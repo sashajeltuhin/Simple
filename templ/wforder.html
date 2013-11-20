@@ -1,0 +1,88 @@
+<div class="stepHeader">Verify order information</div>
+<div class="row-fluid">
+<div class="offset1  span6 control-group"><label class="control-label">Personal info</label>
+    <div class="controls">
+        <label class="control-label">First Name</label>
+        <input type="'text" ng-model="c.fname">
+    </div>
+    <div class="controls">
+        <label class="control-label">Last Name</label>
+        <input type="'text" ng-model="c.lname">
+    </div>
+    <div class="controls">
+        <label class="control-label">Email</label>
+        <input type="'text" ng-model="c.email">
+    </div>
+</div>
+<div class="span5">
+    <div class="row-fluid" ng-repeat="p in cp">
+        <div class="row-fluid">
+            <div class="span2"><div><b>{{p.provider}}</b></div>
+            <div><img ng-src="{{p.brandimgUrl}}" width="40" height="40"/></div></div>
+            <div class="span2"><h4>{{p.title}}</h4><p>{{p.desc}}</p></div>
+        </div>
+        <div class="row-fluid">
+            <div class="offset4 span1">
+                <div><b>${{p.priceNow}}</b></div>
+            </div>
+        </div>
+    </div>
+    <div class="row-fluid">
+        <div class="offset2 span2"><b>Total</b></div>
+        <div class="span1"><b>${{carttotal}}</b></div>
+    </div>
+</div>
+</div>
+<!--<div class="wirefly_hp_ob_outercontainer" ng-repeat="p in cp">-->
+    <!--<div class="wirefly_hp_ob_container">-->
+        <!--<div class="wirefly_hp_ob_deviceimage_container">-->
+            <!--<img class="wirefly_hp_ob_deviceimage" src="{{p.prodimgUrl}}" alt="Samsung Galaxy S 4 Black Mist">-->
+        <!--</div>-->
+        <!--<div class="wirefly_hp_ob_cxrlogo_container">-->
+
+            <!--<img class="wirefly_hp_ob_cxrlogo" ng-src="{{p.brandimgUrl}}" alt="Verizon Wireless Cell Phones and Rate Plans" border="0">-->
+
+        <!--</div>-->
+        <!--<div class="wirefly_hp_ob_devicename_container">-->
+            <!--<div class="wirefly_hp_ob_devicename">-->
+
+                <!--<h2 class="wirefly_hp_ob_devicename">-->
+
+                    <!--{{p.title}}-->
+
+                <!--</h2>-->
+
+            <!--</div>-->
+        <!--</div>-->
+        <!--<div class="wirefly_hp_ob_list_maincontainer">-->
+            <!--<div class="wirefly_hp_ob_list_container">-->
+
+                <!--<ul id="wirefly_hp_ob_list">-->
+                    <!--<li class="wirefly_hp_ob_list_text" ng-repeat="h in p.highlights">h</li>-->
+                <!--</ul>-->
+
+            <!--</div>-->
+        <!--</div>-->
+        <!--<div class="wirefly_hp_ob_savings_container">-->
+            <!--<div class="wirefly_hp_ob_savings" id="savings_64799">-->
+                <!--{{p.promoText}}-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--<div class="wirefly_hp_ob_pricecta_container">-->
+            <!--<div class="wirefly_hp_ob_price_container" id="wirefly_pricing_64799">-->
+
+                <!--{{p.priceNow}}-->
+
+            <!--</div>-->
+        <!--</div>-->
+
+    <!--</div>-->
+<!--</div>-->
+<div class="row-fluid">
+    <div class="span1 offset1">
+     <div class="btn btn-info btn-small" ng-click="back()">Back</div>
+    </div>
+    <div class="span2 offset5">
+        <div class="btn btn-info" ng-click="next()">Confirm</div>
+    </div>
+</div>

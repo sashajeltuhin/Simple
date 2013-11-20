@@ -1,0 +1,333 @@
+<h2>Customize Service</h2>
+
+<h4 class="style4 bg1">High Speed Internet</h4>
+
+<table class="table table-striped table3 mb0">
+    <thead>
+    <tr>
+        <th>&nbsp;</th>
+        <th>Monthly</th>
+        <th>One-Time</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="p in cp">
+        <td class="text-right"><strong>{{p.title}}</strong> <small class="help-block">One year term commitment</small></td>
+        <td>${{p.priceOrig}}</td>
+        <td>$0.00</td>
+    </tr>
+    <tr ng-repeat="p in cp">
+        <td class="text-right">Discounted Price</td>
+        <td>${{p.priceNow}}</td>
+        <td>$0.00</td>
+    </tr>
+
+    <tr >
+        <td class="text-right">Professional Installation</td>
+        <td>$0.00</td>
+        <td>$0.00</td>
+    </tr>
+    <tr>
+        <td>
+            <div class="pull-right">
+                <table class="table">
+                    <tr>
+                        <td class="text-right">Static IPs</td>
+                        <td><select class="form-control mb0" style="width:60px;">
+                            <option value="0" selected="">0</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                        </select></td>
+                        <td><a data-container="body" data-toggle="popover" data-placement="right" data-content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus."><i class="icon-info-sign color2"></i></a></td>
+                    </tr>
+                    <tr>
+                        <td class="text-right">1</td>
+                        <td>$14.95</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td class="text-right">2-5</td>
+                        <td>$19.95</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td class="text-right">6+</td>
+                        <td>$34.95</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                </table>
+            </div>
+        </td>
+        <td>$0.00</td>
+        <td>$0.00</td>
+    </tr>
+    </tbody>
+</table>
+
+<div class="clearer h20">&nbsp;</div>
+
+
+<h4 class="style4 bg1">Local & Long Distance</h4>
+
+<table class="table table-striped table3 mb0">
+<thead>
+<tr>
+    <th>&nbsp;</th>
+    <th>&nbsp;</th>
+    <th>Monthly</th>
+    <th>One-Time</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+    <td class="text-right" rowspan="3">Choose Phone Number &nbsp; <a data-container="body" data-toggle="popover" data-placement="right" data-content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus."><i class="icon-info-sign color2"></i></a></td>
+    <td>
+        <div class="radio" style="margin-top:0;">
+            <label style="width: 100%">
+                <input type="radio">
+                Assign me a new number
+            </label>
+        </div>
+    </td>
+    <td>$0.00</td>
+    <td>$0.00</td>
+</tr>
+<tr>
+    <td>
+        <div class="radio" style="margin-top:0;">
+            <label style="width: 100%">
+                <input type="radio">
+                Keep my current AT&T number
+            </label>
+        </div>
+    </td>
+    <td>$0.00</td>
+    <td>$0.00</td>
+</tr>
+<tr>
+    <td>
+        <div class="radio" style="margin-top:0;">
+            <label style="width: 100%">
+                <input type="radio">
+                Keep my current non AT&T number
+            </label>
+        </div>
+    </td>
+    <td>$0.00</td>
+    <td>$0.00</td>
+</tr>
+
+<tr>
+    <td class="text-right" rowspan="3">Directory Listing &nbsp; <a data-container="body" data-toggle="popover" data-placement="right" data-content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus."><i class="icon-info-sign color2"></i></a></td>
+    <td>
+        <div class="radio" style="margin-top:0;">
+            <label style="width: 100%">
+                <input type="radio">
+                Listed
+            </label>
+        </div>
+    </td>
+    <td>$0.00</td>
+    <td>$0.00</td>
+</tr>
+<tr>
+    <td>
+        <div class="radio" style="margin-top:0;">
+            <label style="width: 100%">
+                <input type="radio">
+                Non listed
+            </label>
+        </div>
+    </td>
+    <td>$2.25</td>
+    <td>$0.00</td>
+</tr>
+<tr>
+    <td>
+        <div class="radio" style="margin-top:0;">
+            <label>
+                <input type="radio">
+                Non published
+            </label>
+        </div>
+    </td>
+    <td>$4.95</td>
+    <td>$0.00</td>
+</tr>
+
+<tr>
+    <td class="text-right">Outbound Caller ID &nbsp; <a data-container="body" data-toggle="popover" data-placement="right" data-content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus."><i class="icon-info-sign color2"></i></a></td>
+    <td>
+        <div class="checkbox" style="margin-top:0;">
+            <label style="width: 100%">
+                <input type="checkbox">
+                Included
+            </label>
+        </div>
+    </td>
+    <td>$0.00</td>
+    <td>$0.00</td>
+</tr>
+<tr class="no-b">
+    <td class="text-right">Outbound Caller ID Name</td>
+    <td>
+        <input type="text" class="form-control">
+    </td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+</tr>
+<tr class="no-b">
+    <td class="text-right">Inbound Caller ID &nbsp; <a data-container="body" data-toggle="popover" data-placement="right" data-content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus."><i class="icon-info-sign color2"></i></a></td>
+    <td>
+        <div class="checkbox" style="margin-top:0;">
+            <label>
+                <input type="checkbox">
+                Select
+            </label>
+        </div>
+    </td>
+    <td>$0.00</td>
+    <td>$0.00</td>
+</tr>
+<tr>
+    <td class="text-right">Allow International <br>outbound calls &nbsp; <a data-container="body" data-toggle="popover" data-placement="right" data-content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus."><i class="icon-info-sign color2"></i></a></td>
+    <td>
+        <div class="checkbox" style="margin-top:0;">
+            <label style="width: 100%">
+                <input type="checkbox">
+                Select
+            </label>
+        </div>
+    </td>
+    <td>$0.00</td>
+    <td>$0.00</td>
+</tr>
+
+<tr>
+    <td class="text-right" rowspan="9">Additional Options</td>
+    <td>
+        <div class="checkbox" style="margin-top:0;">
+            <label style="width: 100%">
+                <input type="checkbox">
+                Call Waiting
+            </label>
+        </div>
+    </td>
+    <td>$0.00</td>
+    <td>$0.00</td>
+</tr>
+<tr>
+    <td>
+        <div class="checkbox" style="margin-top:0;">
+            <label style="width: 100%">
+                <input type="checkbox">
+                Speed Dial 30
+            </label>
+        </div>
+    </td>
+    <td>$0.00</td>
+    <td>$0.00</td>
+</tr>
+<tr>
+    <td>
+        <div class="checkbox" style="margin-top:0;">
+            <label style="width: 100%">
+                <input type="checkbox">
+                Repeat Dialing
+            </label>
+        </div>
+    </td>
+    <td>$0.00</td>
+    <td>$0.00</td>
+</tr>
+<tr>
+    <td>
+        <div class="checkbox" style="margin-top:0;">
+            <label style="width: 100%">
+                <input type="checkbox">
+                Call Return
+            </label>
+        </div>
+    </td>
+    <td>$0.00</td>
+    <td>$0.00</td>
+</tr>
+<tr>
+    <td>
+        <div class="checkbox" style="margin-top:0;">
+            <label style="width: 100%">
+                <input type="checkbox">
+                Hunting (Applies to all lines)
+            </label>
+        </div>
+    </td>
+    <td>$0.00</td>
+    <td>$0.00</td>
+</tr>
+<tr>
+    <td>
+        <div class="checkbox" style="margin-top:0;">
+            <label style="width: 100%">
+                <input type="checkbox">
+                Call Selector
+            </label>
+        </div>
+    </td>
+    <td>$0.00</td>
+    <td>$0.00</td>
+</tr>
+<tr>
+    <td>
+        <div class="checkbox" style="margin-top:0;">
+            <label style="width: 100%">
+                <input type="checkbox">
+                Call Forwarding Don't Answer
+            </label>
+        </div>
+    </td>
+    <td>$0.00</td>
+    <td>$0.00</td>
+</tr>
+<tr>
+    <td>
+        <div class="checkbox" style="margin-top:0;">
+            <label style="width: 100%">
+                <input type="checkbox">
+                Call Forwarding Busy Line
+            </label>
+        </div>
+    </td>
+    <td>$0.00</td>
+    <td>$0.00</td>
+</tr>
+<tr>
+    <td>
+        <div class="checkbox" style="margin-top:0;">
+            <label style="width: 100%">
+                <input type="checkbox">
+                Message Waiting Indicator
+            </label>
+        </div>
+    </td>
+    <td>$0.00</td>
+    <td>$0.00</td>
+</tr>
+</tbody>
+</table>
+
+<div class="clearer h20">&nbsp;</div>
+
+
+<div class="row">
+    <div class="col-xs-4"><a ng-click="back()" class="btn btn-lg btn-default btn-block uppercase"><span>back</span></a></div>
+    <div class="col-xs-4 col-lg-offset-4"><a ng-click="next()" class="btn btn-lg btn-primary btn-block uppercase"><span>continue</span></a></div>
+</div>
+

@@ -1,0 +1,135 @@
+<div class="wrap-container">
+
+<div class="main-content">
+<div class="container">
+<div class="container-content v3 clearfix">
+<div class="row ">
+<div class="box-4">
+    <div class="col-lg-12 col-12">
+        <h3 class="style5 mb0"><span class="i1">Moving is stressful. Setting-up your TV, Internet and Phone doesn't have to be.</span><br>Below are listed the plans available in your area.</h3>
+    </div>
+    <div class="txt-address4 visible-lg">{{c.address1}}, {{c.city}} {{c.state}} {{c.zip}}</div>
+</div><!-- /box-4 -->
+    <div class="box-4">
+        <div class="col-lg-3" style="padding-top:10px;">{{emailPrompt}}</div>
+        <div class="col-lg-4"><input type="text" class="form-control" placeholder="enter email address" ng-model="c.email" ng-hide="emailed"></div>
+        <div class="col-lg-3"><button class="btn btn-style1 uppercase" ng-click="emailList()" ng-hide="emailed">Submit</button></div>
+
+    </div>
+<div class="clearer h30">&nbsp;</div>
+
+
+
+<div class="box-8">
+<div class="box-8-inner clearfix">
+<div class="row">
+    <div class="col-lg-4 col-12 col-sm-6">
+        <select class="form-control">
+            <option>Showing: TV, Internet </option>
+            <option>TV & Internet Bundles</option>
+            <option>TV Plans</option>
+            <option>Internet Plans</option>
+        </select>
+    </div><!-- /.col-lg-6 -->
+    <div class="col-lg-4 col-lg-offset-4 col-12 col-sm-6">
+        <select class="form-control">
+            <option>Sort plans by: Price</option>
+            <option>Sort plans by: Provider</option>
+
+        </select>
+    </div><!-- /.col-lg-6 -->
+</div><!-- /.row -->
+
+
+<div class="separator s2"><hr></div>
+
+
+    <div class="row gradient-container" ng-repeat="p in products">
+
+            <div class="col-lg-3"><div><span><img ng-src="{{p.brandimgUrl}}" width="88" height="31"></span></div></div>
+            <div class="col-lg-6">
+                <h3 class="fld" data-content="product.title">{{p.title}}</h3>
+                <ul class="bullet-1 deals-list-item">
+                    <li ng-repeat="h in p.highlights">{{h}}</li>
+                </ul>
+                <div><i class="icon-angle-right"></i> &nbsp; <a ng-click="showDetail(p)" class="deals-list-item">{{p.lblDetails}}</a></div>
+            </div><!-- .col -->
+            <div class="col-lg-3">
+                <div class="price text-center"><strong>${{p.priceNow}}</strong>/mo</div>
+                <div class="clearer h10">&nbsp;</div>
+                <a ng-click="addToCartandNext(p)" class="btn btn-primary btn-block uppercase">Select</a>
+            </div><!-- .col -->
+
+        <div class="pull-left w600" ng-show="p.openDetail">
+
+            <div class="clearer h20">&nbsp;</div>
+
+            <div class="row gradient-container">
+
+                    <div class="col-lg-8">
+                        <p class="deals-list-item">{{p.promoText}}</p>
+                        <ul class="bullet-1 deals-list-item">
+                            <li ng-repeat="f in p.features">{{f}}</li>
+                        </ul>
+                    </div><!-- .col -->
+
+            </div><!-- /row -->
+
+
+
+            <table class="table table-bordered table-hover fontsize12">
+                <thead>
+                <tr>
+                    <th class="text-center">DOWNLOAD SPEEDS UP TO</th>
+                    <th class="text-center">UPLOAD SPEEDS UP TO</th>
+                    <th class="text-center">EXTRAS</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td class="text-center">{{p.speedDown}} Mbps</td>
+                    <td class="text-center">{{p.speedUp}} Mbps</td>
+                    <td class="text-center">{{p.extras}}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div><!-- /left content -->
+
+    </div><!-- /row -->
+</div><!-- /box-8-inner -->
+</div><!-- /box-8 -->
+</div><!-- /row -->
+
+
+<div class="clearer h50">&nbsp;</div>
+
+
+<div class="row">
+    <div class="col-lg-6 col-12 col-sm-12">
+        <span class="txt-secure2">Private &amp; Secure</span>
+    </div>
+    <div class="col-lg-6 col-12 col-sm-12">
+        <div class="txt-cancel-continue1">Or <a href="#">Cancel</a> & continue without internet</div>
+    </div>
+</div><!-- /row -->
+</div><!-- /container-content -->
+</div><!-- /container -->
+
+
+<div class="clearer h30">&nbsp;</div>
+
+
+<div class="container nobg">
+    <div class="row">
+        <div class="col-lg-6 col-12">
+            <div class="secure-logos"><img src="http://localhost/static/DTVEx/assets/img/ico-mcafee.png"> <img src="http://localhost/static/DTVEx/assets/img/ico-pci.png"> <img src="http://localhost/static/DTVEx/assets/img/ico-verified.png"> <img src="http://localhost/static/DTVEx/assets/img/ico-authorize.png"></div>
+        </div>
+        <!--   <div class="col-lg-6 col-12">
+            <div class="fontsize11"><strong>We are a private business entity that facilitates the address change process for its users and is not affiliated with the US Postal Service.</strong> The fee for this service is to cover the postage, handling, additional services not available through the post office and processing fees charged by the US Postal Service. If you just wish to file with the US Postal Service and not receive our additional benefits, you may do so by visiting the USPS website.</div>
+           </div>  -->
+    </div><!-- /row -->
+</div><!-- /container -->
+</div><!-- /main-content -->
+
+
+</div><!-- /wrap-container -->

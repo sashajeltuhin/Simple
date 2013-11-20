@@ -1,0 +1,18 @@
+{
+    "manifest_version": 2,
+    "name": "GM",
+    "description": "GM",
+    "version": "1",
+    "permissions": ["tabs","http://localhost/*", "http://www.google.com/", "https://www.google.com/"],
+    "content_scripts": [
+        {
+            "matches": ["http://www.guidedmove.com/*", "https://www.guidedmove.com/*"],
+            "js": ["assets/js/omove/jquery-1.8.2.min.js","assets/js/omove/jquery-ui-1.9.2.custom.min.js", "assets/js/omove/bootstrap.js", "assets/js/omove/jquery.placeholder.min.js", "assets/js/omove/jquery.simplyscroll.js", "assets/js/omove/equalheights.js",  "assets/js/omove/ombase.js", "js/select2.js", "js/angular.min.js", "js/sortable.js", "mods/modExt.js", "service/mkpopupservice.js", "service/cartservice.js", "service/adminservice.js","inputlector.js","dir/cartparms.js", "ctrl/cartctrl.js", "ctrl/prodctrl.js","ctrl/surveyctrl.js", "ctrl/optctrl.js","ctrl/adminctrl.js","dir/productDir.js","dir/cartDir.js", "dir/gameDir.js", "dir/providerDir.js","dir/sortlistDir.js", "dir/chartDir.js"],
+            "css": ["assets/css/omove/bootstrap.css", "assets/css/omove/ombase.css", "assets/css/omove/ombase-responsive.css", "assets/css/omove/buttons.css", "assets/css/omove/font-awesome.css","assets/css/omove/jquery.simplyscroll.css",  "assets/css/datepicker/jquery-ui-1.10.3.custom.css"],
+            "run_at": "document_end"}
+    ],
+    "browser_action": {"default_icon": "16x16.png","default_popup": "templ/omconf.html", "default_name": "OM"},
+    "web_accessible_resources" :[
+        "templ/omprods.html", "templ/omprods2.html", "templ/wfsurvey.html", "templ/omconf.html", "templ/omcust.html", "templ/ompers.html", "templ/ompersGM.html", "templ/omcredit.html", "templ/omcreditGM.html","templ/webmm.html", "templ/sortlist.html", "templ/steplist.html"
+    ]
+}

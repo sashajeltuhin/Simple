@@ -1,0 +1,160 @@
+<section class="main-content">
+    <div class="container">
+        <div class="container-content clearfix">
+
+            <div class="clearer h20">&nbsp;</div>
+
+            <h2>Confirmation</h2>
+
+
+
+            <div class="box-8">
+                <div class="box-8-inner clearfix">
+                    <div class="row">
+                        <div class="col-lg-8 col-sm-6">
+                            <div class="box-6">
+                                <div class="box-6-inner clearfix">
+                                    <h4 class="style4 bg1">Confirm Information and Submit</h4>
+
+                                    <h5 class="style4 text-center">Personal Information  <a href="#" class="fontsize11">Edit</a></h5>
+                                    <div class="row mlr0">
+                                        <div class="col-xs-6 text-right">Full Name</div>
+                                        <div class="col-xs-6">{{c.fname}} {{c.lname}}</div>
+                                        <div class="col-xs-6 text-right">Email Addres</div>
+                                        <div class="col-xs-6">{{c.email}}</div>
+                                        <div class="col-xs-6 text-right">Phone Number</div>
+                                        <div class="col-xs-6">{{c.mobil}}</div>
+                                    </div><!-- /row -->
+
+                                    <div class="separator s1"><hr></div>
+
+                                    <h5 class="style4 text-center">Addresses  <a href="#" class="fontsize11">Edit</a></h5>
+                                    <div class="row mlr0">
+                                        <div class="col-xs-6 text-right">Service Address</div>
+                                        <div class="col-xs-6">{{c.address1}}, Suite {{c.appt}}<br>{{c.city}}, {{c.state}} {{c.zip}}</div>
+                                        <div class="col-xs-6 text-right">Billing Address</div>
+                                        <div class="col-xs-6">{{c.address1}}, Suite {{c.appt}}<br>{{c.city}}, {{c.state}} {{c.zip}}</div>
+                                    </div><!-- /row -->
+
+                                    <div class="separator s1"><hr></div>
+
+                                    <h5 class="style4 text-center">Installation  <a href="#" class="fontsize11">Edit</a></h5>
+                                    <div class="row mlr0">
+                                        <div class="col-xs-6 text-right">Date</div>
+                                        <div class="col-xs-6">10/20/2013</div>
+                                        <div class="col-xs-6 text-right">Time</div>
+                                        <div class="col-xs-6">Between 12AM - 5PM<br>Professional Install</div>
+                                    </div><!-- /row -->
+
+
+                                    <div class="clearer h30">&nbsp;</div>
+
+
+                                    <h4 class="style4 bg1">CPNI Authorization</h4>
+                                    <div class="row mlr0">
+                                        <div class="col-xs-12">Federal regulations require our family of companies to receive your permission in order to share your telephone account information with other companies involved in processing this order. Your decision on whether to allow us to use these records will not affect the service you currently receive. We cannot continue to process your order without this authorization.</div>
+                                        <div class="col-xs-12">
+                                            <div class="checkbox">
+                                                <label style="width: 100%">
+                                                    <input type="checkbox">
+                                                    CPNI authorization granted
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div><!-- /row -->
+
+
+                                    <div class="clearer h10">&nbsp;</div>
+
+
+                                    <h4 class="style4 bg1">Terms & Conditions</h4>
+                                    <div class="row mlr0">
+                                        <div class="col-xs-12">
+                                            <textarea ng-repeat="p in cp" class="form-control" rows="5">{{p.terms}}</textarea>
+                                        </div>
+                                        <div class="col-xs-12">
+                                            <div class="checkbox">
+                                                <label style="width: 100%">
+                                                    <input type="checkbox">
+                                                    I accept the Terms & Conditions
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div><!-- /row -->
+
+
+
+
+                                    <div class="clearer h20">&nbsp;</div>
+
+
+                                    <div class="row">
+                                        <div class="col-xs-4"><a ng-click="back()" class="btn btn-lg btn-default btn-block uppercase"><span>back</span></a></div>
+                                        <div class="col-xs-4 col-lg-offset-4"><a ng-click="next()" class="btn btn-lg btn-primary btn-block uppercase"><span>continue</span></a></div>
+                                    </div>
+                                </div><!-- /box-6-inner -->
+                            </div><!-- /box-6 -->
+                        </div><!-- /col -->
+
+
+
+                        <div class="col-lg-4 col-sm-6">
+                            <div class="box-6">
+                                <div class="box-6-inner clearfix">
+                                    <h4 class="style4 bg2">Summary of Charges <i class="icon-shopping-cart pull-right"></i></h4>
+                                    <table class="table table-striped table3">
+                                        <thead>
+                                        <tr ng-repeat="p in cp">
+                                            <th><img ng-src="{{p.brandimgUrl}}" width="111" height="48"></th>
+                                            <th>One-Time</th>
+                                            <th>Monthly</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr class="no-b" ng-repeat="p in cp">
+                                            <td colspan="3"><strong style="font-size:16px;">{{p.provider}}</strong> <a href="#" class="fontsize11">Edit</a></td>
+                                        </tr>
+                                        <tr ng-repeat="p in cp">
+                                            <td>{{p.title}}</td>
+                                            <td>&nbsp;</td>
+                                            <td class="text-right"><div class="txt1">${{p.priceNow}}</div></td>
+                                        </tr>
+
+
+                                        <tr ng-repeat="p in cp">
+                                            <td>Rebate</td>
+                                            <td>&nbsp;</td>
+                                            <td class="text-right"><div class="txt1">[${{p.rebate}}]</div></td>
+                                        </tr>
+
+                                        <tr class="danger">
+                                            <td colspan="3"><div class="links1"><a href="#"><i class="icon-plus-sign"></i>&nbsp; view details</a> &nbsp;&nbsp;&nbsp; <a href="#"><i class="icon-minus-sign"></i>&nbsp; remove</a></div></td>
+                                        </tr>
+
+                                        <tr class="no-b" ng-repeat="p in cp">
+                                            <td>Added to First Bill</td>
+                                            <td class="text-right"><div class="txt1">${{p.priceNow}}</div></td>
+                                            <td>&nbsp;</td>
+                                        </tr>
+
+                                        <tr ng-repeat="p in cp">
+                                            <td><strong>Total Monthly</strong></td>
+                                            <td>&nbsp;</td>
+                                            <td class="text-right"><div class="txt1"><strong>${{p.priceNow}}</strong></div></td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Due today</strong></td>
+                                            <td>&nbsp;</td>
+                                            <td class="text-right"><div class="txt1"><strong>${{carttotal}}</strong></div></td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div><!-- /box-6-inner -->
+                            </div><!-- /box-6 -->
+                        </div><!-- /col -->
+                    </div><!-- /row -->
+                </div><!-- /box-8-inner -->
+            </div><!-- /box-8 -->
+        </div><!-- /container-content -->
+    </div><!-- /container -->
+</section>

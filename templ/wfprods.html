@@ -1,0 +1,60 @@
+<div class="row-fluid">
+    <div class="span8 offset1"><h2><b>Dear {{c.fname}}</b></h2><p>Congrats on your purchase! We suggest that you look at the most popular offers in the {{c.city}} area</p></div>
+</div>
+<div class="row-fluid" ng-repeat="p in products">
+    <div class="offset1 span2"><div><b>{{p.provider}}</b></div>
+    <div><img ng-src="{{p.brandimgUrl}}" width="40" height="40"/></div></div>
+    <div class="span4"><h3>{{p.title}}</h3><h4>{{p.desc}}</h4></div>
+    <div class="span2">
+        <div><b>${{p.priceNow}}</b></div>
+        <div class="btn bv_btn-custom" ng-click="addToCartandNext(p)">Purchase</div>
+    </div>
+</div>
+<!--<div class="wirefly_hp_ob_outercontainer" ng-repeat="p in products">-->
+    <!--<div class="wirefly_hp_ob_container">-->
+        <!--<div class="wirefly_hp_ob_deviceimage_container">-->
+                <!--<img class="wirefly_hp_ob_deviceimage" src="{{p.prodimgUrl}}" alt="Samsung Galaxy S 4 Black Mist">-->
+        <!--</div>-->
+        <!--<div class="wirefly_hp_ob_cxrlogo_container">-->
+
+            <!--<img class="wirefly_hp_ob_cxrlogo" ng-src="{{p.brandimgUrl}}" alt="Verizon Wireless Cell Phones and Rate Plans" border="0">-->
+
+        <!--</div>-->
+        <!--<div class="wirefly_hp_ob_devicename_container">-->
+            <!--<div class="wirefly_hp_ob_devicename">-->
+
+                <!--<h2 class="wirefly_hp_ob_devicename">-->
+
+                        <!--{{p.title}}-->
+
+                <!--</h2>-->
+
+            <!--</div>-->
+        <!--</div>-->
+        <!--<div class="wirefly_hp_ob_list_maincontainer">-->
+            <!--<div class="wirefly_hp_ob_list_container">-->
+
+                <!--<ul id="wirefly_hp_ob_list">-->
+                    <!--<li class="wirefly_hp_ob_list_text" ng-repeat="h in p.highlights">h</li>-->
+                <!--</ul>-->
+
+            <!--</div>-->
+        <!--</div>-->
+        <!--<div class="wirefly_hp_ob_savings_container">-->
+            <!--<div class="wirefly_hp_ob_savings" id="savings_64799">-->
+                <!--{{p.promoText}}-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--<div class="wirefly_hp_ob_pricecta_container">-->
+            <!--<div class="wirefly_hp_ob_price_container" id="wirefly_pricing_64799">-->
+
+                    <!--{{p.priceNow}}-->
+
+            <!--</div>-->
+        <!--</div>-->
+        <!--<div class="wirefly_hp_ob_pricecta_container">-->
+           <!--<a ng-click="addToCartandNext(p)"><img src="//www.wirefly.com/images/Wireflyhomepage/shop_now_med.gif" alt="Shop Now" class="wirefly_hp_ob_cta" border="0"></a>-->
+
+        <!--</div>-->
+    <!--</div>-->
+<!--</div>-->

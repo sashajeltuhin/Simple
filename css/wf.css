@@ -1,0 +1,83 @@
+.wirefly_hp_ob_outercontainer {
+    position: relative;
+    float: left;
+    top: 0px;
+    left: 0px;
+    padding-right: 10px;
+    padding-bottom: 10px;
+}
+
+.wirefly_hp_ob_container {
+    position: relative;
+    float: left;
+    top: 0px;
+    left: 0px;
+    width: 230px;
+    height: 260px;
+    background: url('//www.wirefly.com/images/wireflyhomepage/OfferBlock-230x260Box.png');
+    background-repeat: no-repeat;
+}
+
+.wirefly_hp_ob_deviceimage_container {
+    position: relative;
+    float: left;
+    top: 0px;
+    left: 0px;
+    width: 97px;
+    height: 188px;
+}
+
+.wirefly_hp_ob_cxrlogo_container {
+    position: relative;
+    float: left;
+    top: 0px;
+    left: 0px;
+    width: 133px;
+    height: 51px;
+}
+
+.wirefly_hp_ob_devicename_container {
+    position: relative;
+    float: left;
+    top: 0px;
+    left: 0px;
+    width: 133px;
+    padding-bottom: 5px;
+}
+
+.wirefly_hp_ob_list_maincontainer {
+    position: relative;
+    float: left;
+    top: 0px;
+    left: 0px;
+    width: 133px;
+    height: 92px;
+    margin: 0px 0px 0px 0px;
+}
+
+.wirefly_hp_ob_savings_container {
+    position: relative;
+    float: left;
+    top: 0px;
+    left: 0px;
+    width: 230px;
+    height: 26px;
+}
+
+.wirefly_hp_ob_pricecta_container {
+    position: relative;
+    float: left;
+    top: 0px;
+    left: 0px;
+    width: 115px;
+    height: 46px;
+}
+
+.wirefly_hp_ob_pricecta_container {
+    position: relative;
+    float: left;
+    top: 0px;
+    left: 0px;
+    width: 115px;
+    height: 46px;
+}

@@ -1,0 +1,7 @@
+
+<div ui-sortable="sortableOptions" ng-model="listData">
+    <div class="row-fluid"  ng-repeat="q in listData" ng-class-odd="'odd_row'" ng-class-even="'even_row'">
+        <div class="span4"><h3>{{q.label}}</h3></div>
+        <div class="span1"><input type="checkbox" ng-model="q.value"></div>
+    </div>
+</div>

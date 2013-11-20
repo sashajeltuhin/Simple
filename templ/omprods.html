@@ -1,0 +1,114 @@
+<div class="wrap-container">
+
+<div class="main-content">
+<div class="container">
+<div class="container-content v3 clearfix">
+<div class="row ">
+<div class="box-4">
+    <div class="col-lg-12 col-12">
+        <h3 class="style5 mb0"><span class="i1">Moving is stressful. Setting-up your TV, Internet and Phone doesn't have to be.</span><br>Below are listed the plans available in your area.</h3>
+        <div class="txt-address4 visible-lg">{{c.address1}}, {{c.city}} {{c.state}} {{c.zip}}</div>
+    </div>
+</div><!-- /box-4 -->
+<div class="box-4">
+    <div class="col-lg-3" style="padding-top:10px;">{{emailPrompt}}</div>
+    <div class="col-lg-4"><input type="text" class="form-control" placeholder="enter email address" ng-model="c.email" ng-hide="emailed"></div>
+    <div class="col-lg-3"><button class="btn btn-style1 uppercase" ng-click="emailList()" ng-hide="emailed">Submit</button></div>
+
+</div>
+
+
+
+<div class="clearer h30">&nbsp;</div>
+
+
+
+<div class="box-8">
+<div class="box-8-inner clearfix">
+<div class="row">
+    <div class="col-lg-4 col-12 col-sm-6">
+        <select class="form-control">
+            <option>Showing: TV, Internet & Phone Bundles </option>
+            <option>TV & Internet Bundles</option>
+            <option>TV Plans</option>
+            <option>Internet Plans</option>
+        </select>
+    </div><!-- /.col-lg-6 -->
+    <div class="col-lg-4 col-lg-offset-4 col-12 col-sm-6">
+        <select class="form-control">
+            <option>Sort plans by: Price</option>
+            <option>Sort plans by: Provider</option>
+
+        </select>
+    </div><!-- /.col-lg-6 -->
+</div><!-- /.row -->
+
+
+<div class="separator s2"><hr></div>
+
+
+<div class="row">
+    <div class="col-lg-4 col-12 col-sm-6 mb20" ng-repeat="p in products">
+        <div class="box-9">
+            <div class="inner clearfix">
+                <h4 class="sameHeight2">{{p.title}}</h4>
+                <div class="icons1"><img src="http://localhost/static/DTVEx/assets/img/ico-tv-1.png"> <img src="http://localhost/static/DTVEx/assets/img/ico-internet-1.png"> <img src="http://localhost/static/DTVEx/assets/img/ico-phone-1.png"></div>
+                <ul class="desc1-list sameHeight4">
+                    <li ng-repeat="h in p.highlights"><strong>{{h}}</strong></li>
+                </ul>
+                <div class="ico-dollar"><span>$</span></div>
+                <ul class="desc2-list sameHeight5">
+                    <li ng-repeat="f in p.features"><strong>{{f}}</strong></li>
+                </ul>
+                <div class="text-center">
+                    <a ng-click="addToCartandNext(p)" class="btn btn-lg btn-yellow3 col-lg-8 btn-align-center uppercase">Select Plan</a>
+                </div>
+                <div class="clearer h10">&nbsp;</div>
+            </div><!-- /inner -->
+            <div class="new-price sameHeight6"><div class="clearfix"><span class="i1"><sup>$</sup>{{p.priceNow}}<sup>99</sup></span> <span class="i2">per mo. for 12 months<span>Regular Price ${{p.priceOrig}}</span></span></div></div>
+            <div class="row sameHeight7">
+                <div class="col-lg-6 col-sm-6"><img ng-src="{{p.brandimgUrl}}" width="95" height="20"></div>
+                <div class="col-lg-6 col-sm-6 btn-view-details"><a data-toggle="modal" href="#plan-details1">plan details</a></div>
+            </div>
+        </div><!-- /box-5 -->
+    </div><!-- /col -->
+
+
+</div><!-- /row -->
+</div><!-- /box-8-inner -->
+</div><!-- /box-8 -->
+</div><!-- /row -->
+
+
+<div class="clearer h50">&nbsp;</div>
+
+
+<div class="row">
+    <div class="col-lg-6 col-12 col-sm-12">
+        <span class="txt-secure2">Private &amp; Secure</span>
+    </div>
+    <div class="col-lg-6 col-12 col-sm-12">
+        <div class="txt-cancel-continue1">Or <a href="#">Cancel</a> & continue without internet</div>
+    </div>
+</div><!-- /row -->
+</div><!-- /container-content -->
+</div><!-- /container -->
+
+
+<div class="clearer h30">&nbsp;</div>
+
+
+<div class="container nobg">
+    <div class="row">
+        <div class="col-lg-6 col-12">
+            <div class="secure-logos"><img src="http://localhost/static/DTVEx/assets/img/ico-mcafee.png"> <img src="http://localhost/static/DTVEx/assets/img/ico-pci.png"> <img src="http://localhost/static/DTVEx/assets/img/ico-verified.png"> <img src="http://localhost/static/DTVEx/assets/img/ico-authorize.png"></div>
+        </div>
+        <!--   <div class="col-lg-6 col-12">
+            <div class="fontsize11"><strong>We are a private business entity that facilitates the address change process for its users and is not affiliated with the US Postal Service.</strong> The fee for this service is to cover the postage, handling, additional services not available through the post office and processing fees charged by the US Postal Service. If you just wish to file with the US Postal Service and not receive our additional benefits, you may do so by visiting the USPS website.</div>
+           </div>  -->
+    </div><!-- /row -->
+</div><!-- /container -->
+</div><!-- /main-content -->
+
+
+</div><!-- /wrap-container -->

@@ -1,0 +1,203 @@
+<div class="main-content">
+<div class="container">
+    <div class="container-content v3 clearfix">
+        <div class="row">
+            <div class="box-4">
+                <div class="col-lg-8 col-12">
+                    <h3 class="style5"><span class="i1">Account Setup</span></h3>
+                    <p class="mb0">Personalize your plan for your home.</p>
+                    <div class="txt-address4 visible-lg">{{c.address1}}, {{c.city}} {{c.state}} {{c.zip}}</div>
+                </div>
+                <div class="logos" ng-repeat="p in cp"><img src="{{p.brandimgUrl}}"></div>
+            </div><!-- /box-4 -->
+
+            <div class="clearer h30">&nbsp;</div>
+
+            <div class="box-8">
+                <div class="box-8-inner clearfix">
+                    <div class="row">
+                        <div class="col-lg-8 col-sm-6">
+                            <div class="box-6">
+                                <div class="box-6-inner clearfix">
+                                    <h4 class="style4 bg1">Before we move forward we need to do a credit check</h4>
+
+                                    <p><strong>Deposit Required:</strong> Just like with many home utilities, the services you have selected require a deposit. This amount will be credited back to your account after 12 months, if your account has been in good standing for the previous 6 months.</p>
+                                    <p><strong>Past Due Balance:</strong> Based on the details you've provided, we have determined that you appear in our records with a past due balance. This past due balance will need to be paid before moving forward with your order.</p>
+
+                                    <strong>Deposit Amount</strong>
+                                    <div class="checkbox mt0">
+                                        <label>
+                                            <input type="checkbox">
+                                            I agree to pay the deposit amount. ($150.00)
+                                        </label>
+                                    </div>
+
+                                    <strong>Customer Debt</strong>
+                                    <div class="checkbox mt0">
+                                        <label>
+                                            <input type="checkbox">
+                                            I agree to pay the indicated amount. ($310.75)
+                                        </label>
+                                    </div>
+
+                                    <div class="clearer h20">&nbsp;</div>
+
+
+
+                                    <h4 class="style4 bg1">Credit Card Information</h4>
+
+                                    <div class="form1">
+                                        <div class="col-lg-6 col-12">
+                                            <label>Cardholder Name</label>
+                                            <input type="text" class="form-control">
+                                        </div>
+                                        <div class="col-lg-6 col-12">
+                                            <label>Type of card</label>
+                                            <select class="form-control"><option>- Select card type-</option></select>
+                                        </div>
+
+                                        <div class="col-lg-6 col-12">
+                                            <label>Card Number</label>
+                                            <input type="text" class="form-control">
+                                        </div>
+                                        <div class="col-lg-4 col-12">
+                                            <label>Expiration Date</label>
+                                            <div class="col-lg-6 col-6">
+                                                <input type="text" class="form-control" placeholder="MM">
+                                            </div>
+                                            <div class="col-lg-6 col-6">
+                                                <input type="text" class="form-control" placeholder="YYYY">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-2 col-12">
+                                            <label>CVV</label>
+                                            <input type="text" class="form-control">
+                                        </div>
+                                    </div><!-- /form1 -->
+
+                                    <div class="clearer h10">&nbsp;</div>
+
+                                    <img src="http://localhost/assets/img/ico-cards2.png">
+
+                                    <div class="clearer h30">&nbsp;</div>
+
+
+                                    <h4 class="style4 bg1">Enter your billing address</h4>
+
+                                    <div class="form1">
+                                        <div class="col-lg-12 col-12">
+                                            <div class="radio-inline">
+                                                <label class="radio">
+                                                    <input type="radio">
+                                                    Same as service address
+                                                </label>
+                                            </div>
+                                            <div class="radio-inline">
+                                                <label class="radio">
+                                                    <input type="radio">
+                                                    Different address
+                                                </label>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-8 col-12">
+                                            <label>Street Address</label>
+                                            <input type="text" class="form-control" ng-model="c.address1">
+                                        </div>
+                                        <div class="col-lg-2 col-12">
+                                            <label>Apartment</label>
+                                            <input type="text" class="form-control" ng-model="c.appt">
+                                        </div>
+
+                                        <div class="clearer">&nbsp;</div>
+
+                                        <div class="col-lg-5 col-12">
+                                            <label>City</label>
+                                            <input type="text" class="form-control" ng-model="c.city">
+                                        </div>
+                                        <div class="col-lg-3 col-12">
+                                            <label>State</label>
+                                            <input type="text" class="form-control" ng-model="c.state">
+                                        </div>
+                                        <div class="col-lg-2 col-12">
+                                            <label>ZIP</label>
+                                            <input type="text" class="form-control" ng-model="c.zip">
+                                        </div>
+                                    </div><!-- /form1 -->
+
+
+                                    <div class="clearer h30">&nbsp;</div>
+
+
+                                    <div class="row">
+                                        <div class="col-lg-4 col-12 mb10"><a ng-click="back()" class="btn btn-yellow1 col-lg-12 col-12 col-sm-12"><span>back</span></a></div>
+                                        <div class="col-lg-4 col-12 mb10 col-lg-offset-4"><a ng-click="next()" class="btn btn-yellow1 col-lg-12 col-12 col-sm-12"><span>next</span></a></div>
+                                    </div>
+                                </div><!-- /box-6-inner -->
+                            </div><!-- /box-6 -->
+                        </div><!-- /col -->
+
+
+
+                        <div class="col-lg-4 col-sm-6">
+                            <div class="box-6">
+                                <div class="box-6-inner clearfix">
+                                    <h4 class="style4 bg2">My Order Summary <i class="icon-shopping-cart pull-right"></i></h4>
+                                    <table class="table table-striped table3">
+                                        <tbody>
+                                        <tr class="no-b" ng-repeat="p in cp">
+                                            <td>{{p.desc}}</td>
+                                            <td class="text-right"><div class="txt1"><strong>${{p.priceNow}}.99</strong><br>monthly</div></td>
+                                        </tr>
+                                        <tr ng-repeat="p in cp">
+                                            <td>Rebate</td>
+                                            <td class="text-right"><div class="txt1"><strong>[${{p.rebate}}]</strong><br>monthly</div></td>
+                                        </tr>
+                                        <tr class="danger">
+                                            <td colspan="2"><div class="links1"><a href="#"><i class="icon-plus-sign"></i>&nbsp; view details</a> &nbsp;&nbsp;&nbsp; <a href="#"><i class="icon-minus-sign"></i>&nbsp; remove</a></div></td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Monthly Fees</strong></td>
+                                            <td class="text-right"><div class="txt1"><strong>${{carttotal}}</strong><br>monthly</div></td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                    <!--<a href="billing-installation.html" class="btn btn-yellow1 col-lg-12 col-12 col-sm-12"><span>Continue</span><br>step 2 of 3</a>-->
+                                </div><!-- /box-6-inner -->
+                            </div><!-- /box-6 -->
+                        </div><!-- /col -->
+                    </div><!-- /row -->
+                </div><!-- /box-8-inner -->
+            </div><!-- /box-8 -->
+        </div><!-- /row -->
+
+
+        <div class="clearer h50">&nbsp;</div>
+
+
+        <div class="row">
+            <div class="col-lg-6 col-12 col-sm-12">
+                <span class="txt-secure2">Private &amp; Secure</span>
+            </div>
+            <div class="col-lg-6 col-12 col-sm-12">
+                <div class="txt-cancel-continue1">Or <a href="#">Cancel</a> & continue without internet</div>
+            </div>
+        </div><!-- /row -->
+    </div><!-- /container-content -->
+</div><!-- /container -->
+
+
+<div class="clearer h30">&nbsp;</div>
+
+
+<div class="container nobg">
+    <div class="row">
+        <div class="col-lg-6 col-12">
+            <div class="secure-logos"><img src="http://localhost/assets/img/ico-mcafee.png"> <img src="http://localhost/static/DTVEx/assets/img/ico-pci.png"> <img src="http://localhost/assets/img/ico-verified.png"> <img src="http://localhost/assets/img/ico-authorize.png"></div>
+        </div>
+        <!--   <div class="col-lg-6 col-12">
+            <div class="fontsize11"><strong>We are a private business entity that facilitates the address change process for its users and is not affiliated with the US Postal Service.</strong> The fee for this service is to cover the postage, handling, additional services not available through the post office and processing fees charged by the US Postal Service. If you just wish to file with the US Postal Service and not receive our additional benefits, you may do so by visiting the USPS website.</div>
+           </div>  -->
+    </div><!-- /row -->
+</div><!-- /container -->
+</div><!-- /main-content -->

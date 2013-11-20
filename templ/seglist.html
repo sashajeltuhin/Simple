@@ -1,0 +1,29 @@
+<div style="margin-left: 50px;margin-top: 50px" ng-repeat="s in segs">
+    <div class="row-fluid">
+        <div class="span4"><h3>{{s.title}}</h3></div>
+        <div class="span2">Applies to {{s.app}}</div>
+        <div class="span2 btn btn-small bv_btn-custom" ng-click="createSegment()">New expression</div>
+    </div>
+<div ui-sortable="sortableOptions" ng-model="listData">
+    <div class="row-fluid"  ng-repeat="p in expBySeg(s)  | orderBy:'app'" ng-class-odd="'odd_row'" ng-class-even="'even_row'">
+        <div class="row-fluid">
+        <div class="span7 navbar navbar-inner"><div class="container">
+            <ul class="nav">
+                <li><a ng-click="editSegment(p)">Edit</a></li>
+                <li><a ng-click="cloneExp(p)">Clone</a></li>
+                <li><a ng-click="deleteSegment(p)">Delete</a></li>
+            </ul>
+        </div>
+        </div>
+        </div>
+        <div class="row-fluid">
+        <!--<div class="span1"><img src="{{p.image}}" width="40" height="40"/></div>-->
+
+        <div class="span2"><h4>{{p.exp}}</h4></div>
+        <div class="span3"><b>{{p.field}} {{p.oper}} {{p.val}}</b></div>
+        <div class="span3">maps to category <b>{{p.prodcat}} </b></div>
+        <div class="span2">Active <input type="checkbox" ng-model="p.active"></div>
+        </div>
+    </div>
+</div>
+</div>

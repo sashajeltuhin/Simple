@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="assets/css/bootstrap.css"/>
+    <!--<link rel="stylesheet" href="assets/css/bootstrap-responsive.css"/>-->
+    <!--<link rel="stylesheet" href="css/ext.css"/>-->
+    <link href="assets/css/base.css" rel="stylesheet">
+    <link href="assets/css/buttons.css" rel="stylesheet">
+    <link href="assets/css/font-awesome.css" rel="stylesheet">
+    <link href="assets/css/datepicker/jquery-ui-1.10.3.custom.css" rel="stylesheet">
+    <link href="css/amazon.css" rel="stylesheet">
+    <script src="assets/js/jquery-1.10.2.min.js"></script>
+    <script src="assets/js/bootstrap.min.js"></script>
+    <script src="assets/js/jquery.placeholder.min.js"></script>
+    <script src="assets/js/jquery-ui-1.10.3.custom.min.js"></script>
+    <script src="js/detect.js"></script>
+    <script src="js/mask.js" type="text/javascript"></script>
+    <script src="assets/js/base.js"></script>
+    <script src="js/angular.min.js" type="text/javascript"></script>
+    <script src="js/sortable.js" type="text/javascript"></script>
+    <script src="js/date.js" type="text/javascript"></script>
+    <script src="js/select2.js" type="text/javascript"></script>
+    <script src="js/ng-grid-2.0.7.min.js" type="text/javascript"></script>
+    <script src="mods/mod.js" type="text/javascript"></script>
+    <script src="service/mkpopupservice.js" type="text/javascript"></script>
+    <script src="service/filterservice.js" type="text/javascript"></script>
+    <script src="service/cartservice.js" type="text/javascript"></script>
+    <script src="service/adminservice.js" type="text/javascript"></script>
+    <script src="dir/cartparms.js" type="text/javascript"></script>
+    <script src="ctrl/cartadminctrl.js" type="text/javascript"></script>
+    <script src="ctrl/prodctrl.js" type="text/javascript"></script>
+    <script src="ctrl/teaserctrl.js" type="text/javascript"></script>
+    <script src="ctrl/surveyctrl.js" type="text/javascript"></script>
+    <script src="ctrl/optctrl.js" type="text/javascript"></script>
+    <script src="ctrl/adminctrl.js" type="text/javascript"></script>
+    <script src="dir/leafletDir.js" type="text/javascript"></script>
+    <script src="dir/selectDir.js" type="text/javascript"></script>
+    <script src="dir/productDir.js" type="text/javascript"></script>
+    <script src="dir/cartDir.js" type="text/javascript"></script>
+    <script src="dir/gameDir.js" type="text/javascript"></script>
+    <script src="dir/providerDir.js" type="text/javascript"></script>
+    <script src="dir/sortlistDir.js" type="text/javascript"></script>
+    <script src="dir/chartDir.js" type="text/javascript"></script>
+    <script src="amazinjector.js" type="text/javascript"></script>
+    <script src="ctrl/adminHelper.js" type="text/javascript"></script>
+
+</head>
+<body ng-app="cart">
+<div class="row-fluid" ng-controller="cartadminctrl">
+    <div cart-parms app-Type="Amazon" cart_zipval=""></div>
+    <div id="bv_cart_cont" class="container" style="display: none" ng-include="wrapperUrl">
+    </div>
+</div>
+</body>
+</html>

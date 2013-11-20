@@ -1,0 +1,44 @@
+<div ng-show="gameOn">
+<game-panel class="leaderboard" stats="stats" step="gamePanel"></game-panel>
+</div>
+<div class="navbar navbar-inner">
+    <div class="container">
+        <ul class="nav">
+            <li class="active"><a class="brand" href="#" ng-click="openCart()">{{head}}</a></li>
+            <li><a ng-click="next()" style="cursor: pointer">Next</a></li>
+            <li><a href="#" ng-click="onAuth()">{{login}}</a></li>
+            <li><a href="#/admin" ng-show="isAdmin" ng-click="openAdmin()">Control panel</a></li>
+        </ul>
+    </div>
+</div>
+<div class="crumbpanel row" ng-show="crumbsOn">
+    <div class="crumb span1" ng-repeat="s in steps" ng-class="updateCrumbs(s)">{{s.title}}</div>
+    <div class="span2 btn-info pull-right" ng-click="openScript()">{{scriptlabel}}</div>
+</div>
+<div class="scriptPanel" ng-show="scriptopen">
+    <h3>Help for {{step.name}}</h3>
+    <pre>{{step.desc}}</pre>
+</div>
+<div class="row">
+    <div class="span9 innercontent" ng-view></div>
+    <div id="bv_cart_panel" class="span3">
+        <div class="row">
+            <div class="span3"><h4>Shopping Cart</h4></div></div>
+
+        <div class="row" ng-show="existprod">
+            <div class="span3"><b>Existing service</b></div>
+        </div>
+        <div class="row" ng-show="existprod">
+            <div class="span2">{{ex.name}}</div>
+            <div class="span1">{{ex.price}}</div>
+        </div>
+        <div class="row" ng-show="hasproducts">
+            <div class="span3"><b>Bundle products</b></div>
+        </div>
+        <cart-prod ng-repeat="p in cp" prod="p" rem-call="removeProd(arg1)"></cart-prod>
+        <div class="row">
+            <div class="span2"><b>Total</b></div>
+            <div class="span1"><b>${{carttotal}}</b></div>
+        </div>
+    </div>
+</div>

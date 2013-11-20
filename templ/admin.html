@@ -1,0 +1,94 @@
+<div class="navbar navbar-inner"><div class="container">
+    <ul class="nav">
+        <li class="active"><a class="brand" ng-click="onDash()">Bridgevine Administrative Interface</a></li>
+        <li>Tenant: <select id="admin_sel_tenenat" ng-options="t.name for t in tenants" ng-model="selTen" ng-change="pickTenant()" style="margin-top:10px">
+        </select></li>
+    </ul>
+</div>
+</div>
+
+<div class="navbar navbar-inner"><div class="container"><ul class="nav">
+
+    <li><a href="#/admin"><img src="http://localhost/static/images/filter.jpg" ng-click="toggleFilter()" width="20" height="20"></a></li>
+    <li class="dropdown"><a href="#"class="dropdown-toggle"data-toggle="dropdown">Manage<b class="caret"></b></a>
+        <ul class="dropdown-menu">
+            <li><a href="#/admin" ng-click="loadProducts()">Products</a></li>
+            <li><a href="#/admin" ng-click="loadProvidersLst()">Providers</a></li>
+            <li><a href="#/admin" ng-click="loadProvidersNG()">Angular Providers</a></li>
+            <li><a href="#/admin" ng-click="loadConsumerLst()">Consumers</a></li>
+            <li><a href="#/admin" ng-click="loadStepsLst()">Flow</a></li>
+            <li><a href="#/admin" ng-click="loadLogs()">Logs</a></li>
+            <li><a href="#/admin" ng-click="loadSurveyLst()">Survey</a></li>
+            <li><a href="#/admin" ng-click="loadAppLst()">Applications</a></li>
+            <li><a href="#/admin" ng-click="loadTenantLst()">Tenants</a></li>
+            <li><a href="#/admin" ng-click="loadZips()">Geo</a></li>
+            <li><a href="#/admin" ng-click="loadSegmentList()">Demographic segements</a></li>
+
+            <!--<li><a href="#/admin" ng-click="loadOptLst()">Options</a></li>-->
+        </ul>
+    </li>
+    <li class="dropdown"><a href="#"class="dropdown-toggle"data-toggle="dropdown">Rules<b class="caret"></b></a>
+        <ul class="dropdown-menu">
+            <li><a href="#/admin" ng-click="loadProviders()">Providers</a></li>
+            <li><a href="#/admin" ng-click="loadCartSteps()">Flow</a></li>
+            <li><a href="#/admin" ng-click="loadSegments()">Demographic segements</a></li>
+            <li><a href="#/admin" ng-click="loadSurvey()">Survey</a></li>
+            <li><a href="#/admin" ng-click="viewFlow()">Preview</a></li>
+            <li><a href="#/admin" ng-click="updateGeo()">Update Geo</a></li>
+            <!--<li><a href="#/admin" ng-click="loadOpt()">Options</a></li>-->
+        </ul>
+    </li>
+    <li class="dropdown"><a href="#"class="dropdown-toggle"data-toggle="dropdown">Create<b class="caret"></b></a>
+        <ul class="dropdown-menu">
+            <li><a href="#/admin" ng-click="createField()">Attribute</a></li>
+            <li><a href="#/admin" ng-click="createProvider()">Provider</a></li>
+            <li><a href="#/admin" ng-click="createProduct()">Product</a></li>
+            <li><a href="#/admin" ng-click="createStep()">Flow step</a></li>
+            <li><a href="#/admin" ng-click="createQuestion()">Question</a></li>
+            <li><a href="#/admin" ng-click="createApp()">Application</a></li>
+            <li><a href="#/admin" ng-click="createTenant()">Tenant</a></li>
+            <li><a href="#/admin" ng-click="createGeo()">Geo mapping</a></li>
+            <li><a href="#/admin" ng-click="createSegment()">Demographic segment</a></li>
+        </ul>
+    </li>
+    <li class="dropdown"><a href="#"class="dropdown-toggle"data-toggle="dropdown">Attributes<b class="caret"></b></a>
+        <ul class="dropdown-menu">
+            <li><a href="#/admin" ng-click="loadProductFields()">Product fields</a></li>
+            <li><a href="#/admin" ng-click="loadProviderFields()">Provider fields</a></li>
+            <li><a href="#/admin" ng-click="loadStepFields()">Flow step fields</a></li>
+            <li><a href="#/admin" ng-click="loadLogFields()">Log fields</a></li>
+            <li><a href="#/admin" ng-click="loadFields()">Field descriptors</a></li>
+            <li><a href="#/admin" ng-click="loadSurveyFields()">Survey</a></li>
+            <li><a href="#/admin" ng-click="loadTenantFields()">Tenant</a></li>
+            <li><a href="#/admin" ng-click="loadAppFields()">Application</a></li>
+            <li><a href="#/admin" ng-click="loadConsumerFields()">Consumer</a></li>
+            <li><a href="#/admin" ng-click="loadZipFields()">Geo</a></li>
+            <li><a href="#/admin" ng-click="loadSegmentFields()">Segments</a></li>
+        </ul>
+    </li>
+    <li class="dropdown"><a href="#"class="dropdown-toggle"data-toggle="dropdown">Reports<b class="caret"></b></a>
+        <ul class="dropdown-menu">
+            <li><a href="#/admin" ng-click="ordersReport()">Performance</a></li>
+            <li><a href="#/admin" ng-click="qualsByProv()">Quals</a></li>
+            <li><a href="#/admin" ng-click="ordersByProv()">Orders</a></li>
+            <li><a href="#/admin" ng-click="productGeo()">Product availability</a></li>
+            <li><a href="#/admin" ng-click="export()">Export to email list [SilverPop]</a></li>
+        </ul>
+    </li>
+    <li class="dropdown"><a href="#"class="dropdown-toggle"data-toggle="dropdown">Save<b class="caret"></b></a>
+        <ul class="dropdown-menu">
+            <li><a href="#/admin" ng-click="saveChanges()">Save changes</a></li>
+            <li><a href="#/admin" ng-click="saveMassChanges()">Mass update</a></li>
+        </ul>
+    </li></ul>
+</div>
+</div>
+<!--<div class="row-fluid"><h4 class=" offset2 style4">{{viewTitle}}</h4></div>-->
+<div class="row-fluid">
+    <div class="span2" id="bv_filter_bar" ng-show="filterOpen"></div>
+    <div class="span9">
+        <h4 class="style4">{{viewTitle}}</h4>
+        <div id="bv_ext_admin_wrap" ng-include="wrapper"></div>
+        <div class="gridStyle" id="adminGrid"/>
+    </div>
+</div>

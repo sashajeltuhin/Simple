@@ -1,0 +1,16 @@
+<div class="stepHeader">{{step.title}}</div>
+<div class="row">
+    <div class="span8"> <h2>Congrats! </h2><b>Dear {{c.fname}}, now that the lights are on, how about some High speed internet?</b></div>
+</div>
+<div class="row"><div class="span8"> <p>We have found special offers in {{c.zip}} area just for you</p></div></div>
+
+<list-prod ng-repeat="p in products" prod="p" add-call="addToCart(arg1)"></list-prod>
+
+
+<!--<input ui-date ui-date-format="DD, d MM, yy" ng-model="c.moveDate">-->
+
+<!--<input type="radio" ng-model="color" value="red">  Red <br/>-->
+<!--<input type="radio" ng-model="color" value="green"> Green <br/>-->
+<!--<input type="radio" ng-model="color" value="blue"> Blue <br/>-->
+
+
