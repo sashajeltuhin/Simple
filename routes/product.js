@@ -37,7 +37,7 @@ exports.qual = function (req, res){
     var filter = {};
     filter.order_by = {priority:1};
 
-    db.load('segment', {app:customer.app}, function(err, list){
+    db.load('segment', db.getFilter({app:customer.app}), function(err, list){
         if (err !== null){
             handleError(res, "Cannot list products ", err);
         }
@@ -45,8 +45,11 @@ exports.qual = function (req, res){
             for (var i = 0; i < list.length;i++){
                 var seg = list[i];
                 if(seg.active == true && fitsSegment(customer, seg)){
-                    if (seg.prodcat !== undefined){
+                    if (seg.prodcat !== undefined && seg.prodcat!== ""){
                         filter.cat = seg.prodcat;
+                    }
+                    if (seg.limit !== undefined && Number(seg.limit) > 0){
+                        filter.limit = seg.limit;
                     }
                 }
             }
@@ -85,6 +88,9 @@ function fitsSegment(customer, seg){
                 fits = customer[seg.field] > arr[0] && customer[seg.field] < arr[1];
                 break;
         }
+    }
+    else{ //global
+        fits = true;
     }
     return fits;
 }

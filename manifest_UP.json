@@ -1,0 +1,18 @@
+{
+    "manifest_version": 2,
+    "name": "UP",
+    "description": "Updater",
+    "version": "1",
+    "permissions": ["tabs","http://localhost/*", "http://www.codehelper.io/*", "https://www.codehelper.io/*", "http://www.google.com/", "https://www.google.com/"],
+    "content_scripts": [
+        {
+            "matches": ["http://updater.com/*", "https://updater.com/*", "http://www.updater.com/*", "https://www.updater.com/*"],
+            "js": ["assets/js/jquery-1.10.2.min.js","assets/js/jquery-ui-1.10.3.custom.min.js", "assets/js/bootstrap.min.js", "assets/js/jquery.placeholder.min.js", "js/socket.io.js", "assets/js/base.js", "js/select2.js", "js/detect.js", "js/angular.min.js", "js/sortable.js", "mods/modExt.js", "service/mkpopupservice.js", "service/cartservice.js", "service/adminservice.js","upinjector.js","dir/cartparms.js", "ctrl/cartctrl.js", "ctrl/teaserctrl.js","ctrl/prodctrl.js","ctrl/surveyctrl.js","ctrl/optctrl.js","dir/productDir.js","dir/cartDir.js", "dir/gameDir.js", "dir/providerDir.js","dir/sortlistDir.js"],
+            "css": ["assets/css/bootstrap.css", "assets/css/base.css","assets/css/buttons.css", "assets/css/font-awesome.css"],
+            "run_at": "document_end"}
+    ],
+    "browser_action": {"default_icon": "16x16.png","default_popup": "templ/omconf.html", "default_name": "AZ"},
+    "web_accessible_resources" :[
+        "templ/upteaser.html", "templ/mmcredit.html", "templ/upprods.html","templ/mminst.html","templ/azcust.html","templ/mmcust.html","templ/mmorder.html","templ/mmconf.html","templ/webmm.html", "templ/sortlist.html", "templ/steplist.html"
+    ]
+}

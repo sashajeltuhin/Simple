@@ -99,7 +99,7 @@ function cartctrl($scope, $rootScope, $http, $location, cartservice){
 
     $scope.changeView = function (v){
         $location.path('/' + v);
-        onStep($scope.step);
+        onStep($scope.step, $scope.c);
 
     }
 

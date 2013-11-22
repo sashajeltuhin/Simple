@@ -1,0 +1,8 @@
+
+<div class="info" ng-repeat="p in products">
+    <a ng-click="next()" class="title" title="{{p.title}}"><img ng-src="{{p.brandimgUrl}}" width="78" alt="" id="" height="100" border="0">{{p.title}}</a>
+    <div class="rating"><span class="rating-stars"><span class="crAvgStars" style="white-space:no-wrap;"><span class="asinReviewsSummary" name="B00462PTDQ" ref="pd_ecc_rvi_cart_pop_" getargs="{&quot;refRID&quot;:&quot;01387S8JVZ3H26SREXGG&quot;}">
+                <a ng-click="launch(p)"><img src="http://g-ecx.images-amazon.com/images/G/01/x-locale/common/customer-reviews/ratings/stars-4-5._V192238104_.gif" width="55" alt="4.3 out of 5 stars" align="absbottom" title="4.3 out of 5 stars" height="12" border="0"></a>&nbsp;</span>(<a href="http://www.amazon.com/Wow-World-Wonder-Blu-ray/product-reviews/B00462PTDQ/ref=pd_ecc_rvi_cart_txt_1?ie=UTF8&amp;refRID=01387S8JVZ3H26SREXGG&amp;showViewpoints=1">338</a>)</span></span></div>
+    <div class="price">${{p.priceNow}}</div>
+    <a class="maplink" ng-click="launch(p)">Click for details</a>
+</div>

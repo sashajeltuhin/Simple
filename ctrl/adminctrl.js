@@ -496,10 +496,10 @@ function adminctrl($scope, $rootScope, $http, $location, mkPopup, mkFilter, admi
         selected = 'fields';
         adminservice.loadMeta(selected, $http, function(m){
             adminservice.listObj(selected, {objname:f, 'order_by':{order:1}}, $http, function(d){
-                $scope.colData = m;
-                $scope.listData = d;
-                $scope.wrapper = serverUrl + 'grid.html';
-                buildGrid(m, d);
+                //$scope.colData = m;
+                //$scope.listData = d;
+                $scope.wrapper = serverUrl + 'spread.html';
+                buildNGrid(m,d);//buildGrid(m, d);
             });
         });
     }
@@ -1026,14 +1026,14 @@ function adminctrl($scope, $rootScope, $http, $location, mkPopup, mkFilter, admi
         selected = 'provider';
         $scope.viewTitle = "Providers";
         buildDefFilter();
-        loadObjGrid();
+        loadObjNGrid();//loadObjGrid();
     }
 
     $scope.loadSegmentList = function(){
         selected = 'segment';
         $scope.viewTitle = "Demographic segments";
         buildDefFilter();
-        loadObjGrid();
+        loadObjNGrid();//loadObjGrid();
     }
 
     $scope.loadLogs = function(){
@@ -1063,6 +1063,7 @@ function adminctrl($scope, $rootScope, $http, $location, mkPopup, mkFilter, admi
         selected = 'product';
         $scope.viewTitle = "Products";
         buildDefFilter();
+        //loadObjNGrid();
         loadObjGrid();
     }
 
@@ -1070,7 +1071,8 @@ function adminctrl($scope, $rootScope, $http, $location, mkPopup, mkFilter, admi
         selected = 'zip';
         $scope.viewTitle = "Geo Mapping";
         buildDefFilter();
-        loadObjGrid();
+        loadObjNGrid();
+//        loadObjGrid();
     }
 
 
@@ -1081,13 +1083,13 @@ function adminctrl($scope, $rootScope, $http, $location, mkPopup, mkFilter, admi
         extra.app = {};
         extra.app[$scope.selTen.apps[0]] = true;
         buildDefFilter(extra);
-        loadObjGrid();
+        loadObjNGrid();//loadObjGrid();
     }
     $scope.loadSurveyLst = function(){
         selected = 'survey';
         $scope.viewTitle = "Surveys";
         buildDefFilter();
-        loadObjGrid();
+        loadObjNGrid();//loadObjGrid();
     }
 
     $scope.loadAppLst = function(){
@@ -1096,13 +1098,13 @@ function adminctrl($scope, $rootScope, $http, $location, mkPopup, mkFilter, admi
         var extra = {};
         extra.tenant = $scope.selTen.name;
         buildDefFilter(extra);
-        loadObjGrid();
+        loadObjNGrid();//loadObjGrid();
     }
     $scope.loadTenantLst = function(){
         selected = 'tenant';
         $scope.viewTitle = "Tenants";
         buildDefFilter();
-        loadObjGrid();
+        loadObjNGrid();//loadObjGrid();
     }
     $scope.loadConsumerLst = function(){
         selected = 'consumer';
@@ -1170,6 +1172,7 @@ function adminctrl($scope, $rootScope, $http, $location, mkPopup, mkFilter, admi
     }
 
     function buildNGrid(meta, data) {
+        hideGrid();
         $scope.listData = data;
         $scope.gridcolumns = [];
         //columns.push({field:'head', width:20});

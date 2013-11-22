@@ -1,4 +1,5 @@
 function prodctrl($scope, $rootScope, $http, $location, cartservice){
+    console.log('prodctrl called:');
     $scope.emailed = false;
     $scope.emailPrompt = "EMAIL ME THE RESULTS";
     $scope.showDetail = function(p){
@@ -16,7 +17,7 @@ function prodctrl($scope, $rootScope, $http, $location, cartservice){
         $scope.c = cartservice.getCustomer();
         cartservice.loadproducts($scope.c, $http, function(data){
             var teaser = cartservice.getTeaserProd();
-            if (teaser !== null){
+            if (teaser !== undefined && teaser !== null){
                 data.splice(0, 0, teaser);
             }
             $scope.products = data;
@@ -30,7 +31,7 @@ function prodctrl($scope, $rootScope, $http, $location, cartservice){
     $scope.reloadProds = function(){
         cartservice.loadproducts($scope.c, $http, function(data){
             var teaser = cartservice.getTeaserProd();
-            if (teaser !== null){
+            if (teaser !== undefined && teaser !== null){
                 data.splice(0, 0, teaser);
             }
             $scope.products = data;

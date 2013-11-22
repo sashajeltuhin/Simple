@@ -225,7 +225,7 @@ angular.module('cart').factory('cartservice', function($http) {
                     curstep = st[0];
                     console.log(curstep);
                     console.log("service initstep(). Getting IP info");
-                    var ipURL = extenstion == true?'//www.codehelper.io/api/ips/' : '//www.codehelper.io/api/ips/?js&callback=?';
+                    var ipURL = extenstion == true?'http://www.codehelper.io/api/ips/' : 'http://www.codehelper.io/api/ips/?js&callback=?';
                     $.getJSON(ipURL, function(response) {
                         service.customer.IP = response.IP;
                         service.customer.OS = BrowserDetect.OS;
