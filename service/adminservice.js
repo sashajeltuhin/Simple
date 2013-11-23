@@ -49,9 +49,12 @@ angular.module('cart').factory('adminservice', function($q) {
 
         var metafld = opts[i];
         var f = {};
+        if (metafld.optfilter !== undefined){
+            f = metafld.optfilter;
+        }
         console.log(selTen);
         if(metafld.optobj == 'apps' && selTen !== undefined && selTen.apps.length > 0){
-            f = {appID: selTen.apps};
+            f.appID = selTen.apps;
         }
         var prom = service.listObjProm(metafld.optobj, f,  $q, $http);
         prom.then(function(p){
