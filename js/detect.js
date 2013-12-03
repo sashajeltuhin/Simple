@@ -122,7 +122,7 @@ BrowserDetect.init();
 var SpeedDetect = {
     init: function(){
      var that = this;
-var imageAddr = "http://localhost/img/background.jpg" + "?n=" + Math.random();
+var imageAddr = topUrl + "/img/background.jpg" + "?n=" + Math.random();
 var startTime, endTime;
 var downloadSize = 64000;
 var download = new Image();

@@ -1,5 +1,6 @@
 function cartadminctrl($scope, $rootScope, $http, $location, cartservice){
-    var serverUrl = 'http://localhost/templ/';
+    var serverUrl = topUrl + '/templ/';
+    $scope.topUrl = topUrl;
     $scope.title = "Cart";
     $scope.login = "Sign In";
     $scope.head = "Bundles by Bridgevine";
@@ -26,6 +27,7 @@ function cartadminctrl($scope, $rootScope, $http, $location, cartservice){
 
 
     $scope.start = function(z, cust, appType, extension, prod, exCart){
+        $scope.wrapperUrl = serverUrl + 'adminTmpl.html';
         cust.zip = z;
         cartservice.setExCart(exCart);
         cartservice.setExtension(extension);
@@ -80,16 +82,13 @@ function cartadminctrl($scope, $rootScope, $http, $location, cartservice){
 
         $scope.step = cartservice.prevStep($scope.step.name);
         $scope.changeView($scope.step);
-        onStep($scope.step.name);
     }
 
     $scope.next = function(){
-        onStep();
         console.log("Controller next(). Customer:");
         console.log($scope.c);
         $scope.step = cartservice.nextStep($scope.step.name);
         $scope.changeView($scope.step);
-        onStep($scope.step.name);
     }
 
     $scope.updateCrumbs = function(s){
@@ -101,10 +100,14 @@ function cartadminctrl($scope, $rootScope, $http, $location, cartservice){
 
 
     $scope.changeView = function (step){
-        var fn = window[step.controller];
-        $scope.viewCtrl = fn;
-        $scope.wrapperUrl = serverUrl + 'adminTmpl.html';
-        $scope.templateUrl = cartservice.getTemplateURL();
+        $location.path('/' + step.name);
+//        var fn = window[step.controller];
+//        $scope.viewCtrl = fn;
+//        if ($scope.wrapperUrl == undefined){
+//         $scope.wrapperUrl = serverUrl + 'adminTmpl.html';
+//        }
+//        $scope.templateUrl = cartservice.getTemplateURL();
+        onStep(step, $scope.c);
     }
 
     $scope.loadProds = function(){
@@ -164,10 +167,25 @@ function cartadminctrl($scope, $rootScope, $http, $location, cartservice){
     });
 
     $scope.$on("EV_ADD_PROD_NEXT", function(event, obj, c){
-        cartservice.addProduct(obj);
-        updateCartTotal();
-        $scope.next();
+        if (obj.teaser == true){
+            cartservice.setTeaserProd(obj);
+        }
+        else{
+            cartservice.addProduct(obj);
+            updateCartTotal();
+        }
+        if (c!==undefined){
+            cartservice.setCustomer(c);
+            cartservice.updateCustomer(function(){
+
+                $scope.next();
+            });
+        }
+        else{
+            $scope.next();
+        }
     });
+
     $scope.removeProd = function(obj){
         cartservice.delProduct(obj);
         if (cartservice.exCartExists() &&  cartservice.added !== undefined){

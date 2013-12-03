@@ -141,12 +141,12 @@ exports.aggregate = function(colname, filter, callback){
     getDB(callback, function (err, db) {
 
         db.collection(colname, function (err, collection) {
-            db.close();
             if (err) {
                 handleError("Enable to access collection", err, callback, db);
             }
             else {
                 collection.aggregate(filter, function(err, results){
+                    db.close();
                     if (err){
                         handleError("Enable to aggregate collection", err, callback, db);
                     }
@@ -163,7 +163,6 @@ exports.delete = function (colname, filter, callback) {
     getDB(callback, function (err, db) {
 
         db.collection(colname, function (err, collection) {
-            db.close();
             if (err) {
                 handleError("Enable to access collection", err, callback, db);
             }

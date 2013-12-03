@@ -1,4 +1,5 @@
 function optctrl($scope, $rootScope, $http, $location, cartservice){
+    $scope.topUrl = topUrl;
     $scope.cp = cartservice.getProdsInCart();
     $scope.c = cartservice.getCustomer();
     $scope.templateUrl = cartservice.getTemplateURL();

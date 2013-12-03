@@ -1,3 +1,4 @@
+var topUrl = 'http://localhost';
 var myapp = angular.module("cart", [], function($routeProvider, $locationProvider){
     //$locationProvider.html5Mode(true);//.hashPrefix('!');
     $routeProvider.when('/offer', {

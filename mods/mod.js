@@ -1,3 +1,4 @@
+var topUrl = 'http://localhost';
 var myapp = angular.module("cart", ['ui.sortable','ui.date','ngGrid'], function($routeProvider, $locationProvider){
     //$locationProvider.html5Mode(true);//.hashPrefix('!');
     $routeProvider.when('/offer', {

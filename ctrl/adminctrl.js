@@ -6,13 +6,14 @@ function adminctrl($scope, $rootScope, $http, $location, mkPopup, mkFilter, admi
     var changedFlds = {};
     var selected = '';
     var viewMode = "grid";
-    var serverUrl = 'http://localhost/templ/';
-    var rootUrl = 'http://localhost/';
+    var serverUrl = topUrl + '/templ/';
+    var rootUrl = topUrl;
     $scope.filterOpen = true;
     $scope.filters = [];
     $scope.cleanFilter = {};
     $scope.viewTitle = "";
     $scope.currentApp = "";
+    $scope.adminPage = serverUrl + "admin.html";
 
 
     start();
@@ -898,6 +899,8 @@ function adminctrl($scope, $rootScope, $http, $location, mkPopup, mkFilter, admi
     $scope.pickTenant = function(){
         console.log($('#admin_sel_tenenat').val());
         $scope.selTen = $scope.tenants[$('#admin_sel_tenenat').val()];
+        $scope.filters = [];
+        adminservice.resetCache();
         adminservice.listObj('apps', {tenant:$scope.selTen.name}, $http, function(t){
             $scope.selTen.appObjects = t;
             $scope.selTen.apps = [];
@@ -1319,7 +1322,7 @@ function adminctrl($scope, $rootScope, $http, $location, mkPopup, mkFilter, admi
           if (a.active == true){
               hideGrid();
               cartservice.setAppObj(a);
-              $scope.masterTmpl = rootUrl + a.template;
+              $scope.masterTmpl = rootUrl +'/'+ a.template;
 
               $scope.filterOpen = false;
               $scope.wrapper = serverUrl + 'flow.html';

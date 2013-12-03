@@ -207,3 +207,10 @@ h4.style4 {
     text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.09);
     -webkit-font-smoothing: antialiased;
 }
+.mk_profImg{
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    display: none;
+    z-index: 2;
+}

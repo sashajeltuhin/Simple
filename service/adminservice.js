@@ -1,13 +1,18 @@
 angular.module('cart').factory('adminservice', function($q) {
 
     var service = {};
-    var serverUrl = 'http://localhost';
+    var serverUrl = topUrl;
     var cache = [];
     var fieldCache = {};
     var selTen = {};
 
     service.setTenant = function(t){
         selTen = t;
+    }
+
+    service.resetCache = function(){
+        cache = [];
+        fieldCache = {};
     }
 
     service.loadMeta = function(obj, $http, callback){

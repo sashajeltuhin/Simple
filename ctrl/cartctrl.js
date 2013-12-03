@@ -2,6 +2,7 @@ function cartctrl($scope, $rootScope, $http, $location, cartservice){
     $scope.title = "Cart";
     $scope.login = "Sign In";
     $scope.head = "Bundles by Bridgevine";
+    $scope.topUrl = topUrl;
     $scope.isAdmin = cartservice.isIn();
     $scope.scriptlabel = "Get Help...";
     $scope.scriptopen = false;

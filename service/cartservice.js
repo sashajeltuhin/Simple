@@ -11,7 +11,7 @@ angular.module('cart').factory('cartservice', function($http) {
     var crumb = {};
     var cart = null;
     var appType = '';
-    var serverUrl = 'http://localhost';
+    var serverUrl = topUrl;
     var exCart = null;
     var extenstion = false;
     service.customer = {};
@@ -180,7 +180,7 @@ angular.module('cart').factory('cartservice', function($http) {
             service.endSession();
             service.teaserProd = null;
         }
-        service.socket = io.connect('http://localhost:3000');
+        service.socket = io.connect(serverUrl + ':3000');
         service.customer = {};
         service.customer = cust;
         service.customer.type = "prospect";
@@ -401,17 +401,16 @@ angular.module('cart').factory('cartservice', function($http) {
     }
 
     service.updateCustomer = function(callback){
-        console.log(service.customer);
+        service.customer.lastStep = curstep.name;
+        service.customer.app = appObj.appID;
+        service.customer.tenant = tenant;
+        service.customer.visitTime = new Date();
         if (admin == true){
             if (callback !== undefined){
                 callback(service.customer);
             }
             return;
         }
-        service.customer.lastStep = curstep.name;
-        service.customer.app = appObj.appID;
-        service.customer.tenant = tenant;
-        service.customer.visitTime = new Date();
         if (service.customer.zipguess=true && service.customer.zip !== undefined && service.customer.zip !== ""){
             $http.post(serverUrl + '/zip/list', {zip:service.customer.zip}).success(function(geos){
                 if (geos.length > 0){

@@ -1,5 +1,5 @@
 function teaserctrl($scope, $rootScope, $http, $location, cartservice){
-
+    $scope.topUrl = topUrl;
     cartservice.getSocket().on('prodviewed', function (data) {
         console.log('prodviewed called');
         console.log(data);

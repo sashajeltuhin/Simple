@@ -1,5 +1,5 @@
 function prodctrl($scope, $rootScope, $http, $location, cartservice){
-    console.log('prodctrl called:');
+    $scope.topUrl = topUrl;
     $scope.emailed = false;
     $scope.emailPrompt = "EMAIL ME THE RESULTS";
     $scope.showDetail = function(p){

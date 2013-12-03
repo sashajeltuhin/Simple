@@ -1,6 +1,7 @@
 var where;
 
 var c = {};
+c.leadprodprice = 0;
 
 var reguser = null;
 function getPerson(){
