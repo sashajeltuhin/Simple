@@ -7,7 +7,7 @@
         <div class="span1 btn btn-small" ng-click="deleteApp(a)">Delete</div>
     </div>
 <div ui-sortable="sortableOptions" ng-model="listData">
-    <div class="row-fluid"  ng-repeat="p in stepsByApp(a)  | orderBy:'app'" ng-class-odd="'odd_row'" ng-class-even="'even_row'">
+    <div class="row-fluid"  ng-repeat="p in appElements[a.appID]" ng-class-odd="'odd_row'" ng-class-even="'even_row'">
         <div class="row-fluid">
         <div class="span7 navbar navbar-inner"><div class="container">
             <ul class="nav">

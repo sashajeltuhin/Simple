@@ -81,3 +81,1135 @@
     width: 115px;
     height: 46px;
 }
+
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,fieldset,input,p,blockquote,th,td {
+    margin:0;
+    padding:0;
+    font-family:arial, helvetica, sans-serif;
+    color: rgb(0, 0, 0);
+}
+
+fieldset,img{
+    border:0;
+}
+address,caption,cite,code,dfn,em,th,var,b{
+    font-style:normal;font-weight:normal;
+}
+
+strong {font-style:normal;font-weight:bold;
+}
+
+ul {
+    list-style:none;
+}
+ol {
+    list-style: decimal;
+}
+caption,th {
+    text-align:left;
+}
+h1,h2,h3,h4,h5,h6{
+    font-size:100%;
+}
+q:before,q:after {
+    content:'';
+}
+
+body {
+    font: 12px/18px arial, helvetica, sans-serif;
+}
+a {
+    text-decoration: none;
+    color: inherit;
+    border: none;
+}
+a:hover
+{
+    text-decoration:underline;
+}
+a img {
+    text-decoration: none;
+    color: inherit;
+    border: none;
+}
+
+font {
+    color: inherit;
+    font-family: inherit;
+    font-size: inherit;
+}
+
+/* END BASE */
+
+.wf20_header_wrapper{
+    width:100%;
+    display:block;
+    xposition:relative;
+    margin:0;
+    padding:0;
+}
+
+.wf20_header_topzone_wrapper{
+    width:100%;
+    height:100px;
+    padding:0;
+    margin:0;
+    text-align:center;
+    display:block;
+    position:relative;
+}
+
+.wf20_header_topzone{
+    width:976px;
+    height:100px;
+    margin:0 auto;
+    padding:0;
+    text-align:left;
+    display:block;
+    position:relative;
+}
+
+.wf20_header_topzone_left{
+    float:left;
+    clear:none;
+    display:block;
+    xmargin:30px 0 0;
+    width:200px;
+    position:relative;
+    top:20px;
+}
+
+.wf20_header_topzone_middle{
+    float:left;
+    clear:none;
+    display:block;
+    margin:35px 0 0;
+    width:545px;
+    position:relative;
+    left:15px;
+}
+
+.wf20_header_topzone_right{
+    float:right;
+    clear:none;
+    display:block;
+    width:225px;
+    text-align:right;
+    position:relative;
+    top: 55px;
+    left: -33px
+}
+
+.wf20_header_topzone_right_cart_track{
+    font-size:11px;
+    font-family:  Helvetica, Arial,sans-serif;
+    color:#666666;
+    line-height:22px;
+}
+
+.wf20_header_topzone_right_cart_track_order_a, .wf20_header_topzone_right_cart_track_order_a:visited{
+    color:#666666;
+}
+
+.wf20_header_topzone_right_cart_track_order_a:hover{
+    text-decoration:underline;
+}
+
+.wf20_header_topzone_right_callnow{
+    font-size:11px;
+    font-weight:bold;
+    font-family:  Helvetica, Arial,sans-serif;
+    color:#666666;
+}
+
+.jyn30_remote_banner_topzone_right{
+    position:relative;
+    display:block;
+    float:right;
+    width:110px;
+    height:60px;
+    overflow:hidden;
+}
+
+.wf20_header_bottomzone_wrapper{
+    width:100%;
+    display:block;
+    position:relative;
+    height:50px;
+    margin:0;
+    padding:0;
+    text-align:center;
+    background:url('/images/partners/wirefly/wirefly_nav_hairline_bg.png') top left repeat-x;
+    z-index:40;
+}
+
+.wf20_header_bottomzone{
+    width:976px;
+    height:50px;
+    position:relative;
+    display:block;
+    margin:0 auto;
+    text-align:left;
+    z-index:40;
+}
+
+.wf20_header_nav{
+    position:relative;
+    width:976px;
+    height:50px;
+    display:block;
+    margin:0;
+    padding:0;
+    display:block;
+    background:url('/images/partners/wirefly/wirefly_nav_bg.jpg') top left no-repeat!important;
+    z-index:40;
+}
+
+.wf20_header_nav_toplevel_item{
+    display:block;
+    float:left;
+    padding:0;
+    text-align:center;
+    margin:0;
+    height:50px;
+    line-height:50px;
+    position:relative;
+    font-size:12px;
+    z-index:10;
+    background:url('/images/partners/wirefly/wirefly_nav_divider.png') right top no-repeat;
+    font-family:helvetica, arial, sans-serif;
+    visibility:hidden;
+
+}
+.wf20_header_nav_toplevel_item_a, .wf20_header_nav_toplevel_item_a:visited{
+    color:#666!important;
+    font-weight:bold;
+    margin:0;
+    padding:0;
+    position:relative;
+}
+
+.wf20_header_nav .hover{
+    background:url('/images/partners/wirefly/supp_nav_hover.png') right top no-repeat!important;
+}
+
+.wf20_header_nav .first-hover{
+    background:url('/images/partners/wirefly/dropdown_hover_first.png') left top no-repeat!important;
+}
+
+.wf20_header_nav .last-hover{
+    background:url('/images/partners/wirefly/dropdown_hover_last.png') right top no-repeat!important;
+}
+
+.wf20_header_nav .first-no-hover{
+    background:url('/images/partners/wirefly/dropdown_nohover_first.png') left top no-repeat!important;
+}
+
+.wf20_header_nav .last-no-hover{
+    background:url('/images/partners/wirefly/dropdown_nohover_last.png') right top no-repeat!important;
+}
+
+.wf20_header_nav .single-hover{
+    background:url('/images/partners/wirefly/dropdown_hover_single.jpg') left top no-repeat!important;
+}
+
+.wf20_header_nav .single-no-hover{
+    background:url('/images/partners/wirefly/nodropdown_hover_single.jpg') left top no-repeat!important;
+}
+
+.wf20_header_nav .nodrop-first-hover{
+    background:url('/images/partners/wirefly/nodropdown_hover_first.jpg') left top no-repeat!important;
+}
+
+.wf20_header_nav .nodrop-last-hover{
+    background:url('/images/partners/wirefly/nodropdown_hover_last.jpg') right top no-repeat!important;
+}
+
+
+.wf20_header_nav_toplevel_item_dividerline{
+    display:block;
+    width:1px;
+    height:50px;
+    background:#dddddd;
+    border-right:1px solid #f2f2f2;
+    position:absolute;
+    top:0;
+    right:0px;
+}
+
+.wf20_header_nav_dropdown_container_wrapper{
+    position:absolute;
+    top:50px;
+    left:0;
+    z-index:1;
+    display:none;
+    padding:0 0 5px 0;
+    margin:0;
+    background:#f2f2f2;
+    white-space:normal!important;
+}
+
+.wf20_header_nav_dropdown_container{
+    position:relative;
+    z-index:2;
+    display:block;
+    padding:0;
+    margin:0;
+    background:#f2f2f2;
+    border:1px solid #ccc;
+    border-top:none;
+    border-bottom:none;
+    text-align:left;
+    white-space:normal;
+    padding-bottom: 0px;
+    *padding-bottom: 10px;
+}
+
+.dropdown_flipped{
+    position:absolute;
+    left:auto;
+    right:0;
+}
+
+.wf20_header_nav_dropdown_subnav_column{
+    display:block;
+    float:left;
+    margin:0 5px 0 0;
+    padding:15px 0 15px 10px;
+    width:160px;
+    position:relative;
+    white-space:normal;
+}
+
+.wf20_header_nav_dropdown_subnav_bannercolumn{
+    display:block;
+    float:right;
+    margin:0 0 0 15px;
+    padding:0;
+    width:265px;
+    background:url('/images/partners/wirefly/dropdown_banner_border.png') top left repeat-y #f2f2f2;
+    position:relative;
+    padding-bottom: 0;
+    *padding-bottom: 10px;
+}
+
+.wf20_header_nav_dropdown_subnav_bannercolumn_content{
+    width:240px;
+    background:#f2f2f2;
+    margin:0;
+    margin-left:25px;
+    padding:0;
+    position:relative;
+    padding-bottom: 0px;
+    *padding-bottom: 10px;
+}
+
+.wf20_header_nav_dropdown_subnav_column_non_padded{
+    padding:0;
+}
+
+.wf20_header_nav_dropdown_subnav_menu{
+    border-bottom:1px solid #ccc;
+    padding:10px 0 10px;
+    position:relative;
+    width:160px;
+    overflow:hidden;
+    white-space:normal;
+}
+
+.wf20_header_nav_dropdown_subnav_menu:last-child{
+    border-bottom:none;
+}
+
+.wf20_header_nav_dropdown_subnav_menu_item{
+    line-height:1.2em;
+    margin-top:.35em;
+    margin-bottom:.35em;
+    padding:0;
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:12px;
+    white-space:normal;
+}
+
+.wf20_header_nav_dropdown_subnav_menu_item_title_span{
+    color:#003399;
+    font-weight:bold;
+}
+
+.wf20_header_nav_dropdown_subnav_menu_item_a{
+    color:#333333!important;
+}
+
+.wf20_header_nav_dropdown_subnav_menu_item_a:hover, .wf20_header_nav_dropdown_subnav_menu_item_title_a:hover{
+    text-decoration:underline;
+}
+
+.wf20_header_nav_dropdown_subnav_menu_item_title_a{
+    color:#003399;
+    font-weight:bold;
+}
+
+.wf20_header_nav_dropdown_subnav_menu_item_sup{
+    height: 0;
+    line-height: 1;
+    vertical-align: baseline;
+    _vertical-align: bottom;
+    position: relative;
+    bottom: 1ex;
+}
+
+.wf20_header_nav_dropdown_subnav_widecol_menu{
+    width:210px;
+    margin-left:15px;
+    text-align:center;
+}
+
+.wf20_header_nav_dropdown_subnav_widecol_menu_item_title{
+    color:#003399;
+    font-size:16px;
+    padding:10px 0 5px;
+    margin:0;
+    display:block;
+    line-height:normal;
+    width:210px;
+}
+
+.wf20_header_nav_dropdown_subnav_widecol_menu_item{
+    color:#003399;
+    font-size:12px;
+    margin:0;
+    padding:8px 0;
+    display:block;
+    border-bottom:1px solid #ccc;
+    height:auto;
+    line-height:1.2;
+    width:210px;
+}
+
+.wf20_header_nav_dropdown_subnav_widecol_menu_item_a, .wf20_header_nav_dropdown_subnav_widecol_menu_item_a:visited{
+    color:#003399;
+    font-size:12px;
+    line-height:normal;
+    width:210px;
+}
+
+.wf20_header_nav_dropdown_subnav_widecol_menu_item_a:hover{
+    text-decoration:underline;
+}
+
+.wf20_header_nav_dropdown_subnav_widecol_cta_a{
+    display:block;
+    text-align:center;
+    margin-bottom:15px;
+    margin-top:5px;
+}
+
+.wf20_header_endzone_wrapper{
+    width:100%;
+    display:block;
+    position:relative;
+    height:40px;
+    margin:0;
+    padding:0;
+    text-align:center;
+}
+
+.wf20_header_endzone{
+    width:976px;
+    height:40px;
+    position:relative;
+    display:inline-block;
+    margin:0 auto 0;
+    padding-bottom:26px;
+    text-align:left;
+    background:url('/images/partners/wirefly/stripe.jpg')  bottom no-repeat;
+}
+
+.wf20_header_endzone_left{
+    float:left;
+    width:480px;
+    margin:10px 0;
+    height:20px;
+    position:relative;
+}
+
+.wf20_header_endzone_right{
+    float:right;
+    width:480px;
+    text-align:right;
+    margin:10px 0 ;
+    height:20px;
+    position:relative;
+}
+
+.wf20_header_endzone_right_viewcart_p{
+    width:160px;
+    display:block;
+    float:left;
+    line-height:25px;
+    position: relative;
+    top: -130px;
+    left: 293px;
+}
+
+.wf20_header_endzone_right_shoppingcart{
+    line-height:25px;
+    display:inline-block;
+    vertical-align:middle;
+}
+
+.wf20_header_endzone_right_viewcart_a, .wf20_header_endzone_right_viewcart_a:visited{
+    font-size:11px;
+    font-family:  Helvetica, Arial,sans-serif;
+    color:#666666!important;
+    line-height:25px;
+}
+
+.wf20_header_endzone_right_viewcart_a:hover{
+    text-decoration:underline;
+    color:#666!important;
+}
+
+.wf20_search_container{
+    xposition:relative;
+    display:block;
+    float:right;
+    width:300px;
+    height:25px;
+}
+
+.wf20_search_background{
+    position:absolute;
+    width:300px;
+    height:25px;
+    background:url(/images/partners/wirefly/search_box_bg.png) top left no-repeat;
+    right:0;
+}
+
+.wf20_search_form{
+    display:block;
+    position:absolute;
+    right:0;
+    top:0;
+}
+
+.wf20_header_search_box_wrapper{
+    width:250px;
+    height:25px;
+    background:url(/images/partners/wirefly/search_box_bg.png) top left no-repeat;
+    display:block;
+    float:right;
+    position:relative;
+    overflow:hidden;
+}
+
+.wf20_header_search_box, .wf20_header_search_box:focus{
+    margin:0;
+    width:227px;
+    height:25px;
+    line-height:25px;
+    border:0;
+    outline:none;
+    background:none;
+    color:#777777;
+
+}
+
+.wf20_header_search_submit{
+    padding:0;
+    margin:0 0 0 5px;
+    width:61px;
+    height:25px;
+    border:0;
+    display:block;
+    float:right;
+    position:relative;
+}
+
+.lego20_flash_rotation_engine_v4
+{
+    z-index:0!important;
+}
+
+.ui-autocomplete
+{
+    z-index: 4 !important;
+}
+
+
+/* Wirefly Footer */
+/* lego20_flexi_wirefly_footer */
+/* This container is 'anchored' to the left of the page.
+If the window is smaller than the width of the page, only
+the right side will be cropped - the left edge will always
+remain visible */
+
+
+.lego20_flexi_wirefly_footer{
+    position: relative;
+    margin: 0;
+    padding: 0;
+    clear: both;
+    text-align: left;
+    width: 100%;
+    z-index: 34;
+}
+
+.lego20_flexi_wirefly_footer_navi {
+    position: relative;
+    margin: 0;
+    padding: 0;
+    clear: both;
+    text-align: center;
+    width: 100%;
+    background: url(/core_elements/images/wirefly/tabs_r1_c1.jpg) repeat-x;
+    height: 40px;
+    overflow: hidden;
+}
+
+.lego20_flexi_wirefly_footer_navi:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+}
+
+.lego20_flexi_wirefly_footer_navi_inner {
+    position: relative;
+    margin: 0 auto 0 auto;
+}
+
+.lego20_flexi_wirefly_footer_navi_inner_list_ul {
+    position: relative;
+    height: 40px;
+    padding: 0;
+    margin: 12px 0 12px 0;
+    height: 16px;
+    overflow: hidden;
+}
+
+.lego20_flexi_wirefly_footer_navi_inner_list_li, .lego20_flexi_wirefly_footer_navi_inner_list_li_ichi {
+    position: relative;
+    padding: 0 4px 0 4px;
+    margin: 0;
+    display: inline;
+    color: white;
+    font-size: 12px;
+    line-height: 16px;
+    font-weight: bold;
+    height: 16px;
+}
+
+.lego20_flexi_wirefly_footer_navi_inner_list_li {
+    border-left: 1px solid white;
+}
+
+.lego20_flexi_wirefly_footer_navi_inner_item {
+    color: #666;
+    text-decoration: none;
+}
+
+.lego20_flexi_wirefly_footer_navi_inner_item:hover {
+    text-decoration: underline;
+}
+
+/*force footer to 976 width*/
+.lego20_flexi_wirefly_footer_ext_colums_wrapper {
+
+    position: relative;
+    width:976px;
+    margin: 0 auto 0 auto;
+    padding-left: 45px;
+    overflow: hidden;
+}
+
+
+
+/* end transitional footer*/
+
+/* lego20_flexi_wirefly_grey_footer */
+
+
+
+.lego20_flexi_wirefly_grey_footer{
+    position: relative;
+    margin: 0;
+    padding: 0;
+    clear: both;
+    text-align: center;
+    width:100%;
+    /*z-index: 34;*/
+    z-index: 0;
+    text-align:center;
+    margin-top:50px;
+}
+
+.lego20_flexi_wirefly_grey_footer_topstripe {
+    position: relative;
+    margin: 0;
+    padding: 0;
+    clear: both;
+    text-align: center;
+    width: 100%;
+    background:  rgb(231, 231, 231);
+    border-top: 1px solid rgb(220,220,220);
+    border-bottom: 1px solid rgb(220,220,220);
+    overflow: hidden;
+}
+
+.lego20_flexi_wirefly_grey_footer_topstripe_inner {
+    position: relative;
+    width:976px;
+    margin: 0 auto 0 auto;
+    overflow: hidden;
+}
+
+.lego20_flexi_wirefly_grey_footer_topstripe_inner:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+}
+
+.lego20_flexi_wirefly_grey_footer_topstripe_left {
+    position: relative;
+    margin: 0;
+    padding: 0;
+    width: 446px;
+    border-right: 1px solid rgb(220,220,220);
+    float: left;
+    text-align: left;
+}
+
+.lego20_flexi_wirefly_grey_footer_topstripe_right {
+    position: relative;
+    margin: 0;
+    padding: 0;
+    width: 520px;
+    float: right;
+    text-align: left;
+}
+
+
+.lego20_flexi_wirefly_grey_footer_section_title {
+    position: relative;
+    font-size: 14px;
+    font-weight: bold;
+    color: rgb(60,60,60);
+    line-height: 18px;
+    text-align: left;
+    margin: 14px 12px 8px 12px;
+    letter-spacing:0;
+}
+
+.lego20_flexi_wirefly_grey_footer_socials {
+    position: relative;
+    float: left;
+    margin: 4px 0 10px 12px;
+
+}
+
+.lego20_flexi_wirefly_grey_footer_socials_li {
+    position: relative;
+    float: left;
+    margin-right: 2px;
+    margin-top: 2px;
+    margin-bottom: 2px;
+    margin-left: 2px;
+}
+
+.lego20_flexi_wirefly_grey_footer .addthis_button {
+    position: relative;
+    float: left;
+    margin-left: 8px;
+    margin-top: 14px;
+}
+
+.lego20_flexi_wirefly_grey_footer_plusone {
+    position: relative;
+    float: left;
+    margin-top: 10px;
+    margin-left: 8px;
+}
+
+.lego20_flexi_wirefly_grey_footer_colums_wrapper {
+    background:  rgb(246, 246, 246);
+    position: relative;
+    margin: 0;
+    overflow: hidden;
+    border-bottom: 1px solid rgb(220,220,220);
+    text-align: center;
+}
+
+.lego20_flexi_wirefly_grey_footer_colums_wrapper_inner {
+    position: relative;
+    width:976px;
+    margin: 0 auto 20px auto;
+    padding-left: 15px;
+    overflow: hidden;
+    text-align: left;
+}
+
+
+.lego20_flexi_wirefly_grey_footer_linkcolumn {
+    position: relative;
+    float: left;
+    width: 148px;
+    overflow: hidden;
+    display: block;
+    margin: 4px 0 4px 12px;
+}
+
+.lego20_flexi_wirefly_grey_footer_linkcolumn_header {
+    position: relative;
+    font-size: 12px;
+    line-height: 15px;
+    color: rgb(27, 64, 142);
+    margin: 9px 5px 3px 0;
+}
+
+.lego20_flexi_wirefly_grey_footer_linkcolumn_rule {
+    background:rgb(216,216,216);
+    border: none;
+    margin-top: 9px;
+    margin-right: 20px;
+    position: relative;
+    height: 1px;
+}
+
+.lego20_flexi_wirefly_grey_footer_linkcolumn_linkset {
+    position: relative;
+    display: block;
+    font-size: 12px;
+    line-height: 15px;
+    margin: 0 5px 0 0;
+}
+
+.lego20_flexi_wirefly_grey_footer_linkcolumn_link {
+    position: relative;
+    display: block;
+    font-size: 11px;
+    line-height: 15px;
+    margin-bottom: 1px;
+    font-weight: normal;
+}
+
+.lego20_flexi_wirefly_grey_footer_linkcolumn_link_a, .lego20_flexi_wirefly_grey_footer_linkcolumn_link_a:visited {
+    color: rgb(75, 75, 75)!important;
+    font-weight: normal;
+    text-decoration: none !important;
+}
+
+.lego20_flexi_wirefly_grey_footer_linkcolumn_link_a:hover {
+    color:#224F82!important;
+    text-decoration: underline;
+}
+
+
+.lego20_flexi_wirefly_grey_footer_linkcolumn:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+}
+
+.lego20_flexi_wirefly_grey_footer_navi {
+    position: relative;
+    width:976px;
+    margin: 15px auto 35px auto;
+    padding: 0;
+    overflow: hidden;
+    text-align: center;
+}
+
+.lego20_flexi_wirefly_grey_footer_navi:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+}
+
+.lego20_flexi_wirefly_grey_footer_navi_inner {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 800px;
+    text-align: right;
+}
+
+
+.lego20_flexi_wirefly_grey_footer_navi_inner_list_ul {
+    position: relative;
+    height: 20px;
+    padding: 0;
+    margin: 0;
+    line-height: 16px;
+    overflow: hidden;
+}
+
+.lego20_flexi_wirefly_grey_footer_navi_inner_list_li, .lego20_flexi_wirefly_grey_footer_navi_inner_list_li_ichi {
+    position: relative;
+    padding: 0 4px 0 4px;
+    margin: 0;
+    display: inline;
+    color: rgb(75,75,75);
+    font-size: 13px;
+    line-height: 15px;
+    font-weight: bold;
+    height: 16px;
+
+}
+
+.lego20_flexi_wirefly_grey_footer_navi_inner_list_li {
+    border-left: 1px solid rgb(75,75,75);
+}
+
+.lego20_flexi_wirefly_grey_footer_navi_inner_item {
+    color: rgb(85,85,85)!important;
+    text-decoration: none;
+}
+
+.lego20_flexi_wirefly_grey_footer_navi_inner_item:hover {
+    text-decoration: underline;
+}
+
+.lego20_flexi_wirefly_grey_footer_navi_inner_copyright {
+    position: relative;
+    text-align: right;
+    font-size: 12px;
+    font-weight: normal;
+    color: rgb(85,85,85);
+}
+
+.lego20_flexi_wirefly_grey_footer_navi_logo {
+    position: relative;
+    margin-left: 10px;
+    margin-bottom: 10px;
+    float: left;
+}
+
+
+.lego20_flexi_wirefly_grey_footer_pairing {
+    position: relative;
+    margin: 0;
+    padding: 0;
+    display: block;
+    width: 100%;
+    overflow: hidden;
+}
+
+.lego20_flexi_wirefly_grey_footer_pairing:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+}
+
+.lego20_flexi_wirefly_grey_footer_pairing_port {
+    position: relative;
+    margin: 0 0 0 3%;
+    padding: 0;
+    display: block;
+    width: 46%;
+    float: left;
+    overflow: hidden;
+}
+
+.lego20_flexi_wirefly_grey_footer_pairing_starboard {
+    position: relative;
+    margin: 0;
+    padding: 0;
+    display: block;
+    width: 48%;
+    float: left;
+    overflow: hidden;
+    margin-top:13px;
+}
+
+
+.lego20_flexi_wirefly_grey_footer_subscription_p {
+    position: relative;
+    font-size: 10px;
+    line-height: 13px;
+    font-weight: normal;
+    color: black;
+    margin: 4px 0 20px 0;
+}
+
+.lego20_flexi_wirefly_grey_footer_subscription_h4 {
+    position: relative;
+    font-size: 14px;
+    font-weight: bold;
+    line-height: 17px;
+    color: rgb(27, 64, 142);
+    margin: 25px 1px 4px 2px;
+    letter-spacing:0;
+
+}
+
+.lego20_flexi_wirefly_grey_footer_subscription_box {
+    position: relative;
+    display: block;
+    height: 70px;
+}
+
+.lego20_flexi_wirefly_grey_footer_subscription_box .edialog_optin_form_feedback_message {
+    display: none;
+}
+
+.lego20_flexi_wirefly_grey_footer_subscription_box_inputs {
+    float: left;
+    display: inline;
+}
+
+.lego20_flexi_wirefly_grey_footer_subscription_box_inputbk {
+    position: absolute;
+    left: 0;
+    bottom: 12px;
+    margin: 0;
+    padding: 0;
+    width: 195px;
+    height: 26px;
+    background: url(/core_elements/images/wirefly/lego20_flexi_wirefly_grey_footer/lego20_flexi-grey-footer-email-signup.png) top left no-repeat;
+    z-index: 42;
+}
+
+.lego20_flexi_wirefly_grey_footer_subscription_box #edialog_optin_input_formStyle {
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    border: none;
+    background: white;
+    color: black;
+    width: 189px;
+    height: 22px;
+    bottom: 15px;
+    left: 3px;
+    z-index: 44;
+}
+
+.lego20_flexi_wirefly_grey_footer_subscription_box #edialog_optin_button2 {
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    left: 199px;
+    bottom: 16px;
+}
+
+.lego20_flexi_wirefly_grey_footer_subscription_box .edialog_optin_formStyle {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+
+.lego20_flexi_wirefly_grey_footer_subscription_box .edialog_optin_transmitter {
+    position: relative;
+    display: none;
+}
+
+.lego20_flexi_wirefly_grey_footer_subscription_box #edialog_optin_successMsg {
+    display: none;
+    background: rgb(114, 195, 61);
+    width: 90%;
+    padding: 5%;
+    color: #bdbdbd;
+    font-size: 12px;
+    position: absolute;
+    top: 6px;
+    left: 0;
+}
+#edialog_optin_errMsg
+{
+    margin-left: 0px !important;
+    margin-top: 0px !important;
+}
+
+.lego20_flexi_wirefly_grey_footer_subscription_box #edialog_optin_errMsg{
+    display: none;
+    font-size: 10px;
+    line-height: 13px;
+    font-weight: bold;
+    color: #DB3535;
+    width: 90%;
+    padding: 0;
+    position: absolute;
+    top: 6px;
+    left: 0;
+}
+
+.lego20_flexi_wirefly_grey_footer_subscription_box .edialog_optin_successMsg_bk_strong {
+    font-weight: bold;
+    color: #eaeceb;
+}
+
+.lego20_flexi_wirefly_grey_footer_subscription_box #edialog_optin_successMsg .edialog_optin_successMsg_bk p {
+    color: #eaeceb;
+}
+
+.lego20_flexi_wirefly_grey_footer_notes {
+    color: rgb(100,100,100);
+    font-size: 10px;
+    line-height: 13px;
+    margin: 10px;
+    text-align: center;
+    *margin-top:-10px;
+    *padding-top:10px;
+    *padding-bottom:20px;
+}
+
+#certifications_row2 td {
+    border: none;
+}
+
+#ProgressBarCheckout
+{
+    margin-top:40px;
+}
+
+#footer img
+{
+    margin-right:0px;
+    margin-left:0px;
+    margin-bottom:0px;
+    margin-top:0px;
+}
+
+#footer p
+{
+    font-size: 10px;
+}
+
+
+/*PRN 71307*/
+.custHelp {
+    position: absolute;
+    top: -45px;
+    left: 82px;
+}
+
+#InstServChat a, #InstServChat a:visited, #InstServChat a:hover {
+    font-weight: normal;
+}
+
+a.TopNavLink, .TopNavLink a:visited, a.TopNavLink:hover  {
+    background-color: transparent;
+    font-family: Arial,Helvetica,sans-serif;
+    font-size: 11.5px;
+    text-decoration: underline;
+    color: #224F82!important;
+}
+
+#InstServChat
+{
+    width: 150px;
+}
+
+#InstServChat span {
+    font-weight: normal;
+}
+

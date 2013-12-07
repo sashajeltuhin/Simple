@@ -1,0 +1,2438 @@
+/**********************************************************************************
+Section:  CSS Reset
+***********************************************************************************/
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,fieldset,input,p,blockquote,th,td { margin:0; padding:0; font-family:arial, helvetica, sans-serif; color: rgb(0, 0, 0); }
+table { border-collapse:collapse; border-spacing:0; }
+fieldset,img { border:0; }
+address,caption,cite,code,dfn,em,strong,th,var,b { font-style:normal;font-weight:normal; }
+ul { list-style:none; }
+ol { list-style: decimal; }
+caption,th { text-align:left; }
+h1,h2,h3,h4,h5,h6 { font-size:100%; }
+q:before,q:after { content:''; }
+body, document { font: 12px/18px arial, helvetica, sans-serif; height: 100%; _height: 100%; }
+body { min-height: 100%; }
+a { text-decoration: none; color: inherit; border: none; }
+a img { text-decoration: none; color: inherit; border: none; }
+font { color: inherit; font-family: inherit; font-size: inherit; }
+
+
+/**********************************************************************************
+Section:  Main Template Areas
+***********************************************************************************/
+#wfly_ecomm_primary_container {
+    position: relative;
+    margin: 0 auto 0 auto;
+    width: 976px;
+    padding: 0;
+    height: auto;
+    display: block;
+    z-index: 3;
+    text-align: left;
+    top:10px;
+}
+
+/* wfly_cs use CustomerSupport.Master */
+#wfly_cs
+{
+    margin: 20px auto;
+    width: 976px;
+    padding: 0;
+    height: auto;
+    display: block;
+    text-align: left;
+}
+#wfly_cs_left
+{
+    float: left;
+    width: 181px;
+}
+#wfly_cs_right
+{
+    float: right;
+    position: relative;
+    width: 780px;
+    margin-left: 13px
+}
+
+/**********************************************************************************
+Section:  Common Footers Areas
+***********************************************************************************/
+.certifications {
+    padding: 25px;
+}
+
+.accreditation_logos,
+.accreditation_logos img {
+    margin: 0px 9px 3px 9px;
+    vertical-align: middle;
+    border: none;
+}
+
+.disclaimer {
+    clear:both;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 8pt;
+    color: #666666!important;
+    font-weight: normal;
+    text-decoration: none;
+    padding: 10px 10px 10px 10px;
+    position:relative;
+    margin-left:auto;
+    margin-right:auto;
+    width: 976px;
+    line-height: 12px;
+
+}
+.disclaimer a {
+    text-decoration: underline;
+    color: #0000cc;
+}
+
+.copyright p, .disclaimer p
+{
+    font-family: Arial, Helvetica, sans-serif;
+    padding: 10px 10px 10px 10px;
+    font-size: 8pt;
+    color: #666666;
+    font-weight: normal;
+    text-decoration: none;
+}
+
+/* prn 45441 */
+.disclaimer p
+{
+    font-size:7pt;
+    clear:both;
+}
+
+.copyright
+{
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 8pt;
+    color: #666666!important;
+    padding: 10px;
+    margin:0 auto;
+    line-height: 12px;
+}
+
+.footerlinks a
+{
+    text-decoration: underline;
+    color: #0000cc;
+    font-size: 10px;
+}
+/**********************************************************************************
+Section:  Modal Windows All
+***********************************************************************************/
+.popupMask {
+    position:fixed;
+    z-index: 200;
+    top: 0px; left: 0px;
+    width: 100%; height: 100%;
+    _position: absolute; /* IE6 Hack */
+    _min-height: 100%!important; /* IE6 Hack */
+    opacity: .75;
+    filter: alpha(opacity=75);
+    /* this hack is so it works in IE
+     * I find setting the color in the css gives me more flexibility
+     * than the PNG solution.
+     */
+    background-color:transparent !important;
+    background-color: #333;
+    /* this hack is for opera support
+     * you can uncomment the background-image if you don't care about opera.
+     * this gives you the flexibility to use any bg color that you want, instead of the png
+     */
+    background-image/**/: url("/images/sohome/bg_mask.png") !important; /* For browsers Moz, Opera, etc. */
+    background-image: none;
+    background-repeat: repeat;
+    display:none;
+}
+
+@media print {
+    .popupMask {
+        opacity: 1;
+        filter: alpha(opacity=100);
+        background-color: #FFFFFF;
+    }
+}
+
+.popupContainer {
+    position: absolute;
+    z-index: 201;
+    padding: 0;
+    left: 50%; top: 65px;
+    width: 10px;
+}
+
+.popupInner {
+    background-color: #fff;
+    border: 2px solid #000;
+    left: -493px;
+    margin: auto;
+    position: absolute;
+    text-align: left;
+    width: 986px;
+}
+
+.popupFrame {
+    height: 100%;
+    margin: 0;
+    position: relative;
+    width: 100%;
+    z-index: 202;
+}
+
+.popupTitleBar {
+    background: url("/images/modal/top_bar_bg.jpg") repeat-x;
+    background-color:#E9E9E9;
+    border-bottom:2px solid #E6E6E6;
+    font-weight: bold;
+    height:18px;
+    overflow:hidden;
+    padding: 10px 5px 5px 5px;
+    z-index: 203;
+    _width: 100%; /* IE 6 Hacks */
+}
+
+.popupTitle {
+    float:left;
+    text-align:left;
+    font-size: 12px;
+    width: auto;
+    height: 18px;
+}
+
+.popupControls { float: right; }
+.popupControls div { float: left; font-size: 10px; }
+.popupControls img { vertical-align: middle; cursor: pointer; }
+.popupControls a { color: #2B70B0; }
+
+.modal_print
+{
+    background: url("/images/sohome/printer.gif") no-repeat scroll left center transparent;
+    padding: 0 0 1px 20px;
+}
+
+.modal_close
+{
+    background: url("/images/soHome/Circle-x.gif") no-repeat scroll right center transparent;
+    padding: 0 20px 1px 0;
+}
+
+.specialoffer70_880_info_p{
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:12px;
+    padding: 0 ;
+}
+
+.specialoffer70_880_info_copyright{
+    text-align: center;
+}
+
+.changemodalclose {
+    background: url("/images/soHome/Circle-x.gif") no-repeat scroll right center transparent;
+    padding-bottom: 1px;
+    padding-right: 20px;
+}
+
+/**********************************************************************************
+Section:  Modals Miscellaneous
+***********************************************************************************/
+#divPhoneDetailsModal .popupInner,
+#divImageGalleryModal .popupInner { width: 986px!important; left: -493px; }
+#divPlanDetailsModal .popupInner { width: 986px; left: -493px; }
+
+#divProcessingModal { top: 200px!important; }
+#divProcessingModal .popupInner { width: 450px;	left: -225px; }
+
+#divAddALineModal { top: 200px; }
+#divAddALineModal .popupInner { width: 692px; left: -346px; }
+
+.specialOffer70_divaddalinemodal { padding: 10px 0; margin: 0 auto; text-align: center; }
+.addalinemodal_toplevel_container { text-align: left; width: 460px; margin: 0 auto; padding: 10px 5px 0; }
+.specialOffer70_divaddalinemodal label { padding-left: 4px; }
+.specialOffer70_divaddalinemodal_planquestion { padding:10px 0px; }
+
+.addalinemodal_secondlevel_container { margin: 10px 20px; }
+.addalinemodal_textlarge { font-weight:bold; font-size: 18px; }
+.addalinemodal_textnormal { font-weight:bold; font-size: 12px; }
+
+.addalinemodal_buttonrow { margin: 20px; }
+
+.specialOffer70_divaddalinemodal_planquestion2 { margin-bottom: 10px; overflow:visible; white-space:nowrap; }
+.specialoffer70_divaddalinemodal_planquestion2_learn_more { color: #2B70B0; cursor: pointer; padding-right: 10px !important; text-decoration: underline;}
+.addaline_modal_continue_button_special_offer { background: url(/images/soHome/Continue.png) no-repeat; height: 39px; width: 147px; border: 0px; margin: 0px 0px 0px 0px; opacity:.4; filter:alpha(opacity=40); cursor: pointer; }
+.specialOffer70_divaddalinemodal_planquestion_device_type_block span { line-height: 18px; width: 170px; display: inline-block; }
+.specialOffer70_divaddalinemodal_planquestion_device_type_block_long { width: 195px !important;}
+.specialOffer70_divaddalinemodal_planquestion_device_type_block input { line-height: 18px }
+.specialOffer70_divaddalinemodal_planquestion_device_type_block label { line-height: 18px; }
+
+.addalinemodal_existing_suboptions_container_note
+{ font-weight:normal; font-size: 12px; padding-left: 18px; overflow:visible; white-space:nowrap; }
+
+#addalinemodal_conversion_type_radio_container .wfly_rounded_body
+{
+    padding: 3px 10px 1px;
+}
+
+/**********************************************************************************
+Section: Upgrade Modal
+***********************************************************************************/
+#divUpgradeModal { top: 200px; }
+#divUpgradeModal .popupInner { width: 692px; left: -346px; }
+
+.specialOffer70_divupgrademodal { padding: 10px 0; margin: 0 auto; text-align: center; }
+.upgrademodal_toplevel_container { text-align: left; width: 460px; margin: 0 auto; padding: 10px 5px 0; }
+.upgrademodal_toplevel_disclaimer_container { text-align: left; width: 460px; margin: 0 auto; }
+.specialOffer70_divupgrademodal label { padding-left: 4px; }
+.specialOffer70_divupgrademodal_planquestion { padding:10px 0px; }
+
+.upgrademodal_secondlevel_container { margin: 10px 20px; }
+.upgrademodal_secondlevel_disclaimer_container { margin: 10px 20px; }
+.upgrademodal_textlarge { font-weight:bold; font-size: 14px; }
+.upgrademodal_textnormal { font-weight:normal; font-size: 12px; }
+.upgrademodal_textnormalbold { font-weight:bold; font-size: 12px; }
+
+.upgrademodal_buttonrow { margin: 10px; }
+
+.specialOffer70_divupgrademodal_planquestion2 { margin-bottom: 10px; overflow:visible; white-space:nowrap; }
+.specialoffer70_divupgrademodal_planquestion2_learn_more {color:Blue; cursor: pointer; padding-right: 10px !important; text-decoration: underline;}
+.upgrade_modal_continue_button_special_offer { background: url(/images/soHome/Continue.png) no-repeat; height: 39px; width: 147px; border: 0px; margin: 0px 0px 0px 0px; opacity:.4; filter:alpha(opacity=40); cursor: pointer; }
+.specialOffer70_divupgrademodal_planquestion_device_type_block span { line-height: 18px; width: 170px; display: inline-block; }
+.specialOffer70_divupgrademodal_planquestion_device_type_block_long { width: 195px !important;}
+.specialOffer70_divupgrademodal_planquestion_device_type_block input { line-height: 18px }
+.specialOffer70_divupgrademodal_planquestion_device_type_block label { line-height: 18px; }
+
+.upgrademodal_existing_suboptions_container_note
+{ font-weight:normal; font-size: 12px; padding-left: 18px; overflow:visible; white-space:nowrap; }
+
+#upgrademodal_conversion_type_radio_container .wfly_rounded_body
+{
+    padding: 3px 10px 1px;
+}
+
+.upgrademodal_wordwrap {
+    white-space: pre-wrap;      /* CSS3 */
+    white-space: -moz-pre-wrap; /* Firefox */
+    white-space: -pre-wrap;     /* Opera <7 */
+    white-space: -o-pre-wrap;   /* Opera 7 */
+    word-wrap: break-word;      /* IE */
+}
+
+.upgrademodal_column1-wrap{
+    float: left;
+    width: 25px;
+}
+.upgrademodal_column1{
+    margin-right: 10px;
+}
+.upgrademodal_column2{
+    float: left;
+    width: 400px;
+    margin-left: -10px;
+}
+.upgrademodal_clear{
+    clear: both;
+}
+
+/**********************************************************************************
+Section:  Upgrade Eligibility
+***********************************************************************************/
+#divUpgradeEligibility .popupInner { width: 760px; left: -380px; }
+
+#divUpgradeEligibilityInner { padding: 2px; }
+#divUpgradeEligibilityInner iframe { width: 760px; margin: 0 auto; height: 720px; display: block; border: 0;}
+
+span.ue_launch_link_alternate a.wfly_ue_launchue, span.ue_launch_link a.wfly_ue_launchue, a.wfly_ue_launchue
+{
+    padding: 3px 0 0 0;
+    font-weight: bold;
+    font-size: 11px;
+    text-decoration: underline;
+    color: #2B70B0;
+    display: block;
+    clear:both;
+}
+
+#divPhoneBlock2 .wfly_ue_launchue,
+#divPhoneBlock3 .wfly_ue_launchue,
+#divPhoneBlock4 .wfly_ue_launchue
+{
+    display: block;
+    padding-left: 0;
+}
+
+/**********************************************************************************
+Section:  Plan/Phone Details Modal
+***********************************************************************************/
+
+.special_offer_70_primary_container
+{
+    width: 100%;
+    margin:0;
+    padding:0;
+}
+
+.special_offer_70_tab_container_right  {
+    float:left;
+    overflow:hidden;
+    padding-left:20px;
+    position:relative;
+    width:656px;
+}
+
+.special_offer_70_heading {
+    display:block;
+    margin: 5px 0 10px 0;
+    height: 70px;
+    position: relative;
+}
+.special_offer_70_carrier_logo {
+    float:left;
+    padding-left:10px;
+    width:200px;
+}
+.special_offer_70_heading_phone_title {
+    font-size:16px;
+    font-weight:bold;
+    line-height: 30px;
+    padding-top: 15px;
+    overflow:hidden;
+    text-align:center;
+}
+.special_offer_70_heading_select {
+    width:200px;
+    float: right;
+    padding: 10px 10px 0 0;
+}
+
+.special_offer_70_select_plan, .special_offer_70_select_phone, .special_offer_70_select_device  {
+    cursor:pointer;
+    display:block;
+    padding:0;
+    position:relative;}
+
+/*prn 59434 - default image for select phone */
+.special_offer_70_select_phone {
+    background: url("/images/soHome/select_phone.png") no-repeat scroll 0 0 transparent;
+    height: 48px;
+    width: 154px;
+}
+
+/*prn 59434 - default image for select phone */
+.special_offer_70_select_phone {
+    background: url("/images/soHome/select_phone.png") no-repeat scroll 0 0 transparent;
+    height: 48px;
+    width: 154px;
+}
+
+.special_offer_70_select_plan {
+    background: url("/images/soHome/select_plan.png") no-repeat scroll 0 0 transparent;
+    height: 48px;
+    width: 154px;
+}
+
+.special_offer_70_select_device {
+    background: url("/images/soHome/select_device.png") no-repeat scroll 0 0 transparent;
+    height: 48px;
+    width: 154px;
+}
+
+.special_offer_70_heading_select a { float: right; }
+
+
+
+.special_offer_70_tab_container_right{
+    float: right;
+    width:656px;
+    _width:650px;
+    padding-left:20px;
+    overflow:hidden;
+    position:relative;
+}
+
+.special_offer_70_heading {
+    display:block;
+    margin: 5px 0 10px 0;
+    height: 70px;
+    position: relative;
+}
+.special_offer_70_carrier_logo {
+    float:left;
+    padding-left:10px;
+    width:200px;
+}
+.special_offer_70_heading_phone_title {
+    font-size:16px;
+    font-weight:bold;
+    line-height: 30px;
+    padding-top: 15px;
+    overflow:hidden;
+    text-align:center;
+}
+.special_offer_70_heading_select {
+    width:200px;
+    float: right;
+    padding: 10px 10px 0 0;
+}
+.special_offer_70_heading_select a { float: right; }
+
+
+.special_offer_70_cta{
+    width:150px;
+    height:60px;
+    float:left;
+    margin: 10px 0 0 30px;
+}
+.apples{
+    width:200px;
+    height:200px;
+    display:none;
+}
+
+.special_offer_70_demo_header{
+    font-weight:bold;
+    padding-bottom:20px;
+}
+
+.special_offer_70_demo_container{
+    width:490px;
+    list-style:none;
+    margin: 10px 0 0 80px ;
+    text-align:left;
+}
+.special_offer_70_demo_container p{
+    font-size:14px;
+    padding:10px;
+
+}
+.special_offer_70_demo_container_a{
+    color:#0066FF;
+    text-decoration:underline;
+
+}
+.special_offer_70_demo_button{
+    padding-right: 10px;
+
+}
+
+.ui-tabs-nav, .ui-tabs-panel {
+    font-family: "Trebuchet MS", Trebuchet, Verdana, Helvetica, Arial, sans-serif;
+    font-size: 12px;
+}
+.ui-tabs-nav {
+    list-style: none;
+    margin: 0;
+    padding: 0 0 20px 0;
+
+    background: url("/images/sohome/tabs_bg_top1.jpg") repeat-x bottom;
+}
+.ui-tabs-nav:after { /* clearing without presentational markup, IE gets extra treatment */
+    display: block;
+    clear: both;
+    content: " ";
+}
+.ui-tabs-nav li {
+    float: left;
+    margin: 0 0 0 0px;
+    min-width: 84px; /* be nice to Opera */
+}
+.ui-tabs-nav a, .ui-tabs-nav a span {
+    display: block;
+    padding: 0 10px;
+    background: url(/images/sohome/tab2.png) no-repeat;
+}
+.ui-tabs-nav a {
+    margin: 1px 0 0; /* position: relative makes opacity fail for disabled tab in IE */
+    padding-left: 0;
+    color:#000000;
+    font-weight: bold;
+    line-height: 1.2;
+    text-align: center;
+    text-decoration: none;
+    white-space: nowrap; /* required in IE 6 */
+    outline: 0; /* prevent dotted border in Firefox */
+}
+.ui-tabs-nav .ui-tabs-selected
+{
+    xborder: solid 1px #000;
+    border-bottom-width: 0px;
+}
+
+.ui-tabs-nav .ui-tabs-selected a {
+    position: relative;
+    top: 1px;
+    z-index: 2;
+    margin-top: 0;
+    color: #000;
+}
+.ui-tabs-nav a span {
+    width: 126px; /* IE 6 treats width as min-width */
+    min-width: 126px;
+    height: 25px; /* IE 6 treats height as min-height */
+    min-height: 25px;
+    padding-top: 11px;
+    padding-right: 0;
+}
+*>.ui-tabs-nav a span { /* hide from IE 6 */
+    width: auto;
+    height: auto;
+}
+.ui-tabs-nav .ui-tabs-selected a span {
+    padding-bottom: 1px;
+}
+.ui-tabs-nav .ui-tabs-selected a, .ui-tabs-nav a:hover, .ui-tabs-nav a:focus, .ui-tabs-nav a:active {
+    background-position: 100% -100px;
+}
+.ui-tabs-nav a, .ui-tabs-nav .ui-tabs-disabled a:hover, .ui-tabs-nav .ui-tabs-disabled a:focus, .ui-tabs-nav .ui-tabs-disabled a:active {
+    background-position: 100% -150px;
+}
+.ui-tabs-nav .ui-tabs-selected a span, .ui-tabs-nav a:hover span, .ui-tabs-nav a:focus span, .ui-tabs-nav a:active span {
+    background-position: 0 0;
+}
+.ui-tabs-nav a span, .ui-tabs-nav .ui-tabs-disabled a:hover span, .ui-tabs-nav .ui-tabs-disabled a:focus span, .ui-tabs-nav .ui-tabs-disabled a:active span {
+    background-position: 0 -50px;
+}
+.ui-tabs-nav .ui-tabs-selected a:link, .ui-tabs-nav .ui-tabs-selected a:visited, .ui-tabs-nav .ui-tabs-disabled a:link, .ui-tabs-nav .ui-tabs-disabled a:visited { /* @ Opera, use pseudo classes otherwise it confuses cursor... */
+    cursor: text;
+}
+.ui-tabs-nav a:hover, .ui-tabs-nav a:focus, .ui-tabs-nav a:active,
+.ui-tabs-nav .ui-tabs-unselect a:hover, .ui-tabs-nav .ui-tabs-unselect a:focus, .ui-tabs-nav .ui-tabs-unselect a:active { /* @ Opera, we need to be explicit again here now... */
+    cursor: pointer;
+}
+.ui-tabs-disabled {
+    opacity: .4;
+    filter: alpha(opacity=40);
+}
+.ui-tabs-panel {
+    padding: 10px 8px;
+    overflow:visible;
+}
+.ui-tabs-shadow{
+    background: url("/images/sohome/tabs_bg_top.jpg");
+    background-repeat: repeat-x;
+    width:100%;
+    height:22px;
+    overflow:visible;
+}
+.ui-tabs-holder{
+    padding:0;
+    margin:0;
+    display:block;
+    position:relative;
+}
+.ui-tabs-holder:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: visible;
+}
+.ui-tabs-loading em {
+    padding: 0 0 0 20px;
+    background: url(loading.gif) no-repeat 0 50%;
+}
+
+/* Additional IE specific bug fixes... */
+* html .ui-tabs-nav { /* auto clear, @ IE 6 & IE 7 Quirks Mode */
+    display: inline-block;
+}
+*:first-child+html .ui-tabs-nav  { /* @ IE 7 Standards Mode - do not group selectors, otherwise IE 6 will ignore complete rule (because of the unknown + combinator)... */
+    display: inline-block;
+}
+
+.msg_list
+{
+    margin: 20px 0px;
+    padding: 0px;
+    width: 560px;
+
+}
+
+.msg_head
+{
+    padding: 5px 10px;
+    font-size: 15px;
+    font-weight:bold;
+    cursor: pointer;
+    margin:1px;
+    text-transform: uppercase;
+    text-align:left;
+}
+
+.msg_head a
+{
+    text-decoration: none;
+}
+
+.msg_head img
+{
+    float:left;
+}
+
+.msg_head div
+{
+    margin-left: 25px;
+}
+
+.msg_button
+{
+    border:0px;
+    padding-right: 5px;
+}
+
+.msg_body
+{
+    margin: 0 0 0 55px;
+    padding: 5px 10px 15px;
+    display: none;
+    text-align:left;
+}
+
+.msg_body ul
+{
+    list-style-type: disc;
+}
+
+
+#divPhoneDetailsModal .image_scape_left {
+    clear:both;
+    float:left;
+    padding-left:10px !important;
+    width:300px !important;
+}
+
+
+
+
+
+/**********************************************************************************
+Section:  Image Gallery
+***********************************************************************************/
+
+
+
+.specialoffer70_image_zooms {
+    position: relative;
+    width: 600px;
+    margin: 0 auto;
+    padding: 0;
+    display: block;
+}
+
+.specialoffer70_image_zooms_title {
+    position: relative;
+    font-size: 16px;
+    line-height: 20px;
+    font-weight: bold;
+    margin: 10px 0 10px 0;
+    padding: 0;
+}
+
+.specialoffer70_image_zooms_thumbnails {
+    position: relative;
+    width: 600px;
+    margin: 0;
+    padding: 0;
+    display: block;
+}
+
+.specialoffer70_image_zooms_thumbnails:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+}
+
+.specialoffer70_image_zooms_thumbnails_img {
+    position: relative;
+    float: left;
+    margin: 8px 9px 0 0;
+    border: 1px solid rgb(125, 125, 125);
+    padding: 0;
+}
+.specialoffer70_phone_gallery_link{
+    margin:0;
+    text-decoration: underline;
+    cursor:pointer;
+}
+.specialoffer70_image_zooms_big_img {
+    position: relative;
+    margin: 24px 0;
+    padding: 0;
+}
+
+.specialoffer70_image_zooms_preloads {
+    display: none;
+}
+
+/* specialoffer70_phone_gallery_thumbs */
+
+.specialoffer70_phone_gallery_thumbs {
+    margin: 0;
+    padding: 0;
+    width: 300px;
+    display: block;
+    padding: 0;
+}
+
+.specialoffer70_phone_gallery_thumbs_timg {
+    border:1px solid #333333;
+    cursor:pointer;
+    margin:0 9px 4px 0;
+    position:relative;
+}
+
+
+.specialoffer70_phone_gallery_thumbs_zoom
+{
+    cursor: pointer;
+    margin: 0 0 5px 0;
+    padding: 0;
+    width: 300px;
+    height: 300px;
+    vertical-align:top;
+    overflow: hidden;
+    display: block;
+    border: 1px solid rgb(51, 51, 51);
+}
+
+.specialoffer70_phone_gallery_thumbs_zoom_img {
+    position: relative;
+    margin: 0;
+    padding: 0;
+
+}
+
+
+.specialoffer70_phone_gallery_thumbs {
+    margin: 0;
+    padding: 0;
+    width: 300px;
+    display: block;
+    padding: 0;
+}
+
+.specialoffer70_phone_gallery_thumbs_timg {
+    position: relative;
+    margin: 0 3px 4px 0;
+    border: 1px solid rgb(51, 51, 51);
+    cursor: pointer;
+}
+
+
+.specialoffer70_phone_gallery_thumbs_zoom
+{
+    cursor: pointer;
+    margin: 0 0 5px 0;
+    padding: 0;
+    width: 300px;
+    height: 300px;
+    vertical-align:top;
+    overflow: hidden;
+    display: block;
+    border: 1px solid rgb(51, 51, 51);
+}
+
+.specialoffer70_phone_gallery_thumbs_zoom_img {
+    position: relative;
+    margin: 0;
+    padding: 0;
+
+}
+
+
+/**********************************************************************************
+Section:  Phone Finder and Change Phone Modal
+***********************************************************************************/
+
+
+
+.specialoffer70_more_phones_outer_container
+{
+    margin: 0 auto;
+    width: 880px;
+}
+
+
+/*** Subsection: Phone Block ******************************************************/
+.specialoffer70_phone_hover_a, .specialoffer70_phone_hover_a:visited
+{
+    color: #2B70B0;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+/*** Subsection: Layout **************************************************/
+.specialoffer70_880_250-596_floaty {
+    width: 880px;
+    margin: 0;
+    padding: 0;
+}
+
+.specialoffer70_880_250-596_floaty:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+}
+
+.specialoffer70_880_250-596_floaty_left {
+    display: inline;
+    padding: 2px 0 0 10px;
+    width: 250px;
+    overflow: hidden;
+    float: left;
+}
+
+.specialoffer70_880_250-596_floaty_right {
+    display: inline;
+    padding: 0;
+    margin: 0 10px 0 0;
+    width: 596px;
+    float: right;
+}
+
+.specialoffer70_changephone_noresults
+{
+    font-size:14px;
+    line-height:20px;
+    text-align:left;
+    display:block;
+
+}
+
+.specialoffer70_changephone_noresults a
+{
+    color:blue;
+    text-decoration:underline;
+}
+
+.specialoffer70_changephone_noresults a img
+{
+    vertical-align:middle;
+}
+
+.specialoffer70_changephone_noresults_filterkey
+{
+    color:black;
+    font-weight:bold;
+
+    margin-top:0 !important
+}
+
+.specialoffer70_changephone_noresults_filterType
+{
+    clear:left;
+    color:#999999;
+    font-weight:bold;
+    text-transform:uppercase;
+}
+
+
+.specialoffer70_changephone_noresults_firstColumn_td
+{
+    width:100px;
+}
+
+#phoneDealDescription
+{
+    color:#666666;
+    font-size:11px;
+}
+
+/*** Subsection: Featured **************************************************/
+.specialoffer70_880_more_phones_featured {
+    margin: 0;
+    padding: 10px 0 0;
+    width: 880px;
+    display: block;
+}
+
+.specialoffer70_880_more_phones_featured:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+}
+
+
+.specialoffer70_880_more_phones_featured_floaty {
+    padding: 0 0 10px 10px;
+    margin: 0;
+    width: 280px;
+    float: left;
+}
+
+.specialoffer70_280_more_phones_featured_offer {
+    position: relative;
+    margin: 0;
+    padding: 0;
+    width: 280px;
+    height: 284px;
+    background: bottom url(/images/sohome/specialOffer70_280_offer_block_bk_white_bt.png) no-repeat;
+}
+
+.specialoffer70_280_more_phones_featured_offer_top {
+    position: relative;
+    margin: 0;
+    padding: 0;
+    width: 280px;
+    overflow: hidden;
+    background: top url(/images/sohome/specialOffer70_280_offer_block_bk_grey_bt.png) no-repeat;
+    height: 40px;
+}
+
+
+
+.specialoffer70_280_more_phones_featured_offer_phone_img {
+    margin: 4px 0 0 12px!important;
+    cursor: pointer;
+}
+
+.specialoffer70_280_more_phones_featured_offer_infobox {
+    position: relative;
+    float: right;
+    width: 190px;
+    margin: 10px 6px 0 0;
+}
+
+.specialoffer70_280_more_phones_featured_offer_phonename {
+    position: relative;
+    font-size: 15px;
+    font-weight: bold;
+    line-height: 18px;
+    margin: 0;
+    padding: 0;
+    min-height: 36px;
+    overflow:visible;
+}
+
+.specialoffer70_280_more_phones_featured_offer_phonedetails {
+    position: relative;
+    margin: 9px 0 5px 0;
+    padding: 0;
+    display: block;
+    width: 108px;
+}
+
+.specialoffer70_280_more_phones_featured_offer_imagegallery {
+    position: relative;
+    margin: 0 0 5px 0;
+    padding: 0;
+    display: block;
+    width: 108px;
+}
+
+.specialoffer70_280_more_phones_featured_offer_imagegallery:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+}
+
+.specialoffer70_280_more_phones_featured_offer_phonedetails_p {
+    position: relative;
+    margin: 0 0 0 0px;
+    width:90px;
+    float: right;
+    color: rgb(43, 112, 176);
+    text-decoration: underline;
+    cursor:pointer;
+}
+
+.specialoffer70_280_more_phones_featured_offer_bigprice {
+    position: relative;
+    color: rgb(197, 78, 75);
+    font-size: 28px;
+    line-height: 36px;
+    font-weight: bold;
+}
+
+.specialoffer70_280_more_phones_featured_offer_infobox {
+    position: relative;
+    color: rgb(197, 78, 75);
+    clear: both;
+    font-size: 12px;
+    line-height: 14px;
+    font-weight: bold;
+}
+
+.specialoffer70_280_more_phones_featured_offer_select,
+.specialoffer70_280_more_phones_featured_offer_selected
+{
+    background:url("/images/soHome/specialOffer70_small_green_select_button.png") no-repeat scroll 0 0 transparent;
+    width:78px;
+    height:36px;
+    position: absolute;
+    clear: both;
+    left: 101px;
+    bottom: 12px;
+    cursor: pointer;
+}
+
+.specialoffer70_196_more_phones_featured_offer_select,
+.specialoffer70_196_more_phones_featured_offer_selected
+{
+    background:url("/images/soHome/specialOffer70_small_green_select_button.png") no-repeat scroll 0 0 transparent;
+    width:78px;
+    height:36px;
+    position: absolute;
+    clear: both;
+    left: 60px;
+    bottom: 12px;
+    cursor: pointer;
+}
+
+.specialoffer70_280_more_phones_featured_offer_selected
+{ cursor: auto; text-align:center;}
+
+.specialoffer70_196_more_phones_featured_offer_selected
+{ cursor: auto; text-align:center;}
+
+/*** Subsection: More Phones/Filters/Listview/Thumbview **************************************************/
+.specialoffer70_880_more_phones_top {
+    position: relative;
+    width: 880px;
+    margin: 10px 0 0 0;
+    padding: 0;
+}
+
+.specialoffer70_880_more_phones_top:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+}
+
+.specialoffer70_880_more_phones_top_logo {
+    margin:0 50px 0 50px;
+    float: left;
+}
+
+.specialoffer70_880_more_phones_top_plan_titles {
+    width: 360px;
+    margin: 6px 0 0 0;
+    padding: 0;
+    float: left;
+}
+
+.specialoffer70_880_change_plan_top_plan_titles {
+    width: 560px;
+    margin: 6px 0 0 0;
+    padding: 0;
+    float: left;
+}
+.specialoffer70_880_more_phones_top_plan_titles_carrier {
+    position: relative;
+    font-size: 24px;
+    line-height: 28px;
+    font-weight: bold;
+    margin: 0;
+    padding:0;
+}
+
+.specialoffer70_880_more_phones_top_plan_titles_carrier_subline {
+    font-size: 13px;
+    font-weight: normal;
+    line-height: 19px;
+    margin: 0;
+    padding-top: 11px;
+    position: relative;
+    width: 600px;
+
+}
+
+.specialoffer70_880_more_phones_top_plan_titles_plan {
+    position: relative;
+    margin: 0;
+    padding: 0;
+    font-weight: normal;
+    color: rgb(147, 149, 152);
+    font-size: 12px;
+    line-height: 14px;
+}
+
+.specialoffer70_880_more_phones_top_plan_titles_plan_name
+{
+    font-weight: bold;
+}
+
+.specialoffer70_880_more_phones_top_viewtoggle {
+    background: url("/images/sohome/specialOffer70_view_toggle_small.png") no-repeat scroll 0 0 transparent;
+    float: left;
+    height: 62px;
+    overflow: hidden;
+    /*padding: 2px 0 0;*/
+    position: absolute;
+    width: 235px;
+    top: 7px;
+    left: 28px;
+
+}
+
+.specialoffer70_880_more_phones_top_viewtoggle_title
+{
+    font-size: 12px;
+    line-height: 14px;
+    font-weight: bold;
+    padding: 5px 0 0 10px;
+}
+
+.specialoffer70_880_more_phones_top_viewtoggle_form
+{
+    padding: 15px 0px 0 7px;
+    *margin: -6px 0 0 -4px;
+}
+
+.specialoffer70_880_more_phones_top_viewtoggle_form input
+{
+    line-height: 20px;
+}
+
+.specialoffer70_880_more_phones_top_viewtoggle_label {
+    font-size: 9px;
+    line-height: 15px;
+    font-weight: bold;
+}
+
+.specialoffer70_880_more_phones_top_viewtoggle_img {
+    position: absolute;
+    top: 0px;
+    left: 20px;
+    margin: 0;
+    padding: 0;
+}
+
+.specialoffer70_880_more_phones_top_viewtoggle_cp {
+    position: relative;
+    background: url(/images/sohome/specialOffer70_view_toggle.png) no-repeat;
+    width: 200px;
+    height: 74px;
+    margin-left:55px;
+    padding:0;
+    overflow: hidden;
+    float: left;
+}
+
+.specialoffer70_880_more_phones_top_viewtoggle_title_cp {
+    position: absolute;
+    top: 30px;
+    left: 10px;
+    font-size: 12px;
+    line-height: 14px;
+    font-weight: bold;
+}
+
+.specialoffer70_880_more_phones_top_viewtoggle_form_cp {
+    position: relative;
+    height: 18px;
+    width: 120px;
+    float: right;
+    margin: 13px 10px 0 0;
+}
+
+.specialoffer70_880_more_phones_top_viewtoggle_label_cp {
+    position: absolute;
+    top: 2px;
+    left: 46px;
+    font-size: 12px;
+    line-height: 14px;
+    font-weight: bold;
+}
+
+.specialoffer70_880_more_phones_top_viewtoggle_radio_cp {
+    position: absolute;
+    top: 2px;
+    left: 0px;
+    margin: 0;
+    padding: 0;
+    width: 16px;
+    height: 16px;
+}
+
+.specialoffer70_880_more_phones_top_viewtoggle_img_cp {
+    position: absolute;
+    top: 0px;
+    left: 20px;
+    margin: 0;
+    padding: 0;
+}
+
+.specialoffer70_880_more_phones_top_sort_title
+{
+    float:left;
+    position:absolute;
+    padding: 31px 0 0 42px;
+
+}
+
+.specialoffer70_880_more_phones_top_sort_title span
+{
+    font-size: 16px;
+    font-weight:bold;
+}
+
+
+/*** START: Filter Box ************************************************************/
+#divPhonePriceFilter .specialoffer70_250_filter_box_object_optionbox_option,
+#divCarrierFilterBoxOption .specialoffer70_250_filter_box_object_optionbox_option
+{
+    overflow: visible;
+    height: 18px;
+}
+#divCarrierFilterBoxOption .specialoffer70_250_filter_box_object_optionbox_option_label
+{
+    width: 93px;
+}
+
+
+
+.specialoffer70_250_filter_box{
+    padding: 0 0 14px 0;
+    width: 250px;
+    background: bottom url(/images/sohome/specialOffer70_grey_plantype_box_bk.png) no-repeat;
+}
+
+.specialoffer70_250_filter_box_top {
+    background: top url(/images/sohome/specialOffer70_grey_plantype_box_bk.png) no-repeat;
+}
+
+.specialoffer70_250_filter_box_top:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+}
+
+.specialoffer70_250_filter_box_top_title  {
+    float:left;
+    padding:12px 6px 0 10px;
+}
+
+.specialoffer70_250_filter_box_top_reset {
+    float: right;
+    font-size: 12px;
+    line-height: 14px;
+    padding: 12px 6px 0px 0;
+    text-align: right;
+    clear: right;
+    font-weight: bold;
+    color:black;
+}
+
+.specialoffer70_250_filter_box_top_reset a:link,
+.specialoffer70_250_filter_box_top_reset a:visited,
+.specialoffer70_250_filter_box_top_reset a:hover,
+.specialoffer70_250_filter_box_top_reset a:active {
+
+    color:black
+}
+
+.specialoffer70_250_filter_box_object{
+    padding: 10px 0 10px 10px;
+    width: 230px;
+}
+
+.specialoffer70_250_filter_box_object_title {
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.specialoffer70_250_filter_box_object_optionbox {
+    padding: 0 0 10px 0;
+    width: 230px;
+    background: bottom url(/images/sohome/specialOffer70_plan_box_plantype_option_bk.png) no-repeat;
+}
+.specialoffer70_250_filter_box_object_optionbox:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+}
+
+.specialoffer70_250_filter_box_object_optionbox_top {
+    width: 230px;
+    background: top url(/images/sohome/specialOffer70_plan_box_plantype_option_bk.png) no-repeat;
+    height: 14px;
+}
+.specialoffer70_250_filter_box_object_optionbox_list
+{
+    margin: -14px 0 0 0;
+}
+.specialoffer70_250_filter_box_object_optionbox_option {
+    float: left;
+    padding: 14px 0 0 7px;
+    width: 105px;
+    position: relative;
+    overflow: hidden;
+    font: 11px/12px arial,helvetica,sans-serif;
+}
+
+.specialoffer70_250_filter_box_object_optionbox_option_cbox
+{
+    margin:0; padding:0;
+    height:13px; width:13px;
+}
+
+.specialoffer70_250_filter_box_object_optionbox_option_label
+{
+    margin:0; padding: 0 0 0 4px;
+    position: absolute;
+    left: 22px;
+}
+
+
+.specialoffer70_250_filter_spacer {
+    position: relative;
+    height: 18px;
+    width: 250px;
+    margin: 0;
+    padding: 0;
+}
+
+.specialoffer70_250_filter_spacer:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+}
+/*** END: Filter Box ************************************************************/
+
+.specialoffer70_596_change_phone_listview {
+    position: relative;
+    margin: 0;
+    padding:8px 0 0;
+    width: 596px;
+    display: block;
+}
+
+.specialoffer70_596_change_phone_listview_head {
+    position: relative;
+    width: 596px;
+    height: 54px;
+    overflow: hidden;
+    background: top url(/images/sohome/specialOffer70_596_title_bar_bk.png) no-repeat;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+.specialoffer70_596_change_phone_listview_head_titleimg {
+    position: relative;
+    margin: 10px auto 4px auto;
+    padding: 0;
+}
+
+.specialoffer70_596_change_phone_listview_head_titles {
+    position: relative;
+    width: 566px;
+    margin: 0 15px;
+    padding: 0;
+    font-size: 11px;
+    line-height: 13px;
+    text-align: left;
+}
+
+a.specialoffer70_596_change_phone_listview_head_titles_item:link,
+a.specialoffer70_596_change_phone_listview_head_titles_item:hover,
+a.specialoffer70_596_change_phone_listview_head_titles_item:active,
+a.specialoffer70_596_change_phone_listview_head_titles_item:visited
+{
+    color: #2B70B0;
+    cursor: pointer;
+    margin: 0 10px 0 0;
+    position: absolute;
+    text-decoration: underline;
+    top: 0;
+}
+
+.specialoffer70_596_change_phone_listview_w_oem {
+    width: 100px;
+    left: 10px;
+}
+
+.specialoffer70_596_change_phone_listview_w_phone {
+    width: 170px;
+    overflow: hidden;
+    left: 120px;
+}
+
+.specialoffer70_596_change_phone_listview_w_price {
+    width: 60px;
+    overflow: hidden;
+    left: 282px;
+}
+
+.specialoffer70_596_change_phone_listview_w_fprice {
+    width: 120px;
+    overflow: hidden;
+    text-align: center;
+    left: 325px;
+}
+
+.specialoffer70_596_change_phone_listview_offerset {
+    position: relative;
+    margin: 15px 0 15px 0;
+    padding: 0;
+    clear: both;
+    display: block;
+}
+
+.specialoffer70_596_change_phone_listview_offerblock {
+    margin: 0px 15px 0px 15px;
+    width: 566px;
+    height: 100px;
+    clear: both;
+    display: block;
+    position: relative;
+}
+.specialoffer70_596_change_phone_listview_offerblock:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+}
+
+.specialoffer70_596_change_phone_listview_offerblock_seperator
+{
+    background-image: url(/images/sohome/specialOffer70_phone_set_bk.png);
+    background-repeat: repeat-y;
+    background-position: bottom;
+    height: 5px;
+    margin: 10px 0;
+}
+
+.specialoffer70_596_change_phone_listview_offerblock_field_oem {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 92px;
+    width: 124px;
+}
+.specialoffer70_596_change_phone_listview_offerblock_field_oem:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+}
+.specialoffer70_596_change_phone_listview_offerblock_field_oem_featured {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 92px;
+    width: 90px;
+    margin-left:14px;
+}
+.specialoffer70_596_change_phone_listview_offerblock_field_oem_featured:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+}
+.specialoffer70_596_change_phone_listview_offerblock_field_phone {
+    position: absolute;
+    height: 92px;
+    width: 200px;
+    top: 0;
+    left: 120px;
+}
+
+.specialoffer70_596_change_phone_listview_offerblock_field_price {
+    position: absolute;
+    height: 92px;
+    width: 60px;
+    top: 0;
+    left: 290px;
+}
+
+.specialoffer70_596_change_phone_listview_offerblock_field_fprice {
+    position: absolute;
+    height: 92px;
+    text-align: center;
+    width: 120px;
+    left: 325px;
+    top: 0;
+}
+
+.specialoffer70_596_change_phone_listview_offerblock_select,
+.specialoffer70_596_change_phone_listview_offerblock_selected
+{
+    background:url("/images/soHome/specialOffer70_small_green_select_button.png") no-repeat scroll 0 0 transparent;
+    width:78px;
+    height:36px;
+    position: absolute;
+    cursor: pointer;
+    padding: 0;
+    right: 2px;
+    top: 34px;
+}
+
+.specialoffer70_596_change_phone_listview_offerblock_select_v2,
+.specialoffer70_596_change_phone_listview_offerblock_selected_v2
+{
+    background:url("/images/soHome/specialOffer70_small_green_select_button.png") no-repeat scroll 0 0 transparent;
+    width:78px;
+    height:36px;
+    position: absolute;
+    cursor: pointer;
+    padding: 0;
+    right: 7px;
+    top: 26px;
+}
+
+.specialoffer70_596_change_phone_listview_offerblock_selected
+{ cursor: auto; }
+
+.specialoffer70_596_change_phone_listview_offerblock_oemlogo {
+    position: relative;
+    margin: 22px 0 0 14px;
+    padding: 0;
+}
+
+.specialoffer70_596_change_phone_listview_offerblock_phoneimg {
+    position: relative;
+    margin: 1px 0 0 0;
+    padding: 0;
+    float: left;
+    cursor: pointer;
+}
+
+.specialoffer70_596_change_phone_listview_offerblock_phonename {
+    position: relative;
+    font-size: 12px;
+    line-height: 14px;
+    font-weight: bold;
+    height: 60px;
+    overflow: hidden;
+    margin: 5px 0 0 60px;
+    padding: 0;
+    display: block;
+    width: 140px;
+}
+
+.specialoffer70_596_change_phone_listview_offerblock_phonedetails {
+    position: relative;
+    margin: 0 0 0 60px;
+    padding: 0;
+    display: block;
+}
+
+.specialoffer70_596_change_phone_listview_offerblock_phonedetails:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+}
+
+.specialoffer70_596_change_phone_listview_offerblock_phonedetails_p {
+    position: relative;
+    margin: 0 0 0 0px;
+    width:90px;
+    float: right;
+    color: rgb(43, 112, 176);
+    text-decoration: underline;
+    cursor:pointer;
+}
+
+.specialoffer70_596_change_phone_listview_offerblock_bigprice {
+    position: relative;
+    color: rgb(182,60,59);
+    font-size: 14px;
+    line-height: 16px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.specialoffer70_596_change_phone_listview_offerblock_price {
+    position: relative;
+    color: rgb(197, 78, 75);
+    clear: both;
+    font-size: 12px;
+    line-height: 14px;
+    font-weight: normal;
+    text-align: center;
+}
+
+.specialoffer70_596_change_phone_thumbview {
+    position: relative;
+    margin: 0;
+    padding:8px 0 0;
+    width: 596px;
+    display: block;
+}
+
+.specialoffer70_596_change_phone_thumbview_offerset {
+    margin: 0 0 10px;
+    padding: 0;
+    width: 596px;
+    display: block;
+}
+
+.specialoffer70_596_change_phone_thumbview_offerset:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+}
+
+.specialoffer70_596_change_phone_thumbview_offerset_floaty {
+    margin:4px 0 0 2px;
+    padding: 0;
+    float: left;
+}
+
+.specialoffer70_596_change_phone_thumbview_head {
+    position: relative;
+    width: 596px;
+    height: 54px;
+    overflow: hidden;
+    background: url(/images/sohome/specialOffer70_596_title_bar_bk.png) no-repeat;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+.specialoffer70_596_change_phone_thumbview_head_titleimg {
+    position: relative;
+    margin: 10px auto 4px auto;
+    padding: 0;
+}
+
+.specialoffer70_596_change_phone_thumbview_head_titles {
+    position: relative;
+    width: 566px;
+    margin: 0 15px;
+    padding: 0;
+    font-size: 11px;
+    line-height: 13px;
+    text-align: left;
+}
+
+.specialoffer70_596_change_phone_thumbview_head_titles_item {
+    position: relative;
+    top: 0;
+    margin: 0 10px 0 0;
+    text-decoration: underline;
+    cursor: pointer;
+    float: left;
+    width: 130px;
+    text-align: center;
+    color: #2B70B0;
+}
+
+
+.specialoffer70_146_change_phone_thumbview_offerblock {
+    width: 146px;
+    margin: 0;
+    padding:10px 0 0 0;
+    background: top url(/images/sohome/specialOffer70_146_offer_block_bk_white_bt.png) no-repeat;
+}
+
+.specialoffer70_146_change_phone_thumbview_offerblock_inner {
+    position: relative;
+    width: 146px;
+    height: 245px;
+    margin: 0;
+    padding:0;
+    background: bottom url(/images/sohome/specialOffer70_146_offer_block_bk_white_bt.png) no-repeat;
+    text-align: center;
+}
+
+.specialoffer70_146_change_phone_thumbview_offerblock_img {
+    position: relative;
+    margin: 0 auto 0 auto;
+    padding: 0;
+}
+
+.specialoffer70_146_change_phone_thumbview_offerblock_phonename{
+    position: relative;
+    clear: both;
+    text-align: center;
+    font-weight: bold;
+    font-size: 12px;
+    line-height: 14px;
+    margin: 5px 8px;
+}
+
+.specialoffer70_146_change_phone_thumbview_offerblock_price {
+    position: relative;
+    clear: both;
+    text-align: center;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 14px;
+    margin: 5px 8px;
+    color: rgb(182,60,59);
+}
+
+.specialoffer70_146_change_phone_thumbview_offerblock_bigprice {
+    font-weight: bold;
+}
+
+.specialoffer70_146_change_phone_thumbview_offerblock_select,
+.specialoffer70_146_change_phone_thumbview_offerblock_selected
+{
+    background:url("/images/soHome/specialOffer70_small_green_select_button.png") no-repeat scroll 0 0 transparent;
+    width:78px;
+    height:36px;
+    position: absolute;
+    clear: both;
+    margin: 0;
+    padding: 0;
+    bottom: 8px;
+    left:34px;
+    cursor: pointer;
+}
+
+.specialoffer70_phone_hover_select
+{
+    background:url("/images/soHome/specialOffer70_small_green_select_button.png") no-repeat scroll 0 0 transparent;
+    width:78px;
+    height:36px;
+}
+
+.specialoffer70_146_change_phone_thumbview_offerblock_selected
+{ cursor: auto; }
+
+.specialoffer70_280_more_phones_featured_offer_selected,
+.specialoffer70_146_change_phone_thumbview_offerblock_selected,
+.specialoffer70_596_change_phone_listview_offerblock_selected,
+.specialoffer70_phone_hover_selected,
+.specialoffer70_196_more_phones_featured_offer_selected
+{
+    background:none repeat scroll 0 0 transparent;
+    display: none;
+    color: rgb(182,60,59);
+    font-size: 18px;
+    line-height: 36px;
+    font-weight: bold;
+}
+
+
+
+/*** SubSection: Phone Hover******************************************************************/
+#divPhoneHover, #divTmpPhoneHover
+{
+    position: absolute;
+    padding: 0;
+    height: auto!important; height: 400px;
+    min-height: 400px;
+    border: solid 2px #ccc;
+    background-color: White;
+    top: 0px;
+    left: 0px;
+    z-index: 8000;
+    width: 410px;
+}
+
+.HoverDialogueDivTop
+{
+    background-color: #CCCCCC;
+    width: 100%;
+    /*Start IE6 hack */
+    _width: 450px;
+    /*End IE6 hack */
+}
+
+.specialoffer70_596_change_phone_link_img {
+    position: relative;
+    margin: 3px 4px 0 0;
+    padding: 0;
+    float: left;
+    cursor: pointer;
+}
+
+.specialoffer70_phone_hover_a, .specialoffer70_phone_hover_a:visited
+{
+    color: #2B70B0;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.HoverDialogueDivTop h2
+{
+    background:#E9E9E9 url(/images/modal/top_bar_bg.jpg) repeat-x scroll 0 50%;
+    color:#000000!important;
+    font-size: 9px;
+    font-weight: bold;
+    min-height: 18px;
+    padding: 1px 6px 0pt;
+    text-transform: uppercase;
+    text-align: left;
+}
+
+.specialoffer70_phone_hover_content
+{
+    float: left;
+    padding: 10px 10px 10px 20px;
+    width: 390px;
+}
+
+.HoverDialogueImgDiv
+{
+    float: left;
+    width: 116px;
+}
+
+.specialoffer70_phone_hover_data
+{
+    margin-left: 125px;
+}
+
+.specialoffer70_phone_hover_data dl
+{
+    /* border-top: 1px solid #d1d2d4;*/
+    padding-top: 2px;
+    padding-bottom: 2px;
+}
+
+.specialoffer70_phone_hover_data dl.pricelist
+{
+    border: 0;
+}
+
+.specialoffer70_phone_hover_data dt
+{
+    float: left;
+    width: 130px;
+    line-height: 14px;
+    color: #939598;
+    margin-bottom: 3px;
+    text-align:left;
+}
+
+.specialoffer70_phone_hover_data dd
+{
+    font-weight: normal;
+    display: block;
+    margin-left: 125px;
+    line-height: 14px;
+    margin-bottom: 3px;
+    width: 120px;
+    padding:0px 5px 0px 5px;
+    text-align:left;
+}
+
+.specialoffer70_phone_hover_data dl.pricelist dd, .specialoffer70_phone_hover_data dl.pricelist dd b
+{
+    color: #be1e24;
+    font-weight: bold;
+    padding:0px 5px 0px 5px
+}
+
+.HoverDialogueDivBottom
+{
+    display: block;
+    width: 100%;
+    height: 15px;
+    clear: left;
+}
+
+.HoverDialogueSelectButtonDiv
+{
+    margin-top: 5px;
+    margin-bottom: 5px;
+    text-align: center;
+    width: 100%;
+    clear: left;
+}
+
+.HoverTipTopRight, .HoverTipTopLeft,
+.HoverTipBottomLeft,.HoverTipBottomRight
+{
+    display: block;
+    width: 33px; height: 42px;
+    margin: 0; padding: 0;
+    position: absolute;
+}
+.HoverTipTopLeft
+{
+    top: 15px;
+    left: -33px;
+    background:transparent url(/_images/phonesTab/hoverTipTopLeft.png) no-repeat scroll left top; _background:none;
+    _filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/_images/phonesTab/hoverTipTopLeft.png',sizingMethod='scale')
+}
+
+.HoverTipTopRight
+{
+    top: 15px;
+    left: 400px;
+    _left: 440px;
+    background:transparent url(/_images/phonesTab/hoverTipTopRight.png) no-repeat scroll left top; _background:none;
+    _filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/_images/phonesTab/hoverTipTopRight.png',sizingMethod='scale')
+}
+
+.HoverTipBottomLeft
+{
+    top: 367px;
+    left: -33px;
+    background:transparent url(/_images/phonesTab/hoverTipBottomLeft.png) no-repeat scroll left top;
+    _background:none;
+    _filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/_images/phonesTab/hoverTipBottomLeft.png',sizingMethod='scale')
+}
+
+.HoverTipBottomRight
+{
+    top: 367px;
+    left: 400px;
+    background:transparent url(/_images/phonesTab/hoverTipBottomRight.png) no-repeat scroll left top;
+    _background:none;
+    _filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/_images/phonesTab/hoverTipBottomRight.png',sizingMethod='scale')
+}
+
+/**********************************************************************************
+Section:  JS Framework Assorted Classes
+***********************************************************************************/
+#wfly_util_logger_output
+{
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    z-index: 100;
+    background-color: #000;
+}
+
+#wfly_util_logger_output a
+{
+    color: #fff;
+}
+
+#wfly_util_logger_output .logHead
+{
+    padding: 3px;
+    text-align: right;
+    color: #fff;
+}
+
+#wfly_util_logger_output .logBody
+{
+    background-color: #aaa;
+    font: 11px verdana,arial,sans-serif;
+    height: 600px; width: 400px;
+    overflow: scroll;
+    text-align: left;
+    padding: 2px;
+}
+#wfly_util_logger_output .message_0
+{
+    background-color: #eee;
+    padding: 3px;
+}
+#wfly_util_logger_output .message_1
+{
+    background-color: #fff;
+    padding: 3px;
+}
+
+/**********************************************************************************
+Section:  eCommerce Assorted Classes
+***********************************************************************************/
+#wfly_dropsheet {
+    position: absolute;
+    top: 0; left: 0;
+    z-index: 100;
+    background-color: #000000;
+    width: 100%; height: 100%;
+}
+
+.wfly_clearfix { clear: both; }
+.wfly_clearfix:after { content: ".";display: block;height: 0;clear: both;visibility: hidden;}
+
+.wfly_display_block { display: block; }
+.wfly_display_inline { display: inline; }
+.wfly_display_none { display: none; }
+.wfly_printOnly { display: none; } /* overwritten by print css */
+.wfly_ucase { text-transform: uppercase; }
+
+.wfly_fontweight_bold { font-weight: bold }
+.wfly_fontweight_normal { font-weight: normal }
+
+.wfly_cursor_crosshair { cursor: crosshair; }
+.wfly_cursor_default { cursor: default; }
+.wfly_cursor_pointer { cursor: pointer; }
+.wfly_cursor_wait { cursor: wait; }
+.wfly_cursor_text { cursor: text; }
+.wfly_cursor_help { cursor: help; }
+.wfly_cursor_move { cursor: move; }
+
+.wfly_icon_cart_left {
+    background: left url(/images/cart.gif) no-repeat;
+    padding-left: 20px;
+}
+.wfly_icon_note_left {
+    background: left url(/images/soHome/specialOffer70_page_icon.png) no-repeat;
+    padding-left: 15px;
+}
+.wfly_icon_video_left {
+    background: left url(/images/soHome/specialOffer70_page_icon.png) no-repeat;
+    padding-left: 15px;
+}
+.wfly_icon_zoom_left {
+    background: left url(/images/soHome/specialoffer70_magnify_glass_icon.png) no-repeat;
+    padding-left: 15px;
+}
+.wfly_icon_play_left {
+    background: left url(/images/sohome/play.jpg) no-repeat;
+    padding-left: 25px;
+}
+
+.ajaxLoading
+{
+    background: url(/_CSS/images/loading.gif) no-repeat;
+    margin: 20px auto;
+    margin-bottom: 0;
+    display: block;
+    font-weight: bold;
+    font-size: 16px;
+    width: 110px;
+    height: 32px;
+    padding: 8px 0 0 40px;
+    position: relative;
+}
+
+/* START - 4 way flex Rounded corners  ======================== */
+.wfly_rounded { background: url(/images/ec/layout/wfly_rounded/tl.png) top left no-repeat; margin-top: 10px; }
+.wfly_rounded_tl { background: url(/images/ec/layout/wfly_rounded/tr.png) top right no-repeat; line-height: 5px; height: 5px; font-size: 1px; }
+.wfly_rounded_body { background: url(/images/ec/layout/wfly_rounded/r.png) top right repeat-y; padding: 0 15px; }
+.wfly_rounded_bl { background: url(/images/ec/layout/wfly_rounded/bl.png) bottom left no-repeat; }
+.wfly_rounded_br { background: url(/images/ec/layout/wfly_rounded/br.png) bottom right no-repeat; line-height: 5px; height: 5px; font-size: 1px; }
+
+.wfly_rounded_small { width: 300px; }
+.wfly_rounded_medium { width: 600px; }
+.wfly_rounded_large { width: 900px; }
+.wfly_rounded_title { color: #666; font-size: 16px; font-weight: bold; padding: 5px 0;}
+.wfly_buttonrow { text-align: right; }
+/* END - 4 way flex Rounded corners */
+
+/**********************************************************************************
+Section:  Everything Else (Please try to move items out of this section)
+***********************************************************************************/
+
+/***PRN:  40616***/
+.modalBackLinkTop
+{
+    background-color:Transparent;
+}
+.modalBackLinkTop a
+{
+    float: left;
+    color:#2B70B0;
+    font-size:11px;
+    font-weight:bold;
+    padding: 0 0 0 10px;
+    text-decoration:underline;
+}
+.modalBackLinkTop p
+{
+    width: 200px;
+    margin: 0 auto;
+}
+
+.image_scape_left {
+    float: left;
+    width: 240px;
+}
+
+.modal_block_msg_error {
+    padding: 10px 0 30px;
+    text-align: center;
+    font-size: 16px;
+}
+
+/*** Featured Phones Block overrides **************************************/
+.lego20_wirefly_phonestab_featuredphone {
+    position: relative;
+    width: 196px;
+    height: 275px;
+    background: url(/_images/phonesTab/lego20_wirefly_phonestab_featuredphone_bk_bottom.png) no-repeat;
+    background-position: bottom left;
+    padding-bottom: 10px;
+    text-align: center;
+
+    margin:0;
+    padding:0;
+}
+
+.lego20_wirefly_phonestab_featuredphone_top {
+    position: relative;
+    width: 196px;
+    height: 40px;
+    background: url(/_images/phonesTab/lego20_wirefly_phonestab_featuredphone_bk_top.png) no-repeat;
+    background-position: top left;
+    overflow: hidden;
+    margin: 0;
+    padding:0;
+}
+
+.lego20_wirefly_phonestab_featuredphone_top:after, .lego20_wirefly_phonestab_featuredphone:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+}
+
+.lego20_wirefly_phonestab_featuredphone_top_h3 {
+    position: relative;
+    color: black;
+    display: block;
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 14px;
+    line-height: 18px;
+    padding: 12px 4px 0 4px;
+}
+
+.lego20_wirefly_phonestab_featuredphone_phonename {
+    position: relative;
+    padding: 12px 8px 8px 0px;
+    line-height: 16px;
+    font-size: 14px;
+    font-weight: bold;
+    text-align: left;
+    float:right;
+    width:120px;
+}
+
+.lego20_wirefly_phonestab_featuredphone_details {
+    position: relative;
+    padding: 0 9px 5px 0;
+    height: 15px;
+    cursor: pointer;
+    text-align: left;
+    float: right;
+    width: 120px;
+}
+
+.lego20_wirefly_phonestab_featuredphone_details_page {
+    position: relative;
+    float: left;
+    padding: 0 4px 0 0;
+    cursor: pointer;
+}
+
+.lego20_wirefly_phonestab_featuredphone_details_text {
+    position: relative;
+    line-height: 14px;
+    font-size: 11px;
+    margin: 0;
+    color: rgb(72,142,212);
+    text-decoration: underline;
+    cursor: pointer;
+    width: 120px;
+    float: right;
+}
+
+.lego20_wirefly_phonestab_featuredphone_price {
+    position: relative;
+    font-size: 18px;
+    line-height: 12px;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: rgb(182,60,59);
+    text-align: center;
+    clear: both;
+    padding: 3px 6px;
+}
+
+.lego20_wirefly_phonestab_featuredphone_productimage {
+    position: relative;
+    padding: 12px 8px;
+    float: left;
+}
+
+.lego20_wirefly_phonestab_featuredphone_select {
+    position: relative;
+    padding: 6px auto 0 auto;
+}
+
+.lego20_wirefly_phonestab_flexi_196_floaty {
+    position: relative;
+    padding: 0 1px 0 1px;
+    width: 196px;
+    float: left;
+}
+
+.lego20_wirefly_phonestab_flexi_196 {
+    position: relative;
+    padding: 0 0 8px 0;
+    border-bottom: 1px solid rgb(200, 200, 200);
+    clear: both;
+    text-align: left;
+    width: 100%;
+    margin-bottom:5px;
+}
+
+.lego20_wirefly_phonestab_featuredphone_price_details {
+    position: relative;
+    font-size: 11px;
+    line-height: 12px;
+    font-weight: bold;
+    color: #666666;
+    text-align: center;
+    clear: both;
+    padding: 6px;
+}
+
+/*** End Featured Phones Block overrides **************************************/
+
+
+
+.phonesInSelectionDivTopCss
+{
+    font-size: 11px;
+}
+.phonesInSelectionDivBottomCss
+{
+    padding-top:3px;
+    font-size: 11px;
+}
+
+.promo_dollar_value
+{
+    text-decoration:line-through;
+}
+.promo_string_value
+{
+}
+
+/*pf reset image*/
+.specialoffer70_offer_block_a_reset{background: url("/images/soHome/specialOffer70_reset-symbol.png") no-repeat scroll right center transparent; padding-right:15px;}
+/*pf reset image end*/
+
+@media print
+{
+    .wfly_pageBreakBefore {
+        page-break-before: always !important;
+    }
+
+    .lego20_flexi_wirefly_navigation_tabs, .lego20_flexi_wirefly_footer
+    {
+        display: none !important;
+    }
+
+    .lego20_976_primary_container
+    {
+        position: absolute !important;
+        top: 0 !important;
+        left: 0 !important;
+        margin: 0 !important;
+    }
+    .lego20_976_to_780_adaptor
+    {
+        text-align:left;
+        margin: 0 !important;
+    }
+    .lego20_976_to_780_adaptor_inner
+    {
+        margin: 0 !important;
+    }
+    .specialoffer70_offers_add-a-line_button
+    {
+        display:none !important;
+    }
+
+    /* START: Multi Phones */
+    #narrowContainer
+    {
+        float:none;
+    }
+    .specialoffer70_260_offer_block_narrow
+    {
+        margin: 0;
+        padding: 0;
+    }
+    /* END: Multi Phones */
+
+
+    /*** Generic Classes *************************************************/
+    .wfly_print_display_none { display: none; }
+
+} /* @media print end */
+
+
+/******PRN 60378******/
+.vsignlogo {
+    float: left;
+    padding-top:0px;
+    margin-top:-35px;
+}
+
+.accreditation_logos2,
+.accreditation_logos img2 {
+    margin: 0px 9px 3px;
+    vertical-align: middle;
+    border: none;
+}
+
+.certifications {
+    padding-bottom: 55px;
+    padding-left: 25px;
+    padding-right: 25px;
+    padding-top: 55px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+.lego20_flexi_wirefly_navigation_tabs_topzone_right {
+    position: relative;
+    margin: 0;
+    padding: 0;
+    top:16px;
+}
+
+/*adding css styling to rateplan popup*/
+
+A.sublinea{color: #2B70B0;
+    text-decoration: underline;}
+
+.specialoffer70_880_more_phones_top_plan_titles_carrier_subline a.sublinea:visited{color: #2B70B0;}
+
+/*PRN 62884 -- rtd*/
+
+.comparebutton {
+    background: url("/images/sohome/compare.jpg") no-repeat scroll 0 0 transparent;
+    clear: both;
+    height: 15px;
+    left: 40px;
+    overflow: hidden;
+    position: absolute;
+    top: 256px;
+    width: 69px;
+}
+
+.comparebuttonlist {
+    background: url("/images/sohome/compare.jpg") no-repeat scroll 0 0 transparent;
+    clear: both;
+    height: 15px;
+    left: 490px;
+    overflow: hidden;
+    position: absolute;
+    top: 75px;
+    width: 69px;
+}
+
+.specialoffer70_146_change_phone_thumbview_offerblock_inner {
+    height: 285px;
+}
+
+.specialoffer70_146_change_phone_thumbview_offerblock_select {
+    bottom: 35px;
+}

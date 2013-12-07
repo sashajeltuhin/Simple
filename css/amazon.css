@@ -2022,3 +2022,30 @@ div.toTheEdge {margin-left: -0.63em; margin-right: -0.63em;}
     position: absolute;
     z-index: 999;
 }
+.soa-tabletext.tick {
+    color: #00AA00;
+    font-size: 18px;
+    cursor: pointer;
+}
+.soa-tabletext-head {
+    background-color: #A4C8F0;
+    color: #003466;z
+    font-weight: bold;
+    font-size: 18px;
+}
+.soa-tabletext.red {
+    color: #CC0000;
+    font-size: 16px;
+    cursor: pointer;
+}
+.soa-table {
+    font-family: Verdana, Arial;
+    margin: 10px 0 0 18px;
+    width: 689px;
+    border: 1px solid #BBBBBB;
+    padding-bottom: 0;
+}
+.soa-tabletext {
+   color: #e47911;
+  font-size: 16px;
+}

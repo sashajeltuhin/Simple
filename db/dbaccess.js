@@ -58,6 +58,10 @@ exports.getFilter = function(f){
                 var num = Number(str.replace('>', ''));
                 filter.query[key] =  { $gt: num };
             }
+            else if (str.indexOf('<>') !== -1){
+                var vl = str.replace('<>', '');
+                filter.query[key] = {$ne: vl};
+            }
             else{
                 filter.query[key] =  v;
             }

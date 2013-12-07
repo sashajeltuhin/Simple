@@ -143,4 +143,16 @@ io.sockets.on('connection', function (socket) {
         console.log(data);
         socket.broadcast.emit('prodviewed', data);
     });
+
+    socket.on('agenttalk', function (action) {
+        console.log('Called agenttalk:');
+        console.log(action);
+        socket.broadcast.emit('agenttalk', action);
+    });
+
+    socket.on('feedback', function (feed) {
+        console.log('Client feedback:');
+        console.log(feed);
+        socket.broadcast.emit('feedback', feed);
+    });
 });

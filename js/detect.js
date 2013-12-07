@@ -152,3 +152,17 @@ function showResults() {
 }
 }
 SpeedDetect.init();
+
+//http://smart-ip.net/geoip-json
+//{
+//    "source":"smart-ip.net"
+//    "host":"193.178.146.17",
+//    "lang":"en",
+//    "countryName":"Ukraine",
+//    "countryCode":"UA",
+//    "city":"Kiev",
+//    "region":"Kyyivs'ka Oblast'",
+//    "latitude":50.4333,
+//    "longitude":30.5167,
+//    "timezone":"Europe/Kiev"
+//}

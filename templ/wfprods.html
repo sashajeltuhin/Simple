@@ -1,60 +1,142 @@
 <div class="row-fluid">
-    <div class="span8 offset1"><h2><b>Dear {{c.fname}}</b></h2><p>Congrats on your purchase! We suggest that you look at the most popular offers in the {{c.city}} area</p></div>
+    <!--<div class="span8 offset1"><h2><b>Dear {{c.fname}}</b></h2><p>Congrats on your purchase! We suggest that you look at the most popular offers in the {{c.city}} area</p></div>-->
+    <h3 class="wirefly_hp_h3">
+        Best deals in the {{c.city}} area
+    </h3>
 </div>
-<div class="row-fluid" ng-repeat="p in products">
-    <div class="offset1 span2"><div><b>{{p.provider}}</b></div>
-    <div><img ng-src="{{p.brandimgUrl}}" width="40" height="40"/></div></div>
-    <div class="span4"><h3>{{p.title}}</h3><h4>{{p.desc}}</h4></div>
-    <div class="span2">
-        <div><b>${{p.priceNow}}</b></div>
-        <div class="btn bv_btn-custom" ng-click="addToCartandNext(p)">Purchase</div>
-    </div>
-</div>
-<!--<div class="wirefly_hp_ob_outercontainer" ng-repeat="p in products">-->
-    <!--<div class="wirefly_hp_ob_container">-->
-        <!--<div class="wirefly_hp_ob_deviceimage_container">-->
-                <!--<img class="wirefly_hp_ob_deviceimage" src="{{p.prodimgUrl}}" alt="Samsung Galaxy S 4 Black Mist">-->
-        <!--</div>-->
-        <!--<div class="wirefly_hp_ob_cxrlogo_container">-->
-
-            <!--<img class="wirefly_hp_ob_cxrlogo" ng-src="{{p.brandimgUrl}}" alt="Verizon Wireless Cell Phones and Rate Plans" border="0">-->
-
-        <!--</div>-->
-        <!--<div class="wirefly_hp_ob_devicename_container">-->
-            <!--<div class="wirefly_hp_ob_devicename">-->
-
-                <!--<h2 class="wirefly_hp_ob_devicename">-->
-
-                        <!--{{p.title}}-->
-
-                <!--</h2>-->
-
-            <!--</div>-->
-        <!--</div>-->
-        <!--<div class="wirefly_hp_ob_list_maincontainer">-->
-            <!--<div class="wirefly_hp_ob_list_container">-->
-
-                <!--<ul id="wirefly_hp_ob_list">-->
-                    <!--<li class="wirefly_hp_ob_list_text" ng-repeat="h in p.highlights">h</li>-->
-                <!--</ul>-->
-
-            <!--</div>-->
-        <!--</div>-->
-        <!--<div class="wirefly_hp_ob_savings_container">-->
-            <!--<div class="wirefly_hp_ob_savings" id="savings_64799">-->
-                <!--{{p.promoText}}-->
-            <!--</div>-->
-        <!--</div>-->
-        <!--<div class="wirefly_hp_ob_pricecta_container">-->
-            <!--<div class="wirefly_hp_ob_price_container" id="wirefly_pricing_64799">-->
-
-                    <!--{{p.priceNow}}-->
-
-            <!--</div>-->
-        <!--</div>-->
-        <!--<div class="wirefly_hp_ob_pricecta_container">-->
-           <!--<a ng-click="addToCartandNext(p)"><img src="//www.wirefly.com/images/Wireflyhomepage/shop_now_med.gif" alt="Shop Now" class="wirefly_hp_ob_cta" border="0"></a>-->
-
-        <!--</div>-->
+<!--<div class="row-fluid" ng-repeat="p in products">-->
+    <!--<div class="offset1 span2"><div><b>{{p.provider}}</b></div>-->
+    <!--<div><img ng-src="{{topUrl}}{{p.brandimgUrl}}" width="40" height="40"/></div></div>-->
+    <!--<div class="span4"><h3>{{p.title}}</h3><h4>{{p.desc}}</h4></div>-->
+    <!--<div class="span2">-->
+        <!--<div><b>${{p.priceNow}}</b></div>-->
+        <!--<div class="btn bv_btn-custom" ng-click="addToCartandNext(p)">Purchase</div>-->
     <!--</div>-->
 <!--</div>-->
+   <!--<div class="row-fluid">-->
+       <!--<div class="wirefly_hp_ob_outercontainer" ng-repeat="p in products">-->
+           <!--<div class="wirefly_hp_ob_container">-->
+               <!--<div class="wirefly_hp_ob_deviceimage_container">-->
+
+
+                   <!--<a ng-click="addToCartandNext(p)"  title="{{p.title}}" alt="Samsung Galaxy S 4 Mini">-->
+                       <!--<img class="wirefly_hp_ob_deviceimage" ng-src="{{topUrl}}{{p.typeUrl}}"  width="65" height="65"  alt="{{p.title}}">-->
+                   <!--</a>-->
+
+               <!--</div>-->
+               <!--<div class="wirefly_hp_ob_cxrlogo_container">-->
+
+                   <!--<img class="wirefly_hp_ob_cxrlogo" ng-src="{{topUrl}}{{p.brandimgUrl}}" width="60" height="40" alt="Verizon Wireless Cell Phones and Rate Plans" border="0">-->
+
+               <!--</div>-->
+               <!--<div class="wirefly_hp_ob_devicename_container">-->
+                   <!--<div class="wirefly_hp_ob_devicename">-->
+
+                       <!--<h2 class="wirefly_hp_ob_devicename">-->
+                           <!--<a class="wirefly_hp_ob_devicename" title="{{p.title}}" alt="{{p.title}}">-->
+                               <!--{{p.title}}-->
+                           <!--</a>-->
+                       <!--</h2>-->
+
+                   <!--</div>-->
+               <!--</div>-->
+               <!--<div class="wirefly_hp_ob_list_maincontainer">-->
+                   <!--<div class="wirefly_hp_ob_list_container">-->
+
+                       <!--<ul id="wirefly_hp_ob_list">-->
+                           <!--<li class="wirefly_hp_ob_list_text" ng-repeat="h in p.highlights">{{h}}</li>-->
+                       <!--</ul>-->
+
+                   <!--</div>-->
+               <!--</div>-->
+               <!--<div class="wirefly_hp_ob_savings_container">-->
+                   <!--<div class="wirefly_hp_ob_savings" id="savings_65441">-->
+                       <!--Original price: ${{p.priceOrig}}-->
+                   <!--</div>-->
+               <!--</div>-->
+               <!--<div class="wirefly_hp_ob_pricecta_container">-->
+                   <!--<div class="wirefly_hp_ob_price_container" id="wirefly_pricing_65441">-->
+                       <!--<a class="wirefly_hp_ob_price" id="offer_65441" href="/r.aspx?oflag=specialoffer&amp;mode=0&amp;refcode2=&amp;referringdomain=wirefly&amp;refcode1=&amp;agent=&amp;eid=&amp;zipcode=02122&amp;p1pid=65441&amp;originpage=" title="$0.99 " alt="$0.99 ">-->
+                           <!--${{p.priceNow}}-->
+                       <!--</a>-->
+
+                   <!--</div>-->
+               <!--</div>-->
+               <!--<div class="wirefly_hp_ob_pricecta_container">-->
+
+                   <!--<a style="cursor: pointer" ng-click="addToCartandNext(p)" title="Shop Now" alt="Shop Now">-->
+                       <!--<img src="/images/Wireflyhomepage/shop_now_med.gif" alt="Shop Now" class="wirefly_hp_ob_cta" border="0">-->
+                   <!--</a>-->
+
+               <!--</div>-->
+           <!--</div>-->
+       <!--</div>-->
+   <!--</div>-->
+        <!--option 2 class="specialoffer70_260_offer_block_narrow" -->
+<div class="row-fluid">
+    <div class="span4" style="display: block;max-height: 500px" ng-repeat="p in products">
+        <div class="specialoffer70_260_offer_block_narrow_top">
+            <h3 class="specialoffer70_260_offer_block_narrow_top_title">Best Offer</h3>
+
+        </div>
+        <div class="specialoffer70_260_offer_block_narrow_bottom">
+            <a href="javascript:void(0)" onclick="return _imageGalleryModal.showPhoneLine(1);">
+                <img id="ctl00_main_ucMultiplePhoneBlock_imgPhone1" class="specialoffer70_260_offer_block_narrow_phone_image" src="/images\phoneoverlays\61769__promo-overlay-visa-m.jpg" style="border-width:0px;" alt="Samsung Galaxy S III Blue" title="Samsung Galaxy S III Blue"></a>
+            <div class="specialoffer70_260_offer_block_narrow_infoblock_titles">
+                <img id="ctl00_main_ucMultiplePhoneBlock_imgManufacturer1" ng-src="{{topUrl}}{{p.brandimgUrl}}" style="border-width:0px;" alt="Samsung" title="Samsung">
+                <h2 id="lblPhoneName" class="specialoffer70_260_offer_block_narrow_infoblock_phonename">{{p.title}}</h2>
+                <h1 class="specialoffer70_260_offer_block_narrow_infoblock_price">{{p.priceNow}}</h1>
+                <h4 id="lblPhonePriceDetails" class="specialoffer70_260_offer_block_narrow_infoblock_price">ONLY this month</h4>
+                <span class="ue_launch_link"></span>
+            </div>
+            <div class="specialoffer70_260_offer_block_narrow_infoblock_notes">
+                <div id="divReviewsSnippet_Phone1" class="specialoffer70_offer_block_reviews"><div id="pr-snippet-61769-2" class="pr-snippet"><div class="pr-snippet-wrapper"><div class="pr-snippet-stars"><div title="Perfect. It doesn't get any better" style="background-position: 0px -162px;" class="pr-stars pr-stars-small pr-stars-4_5-sm">&nbsp;</div><span class="pr-snippet-rating-decimal pr-rounded">4.7</span></div><p class="pr-snippet-review-count">(42 reviews)</p><div class="pr-snippet-read-write"><div class="pr-snippet-read-reviews"><a href="javascript:var retval = _phoneDetailsModal.showPhoneLine(1, 2);" data-pr-event="snippet-read-reviews" class="pr-snippet-link" id="pr-snippet-read-link-61769">Read <span>42</span> Reviews</a></div><div class="pr-snippet-write-review"><a href="/SubmitReview3.aspx?source=online&amp;product_id=61769&amp;campaignid=112&amp;r=wirefly" data-pr-event="snippet-write-review" class="pr-snippet-link">Write a Review</a></div><div class="pr-clear"></div></div><div class="pr-clear"></div><div class="pr-snippet-social-bar"><div class="pr-clear"></div></div></div></div></div>
+                <div class="specialoffer70_offer_block_notes">
+                    <h4 class="specialoffer70_offer_block_notes_title">
+                        <a href="javascript:void(0)" id="ctl00_main_ucMultiplePhoneBlock_lblEquipmentTypeDetails1" onclick="return _phoneDetailsModal.showPhoneLine(1, eCommerce.Web.ScriptLibrary.PhoneFinder.TabType.Default);" class="specialoffer70_offer_block_a wfly_icon_note_left" title="Device Details">Device Details</a>
+                    </h4>
+                </div>
+                <div id="block_notes_video_link" style="display: " class="specialoffer70_offer_block_notes">
+                    <h4 class="specialoffer70_offer_block_notes_title_video">
+                        <a href="javascript:void(0)" onclick="return _phoneDetailsModal.showPhoneLine(1, eCommerce.Web.ScriptLibrary.PhoneFinder.TabType.Demos);" title="Video" class="specialoffer70_offer_block_a wfly_icon_video_left">Video</a></h4>
+                </div>
+                <div class="specialoffer70_offer_block_notes">
+                    <h4 class="specialoffer70_offer_block_notes_title_imagegal">
+                        <a href="javascript:void(0)" onclick="return _imageGalleryModal.showPhoneLine(1)" title="Image Gallery" class="specialoffer70_offer_block_a wfly_icon_zoom_left">Image
+                            Gallery</a></h4>
+                </div>
+            </div>
+            <div class="specialoffer70_260_offer_block_narrow_infoblock_prices">
+                <table id="tblPriceBlock1" class="specialoffer70_offer_block_price_table">
+                    <tbody><tr>
+                        <td class="specialoffer70_offer_block_price_table_head specialoffer70_offer_block_price_table_left">
+                            Item
+                        </td>
+                        <td id="tblPriceBlock_th_value1" class="specialoffer70_offer_block_price_table_head specialoffer70_offer_block_price_table_center">Value</td>
+                        <td class="specialoffer70_offer_block_price_table_head specialoffer70_offer_block_price_table_right">
+                            Price
+                        </td>
+                    </tr>
+                    <tr>
+                        <td id="lblPhonePriceBlockPhoneName" class="specialoffer70_offer_block_price_table_cell specialoffer70_offer_block_price_table_left">{{p.title}}</td>
+                        <td id="lblPhonePriceBlockValue" class="specialoffer70_offer_block_price_table_cell specialoffer70_offer_block_price_table_center"><span class="phoneValue">${{priceOrig}}</span></td>
+                        <td id="lblPhonePriceBlockPrice" class="specialoffer70_offer_block_price_table_cell specialoffer70_offer_block_price_table_right">${{p.priceNow}}</td>
+                    </tr>
+                    <tr>
+                        <td id="lblPhoneShippingMethodName" class="specialoffer70_offer_block_price_table_cell specialoffer70_offer_block_price_table_left">Standard Shipping via FedEx</td>
+                        <td class="specialoffer70_offer_block_price_table_cell specialoffer70_offer_block_price_table_center">
+                            &nbsp;
+                        </td>
+                        <td id="lblPhoneShippingPrice" class="specialoffer70_offer_block_price_table_cell specialoffer70_offer_block_price_table_right">FREE</td>
+                    </tr>
+
+                    <tr id="rptPromoItems10"><td class="specialoffer70_offer_block_price_table_cell specialoffer70_offer_block_price_table_left"><a class="specialoffer70_offer_block_a" title="Additional Details" promoid="2507" href="#">Two Free Cases With Purchase</a></td><td class="specialoffer70_offer_block_price_table_cell specialoffer70_offer_block_price_table_center"><span class="promo_dollar_value"></span><span class="promo_string_value">$70.00</span></td><td class="specialoffer70_offer_block_price_table_cell specialoffer70_offer_block_price_table_right">FREE</td></tr><tr id="rptPromoItems11"><td class="specialoffer70_offer_block_price_table_cell specialoffer70_offer_block_price_table_left"><a class="specialoffer70_offer_block_a" title="Additional Details" promoid="2552" href="#">FREE $20 VISA Gift Card With Purchase</a></td><td class="specialoffer70_offer_block_price_table_cell specialoffer70_offer_block_price_table_center"><span class="promo_dollar_value"></span><span class="promo_string_value">$20.00</span></td><td class="specialoffer70_offer_block_price_table_cell specialoffer70_offer_block_price_table_right">FREE</td></tr><tr>
+                        <td class="specialoffer70_offer_block_price_table_total_cell specialoffer70_offer_block_price_table_left"><span id="lblPhonePriceBlockItemType">Device</span> Price Today</td>
+                        <td class="specialoffer70_offer_block_price_table_total_cell specialoffer70_offer_block_price_table_center"></td>
+                        <td id="lblPhonePriceBlockPriceToday" class="specialoffer70_offer_block_price_table_total_cell specialoffer70_offer_block_price_table_right specialoffer70_260_offer_block_narrow_infoblock_price">${{p.priceNow}}</td>
+                    </tr>
+                    </tbody></table>
+            </div>
+        </div>
+    </div>
+</div>

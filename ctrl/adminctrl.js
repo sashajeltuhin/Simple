@@ -27,6 +27,10 @@ function adminctrl($scope, $rootScope, $http, $location, mkPopup, mkFilter, admi
         }
     }
 
+    $scope.editScript = function(){
+        $scope.modalTabPage = serverUrl + 'agentScript.html';
+    }
+
     $scope.showView = function(p){
         if (p.openView == undefined || p.openView == false){
             var appObj;
@@ -229,10 +233,17 @@ function adminctrl($scope, $rootScope, $http, $location, mkPopup, mkFilter, admi
         }
     }
 
+    function getChangedList(){
+        if(selected == 'step' && viewMode == 'fancy'){
+            return $scope.appElements[$scope.stepApps[0].appID];
+        }
+        return $scope.listData;
+    }
+
     $scope.saveChanges = function() {
         console.log(changedFlds);
 
-        var l = viewMode == 'grid'? changedlist: $scope.listData;
+        var l = viewMode == 'grid'? changedlist: getChangedList();
         $.each(l, function(i, item){
             if (viewMode == 'fancy'){
                 item.order = i + 1;
@@ -315,9 +326,17 @@ function adminctrl($scope, $rootScope, $http, $location, mkPopup, mkFilter, admi
 
     $scope.createStep = function(){
         selected = 'step';
-        createObj('New Flow Element');
-
+        var def = {};
+        def.type = 'cart';
+        createObj('New Flow Element', def);
     };
+
+    $scope.createWidget = function(){
+        selected = 'step';
+        var def = {};
+        def.type = 'notify';
+        createObj('New Widget', def);
+    }
 
     $scope.createQuestion = function(){
         selected = 'survey';
@@ -499,8 +518,8 @@ function adminctrl($scope, $rootScope, $http, $location, mkPopup, mkFilter, admi
             adminservice.listObj(selected, {objname:f, 'order_by':{order:1}}, $http, function(d){
                 //$scope.colData = m;
                 //$scope.listData = d;
-                $scope.wrapper = serverUrl + 'spread.html';
-                buildNGrid(m,d);//buildGrid(m, d);
+                $scope.wrapper = serverUrl + 'grid.html';
+                buildGrid(m, d);
             });
         });
     }
@@ -921,43 +940,70 @@ function adminctrl($scope, $rootScope, $http, $location, mkPopup, mkFilter, admi
         loadFancyList(serverUrl + 'sortlist.html');
     }
 
-    $scope.loadCartSteps = function(){
-        selected = 'step';
-        $scope.viewTitle = "User Flow";
-        var extra = {};
-        extra.type = 'cart';
-        extra.app = {};
+    function addActiveApp(appField){
         var c = 0;
         $.each($scope.selTen.appObjects, function(i, a){
             if (a.active === true){
-                extra.app[a.appID] = true;
+                appField[a.appID] = true;
                 c++;
             }
         });
         if (c == 0){
-            extra.app[$scope.selTen.appObjects[0].appID] = true;
+            appField[$scope.selTen.appObjects[0].appID] = true;
         }
+    }
 
+    $scope.loadCartSteps = function(){
+        selected = 'step';
+        $scope.viewTitle = "User Flow";
+        $scope.stepApps = [];
+        var extra = {};
+        extra.type = 'cart';
+        extra.app = {};
+        addActiveApp(extra.app);
         buildDefFilter(extra);
-        loadFancyList(serverUrl + 'steplist.html', function(d){
+        loadFancyList(serverUrl + 'steplisthor.html', function(d){
             //apps
             refreshSteps(d);
         });
     }
 
     function refreshSteps(d){
-        var cap = "";
+        $scope.appElements = [];
+        $scope.appWidgets = [];
         $scope.stepApps = [];
-        $.each(d, function(i, s){
-            if (cap !== s.app){
-                cap = s.app;
-                for(var ii=0; ii< $scope.selTen.appObjects.length;ii++){
-                    if ($scope.selTen.appObjects[ii].appID == s.app){
-                        $scope.stepApps.push($scope.selTen.appObjects[ii]);
-                    }
-                }
+        var apps = $scope.cleanFilter.app;
+        for(var ii=0; ii< $scope.selTen.appObjects.length;ii++){
+            if (apps.indexOf($scope.selTen.appObjects[ii].appID) !== -1){
+                $scope.stepApps.push($scope.selTen.appObjects[ii]);
             }
-        })
+        }
+        $.each(apps, function(i){
+            $scope.appElements[apps[i]] = [];
+            $scope.appWidgets[apps[i]] = [];
+            $.each(d, function(x, s){
+                if (s.type == 'cart'){
+                    $scope.appElements[apps[i]].push(s);
+                }
+                else{
+                    $scope.appWidgets[apps[i]].push(s);
+                }
+            });
+        });
+
+
+//        var cap = "";
+//        $scope.stepApps = [];
+//        $.each(d, function(i, s){
+//            if (cap !== s.app){
+//                cap = s.app;
+//                for(var ii=0; ii< $scope.selTen.appObjects.length;ii++){
+//                    if ($scope.selTen.appObjects[ii].appID == s.app){
+//                        $scope.stepApps.push($scope.selTen.appObjects[ii]);
+//                    }
+//                }
+//            }
+//        })
     }
 
     $scope.loadSegments = function(){
@@ -1017,6 +1063,35 @@ function adminctrl($scope, $rootScope, $http, $location, mkPopup, mkFilter, admi
         return list;
     }
 
+    $scope.widgetsByApp = function(app){
+        var list = [];
+        var f = {};
+        f.app = app.appID;
+        f.type = '<>cart';
+        adminservice.listObj(selected, f, $http, function(d){
+            list = d;
+        });
+
+        return list;
+    }
+
+    $scope.openStepInfo = function(step){
+        adminservice.loadMeta('step', $http, function(meta){
+            var templ = buildForm(meta);
+            $scope.obj = step;
+            mkPopup(
+                {
+                    templateUrl: serverUrl + 'stepDetail.html',
+                    //template: templ,
+                    title: 'Flow step',
+                    scope: $scope,
+                    backdrop: false,
+                    success: {label: 'Ok', fn: saveObj}
+                });
+            $scope.editScript();
+        });
+    }
+
     $scope.loadSurvey = function(){
         selected = 'survey';
         $scope.viewTitle = "Surveys";
@@ -1029,7 +1104,7 @@ function adminctrl($scope, $rootScope, $http, $location, mkPopup, mkFilter, admi
         selected = 'provider';
         $scope.viewTitle = "Providers";
         buildDefFilter();
-        loadObjNGrid();//loadObjGrid();
+        loadObjGrid();
     }
 
     $scope.loadSegmentList = function(){
@@ -1084,15 +1159,15 @@ function adminctrl($scope, $rootScope, $http, $location, mkPopup, mkFilter, admi
         $scope.viewTitle = "UI Elements";
         var extra = {};
         extra.app = {};
-        extra.app[$scope.selTen.apps[0]] = true;
+        addActiveApp(extra.app);
         buildDefFilter(extra);
-        loadObjNGrid();//loadObjGrid();
+        loadObjGrid();
     }
     $scope.loadSurveyLst = function(){
         selected = 'survey';
         $scope.viewTitle = "Surveys";
         buildDefFilter();
-        loadObjNGrid();//loadObjGrid();
+        loadObjGrid();
     }
 
     $scope.loadAppLst = function(){
@@ -1113,8 +1188,8 @@ function adminctrl($scope, $rootScope, $http, $location, mkPopup, mkFilter, admi
         selected = 'consumer';
         $scope.viewTitle = "Consumers";
         buildDefFilter();
-        loadObjNGrid();
-//        loadObjGrid();
+        //loadObjNGrid();
+        loadObjGrid();
     }
 
     function loadFancyList(wrap, onload){
@@ -1330,6 +1405,17 @@ function adminctrl($scope, $rootScope, $http, $location, mkPopup, mkFilter, admi
           }
         });
 
-
     }
+    $scope.openCallCenter = function(){
+        $scope.viewTitle = "Call Center";
+
+        hideGrid();
+
+        $scope.masterTmpl = rootUrl +'/'+ "cctmpl.html";
+
+        $scope.filterOpen = false;
+        $scope.wrapper = serverUrl + 'flow.html';
+    }
+
+
 }

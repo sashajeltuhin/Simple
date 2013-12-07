@@ -1,0 +1,32 @@
+<h1><b>{{step.prompt}}</b></h1>
+<table class="soa-table treatment-3" border="0" cellpadding="0" cellspacing="40" width="689">
+
+    <tbody> <tr  style="margin-bottom: 40px;"> <td class="soa-tabletext-head" align="left" valign="middle" width="332">Here are some questions for you
+    </td> <td class="soa-tabletext-head" align="center" valign="middle" width="193">Tell us<br><i style="FONT-SIZE:
+
+10px; FONT-WEIGHT: normal">(This would really help)</i>
+
+    </td> </tr>  <tr ng-repeat="q in listData" style="margin-bottom: 40px;"> <td class="soa-tabletext" align="left">{{q.label}}</td>
+
+        <td ng-class="{'soa-tabletext tick': q.yes, 'soa-tabletext red': !q.yes}" align="center" ng-click="toggleAnswer(q)"> {{ q.yes && '✓' || '?' }}
+
+        </td> </tr></tbody></table>
+
+<div class="clearer h20">&nbsp;</div>
+
+<div class="row">
+    <div class="col-xs-2"><a ng-click="next()" class="btn btn-small btn-block uppercase"><span>Show me products</span></a></div>
+</div>
+
+<div class="clearer h20">&nbsp;</div>
+
+<div class="clearer h20">&nbsp;</div>
+<div class="clearer h20">&nbsp;</div>
+<div class="clearer h20">&nbsp;</div>
+
+        Test
+
+<!--class="soa-tabletext tick"-->
+<!--<td class="soa-tabletext red" align="center">x-->
+
+<!--</td>-->

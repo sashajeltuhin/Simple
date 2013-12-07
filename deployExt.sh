@@ -14,15 +14,16 @@ cp -fv simple/$3 $1/manifest.json
 cp -rfv simple/assets $1/assets
 cp -rfv simple/ctrl $1/ctrl
 cp -rfv simple/dir $1/dir
+cp -rfv simple/css $1/css
 cp -rfv simple/js $1/js
 cp -rfv simple/mods $1/mods
 cp -rfv simple/service $1/service
 cp -rfv simple/templ $1/templ
 
-cd $1
-sed -i '' "s/localhost/$4/g" *.js
-cd mods
-sed -i '' "s/localhost/$4/g" *.js
-cd ../templ
-sed -i '' "s/localhost/$4/g" *.html
+#cd $1
+#sed -i '' "s/localhost/$4/g" *.js
+#cd mods
+#sed -i '' "s/localhost/$4/g" *.js
+#cd ../templ
+#sed -i '' "s/localhost/$4/g" *.html
 

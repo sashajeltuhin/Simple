@@ -1,6 +1,6 @@
 <div ui-sortable="sortableOptions" ng-model="listData" class="span6">
     <div class="row-fluid"  ng-repeat="p in listData" ng-class-odd="'odd_row'" ng-class-even="'even_row'">
-        <div class="span2"><img src="{{p.logo}}"  width="40" height="40"/></div>
+        <div class="span2"><img ng-src="{{topUrl}}{{p.logo}}"  width="40" height="40"/></div>
         <div class="span4"><h3>{{p.name}}</h3></div>
         <div class="offset3 span1"><p>Active</p><input type="checkbox" ng-model="p.active"></div>
     </div>

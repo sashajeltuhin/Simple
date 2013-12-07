@@ -56,7 +56,7 @@ angular.module('cart').factory('mkPopup', ["$document", "$compile", "$rootScope"
             //We don't have the scope we're gonna use yet, so just get a compile function for modal
             var modalEl = angular.element(
                 '<div class="' + options.modalClass + ' fade"' + idAttr + '>' +
-                    '  <div class="modal-header">' +
+                    '  <div class="modal-header" style="cursor: pointer">' +
                     '    <button type="button" class="close" ng-click="$modalCancel()">&times;</button>' +
                     '    <h2>{{$title}}</h2>' +
                     '  </div>' +
@@ -116,6 +116,7 @@ angular.module('cart').factory('mkPopup', ["$document", "$compile", "$rootScope"
             $compile(modalEl)(scope);
             $compile(backdropEl)(scope);
             body.append(modalEl);
+            modalEl.draggable();
             if (options.backdrop) body.append(backdropEl);
 
             $timeout(function () {

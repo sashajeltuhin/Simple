@@ -1,9 +1,9 @@
-<div class="coa-row" style="padding: 8px,80px">
+<div class="pull-left w600">
 
     <p ng-click="reloadProds()" style="cursor: pointer"><strong> Results </strong> for {{c.address1}}, {{c.city}} {{c.state}} {{c.zip}}</p>
 
     <div class="row gradient-container">
-        <div class="gradient-item clearfix" style="margin-left: 40px">
+        <div class="gradient-item clearfix">
             <div class="col-xs-4" style="padding-top:10px;">{{emailPrompt}}</div>
             <div class="col-xs-5"><input type="text" class="form-control mb0" placeholder="enter email address" ng-model="c.email" ng-hide="emailed"></div>
             <div class="col-xs-3"><button class="btn btn-style1 uppercase" ng-click="emailList()" ng-hide="emailed">Submit</button></div>
@@ -11,7 +11,7 @@
     </div>
 
     <div class="row gradient-container" ng-repeat="p in products">
-        <div class="box-1 gradient-item clearfix">
+        <div class="box-1 gradient-item clearfix" ng-style="{zoom: !p.point && '100%' || '150%'}">
             <div class="col-xs-3"><div><span><img ng-src="{{topUrl}}{{p.brandimgUrl}}" width="88" height="31"></span></div></div>
             <div class="col-xs-6">
                 <h3 class="fld" data-content="product.title">{{p.title}}</h3>
@@ -24,6 +24,8 @@
                 <div class="price text-center"><strong>${{p.priceNow}}</strong>/mo</div>
                 <div class="clearer h10">&nbsp;</div>
                 <a ng-click="addToCartandNext(p)" class="btn btn-primary btn-block uppercase">Select</a>
+                <div class="clearer h10">&nbsp;</div>
+                <a ng-click="highlight(p)" class="btn btn-primary btn-block uppercase">Point out</a>
             </div><!-- .col -->
         </div><!-- /box-1 -->
         <div class="pull-left w600" ng-show="p.openDetail">

@@ -1,0 +1,663 @@
+body {
+    font: 11px/18px Verdana, Helvetica, Arial, sans-serif;
+    background: #fff;
+    color: #000;
+    margin: 0 0 0 0 !important;
+    padding: 0;
+    min-width: 1000px;
+}
+
+
+/********* BEGIN WIREFLY HEADER AND FOOTER *************/
+
+.lego20_flexi_wirefly_navigation_tabs{
+    position: relative;
+    margin: 0;
+    padding: 0;
+    clear: both;
+    text-align: left;
+    width: 100%;
+    z-index: 34;
+}
+
+
+/*** Header ******************************************************************/
+/*** Header - Topzone ********************************************************/
+.lego20_flexi_wirefly_navigation_tabs_topzone {
+    position: relative;
+    /* prn 46430 margin: 0; */
+    margin: 10px auto;
+    padding: 0;
+    width: 100% !important;
+    /* prn 46430 */
+    max-width:1020px;
+    min-width:1020px;
+}
+
+.lego20_flexi_wirefly_navigation_tabs_topzone_left img
+{
+    float:left;
+    height:65px;
+    /* prn 44630 */
+    padding:0 0 0 16px;
+    margin:0;
+}
+
+.lego20_flexi_wirefly_navigation_tabs_topzone_banner_ad
+{
+    margin:0 auto;
+    width:565px;
+    z-index:35;
+    /* prn 44630 */
+    padding-left:11px;
+}
+
+.lego20_flexi_wirefly_navigation_tabs_topzone_right img
+{
+    float: right;
+    /* prn 46430 padding: 23px 55px 0 0; */
+    padding: 0px 18px 0 0;
+}
+
+
+/*** Header - Tabzone ********************************************************/
+.lego20_flexi_wirefly_navigation_tabs_tabzone {
+    position: relative;
+    margin: 0;
+    padding: 0;
+    clear: both;
+    text-align: center;
+    width: 100%;
+    background: url(/images/tabs_r1_c1.jpg) repeat-x;
+    height: 40px;
+    overflow: visible;
+    white-space:nowrap;
+    top: 3px; /* ??? */
+}
+
+.lego20_flexi_wirefly_navigation_tabs_tabzone_inner {
+    background:transparent url(/images/tabs_r1_c1.jpg) repeat-x scroll 0 0;
+    position: relative;
+    margin: 0 auto 0 auto;
+}
+
+.lego20_flexi_wirefly_navigation_tabs_tabzone_inner_tab {
+    position: relative;
+    margin: 0;
+    padding: 0;
+    display: inline;
+}
+
+.lego20_flexi_wirefly_navigation_tabs_sform {
+    position: relative;
+    margin: 0;
+    padding: 0;
+    font-size: 10px;
+    line-height: 10px;
+    top: 4px;
+    width: 230px;
+    height: 36px;
+    overflow: hidden;
+    float: left;
+    left: 5px;
+}
+
+/*** Header - Underzone ********************************************************/
+.lego20_flexi_wirefly_navigation_tabs_underzone {
+    position: relative;
+    clear: both;
+    margin: 0;
+    padding: 0;
+    background: url(/images/grey_bottom_bar.jpg) repeat-x;
+    height: 36px;
+    overflow: hidden;
+    top:3px;
+}
+
+.lego20_flexi_wirefly_navigation_tabs_underzone_nest
+{
+    width: 976px;
+    margin: 0 auto;
+}
+
+.lego20_flexi_wirefly_navigation_tabs_sform_container
+{
+    margin: 0;
+    padding: 5px 0 0 0;
+    float: left;
+    font-size: 10px;
+    width: 300px;
+}
+
+.lego20_flexi_wirefly_navigation_tabs_sform_textinput, .lego20_flexi_wirefly_navigation_tabs_sform_gobtn {
+    position: relative;
+    padding: 0;
+    margin: 0;
+    border-width: 1px;
+    background: white;
+    color: #333;
+}
+
+.lego20_flexi_wirefly_navigation_tabs_sform_textinput {
+    position: relative;
+    width: 140px;
+    margin: 0;
+    top: 0px;
+    padding: 0;
+    border: 1px solid black;
+    height: 16px;
+    font-size: 12px;
+    line-height: 12px;
+}
+
+.lego20_flexi_wirefly_navigation_tabs_sform_gobtn {
+
+    position: relative;
+    margin: 0px 0 0 0;
+    padding: 0;
+    top: 3px;
+}
+
+.lego20_flexi_wirefly_navigation_tabs_sform_label {
+    color: #fff;
+    font-weight: bold;
+    font-family:Verdana;
+    font-size:10px;
+    text-decoration:none;
+    color: #333;
+}
+
+
+
+.lego20_flexi_wirefly_navigation_tabs_underzone_tabbar_list {
+    position: relative;
+    float: right;
+    width: 575px;
+    height: 28px;
+    overflow: hidden;
+    color:#333;
+    text-align: right;
+    padding: 0;
+    /* prn 46430 */
+    left:10px;
+}
+
+.lego20_flexi_wirefly_navigation_tabs_underzone_tabbar_ul {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+
+.lego20_flexi_wirefly_navigation_tabs_underzone_tabbar_li {
+    margin: 0;
+    float: right;
+    list-style-type: none;
+    padding: 5px;
+    color:#333;
+}
+
+.lego20_flexi_wirefly_navigation_tabs_underzone_tabbar_img {
+    margin-right: 4px;
+}
+
+.lego20_flexi_wirefly_navigation_tabs_underzone_tabbar_a {
+    color:#333;
+    font-weight: bold;
+    font-family:Verdana;
+    font-size:10px;
+    text-decoration:none;
+}
+.lego20_flexi_wirefly_navigation_tabs_underzone_tabbar_a:link {
+    color:#333;
+    font-weight: bold;
+    font-family:Verdana;
+    font-size:10px;
+    text-decoration:none;
+}
+.lego20_flexi_wirefly_navigation_tabs_underzone_tabbar_a:visited {
+    color:#333;
+    font-weight: bold;
+    font-family:Verdana;
+    font-size:10px;
+    text-decoration:none;
+}
+.lego20_flexi_wirefly_navigation_tabs_underzone_tabbar_a:hover {
+    color:#333;
+    text-decoration: underline;
+    font-weight: bold;
+    font-family:Verdana;
+    font-size:10px;
+    text-decoration:underline;
+}
+
+
+#chatTab
+{
+    padding-left:5px;
+}
+#chatTab a
+{
+    color: #224F82;
+    text-decoration: underline;
+    padding: 0 1px;
+}
+
+/** Menus ******************************************************/
+#menu_container_976
+{
+    width: 925px;
+    height: auto;
+    margin: auto;
+    overflow:visible;
+    padding: 0;
+    z-index: 1000;
+}
+
+#sddm
+{	margin: 0;
+    padding: 0;
+    z-index: 1000;
+}
+
+#sddm li
+{	margin: 0;
+    padding: 0;
+    list-style: none;
+    float: left;
+    font-size: 11px;
+    font-weight: normal;
+    font-family: Arial;
+    height: auto;
+    z-index: 1000;
+}
+
+#sddm li a
+{	display: block;
+    margin: 0 0 0 0;
+    width: auto;
+    color: #FFFFFF;
+    text-align: center;
+    text-decoration: none;
+    font-family: Arial;
+    z-index: 1000;
+}
+
+#sddm li h2
+{	display: block;
+    margin: 0 0 0 0;
+    xpadding: 8px 20px;
+    width: auto;
+    color: #224F82;
+    text-align: center;
+    text-decoration: none;
+    font-family: Arial;
+    font-size: 14px;
+    z-index: 1000;
+}
+
+
+#sddm li a:hover
+{	color: #000000;
+    z-index: 1000;
+}
+
+#sddm div
+{
+    position: absolute;
+    visibility: hidden;
+    margin: 0;
+    margin-top: 1px;
+    padding: 0;
+    background: #F1F1F1;
+    border-left: 4px solid #D8D8D8;
+    border-right: 4px solid #D8D8D8;
+    border-bottom: 4px solid #D8D8D8;
+    z-index: 1000;
+}
+
+#sddm div a
+{	position: relative;
+    display: block;
+    margin: 0;
+    padding: 3px 10px;
+    width: auto;
+    white-space: nowrap;
+    text-align: left;
+    text-decoration: none;
+    background: #F1F1F1;
+    color: #003399;
+    font-size: 11px;
+    font-weight: normal;
+    font-family: Arial;
+    z-index: 1000;
+    border-bottom:1px solid #E0E0E0;
+}
+#sddm div a:hover
+{	background: #224F82;
+    color: #fff;
+    z-index: 1000;
+}
+#sddm div hr
+{	color: #003399;
+    width: 95%;
+    z-index: 50000;
+}
+
+#m2
+{
+    width:190px;
+}
+
+#m1
+{
+    width:170px;
+}
+
+#m7
+{
+    top:40px\9;
+}
+
+#m9
+{
+    top:40px\9;
+}
+
+
+/*** Footer  ********************************************************/
+.lego20_flexi_wirefly_footer{
+    position: relative;
+    margin-top: 10px;
+    padding: 0;
+    clear: both;
+    text-align: center;
+    width: 100%;
+    z-index: 0;
+}
+
+.lego20_flexi_wirefly_footer_navi {
+    position: relative;
+    margin: 0;
+    padding: 0;
+    clear: both;
+    text-align: center;
+    background: url(/images/tabs_r1_c1-GREY.jpg) repeat-x;
+    height: 40px;
+    overflow: visible;
+    min-width:990px;
+    white-space:nowrap;
+    padding-top:1px;
+    border:1px solid #c4c4c4;
+}
+
+.lego20_flexi_wirefly_footer_navi:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+}
+
+.lego20_flexi_wirefly_footer_navi_inner {
+    position: relative;
+    margin: 0 auto 0 auto;
+}
+
+.lego20_flexi_wirefly_footer_navi_inner_list_ul {
+    position: relative;
+    height: 40px;
+    padding: 0;
+    margin: 12px 0 12px 0;
+    height: 16px;
+    overflow: hidden;
+    font-size: 12px!important;
+    font-family:arial!important;
+}
+
+.lego20_flexi_wirefly_footer_navi_inner_list_li, .lego20_flexi_wirefly_footer_navi_inner_list_li_ichi
+{
+    position: relative;
+    padding: 0 15px 0 15px;
+    margin: 0;
+    display: inline;
+    color: #666;
+    font-size: 12px!important;
+    font-family:arial!important;
+    line-height: 16px;
+    font-weight: bold;
+    height: 16px;
+}
+
+.lego20_flexi_wirefly_footer_navi_inner_list_li {
+    border-left: 1px solid #c4c4c4;
+}
+
+.lego20_flexi_wirefly_footer_navi_inner_item {
+    color: #666!important;
+    text-decoration: none;
+}
+a.lego20_flexi_wirefly_footer_navi_inner_item
+{
+    color: #666!important;
+    text-decoration: none;
+}
+.lego20_flexi_wirefly_footer_navi_inner_item a:active
+{
+    color: #666!important;
+    text-decoration: none;
+}
+.lego20_flexi_wirefly_footer_navi_inner_item a:visited
+{
+    color: #666!important;
+    text-decoration: none;
+}
+.lego20_flexi_wirefly_footer_navi_inner_item:hover
+{
+    color:#666!Important;
+    text-decoration: underline;
+}
+
+#chatTab
+{
+    padding-left:5px;
+}
+#chatTab a
+{
+    color: #224F82;
+    text-decoration: underline;
+    padding: 0 1px;
+}
+
+/***prn 38894***/
+.social_media_div
+{
+    padding-top:20px;
+}
+.social_media_div a, .social_media_div a:visited
+{
+    text-decoration:none;
+}
+.social_media_div img
+{
+    line-height:50px;
+    margin :5px 2px 0px 0px !important;
+}
+/***prn 38894***/
+
+/**PRN 42928 ***/
+#footerColumnContainer li { color:#00488C; font-weight:bold; font-size:13px; font-family:arial,helvetica,sans-serif; line-height:16px;}
+#footerColumnContainer a { color:Gray; font-weight:normal; font-size:11px; font-family:Arial,helvetica,sans-serif; line-height:16px; text-decoration:none!important;}
+#footerColumnContainer a:hover { text-decoration:underline; }
+
+#footerColumnContainer
+{
+    clear:both;
+    margin:0;
+    padding:0;
+    position:relative;
+    text-align:left;
+    width:100%;
+    height:220px;
+    width:740px;
+    margin-top:30px;
+}
+#footerColumn1 {
+    position: absolute;
+    left:5px;
+    width:190px;
+    text-align:left;
+}
+#footerColumn2 {
+    position: absolute;
+    left: 205px;
+    width: 190px;
+    text-align: left;
+}
+#footerColumn3
+{
+    position: absolute;
+    left: 405px;
+    width: 190px;
+    text-align: left;
+}
+#footerColumn4
+{
+    position: absolute;
+    left: 605px;
+    width: 190px;
+    text-align: left;
+}
+/*** PRN 42928 ***/
+/********* END WIREFLY HEADER AND FOOTER *************/
+
+
+/* PRN 47297 */
+.specialoffer70_250_plan_box_h4
+{
+    color:#000000;
+    padding-top: 15px;
+    padding-left: 25px;
+    margin:0 0 0 0;
+}
+
+.plan_box_button h2 { padding-left: 35px }
+.plan_box_button { height:24px; width: 100px; }
+.plan_box_button h2.shorttext {  padding-top:5px; font-weight:normal; }
+.plan_box_button h2.longtext {  padding-top:5px; font-weight:normal; }
+
+.plan_box_button_on
+{
+    background: url(/images/sohome/PlanType-Button-On.png) no-repeat;
+    margin-left: 20px;
+}
+
+.plan_box_button_off
+{
+    background: url(/images/sohome/PlanType-Button-Off.png) no-repeat; color: #fff !important;
+    color:#000000;
+    margin-left:20px;
+}
+
+.plan_box_button_off h2 { color:#000000; }
+
+#divPlanType
+{
+    background:url("/images/sohome/specialOffer70_plan_box_plantype_option_bk.png") no-repeat scroll center bottom transparent;
+    height:auto;
+    padding-bottom:25px;
+}
+
+#h4AlreadyHaveAPlan
+{
+    margin-top:-5px;
+    *margin-top:0px;
+}
+
+#h4NewPlan
+{
+    background:url("/images/sohome/specialOffer70_plan_box_plantype_option_bk.png") no-repeat scroll center top transparent;
+}
+
+.specialoffer70_250_plan_box_top
+{
+    *overflow:visible;
+}
+/* fix bug 3512 prn 47297 */
+.specialoffer70_780_527-250_floaty_right, .specialoffer70_250_plan_box
+{
+    overflow:visible;
+}
+
+#divCustomizePlanOption h4
+{
+    color:#1D5590;
+}
+
+#divPlanOptionsNameAndHighlights
+{
+    height: auto;
+}
+
+/* IE6 */
+.specialoffer70_780_527-250_floaty
+{
+    _width:790px;
+}
+
+.shorttext
+{
+    _width:180px !important;
+    _padding-left:30px !important;
+
+}
+
+.longtext
+{
+    _width:180px !important;
+    _padding-left:30px !important;
+
+}
+
+.specialoffer70_250_plan_box_plantype_option_top
+{
+
+    _width:233px !important;
+}
+
+.specialoffer70_250_plan_box_plantype_option
+{
+    _width:233px !important;
+}
+
+#divPlanType
+{
+    _height:50px;
+}
+
+
+/* END PRN 47297*/
+
+#ctl00_partnerHeader_pageHeader_hdr_templates_wirefly_aAccessoryLink_wirefly {*height:40px;}
+
+/*PRN 65905*/
+.certifications{padding:10px 25px;}
+
+/*PRN 65905 end*/
+
+/*PRN 71307*/
+.custHelp {
+    width: 150px;
+}
+
+.custHelp a, .custHelp a:visited, .custHelp a:hover {
+    color: #000;
+}
+
+#customer_support_content_aspx .custHelp,
+#customer_support_login_aspx .custHelp,
+#customer_support_orderreceipt_aspx .custHelp,
+#customer_support_orderstatus_aspx .custHelp,
+#customer_support_ordertransition_aspx .custHelp,
+#customer_support_proratereceipt_aspx .custHelp,
+#customer_support_survey_aspx .custHelp
+{display:none;}

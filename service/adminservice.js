@@ -15,8 +15,14 @@ angular.module('cart').factory('adminservice', function($q) {
         fieldCache = {};
     }
 
+    service.resetCacheObj = function(obj){
+        if (cache[obj] !== undefined){
+        cache[obj] = null;
+        }
+    }
+
     service.loadMeta = function(obj, $http, callback){
-        if (cache[obj] == undefined){
+        if (cache[obj] == undefined || cache[obj] == null){
             var f = {objname : obj, 'order_by':{order:1}};
             $http.post(serverUrl + '/fields/list', f).success(function (data)
             {
@@ -78,6 +84,9 @@ angular.module('cart').factory('adminservice', function($q) {
     service.saveObj = function(fld, obj, $http, callback){
         $http.post(serverUrl + '/' + obj + '/update', fld).success(function (data) {
             callback(data);
+            if (obj == 'fields'){
+                service.resetCacheObj(fld.objname);
+            }
         });
     };
 
