@@ -1,4 +1,4 @@
-function adminctrl($scope, $rootScope, $http, $location, mkPopup, mkFilter, adminservice, cartservice){
+function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFilter, adminservice, cartservice){
 
     $scope.logo = "Admin";
     var grid = null;
@@ -18,38 +18,6 @@ function adminctrl($scope, $rootScope, $http, $location, mkPopup, mkFilter, admi
 
     start();
 
-    $scope.editScript = function(p){
-        if (p.editscript == undefined){
-            p.editscript = true;
-        }
-        else{
-            p.editscript = !p.editscript;
-        }
-    }
-
-    $scope.editScript = function(){
-        $scope.modalTabPage = serverUrl + 'agentScript.html';
-    }
-
-    $scope.showView = function(p){
-        if (p.openView == undefined || p.openView == false){
-            var appObj;
-            $.each($scope.selTen.appObjects, function(i, a){
-                if (a.appID === p.app){
-                    appObj = a;
-                }
-            });
-            cartservice.setAppObj(appObj);
-            cartservice.setSingleTempl(p.name);
-            $scope.masterTmpl = appObj.template;
-        }
-        if (p.openView == undefined){
-            p.openView = true;
-        }
-        else{
-            p.openView = !p.openView;
-        }
-    }
 
     $scope.toggleFilter = function(){
         $scope.filterOpen = !$scope.filterOpen;
@@ -169,8 +137,22 @@ function adminctrl($scope, $rootScope, $http, $location, mkPopup, mkFilter, admi
     }
 
     $scope.deleteStep = function(s){
-        adminservice.deleteObj(s, 'step', $http, function(){
-               refreshData();
+        $scope.obj = s;
+        mkPopup(
+            {
+                template: '<div>Delete ' + s.title + '?</div>',
+                title: 'Warning',
+                scope: $scope,
+                backdrop: false,
+                success: {label: 'OK', fn: delStep},
+                cancel: {label: 'No'}
+            });
+
+    }
+
+    function delStep(){
+        adminservice.deleteObj($scope.obj, 'step', $http, function(){
+            refreshData();
         } );
     }
 
@@ -379,10 +361,10 @@ function adminctrl($scope, $rootScope, $http, $location, mkPopup, mkFilter, admi
 
     };
 
-    $scope.editStep = function(s){
-        selected = 'step';
-        editObj(s.title, s);
-    }
+//    $scope.editStep = function(s){
+//        selected = 'step';
+//        editObj(s.title, s);
+//    }
 
     $scope.editSegment = function(s){
         selected = 'segment';
@@ -1076,20 +1058,46 @@ function adminctrl($scope, $rootScope, $http, $location, mkPopup, mkFilter, admi
     }
 
     $scope.openStepInfo = function(step){
-        adminservice.loadMeta('step', $http, function(meta){
-            var templ = buildForm(meta);
             $scope.obj = step;
             mkPopup(
                 {
                     templateUrl: serverUrl + 'stepDetail.html',
                     //template: templ,
-                    title: 'Flow step',
+                    title: 'Flow step ' + step.title,
                     scope: $scope,
                     backdrop: false,
+                    css: {
+                        top: '100px',
+                        left: '10%',
+                        width: '80%',
+                        margin: 'auto'
+                    },
                     success: {label: 'Ok', fn: saveObj}
                 });
-            $scope.editScript();
+            $scope.editStep();
+    }
+
+    $scope.editScript = function(){
+        $scope.modalTabPage = serverUrl + 'agentScript.html';
+    }
+
+    $scope.editStep = function(){
+        adminservice.loadMeta('step', $http, function(meta){
+            $scope.modalTabPage = serverUrl + 'stepProps.html';
+            $scope.propsEl = buildForm(meta);
         });
+
+    }
+
+    $scope.showTemplate = function(){
+        var appObj;
+        $.each($scope.selTen.appObjects, function(i, a){
+            if (a.appID === $scope.obj.app){
+                appObj = a;
+            }
+        });
+        $scope.modalTabPage = serverUrl + 'stepTmpl.html';
+        $scope.masterTmpl = appObj.template;
     }
 
     $scope.loadSurvey = function(){
@@ -1176,7 +1184,7 @@ function adminctrl($scope, $rootScope, $http, $location, mkPopup, mkFilter, admi
         var extra = {};
         extra.tenant = $scope.selTen.name;
         buildDefFilter(extra);
-        loadObjNGrid();//loadObjGrid();
+        loadObjGrid();
     }
     $scope.loadTenantLst = function(){
         selected = 'tenant';

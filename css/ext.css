@@ -220,7 +220,15 @@ h4.style4 {
     height:50px;
     background:#FFF;
     margin:40px auto;
+
+}
+.stepboxnum{
+    position: relative;
+    font-size: 2em;
+    float: left;
     cursor: pointer;
+    margin-left: -5px;
+    margin-top: -10px;
 }
 
 .stepbox h4{
@@ -228,7 +236,13 @@ h4.style4 {
     position:relative;
     top:2px;
 }
-
+.stepdel{
+    position: relative;
+    float: right;
+    margin-right: -3px;
+    margin-top: -5px;
+    cursor: pointer;
+}
 .effectStep
 {
     position:relative;
