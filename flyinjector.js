@@ -24,11 +24,11 @@ $(document).ready(function(){
         console.log(cont);
         if (cont.length > 0){
             cont.replaceWith($('<img id="bv_etx_srch" src="/images/storefront50/navigation/Submit-Order.jpg" style="cursor: pointer;width: 147px;height: 33px">'));
-            var banner = $('<div id="bv_banner" class="specialoffer70_offers_add-a-line_button" style="display: block;">Birdgevine banner goes here</div>');
-            banner.insertAfter($('#ctl00_main_ucAddALineButton_pnlAddALineButton'));
-            banner.click(function(){
-                launch();
-            });
+//            var banner = $('<div id="bv_banner" class="specialoffer70_offers_add-a-line_button" style="display: block;">Birdgevine banner goes here</div>');
+//            banner.insertAfter($('#ctl00_main_ucAddALineButton_pnlAddALineButton'));
+//            banner.click(function(){
+//                launch();
+//            });
 
             $('#bv_etx_srch').click(function(){
                 launch();
@@ -37,6 +37,19 @@ $(document).ready(function(){
 
         function launch(){
             c.zip = $('input[name="ctl00$modalWindows$ucChangeZipModal$modal__control_specialoffer_changezipmodal$txtZip"]').val();
+            c.leadprodcat = $('#ctl00_main_ucIndividualPhoneBlock_lblPhoneName').html();
+            var price = $('#ctl00_main_ucIndividualPhoneBlock_ucPhonePriceBlock_lblPhonePriceToday').html();
+
+            if (price.indexOf('$') !== -1){
+                price = price.replace('$', '');
+            }
+            if (price.indexOf(',') !== -1){
+                price = price.replace(',', '');
+            }
+
+            var num = Number(price);
+            c.leadprodprice = num;
+
             console.log("launching cart app");
             console.log("zip: " + c.zip);
             var flyheader = $('#ctl00_partnerHeader_pageHeader_pnlContent');

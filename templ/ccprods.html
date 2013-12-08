@@ -11,9 +11,9 @@
     </div>
 
     <div class="row gradient-container" ng-repeat="p in products">
-        <div class="box-1 gradient-item clearfix" ng-style="{zoom: !p.point && '100%' || '150%'}">
+        <div class="box-1 gradient-item clearfix">
             <div class="col-xs-3"><div><span><img ng-src="{{topUrl}}{{p.brandimgUrl}}" width="88" height="31"></span></div></div>
-            <div class="col-xs-6">
+            <div class="col-xs-6"  ng-style="{zoom: !p.point && '100%' || '150%'}">
                 <h3 class="fld" data-content="product.title">{{p.title}}</h3>
                 <ul class="bullet-1 deals-list-item">
                     <li ng-repeat="h in p.highlights">{{h}}</li>
@@ -21,9 +21,11 @@
                 <div><i class="icon-angle-right"></i> &nbsp; <a ng-click="showDetail(p)" class="deals-list-item">{{p.lblDetails}}</a></div>
               </div><!-- .col -->
             <div class="col-xs-3">
-                <div class="price text-center"><strong>${{p.priceNow}}</strong>/mo</div>
+                <div class="price text-center"  ng-style="{zoom: !p.point && '100%' || '150%'}"><strong>${{p.priceNow}}</strong>/mo</div>
                 <div class="clearer h10">&nbsp;</div>
                 <a ng-click="addToCartandNext(p)" class="btn btn-primary btn-block uppercase">Select</a>
+                <div class="clearer h10">&nbsp;</div>
+                <a ng-click="reveal(p)" class="btn btn-primary btn-block uppercase">{{ p.visible && 'Hide' || 'Show' }}</a>
                 <div class="clearer h10">&nbsp;</div>
                 <a ng-click="highlight(p)" class="btn btn-primary btn-block uppercase">Point out</a>
             </div><!-- .col -->
