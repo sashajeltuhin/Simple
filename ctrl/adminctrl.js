@@ -1201,7 +1201,7 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
         selected = 'tenant';
         $scope.viewTitle = "Tenants";
         buildDefFilter();
-        loadObjNGrid();//loadObjGrid();
+        loadObjGrid();
     }
     $scope.loadConsumerLst = function(){
         selected = 'consumer';
@@ -1433,7 +1433,7 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
 
         hideGrid();
 
-        $scope.masterTmpl = rootUrl +'/'+ "cctmpl.html?tenant=" + $scope.selTen.name + '&agent=agent777';
+        $scope.masterTmpl = rootUrl +'/'+ "cctmpl.html?tenant=" + $scope.selTen.name + '&agent=sasha';
 
         $scope.filterOpen = false;
         $scope.wrapper = serverUrl + 'flow.html';

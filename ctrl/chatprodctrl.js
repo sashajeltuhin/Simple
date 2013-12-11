@@ -25,7 +25,8 @@ function chatprodctrl($scope, $rootScope, $http, $location, cartservice){
     $scope.$on("EV_PROD_HIDE", function(event, p){
         $.each($scope.products, function(i, prod){
             if (prod._id === p._id){
-                $scope.products.remove(i);
+                $scope.products.splice(i, 1);
+                $scope.$apply();
                 return;
             }
         });

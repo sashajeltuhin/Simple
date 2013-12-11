@@ -77,15 +77,19 @@ function agentctrl($scope, $rootScope, $http, $location, cartservice){
         updateCartTotal();
         cartservice.getSocket().on('feedback', function (action) {
                 console.log("client feedback:");
-                console.log(data);
-                if (data.action == 'iam'){
+                console.log(action);
+                if (action.name == 'iam'){
                     $scope.c = cartservice.getCustomer();
-                    for(var key in data.obj){
-                        $scope.c[key] = data.obj[key];
+                    for(var key in action.obj){
+                        $scope.c[key] = action.obj[key];
                     }
-                    cartservice.updateCustomer();
+                    cartservice.updateCustomer(function(c){
+                        $scope.c = cartservice.getCustomer();
+                        $scope.$apply();
+                    });
                 }
             if (action.name == 'EV_PRODUCT_SELECTED'){
+                console.log("client calls :" +  action.name);
                 $scope.$broadcast(action.name, action.obj);
             }
         });

@@ -9,7 +9,8 @@ function shadowctrl($scope, $rootScope, $http, $location, cartservice){
     $scope.scriptopen = false;
     $scope.cp = cartservice.getProdsInCart();
     $scope.c = cartservice.getCustomer();
-    $scope.agent = "Unassigned";
+    $scope.agent = "about to join you";
+    $scope.started = false;
 
     $scope.stats = {};
     $scope.hasproducts = false;
@@ -89,10 +90,15 @@ function shadowctrl($scope, $rootScope, $http, $location, cartservice){
         if (action.name == 'welcome'){
             $scope.agent = action.obj.agent;
             $scope.tenant = action.obj.tenant;
-            $scope.c = cartservice.getCustomer();
-            $scope.$apply();
-            $scope.start($scope.c.zip, $scope.c, $scope.tenant, false);
-            cartservice.getSocket().emit('feedback', buildChatAction('iam', $scope.c));
+            cartservice.listObj('tenant', {name: $scope.tenant}, $http, function(t){
+                $scope.started = true;
+                $scope.tenantObj = t;
+                $scope.c = cartservice.getCustomer();
+                $scope.$apply();
+                $scope.start($scope.c.zip, $scope.c, $scope.tenant, false);
+                cartservice.getSocket().emit('feedback', buildChatAction('iam', $scope.c));
+            });
+
         }
     });
 

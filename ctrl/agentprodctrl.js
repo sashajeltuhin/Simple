@@ -1,4 +1,4 @@
-function prodctrl($scope, $rootScope, $http, $location, cartservice){
+function agentprodctrl($scope, $rootScope, $http, $location, cartservice){
     $scope.topUrl = topUrl;
     $scope.emailed = false;
     $scope.emailPrompt = "EMAIL ME THE RESULTS";
@@ -47,12 +47,16 @@ function prodctrl($scope, $rootScope, $http, $location, cartservice){
     });
 
     $scope.$on("EV_PRODUCT_SELECTED", function(event, obj){
-        if (obj.chosen == undefined || obj.chosen == false){
-            obj.chosen = true;
-        }
-        else{
-            obj.chosen = false;
-        }
+        console.log("changing chosen status to " + obj.chosen);
+
+        $.each($scope.products, function(i, prod){
+            if (prod._id === obj._id){
+                prod.chosen = obj.chosen;
+                $scope.$apply();
+                return;
+            }
+        });
+        $scope.$apply();
     });
 
     $scope.addToCart = function(obj){

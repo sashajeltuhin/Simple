@@ -47,7 +47,8 @@
 <body ng-app="cart">
 <div class="row-fluid" ng-controller="shadowctrl">
     <div class="container" style="position: relative;width: 95%">
-        <h2>Welcome to the store front. Your agent is {{agent}}</h2>
+        <img ng-src="{{topUrl}}{{tenantObj.logo}}" ng-show="started">
+        <h2>Welcome to the store front. Your friendly agent is {{agent}}</h2>
         <div id="bv_cart_cont" style="float: left" ng-include="wrapperUrl"></div>
     </div>
 </div>

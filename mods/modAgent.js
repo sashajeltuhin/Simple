@@ -3,7 +3,7 @@ var myapp = angular.module("cart", ['ui.sortable','ui.date','ngGrid'], function(
     //$locationProvider.html5Mode(true);//.hashPrefix('!');
     $routeProvider.when('/offer', {
         template: '<div ng-include="templateUrl">Loading...</div>',
-        controller: prodctrl
+        controller: agentprodctrl
     }).when('/survey', {
             template: '<div ng-include="templateUrl">Loading...</div>',
             controller: surveyctrl
