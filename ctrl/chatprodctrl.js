@@ -18,6 +18,7 @@ function chatprodctrl($scope, $rootScope, $http, $location, cartservice){
 
 
     $scope.$on("EV_PROD_SHOW", function(event, p){
+        $scope.greeting = $scope.step.desc;
         $scope.products.push(p);
         $scope.$apply();
     });

@@ -9,7 +9,7 @@ function shadowctrl($scope, $rootScope, $http, $location, cartservice){
     $scope.scriptopen = false;
     $scope.cp = cartservice.getProdsInCart();
     $scope.c = cartservice.getCustomer();
-    $scope.agent = "about to join you";
+    $scope.agent = "about to join you...";
     $scope.started = false;
 
     $scope.stats = {};
@@ -62,6 +62,7 @@ function shadowctrl($scope, $rootScope, $http, $location, cartservice){
             $scope.steps = steps;
             $scope.step = cartservice.currentstep();
             $scope.c = cartservice.getCustomer();
+            cartservice.getSocket().emit('feedback', buildChatAction('iam', $scope.c));
 //            if ($location.path() == '/' + steps[0].name && steps[0].name == 'offer'){
 //                $scope.loadProds();
 //            }
@@ -77,6 +78,10 @@ function shadowctrl($scope, $rootScope, $http, $location, cartservice){
         });
         updateCartTotal();
     }
+    cartservice.getIPinfo(function(){
+        $scope.c = cartservice.getCustomer();
+        cartservice.getSocket().emit('feedback', buildChatAction('iam', $scope.c));
+    })
 
     cartservice.getSocket().on('agenttalk', function (action) {
         console.log("Agent is talking:");
@@ -92,11 +97,10 @@ function shadowctrl($scope, $rootScope, $http, $location, cartservice){
             $scope.tenant = action.obj.tenant;
             cartservice.listObj('tenant', {name: $scope.tenant}, $http, function(t){
                 $scope.started = true;
-                $scope.tenantObj = t;
+                $scope.tenantObj = t[0];
                 $scope.c = cartservice.getCustomer();
                 $scope.$apply();
                 $scope.start($scope.c.zip, $scope.c, $scope.tenant, false);
-                cartservice.getSocket().emit('feedback', buildChatAction('iam', $scope.c));
             });
 
         }

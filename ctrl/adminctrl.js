@@ -1416,7 +1416,7 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
     $scope.viewFlow = function(){
         $scope.viewTitle = "Preview";
         $.each($scope.selTen.appObjects, function(i, a){
-          if (a.active == true){
+          if (a.active == true && a.agent == 'consumer'){
               hideGrid();
               cartservice.setAppObj(a);
               $scope.masterTmpl = rootUrl +'/'+ a.template;
@@ -1433,7 +1433,7 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
 
         hideGrid();
 
-        $scope.masterTmpl = rootUrl +'/'+ "cctmpl.html?tenant=" + $scope.selTen.name + '&agent=sasha';
+        $scope.masterTmpl = rootUrl +'/'+ "cctmpl.html?tenant=" + $scope.selTen.name + '&agent=Sasha';
 
         $scope.filterOpen = false;
         $scope.wrapper = serverUrl + 'flow.html';

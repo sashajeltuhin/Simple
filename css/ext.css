@@ -192,20 +192,21 @@ h4.style4 {
 }
 
 .bv_btn-custom {
-    background-color: hsl(92, 93%, 37%) !important;
-    background-repeat: repeat-x;
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#66d307", endColorstr="#58b606");
-    background-image: -khtml-gradient(linear, left top, left bottom, from(#66d307), to(#58b606));
-    background-image: -moz-linear-gradient(top, #66d307, #58b606);
-    background-image: -ms-linear-gradient(top, #66d307, #58b606);
-    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #66d307), color-stop(100%, #58b606));
-    background-image: -webkit-linear-gradient(top, #66d307, #58b606);
-    background-image: -o-linear-gradient(top, #66d307, #58b606);
-    background-image: linear-gradient(#66d307, #58b606);
-    border-color: #58b606 #58b606 hsl(92, 93%, 35.5%);
-    color: #fff !important;
-    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.09);
-    -webkit-font-smoothing: antialiased;
+    background-color: #0099CC;
+    /*background-color: hsl(92, 93%, 37%) !important;*/
+    /*background-repeat: repeat-x;*/
+    /*filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#66d307", endColorstr="#58b606");*/
+    /*background-image: -khtml-gradient(linear, left top, left bottom, from(#66d307), to(#58b606));*/
+    /*background-image: -moz-linear-gradient(top, #66d307, #58b606);*/
+    /*background-image: -ms-linear-gradient(top, #66d307, #58b606);*/
+    /*background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #66d307), color-stop(100%, #58b606));*/
+    /*background-image: -webkit-linear-gradient(top, #66d307, #58b606);*/
+    /*background-image: -o-linear-gradient(top, #66d307, #58b606);*/
+    /*background-image: linear-gradient(#66d307, #58b606);*/
+    /*border-color: #58b606 #58b606 hsl(92, 93%, 35.5%);*/
+    /*color: #fff !important;*/
+    /*text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.09);*/
+    /*-webkit-font-smoothing: antialiased;*/
 }
 .mk_profImg{
     position: absolute;
@@ -231,7 +232,7 @@ h4.style4 {
     margin-top: -10px;
 }
 .stepactive{
-    color: hsl(92, 93%, 37%) !important;
+    color: #0099CC
 }
 
 .stepbox h4{

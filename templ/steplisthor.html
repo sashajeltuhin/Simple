@@ -12,7 +12,7 @@
     <div ui-sortable="sortableOptions" class="row-fluid" ng-model="appElements[a.appID]">
             <div class="span2 stepbox effectStep"  ng-repeat="p in appElements[a.appID]" >
                 <!--<div ng-class="{'stepboxnum stepactive': p.visible,'stepboxnum': !p.visible}">{{p.order}}</div>-->
-                <div class="stepdel" ng-click="deleteStep(p)"><img src="/images/admin_del_step.png" width="20" height="20"></div>
+                <div class="stepdel" ng-click="deleteStep(p)"><img src="/images/step_del.png" width="20" height="20"></div>
             <h4 ng-click="openStepInfo(p)" ng-class="{'stepactive': p.visible,'': !p.visible}">{{p.title}}</h4>
             </div>
     </div>

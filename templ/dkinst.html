@@ -142,7 +142,6 @@
                             <thead>
                             <tr ng-repeat="p in cp">
                                 <th><img ng-src="{{topUrl}}{{p.brandimgUrl}}" width="111" height="48"></th>
-                                <th>One-Time</th>
                                 <th>Monthly</th>
                             </tr>
                             </thead>
@@ -152,35 +151,30 @@
                             </tr>
                             <tr ng-repeat="p in cp">
                                 <td>{{p.title}}</td>
-                                <td>&nbsp;</td>
                                 <td class="text-right"><div class="txt1">${{p.priceNow}}</div></td>
                             </tr>
 
 
                             <tr ng-repeat="p in cp">
                                 <td>Rebate</td>
-                                <td>&nbsp;</td>
                                 <td class="text-right"><div class="txt1">[${{p.rebate}}]</div></td>
                             </tr>
 
                             <tr class="danger">
-                                <td colspan="3"><div class="links1"><a href="#"><i class="icon-plus-sign"></i>&nbsp; view details</a> &nbsp;&nbsp;&nbsp; <a href="#"><i class="icon-minus-sign"></i>&nbsp; remove</a></div></td>
+                                <td colspan="2"><div class="links1"><a href="#"><i class="icon-plus-sign"></i>&nbsp; view details</a> &nbsp;&nbsp;&nbsp; <a href="#"><i class="icon-minus-sign"></i>&nbsp; remove</a></div></td>
                             </tr>
 
                             <tr class="no-b" ng-repeat="p in cp">
                                 <td>Added to First Bill</td>
                                 <td class="text-right"><div class="txt1">${{p.priceNow}}</div></td>
-                                <td>&nbsp;</td>
                             </tr>
 
                             <tr ng-repeat="p in cp">
                                 <td><strong>Total Monthly</strong></td>
-                                <td>&nbsp;</td>
                                 <td class="text-right"><div class="txt1"><strong>${{p.priceNow}}</strong></div></td>
                             </tr>
                             <tr>
                                 <td><strong>Due today</strong></td>
-                                <td>&nbsp;</td>
                                 <td class="text-right"><div class="txt1"><strong>${{carttotal}}</strong></div></td>
                             </tr>
                             </tbody>

@@ -258,7 +258,7 @@ angular.module('cart').factory('cartservice', function($http) {
                                 service.customer = c;
                                 service.logAction("call_start", 0, true);
                                 callback(st);
-                                getIPinfo();
+                                service.getIPinfo();
                             });
                         });
                     }
@@ -268,7 +268,7 @@ angular.module('cart').factory('cartservice', function($http) {
                             service.customer = c;
                             service.logAction("call_start", 0, true);
                             callback(st);
-                            getIPinfo();
+                            service.getIPinfo();
                         });
                     }
 
@@ -277,7 +277,7 @@ angular.module('cart').factory('cartservice', function($http) {
         });
     };
 
-    function getIPinfo(){
+    service.getIPinfo = function(callback){
         if (appObj.agent !== "agent"){
             console.log("Getting IP info");
             var ipURL = extenstion == true?'http://www.codehelper.io/api/ips/' : 'http://www.codehelper.io/api/ips/?js&callback=?';
@@ -290,6 +290,9 @@ angular.module('cart').factory('cartservice', function($http) {
                 service.customer.country = response.Country;
                 service.updateCustomer(function(c){
                     console.log("Obtained IP and updated customer");
+                    if (callback !== undefined){
+                        callback();
+                    }
                 });
             });
         }
