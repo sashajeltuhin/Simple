@@ -52,7 +52,7 @@ function cartctrl($scope, $rootScope, $http, $location, cartservice){
                 updateStats();
             }
         });
-        var f = {zip:z};
+        var f = {zip:z, agent:'consumer'};
         $scope.ex = prod;
         $scope.existprod = $scope.ex!= null && $scope.ex != undefined;
         cartservice.initsteps(f, cust, appType, {type:'cart', visible:true, order_by:{order:1}}, $http, function(steps){

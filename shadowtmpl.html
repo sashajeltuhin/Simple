@@ -28,7 +28,7 @@
     <script src="service/adminservice.js" type="text/javascript"></script>
     <script src="dir/cartparms.js" type="text/javascript"></script>
     <script src="ctrl/shadowctrl.js" type="text/javascript"></script>
-    <script src="ctrl/prodctrl.js" type="text/javascript"></script>
+    <script src="ctrl/chatprodctrl.js" type="text/javascript"></script>
     <script src="ctrl/teaserctrl.js" type="text/javascript"></script>
     <script src="ctrl/surveyctrl.js" type="text/javascript"></script>
     <script src="ctrl/optctrl.js" type="text/javascript"></script>
@@ -46,8 +46,9 @@
 </head>
 <body ng-app="cart">
 <div class="row-fluid" ng-controller="shadowctrl">
-    <div cart-parms app-Type="Duke" cart_zipval="32967"></div>
-    <div id="bv_cart_cont" class="container" style="display: none" ng-include="wrapperUrl">
+    <div class="container" style="position: relative;width: 95%">
+        <h2>Welcome to the store front. Your agent is {{agent}}</h2>
+        <div id="bv_cart_cont" style="float: left" ng-include="wrapperUrl"></div>
     </div>
 </div>
 </body>

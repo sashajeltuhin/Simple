@@ -9,6 +9,7 @@ function shadowctrl($scope, $rootScope, $http, $location, cartservice){
     $scope.scriptopen = false;
     $scope.cp = cartservice.getProdsInCart();
     $scope.c = cartservice.getCustomer();
+    $scope.agent = "Unassigned";
 
     $scope.stats = {};
     $scope.hasproducts = false;
@@ -23,6 +24,7 @@ function shadowctrl($scope, $rootScope, $http, $location, cartservice){
 
     console.log("Controller init. Customer:");
     console.log($scope.c);
+    cartservice.openChat();
 
     $scope.start = function(z, cust, appType, extension, prod, exCart){
         $scope.wrapperUrl = serverUrl + 'adminTmpl.html';
@@ -52,7 +54,7 @@ function shadowctrl($scope, $rootScope, $http, $location, cartservice){
                 updateStats();
             }
         });
-        var f = {zip:z};
+        var f = {zip:z,  agent:'chat'};
         $scope.ex = prod;
         $scope.existprod = $scope.ex!= null && $scope.ex != undefined;
         cartservice.initsteps(f, cust, appType, {type:'cart', visible:true, order_by:{order:1}}, $http, function(steps){
@@ -73,17 +75,37 @@ function shadowctrl($scope, $rootScope, $http, $location, cartservice){
             $scope.crumbsOn = cr.visible;
         });
         updateCartTotal();
-
-        cartservice.getSocket().on('agenttalk', function (action) {
-            console.log("Agent is talking:");
-            console.log(action);
-            if (action.name == 'EV_ADD_PROD' || 'EV_ADD_PROD_NEXT'){
-                $scope.$emit(action.name, action.obj);
-            }
-        });
-
-
     }
+
+    cartservice.getSocket().on('agenttalk', function (action) {
+        console.log("Agent is talking:");
+        console.log(action);
+//        if (action.name == 'EV_ADD_PROD' || 'EV_ADD_PROD_NEXT'){
+//            $scope.$emit(action.name, action.obj);
+//        }
+        if (action.name == 'EV_PROD_HIGHLIGHT' || action.name == 'EV_PROD_SHOW' || action.name == 'EV_PROD_HIDE'){
+            $scope.$broadcast(action.name, action.obj);
+        }
+        if (action.name == 'welcome'){
+            $scope.agent = action.obj.agent;
+            $scope.tenant = action.obj.tenant;
+            $scope.c = cartservice.getCustomer();
+            $scope.$apply();
+            $scope.start($scope.c.zip, $scope.c, $scope.tenant, false);
+            cartservice.getSocket().emit('feedback', buildChatAction('iam', $scope.c));
+        }
+    });
+
+    function buildChatAction(title, obj){
+        var action = {};
+        action.name = title;
+        action.obj = obj;
+        return action;
+    }
+
+    $scope.$on("CHAT_ACTION", function(event, action, obj){
+        cartservice.getSocket().emit('feedback', buildChatAction(action, obj));
+    });
 
     $scope.back = function(){
 
@@ -147,7 +169,7 @@ function shadowctrl($scope, $rootScope, $http, $location, cartservice){
     function updateCartTotal(){
         $scope.cp = cartservice.getProdsInCart();
         $scope.hasproducts = $scope.cp !== undefined && $scope.cp.length > 0;
-        $scope.carttotal = $scope.ex.price;
+        $scope.carttotal = $scope.ex !== undefined && $scope.ex.price !== undefined ? $scope.ex.price : 0;
 
         $.each($scope.cp, function(i, p){
             $scope.carttotal = Number(Number($scope.carttotal) + Number(p.priceNow)).toFixed(2);

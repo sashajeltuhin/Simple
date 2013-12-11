@@ -118,6 +118,11 @@ angular.module('cart').factory('cartservice', function($http) {
         return curstep;
     }
 
+    service.stepByName = function(name){
+        var index = stepNames[name];
+        return index > -1 && index < steps.length ? steps[index] : null;
+    }
+
     service.nextStep = function(now){
         if (cart == null){
             return '';
@@ -175,12 +180,24 @@ angular.module('cart').factory('cartservice', function($http) {
         });
     }
 
+    service.openChat = function(){
+
+        service.socket = io.connect(serverUrl + ':3000');
+    }
+
+    service.closeChat = function(){
+        service.socket.close();
+    }
+
     service.initsteps = function(filter, cust, appT, f, $http, callback){
         if (cart !== null){
             service.endSession();
             service.teaserProd = null;
+            //service.closeChat();
         }
-        service.socket = io.connect(serverUrl + ':3000');
+        if (filter.agent !== 'chat'){
+            service.openChat();
+        }
         service.customer = {};
         service.customer = cust;
         service.customer.type = "prospect";
@@ -191,7 +208,7 @@ angular.module('cart').factory('cartservice', function($http) {
             appType = appObj.appID;
         }
         console.log(appType);
-        $http.post(serverUrl + '/apps/list', {tenant:appType}).success(function(applics){
+        $http.post(serverUrl + '/apps/list', {tenant:appType, agent:filter.agent}).success(function(applics){
             for(var a = 0; a < applics.length; a++){
                 if (applics[a].active == true){
                     appType = applics[a].appID;
@@ -223,50 +240,65 @@ angular.module('cart').factory('cartservice', function($http) {
                     });
                     singleTempl = "";
                     curstep = st[0];
-                    console.log(curstep);
-                    console.log("service initstep(). Getting IP info");
-                    var ipURL = extenstion == true?'http://www.codehelper.io/api/ips/' : 'http://www.codehelper.io/api/ips/?js&callback=?';
-                    $.getJSON(ipURL, function(response) {
-                        service.customer.IP = response.IP;
+                    if (appObj.agent !== "agent"){
                         service.customer.OS = BrowserDetect.OS;
                         service.customer.browser = BrowserDetect.browser;
                         service.customer.speed = SpeedDetect.speedMbps;
-                        service.customer.city = response.CityName;
-                        service.customer.state = response.RegionName;
-                        service.customer.lat = response.CityLatitude;
-                        service.customer.lon = response.CityLongitude;
-                        service.customer.country = response.Country;
-
-                        if (filter.zip !== undefined){
-                            $http.post(serverUrl + '/zip/list', {zip:filter.zip}).success(function(geos){
-                                if (geos.length > 0){
-                                    var geo = geos[0];
-                                    service.customer.state = geo.state;
-                                    service.customer.city = geo.city;
-                                    service.customer.lat = geo.lat;
-                                    service.customer.lon = geo.lon;
-                                }
-                                service.updateCustomer(function(c){
-                                    service.customer = c;
-                                    service.logAction("call_start", 0, true);
-                                    callback(st);
-                                });
-                            });
-                        }
-                        else{
-                            service.customer.zipguess=true;
+                    }
+                    if (filter.zip !== undefined){
+                        $http.post(serverUrl + '/zip/list', {zip:filter.zip}).success(function(geos){
+                            if (geos.length > 0){
+                                var geo = geos[0];
+                                service.customer.state = geo.state;
+                                service.customer.city = geo.city;
+                                service.customer.lat = geo.lat;
+                                service.customer.lon = geo.lon;
+                            }
                             service.updateCustomer(function(c){
+                                service.customer = c;
+                                service.logAction("call_start", 0, true);
+                                callback(st);
+                                getIPinfo();
+                            });
+                        });
+                    }
+                    else{
+                        service.customer.zipguess=true;
+                        service.updateCustomer(function(c){
                             service.customer = c;
                             service.logAction("call_start", 0, true);
                             callback(st);
+                            getIPinfo();
                         });
-                        }
-                    });
-
+                    }
 
             });
 
+        });
+    };
 
+    function getIPinfo(){
+        if (appObj.agent !== "agent"){
+            console.log("Getting IP info");
+            var ipURL = extenstion == true?'http://www.codehelper.io/api/ips/' : 'http://www.codehelper.io/api/ips/?js&callback=?';
+            $.getJSON(ipURL, function(response) {
+                service.customer.IP = response.IP;
+                service.customer.city = response.CityName;
+                service.customer.state = response.RegionName;
+                service.customer.lat = response.CityLatitude;
+                service.customer.lon = response.CityLongitude;
+                service.customer.country = response.Country;
+                service.updateCustomer(function(c){
+                    console.log("Obtained IP and updated customer");
+                });
+            });
+        }
+    }
+
+    service.listObj = function(obj, filter, $http, callback){
+        var f = filter;
+        $http.post(serverUrl + '/' + obj + '/list', f).success(function(data){
+            callback(data);
         });
     };
 
@@ -405,7 +437,7 @@ angular.module('cart').factory('cartservice', function($http) {
         service.customer.app = appObj.appID;
         service.customer.tenant = tenant;
         service.customer.visitTime = new Date();
-        if (admin == true){
+        if (admin == true || appObj.agent == "chat"){
             if (callback !== undefined){
                 callback(service.customer);
             }

@@ -54,20 +54,21 @@ function cartadminctrl($scope, $rootScope, $http, $location, cartservice){
                 updateStats();
             }
         });
-        var f = {zip:z};
+        var f = {zip:z, agent:'consumer'};
         $scope.ex = prod;
         $scope.existprod = $scope.ex!= null && $scope.ex != undefined;
         cartservice.initsteps(f, cust, appType, {type:'cart', visible:true, order_by:{order:1}}, $http, function(steps){
             $scope.steps = steps;
             $scope.step = cartservice.currentstep();
             $scope.c = cartservice.getCustomer();
-//            if ($location.path() == '/' + steps[0].name && steps[0].name == 'offer'){
-//                $scope.loadProds();
-//            }
-//            else
-//            {
-            $scope.changeView(steps[0]);
-//            }
+
+            var passedstep = getURLParameter('step');
+
+            var single = cartservice.stepByName(passedstep);
+            var showstep = single !== null ? single : steps[0];
+            $scope.step = showstep;
+            $scope.changeView(showstep);
+
 
         });
 
@@ -76,6 +77,10 @@ function cartadminctrl($scope, $rootScope, $http, $location, cartservice){
         });
         updateCartTotal();
 
+    }
+
+    function getURLParameter(name) {
+        return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search)||[,""])[1].replace(/\+/g, '%20'))||null
     }
 
     $scope.back = function(){

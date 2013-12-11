@@ -942,6 +942,7 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
         var extra = {};
         extra.type = 'cart';
         extra.app = {};
+        //extra.agent ='consumer';
         addActiveApp(extra.app);
         buildDefFilter(extra);
         loadFancyList(serverUrl + 'steplisthor.html', function(d){
@@ -964,11 +965,13 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
             $scope.appElements[apps[i]] = [];
             $scope.appWidgets[apps[i]] = [];
             $.each(d, function(x, s){
-                if (s.type == 'cart'){
-                    $scope.appElements[apps[i]].push(s);
-                }
-                else{
-                    $scope.appWidgets[apps[i]].push(s);
+                if (s.app == apps[i]){
+                    if (s.type == 'cart'){
+                        $scope.appElements[apps[i]].push(s);
+                    }
+                    else{
+                        $scope.appWidgets[apps[i]].push(s);
+                    }
                 }
             });
         });
@@ -1079,6 +1082,14 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
 
     $scope.editScript = function(){
         $scope.modalTabPage = serverUrl + 'agentScript.html';
+    }
+
+    $scope.showRaw = function(){
+        $scope.modalTabPage = serverUrl + 'rawHtml.html';
+    }
+
+    $scope.showIntscript = function(){
+        $scope.modalTabPage = serverUrl + 'intScript.html';
     }
 
     $scope.editStep = function(){
@@ -1195,7 +1206,10 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
     $scope.loadConsumerLst = function(){
         selected = 'consumer';
         $scope.viewTitle = "Consumers";
-        buildDefFilter();
+        var extra = {};
+        extra.app = {};
+        addActiveApp(extra.app);
+        buildDefFilter(extra);
         //loadObjNGrid();
         loadObjGrid();
     }
@@ -1419,7 +1433,7 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
 
         hideGrid();
 
-        $scope.masterTmpl = rootUrl +'/'+ "cctmpl.html";
+        $scope.masterTmpl = rootUrl +'/'+ "cctmpl.html?tenant=" + $scope.selTen.name + '&agent=agent777';
 
         $scope.filterOpen = false;
         $scope.wrapper = serverUrl + 'flow.html';

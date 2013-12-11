@@ -24,7 +24,12 @@ function agentctrl($scope, $rootScope, $http, $location, cartservice){
     console.log("Controller init. Customer:");
     console.log($scope.c);
 
+    $scope.tenant = getURLParameter('tenant');
+    $scope.agent = getURLParameter('agent');
 
+    cartservice.listObj('fields', {objname:'consumer'}, $http, function(meta){
+        $scope.propsEl = buildForm(meta);
+    });
 
     $scope.start = function(z, cust, appType, extension, prod, exCart){
         $scope.wrapperUrl = serverUrl + 'adminTmpl.html';
@@ -54,32 +59,101 @@ function agentctrl($scope, $rootScope, $http, $location, cartservice){
                 updateStats();
             }
         });
-        var f = {zip:z};
+        var f = {zip:z, agent:'agent'};
         $scope.ex = prod;
         $scope.existprod = $scope.ex!= null && $scope.ex != undefined;
         cartservice.initsteps(f, cust, appType, {type:'cart', visible:true, order_by:{order:1}}, $http, function(steps){
             $scope.steps = steps;
             $scope.step = cartservice.currentstep();
             $scope.c = cartservice.getCustomer();
-//            if ($location.path() == '/' + steps[0].name && steps[0].name == 'offer'){
-//                $scope.loadProds();
-//            }
-//            else
-//            {
-            $scope.changeView(steps[0]);
-//            }
 
+
+            $scope.changeView(steps[0]);
         });
 
         cartservice.initCrumbs({name:'crumb'}, $http, function(cr){
             $scope.crumbsOn = cr.visible;
         });
         updateCartTotal();
-        cartservice.getSocket().on('feedback', function (data) {
-
+        cartservice.getSocket().on('feedback', function (action) {
+                console.log("client feedback:");
+                console.log(data);
+                if (data.action == 'iam'){
+                    $scope.c = cartservice.getCustomer();
+                    for(var key in data.obj){
+                        $scope.c[key] = data.obj[key];
+                    }
+                    cartservice.updateCustomer();
+                }
+            if (action.name == 'EV_PRODUCT_SELECTED'){
+                $scope.$broadcast(action.name, action.obj);
+            }
         });
 
     }
+
+    function getURLParameter(name) {
+        return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search)||[,""])[1].replace(/\+/g, '%20'))||null
+    }
+
+    $scope.startCall = function(){
+        $scope.c = $scope.obj;
+        $scope.start($scope.c.zip, $scope.c, $scope.tenant, false);
+    }
+
+    $scope.startChat = function(){
+        var o = {};
+        o.tenant = $scope.tenant;
+        o.agent = $scope.agent;
+        cartservice.getSocket().emit('agenttalk', buildChatAction('welcome', o));
+    }
+
+
+
+    function buildobj(meta, def){
+        var that = this;
+        var obj = {};
+        $.each(meta, function(i, key){
+            obj[key.fldname] = def!==undefined && def[key.fldname] !== undefined ? def[key.fldname] : key.defval;
+        });
+        return obj;
+    }
+
+    function buildForm(meta){
+        var top = $('<div></div>');
+        for(var key in meta){
+            var metafld = meta[key];
+            if (metafld.editable == true){
+                var block = $('<div class="control-group"><label class="control-label">' + metafld.label + '</label></div>').appendTo(top);
+                var w =  $('<div class="controls"></div>').appendTo(block);
+                var inputtype = 'text';
+                switch (metafld.fldtype){
+                    case 'bool':
+                        inputtype = 'checkbox';
+                        break;
+                    case 'longtext':
+                        inputtype = 'textarea';
+                        break;
+                }
+                var cls = 'mk_fld';
+                var atts = '';
+
+                if(metafld.opts !== undefined && metafld.opts.length > 0){
+                    var sel = $('<select ng-model="obj.' + metafld.fldname + '"></select>').appendTo(w);
+                    $.each(metafld.opts, function(i, o){
+                        var optval = metafld.optfld !== undefined ? o[metafld.optfld] : o;
+                        sel.append('<option value="' + optval + '">'+ optval +'</option>');
+                    });
+                }
+                else{
+                    var ed = inputtype == 'textarea' ? '<textarea ng-model="obj.' + metafld.fldname + '" ></textarea>': '<input type="' + inputtype + '" ng-model="obj.' + metafld.fldname + '" class="' + cls + '" ' + atts + '>';
+                    var ctrl = $(ed).appendTo(w);
+                }
+            }
+        }
+        return top.html();
+    }
+
 
     $scope.back = function(){
 
@@ -143,7 +217,7 @@ function agentctrl($scope, $rootScope, $http, $location, cartservice){
     function updateCartTotal(){
         $scope.cp = cartservice.getProdsInCart();
         $scope.hasproducts = $scope.cp !== undefined && $scope.cp.length > 0;
-        $scope.carttotal = $scope.ex.price;
+        $scope.carttotal = $scope.ex !== undefined && $scope.ex.price !== undefined ? $scope.ex.price : 0;
 
         $.each($scope.cp, function(i, p){
             $scope.carttotal = Number(Number($scope.carttotal) + Number(p.priceNow)).toFixed(2);
@@ -169,7 +243,18 @@ function agentctrl($scope, $rootScope, $http, $location, cartservice){
         else{
             p.point = false;
         }
-        cartservice.getSocket().emit('agenttalk', buildChatAction('highlight', p));
+        cartservice.getSocket().emit('agenttalk', buildChatAction('EV_PROD_HIGHLIGHT', p));
+    }
+
+    $scope.reveal = function(p){
+        if (p.visible == undefined || p.visible == false){
+            p.visible = true;
+        }
+        else{
+            p.visible = false;
+        }
+        var action = p.visible ? 'EV_PROD_SHOW' : 'EV_PROD_HIDE';
+        cartservice.getSocket().emit('agenttalk', buildChatAction(action, p));
     }
 
     $scope.$on("EV_ADD_PROD", function(event, obj){

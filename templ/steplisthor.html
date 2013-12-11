@@ -11,12 +11,12 @@
     </div>
     <div ui-sortable="sortableOptions" class="row-fluid" ng-model="appElements[a.appID]">
             <div class="span2 stepbox effectStep"  ng-repeat="p in appElements[a.appID]" >
-                <div class="stepboxnum">{{p.order}}</div>
+                <!--<div ng-class="{'stepboxnum stepactive': p.visible,'stepboxnum': !p.visible}">{{p.order}}</div>-->
                 <div class="stepdel" ng-click="deleteStep(p)"><img src="/images/admin_del_step.png" width="20" height="20"></div>
-            <h4 ng-click="openStepInfo(p)">{{p.title}}</h4>
+            <h4 ng-click="openStepInfo(p)" ng-class="{'stepactive': p.visible,'': !p.visible}">{{p.title}}</h4>
             </div>
     </div>
-    <div class="row-fluid">
+    <div class="row-fluid" ng-show="a.agent=='agent'">
         <h4>Stand-alone widgets</h4>
         <div class="btn btn-small bv_btn-custom" ng-click="createWidget()">New widget</div>
     </div>

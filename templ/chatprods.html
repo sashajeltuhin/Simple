@@ -1,18 +1,9 @@
+<h2>{{greeting}}</h2>
 <div class="pull-left w600">
-
-    <p ng-click="reloadProds()" style="cursor: pointer"><strong> Results </strong> for {{c.address1}}, {{c.city}} {{c.state}} {{c.zip}}</p>
-
-    <div class="row gradient-container">
-        <div class="gradient-item clearfix">
-            <div class="col-xs-4" style="padding-top:10px;">{{emailPrompt}}</div>
-            <div class="col-xs-5"><input type="text" class="form-control mb0" placeholder="enter email address" ng-model="c.email" ng-hide="emailed"></div>
-            <div class="col-xs-3"><button class="btn btn-style1 uppercase" ng-click="emailList()" ng-hide="emailed">Submit</button></div>
-        </div>
-    </div>
 
     <div class="row gradient-container" ng-repeat="p in products">
         <div class="box-1 gradient-item clearfix">
-            <div class="col-xs-3"><div><span><img ng-src="{{topUrl}}{{p.brandimgUrl}}" width="88" height="31"></span></div></div>
+            <div class="col-xs-3"><div><span><img ng-src="{{topUrl}}{{p.brandimgUrl}}" width="100" height="100"></span></div></div>
             <div class="col-xs-6"  ng-style="{zoom: !p.point && '100%' || '150%'}">
                 <h3 class="fld" data-content="product.title">{{p.title}}</h3>
                 <ul class="bullet-1 deals-list-item">
@@ -25,11 +16,7 @@
                 <div class="clearer h10">&nbsp;</div>
                 <div class="price text-center"  ng-style="{zoom: !p.point && '100%' || '150%'}"><strong>${{p.priceNow}}</strong>/mo</div>
                 <div class="clearer h10">&nbsp;</div>
-                <a ng-click="addToCartandNext(p)" class="btn btn-primary btn-block uppercase">Add</a>
-                <div class="clearer h10">&nbsp;</div>
-                <a ng-click="reveal(p)" class="btn btn-primary btn-block uppercase">{{ p.visible && 'Remove' || 'Suggest' }}</a>
-                <div class="clearer h10">&nbsp;</div>
-                <a ng-click="highlight(p)" class="btn btn-primary btn-block uppercase">Highlight</a>
+                <a ng-click="selectProd(p)" class="btn btn-primary btn-block uppercase">Select</a>
             </div><!-- .col -->
         </div><!-- /box-1 -->
         <div class="pull-left w600" ng-show="p.openDetail">
