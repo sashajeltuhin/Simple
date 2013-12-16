@@ -49,7 +49,7 @@ angular.module('cart').factory('cartservice', function($http) {
         if (extenstion == true){
             return chrome.extension.getURL('templ/' + this.currentstep().template);
         }
-        return 'templ/' + this.currentstep().template;
+        return serverUrl + '/templ/' + this.currentstep().template;
     }
 
     service.getCustomer = function(){

@@ -24,6 +24,7 @@ var express = require('express')
   , path = require('path')
   , fp = require('./routes/fup')
   , vp = require('./routes/vidup')
+  , tmplUp = require('./routes/templateUp')
   , passport = require('passport')
   , auth = require('./routes/auth')
   , zip = require('./routes/zip')
@@ -41,6 +42,7 @@ app.configure(function(){
   app.use('/profile/upload', fp.imgup);
 //  app.use('/product/upload', produp.upload);
   app.use('/profile/vup', vp.vup);
+  app.use('/step/template', tmplUp.upload);
   app.use(express.bodyParser());
   app.use(express.methodOverride());
   app.use(app.router);
@@ -137,7 +139,13 @@ server.listen(app.get('port'), function(){
   console.log("Express server listening on port " + app.get('port'));
 });
 
+var clients = {};
 io.sockets.on('connection', function (socket) {
+    clients[socket.id] = socket;
+    socket.on('disconnect', function() {
+        console.log('Got disconnect!');
+        delete clients['socket.id'];
+    });
     socket.on('viewprod', function (data) {
         console.log('Called viewprod');
         console.log(data);
@@ -145,14 +153,27 @@ io.sockets.on('connection', function (socket) {
     });
 
     socket.on('agenttalk', function (action) {
-        console.log('Called agenttalk:');
+        console.log('Called agenttalk with ID = ' + socket.id);
         console.log(action);
+        logChatAction(action, socket.id, 'agenttalk');
         socket.broadcast.emit('agenttalk', action);
     });
 
     socket.on('feedback', function (feed) {
-        console.log('Client feedback:');
+        console.log('Client feedback with ID:' + socket.id);
         console.log(feed);
+        logChatAction(feed, socket.id, 'feedback');
         socket.broadcast.emit('feedback', feed);
     });
 });
+
+function logChatAction(action, id, ev){
+    var a = {};
+    a.action = ev;
+    a.time = new Date();
+    a.app = action.app;
+    a.data = {};
+    a.data.aid = id;
+    a.data.event = action.name;
+    log.log(a);
+}

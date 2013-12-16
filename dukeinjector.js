@@ -2,6 +2,7 @@ var where;
 
 var c = {};
 c.leadprodprice = 0;
+c.state = 'Florida';
 
 var reguser = null;
 function getPerson(){

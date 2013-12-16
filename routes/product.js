@@ -51,6 +51,9 @@ exports.qual = function (req, res){
                     if (seg.limit !== undefined && Number(seg.limit) > 0){
                         filter.limit = seg.limit;
                     }
+                    if (customer.lastStep == 'offer' && seg.offersize !== undefined && Number(seg.offersize) > 0){
+                        filter.limit = seg.offersize;
+                    }
                 }
             }
             if (customer.zip !== undefined && customer.zip !== ""){

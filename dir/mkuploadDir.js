@@ -2,7 +2,7 @@ angular.module('cart').directive('mkUpload', function() {
 
     return{
         restrict: 'EA',
-        scope: { uplfnc: '&mkUpfnc'},
+        scope: { path: '@path', fnc: '&fnc'},
         template: '<input class="mk_profImg" type="file" name="files[]" multiple/><div style="btn" style="position: relative ;cursor: pointer;width: 100%;height: 100%">Upload</div>' +
                 '<div class="bar" style="width: 0%;background: green;height: 18px"></div>',
         link: function(scope, elem, attr){
@@ -11,7 +11,7 @@ angular.module('cart').directive('mkUpload', function() {
             elem.css({'cursor':'pointer'});
             var bar = angular.element(elem.children()[2]);
             input.fileupload({
-                url:'/profile/upload',
+                url: scope.path,
                 dataType: 'json',
                 done: function (e, data) {
                     bar.css(
@@ -19,7 +19,7 @@ angular.module('cart').directive('mkUpload', function() {
                         '0%'
                     );
                     var fileinfo = data.result[0];
-                    scope.uplfnc({file:fileinfo.name});
+                    scope.fnc(fileinfo);
                 },
                 progressall: function (e, data) {
                     var progress = parseInt(data.loaded / data.total * 100, 10);

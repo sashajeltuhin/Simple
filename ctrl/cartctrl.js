@@ -100,7 +100,12 @@ function cartctrl($scope, $rootScope, $http, $location, cartservice){
 
     $scope.changeView = function (v){
         $location.path('/' + v);
-        onStep($scope.step, $scope.c);
+        if ($scope.step.integration !== undefined && $scope.step.integration.length > 0){
+            eval($scope.step.integration);
+        }
+        else{
+            onStep($scope.step, $scope.c);
+        }
 
     }
 

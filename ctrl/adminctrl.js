@@ -1111,6 +1111,10 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
         $scope.masterTmpl = appObj.template;
     }
 
+    $scope.onTmplUploaded = function(fi){
+        console.log(fi);
+    }
+
     $scope.loadSurvey = function(){
         selected = 'survey';
         $scope.viewTitle = "Surveys";
@@ -1136,24 +1140,12 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
     $scope.loadLogs = function(){
         selected = 'log';
         $scope.viewTitle = "Application Logs";
-        buildDefFilter({});
         var extra = {};
-        if ($scope.selTen.appObjects !== undefined){
         extra.app = {};
-        var c = 0;
-        $.each($scope.selTen.appObjects, function(i, a){
-            if (a.active === true){
-                extra.app[a.appID] = true;
-                c++;
-            }
-        });
-        if (c == 0){
-            extra.app[$scope.selTen.appObjects[0].appID] = true;
-        }
-        }
+        addActiveApp(extra.app);
         buildDefFilter(extra);
-        loadObjNGrid();
-//        loadObjGrid();
+        //loadObjNGrid();
+        loadObjGrid();
     }
 
     $scope.loadProducts = function(){

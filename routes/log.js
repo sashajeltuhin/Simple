@@ -161,5 +161,31 @@ exports.save = function(req, res){
 
 }
 
+exports.log = function(action, callback){
+    db.setDB(dbname);
+    var vid = action;
+    var filter = {};
+    if (vid._id !== null){
+        filter._id = new ObjectID(vid._id);
+        vid._id = filter._id;
+    }
+    db.upsert(colName, vid, filter, function(err, newid){
+        if (err !== null){
+            if (callback !== undefined){
+                callback(err, null);
+            }
+        }
+        else{
+            if (newid !== null){
+                vid._id = newid;
+            }
+            if (callback !== undefined){
+                callback(null, vid);
+            }
+        }
+    });
+
+}
+
 
 

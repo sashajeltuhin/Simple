@@ -10,6 +10,9 @@ var myapp = angular.module("cart", [], function($routeProvider, $locationProvide
         }).when('/teaser', {
             template: '<div ng-include="templateUrl">Loading...</div>',
             controller: teaserctrl
+        }).when('/qual', {
+            template: '<div ng-include="templateUrl">Loading...</div>',
+            controller: teaserctrl
         }).when('/cust', {
             template: '<div ng-include="templateUrl">Loading...</div>',
             controller: cartctrl

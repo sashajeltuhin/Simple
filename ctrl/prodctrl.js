@@ -17,7 +17,7 @@ function prodctrl($scope, $rootScope, $http, $location, cartservice){
         $scope.c = cartservice.getCustomer();
         cartservice.loadproducts($scope.c, $http, function(data){
             var teaser = cartservice.getTeaserProd();
-            if (teaser !== undefined && teaser !== null){
+            if (teaser !== undefined && teaser !== null && !teaserInList(teaser, data)){
                 data.splice(0, 0, teaser);
             }
             $scope.products = data;
@@ -26,6 +26,16 @@ function prodctrl($scope, $rootScope, $http, $location, cartservice){
                 cartservice.logAction("qual", 0, true, {zip:p.zip,prov:p.provider});
             });
         });
+    }
+
+    function teaserInList(teaser, data){
+        var y = false;
+        $.each(data, function(i, p){
+            if (teaser._id === p._id){
+                y = true;
+            }
+        });
+        return y;
     }
 
     $scope.reloadProds = function(){

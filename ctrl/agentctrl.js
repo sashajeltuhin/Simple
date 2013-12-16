@@ -17,7 +17,7 @@ function agentctrl($scope, $rootScope, $http, $location, cartservice){
     $scope.templateUrl = cartservice.getTemplateURL();
     $scope.carttotal = cartservice.cartTotal();
     $scope.step = cartservice.currentstep();
-    cartservice.setAdmin(true);
+    //cartservice.setAdmin(true);
 
     console.log("Controller init. step: " + $scope.step.name);
 
@@ -83,9 +83,10 @@ function agentctrl($scope, $rootScope, $http, $location, cartservice){
                     for(var key in action.obj){
                         $scope.c[key] = action.obj[key];
                     }
+                    cartservice.setCustomer($scope.c);
                     cartservice.updateCustomer(function(c){
                         $scope.c = cartservice.getCustomer();
-                        $scope.$apply();
+                        //$scope.$apply();
                     });
                 }
             if (action.name == 'EV_PRODUCT_SELECTED'){
@@ -237,6 +238,7 @@ function agentctrl($scope, $rootScope, $http, $location, cartservice){
         var action = {};
         action.name = title;
         action.obj = obj;
+        action.app = cartservice.getApp();
         return action;
     }
 

@@ -1,5 +1,6 @@
 function teaserctrl($scope, $rootScope, $http, $location, cartservice){
     $scope.topUrl = topUrl;
+    $scope.step = cartservice.currentstep();
     cartservice.getSocket().on('prodviewed', function (data) {
         console.log('prodviewed called');
         console.log(data);
@@ -42,11 +43,23 @@ function teaserctrl($scope, $rootScope, $http, $location, cartservice){
         }
     }
 
+    $scope.launchNext = function(obj){
+        $scope.c = cartservice.getCustomer();
+        if ($scope.c.zip == undefined || $scope.c.zip == ""){
+            $('#bv_popup_trigger').click();
+            //anonymous
+            obj.teaser = true;
+            $scope.teaserProd = obj;
+        }
+
+        $scope.$emit("EV_ADD_PROD_NEXT", obj, $scope.c);
+
+    }
+
     $scope.proceed = function(){
         $('.modal-backdrop').remove();
 
         $scope.$emit("EV_ADD_PROD_NEXT", $scope.teaserProd, $scope.c);
     }
-
 
 }

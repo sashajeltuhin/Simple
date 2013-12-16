@@ -1,0 +1,18 @@
+{
+    "manifest_version": 2,
+    "name": "FPL",
+    "description": "FPL",
+    "version": "1",
+    "permissions": ["tabs","http://localhost/*", "http://www.codehelper.io/*", "http://www.codehelper.io/*", "http://www.google.com/", "https://www.google.com/"],
+    "content_scripts": [
+        {
+            "matches": ["http://www.fpl.com/residential/energy_saving/*", "http://www.fpl.com/residential/energy_saving/index.shtml/*"],
+            "js": ["assets/js/jquery-1.10.2.min.js","assets/js/jquery-ui-1.10.3.custom.min.js", "assets/js/bootstrap.min.js", "assets/js/jquery.placeholder.min.js", "js/socket.io.js", "assets/js/base.js", "js/select2.js", "js/angular.min.js", "js/sortable.js", "mods/modExt.js", "js/detect.js", "service/mkpopupservice.js", "service/cartservice.js", "service/adminservice.js","fplinjector.js","dir/cartparms.js", "ctrl/cartctrl.js", "ctrl/teaserctrl.js","ctrl/prodctrl.js","ctrl/surveyctrl.js","ctrl/optctrl.js","dir/productDir.js","dir/cartDir.js", "dir/gameDir.js", "dir/providerDir.js","dir/sortlistDir.js"],
+            "css": ["assets/css/bootstrap.css"],
+            "run_at": "document_end"}
+    ],
+    "browser_action": {"default_icon": "16x16.png","default_popup": "conf.html", "default_name": "WF"},
+    "web_accessible_resources" :[
+        "templ/fpteaser.html","templ/fpqual.html","templ/dkprods.html", "templ/dkcredit.html", "templ/dkorder.html", "templ/dkconf.html","templ/dkinst.html"
+    ]
+}
