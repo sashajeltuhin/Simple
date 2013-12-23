@@ -151,7 +151,8 @@ h4.style4 {
 .flowscriptPanel{
     position: relative;
     width: 90%;
-    height: 200px;
+    max-height: 500px;
+    min-height: 400px;
     overflow: scroll;
 }
 
@@ -232,7 +233,8 @@ h4.style4 {
     margin-top: -10px;
 }
 .stepactive{
-    color: #0099CC
+    color: #0099CC;
+    cursor: pointer;
 }
 
 .stepbox h4{
@@ -250,6 +252,7 @@ h4.style4 {
 .effectStep
 {
     position:relative;
+    cursor: pointer;
     -webkit-box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
     -moz-box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
     box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;

@@ -8,7 +8,7 @@ function optctrl($scope, $rootScope, $http, $location, cartservice){
     $scope.endCust = function(){
         onStep();
         cartservice.updateCustomer(function(){
-            $scope.step = cartservice.nextStep($scope.step.name);
+            $scope.step = cartservice.nextStep($scope.step._id);
             $scope.changeView($scope.step.name);
             onStep($scope.step.name);
         });

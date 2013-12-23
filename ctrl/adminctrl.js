@@ -7,7 +7,7 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
     var selected = '';
     var viewMode = "grid";
     var serverUrl = topUrl + '/templ/';
-    var rootUrl = topUrl;
+    $scope.rootUrl = topUrl;
     $scope.filterOpen = true;
     $scope.filters = [];
     $scope.cleanFilter = {};
@@ -344,6 +344,10 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
         createObj('New Demographic Segment');
     }
 
+    $scope.createBlock = function(){
+        selected = 'block';
+        createObj('New Template Block');
+    }
 
     function createObj(heading, def){
         adminservice.loadMeta(selected, $http, function(meta){
@@ -491,6 +495,12 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
     $scope.loadSegmentFields = function(){
         var f = 'segment';
         $scope.viewTitle = "Demographic segment attributes";
+        loadMeta(f);
+    }
+
+    $scope.loadBlockFields = function(){
+        var f = 'block';
+        $scope.viewTitle = "Template block attributes";
         loadMeta(f);
     }
 
@@ -1073,6 +1083,7 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
                         top: '100px',
                         left: '10%',
                         width: '80%',
+                        height: '80%',
                         margin: 'auto'
                     },
                     success: {label: 'Ok', fn: saveObj}
@@ -1085,7 +1096,29 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
     }
 
     $scope.showRaw = function(){
+        adminservice.listObj('block', {cat:"action"}, $http, function(abs){
+            $scope.actionblocks = abs;
+        });
+        adminservice.listObj('block', {cat:"data"}, $http, function(dbs){
+            $scope.datablocks = dbs;
+        });
         $scope.modalTabPage = serverUrl + 'rawHtml.html';
+    }
+
+    $scope.insertBlock = function(b){
+
+    }
+
+    $scope.tmplkeydown = function(event){
+        if (event.metaKey || event.ctrlKey){
+            if (event.which == 73){ //i
+                console.log('keydown ctrl - i', event);
+                if (event.position !== undefined){
+                    $scope.obj.rawhtml =
+                        [$scope.obj.rawhtml.slice(0, event.position), '^^^', $scope.obj.rawhtml.slice(event.position)].join('');
+                }
+            }
+        }
     }
 
     $scope.showIntscript = function(){
@@ -1113,6 +1146,8 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
 
     $scope.onTmplUploaded = function(fi){
         console.log(fi);
+        console.log('step: ');
+        console.log($scope.step);
     }
 
     $scope.loadSurvey = function(){
@@ -1135,6 +1170,13 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
         $scope.viewTitle = "Demographic segments";
         buildDefFilter();
         loadObjNGrid();//loadObjGrid();
+    }
+
+    $scope.loadBlockList = function(){
+        selected = 'block';
+        $scope.viewTitle = "Template blocks";
+        buildDefFilter();
+        loadObjGrid();
     }
 
     $scope.loadLogs = function(){
@@ -1411,7 +1453,7 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
           if (a.active == true && a.agent == 'consumer'){
               hideGrid();
               cartservice.setAppObj(a);
-              $scope.masterTmpl = rootUrl +'/'+ a.template;
+              $scope.masterTmpl = $scope.rootUrl +'/'+ a.template;
 
               $scope.filterOpen = false;
               $scope.wrapper = serverUrl + 'flow.html';
@@ -1425,11 +1467,20 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
 
         hideGrid();
 
-        $scope.masterTmpl = rootUrl +'/'+ "cctmpl.html?tenant=" + $scope.selTen.name + '&agent=Sasha';
+        $scope.masterTmpl = $scope.rootUrl +'/'+ "cctmpl.html?tenant=" + $scope.selTen.name + '&agent=Sasha';
 
         $scope.filterOpen = false;
         $scope.wrapper = serverUrl + 'flow.html';
     }
 
+    $scope.keySaveObj = function(event){
+        if (event.metaKey || event.ctrlKey){
+            if (event.which == 83){ //i
+                event.preventDefault();
+                console.log('keydown ctrl s', event);
+                $scope.saveChanges();
+            }
+        }
+    }
 
 }

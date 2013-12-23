@@ -9,6 +9,7 @@ var express = require('express')
   , profile = require('./routes/profile')
   , product = require('./routes/product')
   , step = require('./routes/step')
+  , block = require('./routes/block')
   , apps = require('./routes/apps')
   , tenant = require('./routes/tenant')
   , person = require('./routes/person')
@@ -87,6 +88,9 @@ app.get('/product/default', product.default);
 app.post('/step/list', step.list);
 app.post('/step/update', step.save);
 app.post('/step/delete', step.delete);
+app.post('/block/list', block.list);
+app.post('/block/update', block.save);
+app.post('/block/delete', block.delete);
 app.post('/person/list', person.list);
 app.post('/person/update', person.save);
 app.post('/consumer/list', consumer.list);

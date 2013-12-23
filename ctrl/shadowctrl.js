@@ -119,14 +119,14 @@ function shadowctrl($scope, $rootScope, $http, $location, cartservice){
 
     $scope.back = function(){
 
-        $scope.step = cartservice.prevStep($scope.step.name);
+        $scope.step = cartservice.prevStep($scope.step._id);
         $scope.changeView($scope.step);
     }
 
     $scope.next = function(){
         console.log("Controller next(). Customer:");
         console.log($scope.c);
-        $scope.step = cartservice.nextStep($scope.step.name);
+        $scope.step = cartservice.nextStep($scope.step._id);
         $scope.changeView($scope.step);
     }
 

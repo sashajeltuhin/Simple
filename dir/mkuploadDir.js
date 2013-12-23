@@ -11,7 +11,7 @@ angular.module('cart').directive('mkUpload', function() {
             elem.css({'cursor':'pointer'});
             var bar = angular.element(elem.children()[2]);
             input.fileupload({
-                url: scope.path,
+                url: attr.path,
                 dataType: 'json',
                 done: function (e, data) {
                     bar.css(
@@ -19,7 +19,7 @@ angular.module('cart').directive('mkUpload', function() {
                         '0%'
                     );
                     var fileinfo = data.result[0];
-                    scope.fnc(fileinfo);
+                    scope.fnc({arg1: fileinfo});
                 },
                 progressall: function (e, data) {
                     var progress = parseInt(data.loaded / data.total * 100, 10);
