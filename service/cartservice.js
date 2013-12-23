@@ -119,7 +119,12 @@ angular.module('cart').factory('cartservice', function($http) {
     }
 
     service.stepByName = function(name){
-        var index = stepNames[name];
+        var index = -1;
+        $.each(steps, function (i, s){
+            if (s.name == name){
+                index = i;
+            }
+        });
         return index > -1 && index < steps.length ? steps[index] : null;
     }
 
@@ -182,7 +187,7 @@ angular.module('cart').factory('cartservice', function($http) {
 
     service.openChat = function(){
 
-        service.socket = io.connect(serverUrl + ':3000');
+        service.socket = io.connect(serverUrl);
     }
 
     service.closeChat = function(){
@@ -228,14 +233,14 @@ angular.module('cart').factory('cartservice', function($http) {
                     console.log(st);
                     $.each(st, function(i, s){
                         if (admin == true && singleTempl !== ""){
-                            if (singleTempl === s.name){
+                            if (singleTempl === s._id){
                                 steps[0] = s;
-                                stepNames[s.name] = 0;
+                                stepNames[s._id] = 0;
                             }
                         }
                         else{
                             steps[i] = s;
-                            stepNames[s.name] = i;
+                            stepNames[s._id] = i;
                         }
                     });
                     singleTempl = "";
