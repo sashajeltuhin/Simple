@@ -1,11 +1,12 @@
-angular.module('cart').directive('mkUpload', function() {
+angular.module('cart').directive('mkUpload', function($parse) {
 
     return{
         restrict: 'EA',
-        scope: { path: '@path', fnc: '&fnc'},
-        template: '<input class="mk_profImg" type="file" name="files[]" multiple/><div style="btn" style="position: relative ;cursor: pointer;width: 100%;height: 100%">Upload</div>' +
+        //scope: { path: '&path', fnc: '&fnc'},
+        template: '<input class="mk_profImg" type="file" name="files[]" multiple/><div style="btn" style="position: relative ;cursor: pointer;width: 100%;height: 100%">{{mkUploadLabel}}</div>' +
                 '<div class="bar" style="width: 0%;background: green;height: 18px"></div>',
         link: function(scope, elem, attr){
+            scope.mkUploadLabel = attr.label;
             var input = angular.element(elem.children()[0]);
             var div = angular.element(elem.children()[1]);
             elem.css({'cursor':'pointer'});
@@ -19,7 +20,11 @@ angular.module('cart').directive('mkUpload', function() {
                         '0%'
                     );
                     var fileinfo = data.result[0];
-                    scope.fnc({arg1: fileinfo});
+                    var fnc = $parse(attr.fnc);
+                    scope.$apply(function() {
+                        fnc(scope, { $event: fileinfo, $params: fileinfo });
+                    });
+                    //scope.fnc({arg1: fileinfo});
                 },
                 progressall: function (e, data) {
                     var progress = parseInt(data.loaded / data.total * 100, 10);

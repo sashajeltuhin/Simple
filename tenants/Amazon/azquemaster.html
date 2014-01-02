@@ -1,0 +1,16 @@
+<div class="container">
+    <div class="container-content style1 clearfix">
+        <h2 class="style1">{{step.prompt}}</h2>
+        <h3 class="style1">{{step.desc}}</h3>
+
+        <div class="clearer h20">&nbsp;</div>
+        <div ng-include="queTemplate">
+
+        </div>
+        <div class="clearer h20">&nbsp;</div>
+
+        <div class="btn2 w200 uppercase floatRight"><a href="#" ng-click="nextque()"><span class="a-button-inner"><span class="a-button-text">next</span></span></a></div>
+
+        <div class="clearer h30">&nbsp;</div>
+    </div><!-- /// -->
+</div>

@@ -5,9 +5,22 @@ angular.module('cart').factory('adminservice', function($q) {
     var cache = [];
     var fieldCache = {};
     var selTen = {};
+    var selAppObj = {};
 
     service.setTenant = function(t){
         selTen = t;
+    }
+
+    service.getTenant = function(){
+        return selTen;
+    }
+
+    service.setAppObj = function(a){
+        selAppObj = a;
+    }
+
+    service.getAppObj = function(){
+        return selAppObj;
     }
 
     service.resetCache = function(){
@@ -21,9 +34,14 @@ angular.module('cart').factory('adminservice', function($q) {
         }
     }
 
-    service.loadMeta = function(obj, $http, callback){
-        if (cache[obj] == undefined || cache[obj] == null){
+    service.loadMeta = function(obj, $http, callback, filter){
+        if (filter !== undefined || cache[obj] == undefined || cache[obj] == null){
             var f = {objname : obj, 'order_by':{order:1}};
+            if (filter !== undefined){
+                for(var el in filter){
+                    f[el] = filter[el];
+                }
+            }
             $http.post(serverUrl + '/fields/list', f).success(function (data)
             {
                 var opts = [];
@@ -86,6 +104,17 @@ angular.module('cart').factory('adminservice', function($q) {
             callback(data);
             if (obj == 'fields'){
                 service.resetCacheObj(fld.objname);
+            }
+        });
+    };
+
+    service.import = function(fileName, obj, $http, callback){
+        var filter = {fn: fileName};
+        $http.post(serverUrl + '/' + obj + '/import', filter).success(function (data) {
+            if (data.success == true){
+                callback(data.recs);
+            }else{
+                console.log(data.err);
             }
         });
     };
@@ -183,6 +212,16 @@ angular.module('cart').factory('adminservice', function($q) {
             callback(loc);
         });
     }
+
+    service.buildobj = function(meta, def){
+        var that = this;
+        var obj = {};
+        $.each(meta, function(i, key){
+            obj[key.fldname] = def!==undefined && def[key.fldname] !== undefined ? def[key.fldname] : key.defval;
+        });
+        return obj;
+    }
+
 
     return service;
 

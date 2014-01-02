@@ -1,0 +1,56 @@
+ <div class="recsWrapper"   ng-repeat="p in products">
+    <div class="horizontalCellRender">
+        <div class="image p13nimp" data-asin="B00462PTDQ" data-ref="pd_ecc_rvi_cart_1">
+            <a ng-click="launch(p)" class="title" title="{{p.title}}"> <div class="imageContainer" style="margin-bottom: 0px; margin-top: 3px;">
+                <img ng-src="{{topUrl}}{{p.brandimgUrl}}" width="78" alt="" id="" height="100" border="0">
+            </div> </a>
+
+        </div>
+        <div class="info">
+            <span>
+                <a ng-click="next()" class="title" title="{{p.title}}">{{p.title}}</a>
+            </span>
+            <div class="rating"><span class="rating-stars"><span class="crAvgStars" style="white-space:no-wrap;"><span class="asinReviewsSummary" name="B00462PTDQ" ref="pd_ecc_rvi_cart_pop_" getargs="{&quot;refRID&quot;:&quot;01387S8JVZ3H26SREXGG&quot;}">
+                <a ng-click="launch(p)"><img src="http://g-ecx.images-amazon.com/images/G/01/x-locale/common/customer-reviews/ratings/stars-4-5._V192238104_.gif" width="55" alt="4.3 out of 5 stars" align="absbottom" title="4.3 out of 5 stars" height="12" border="0"></a>&nbsp;</span>(<a href="http://www.amazon.com/Wow-World-Wonder-Blu-ray/product-reviews/B00462PTDQ/ref=pd_ecc_rvi_cart_txt_1?ie=UTF8&amp;refRID=01387S8JVZ3H26SREXGG&amp;showViewpoints=1">338</a>)</span></span></div>
+            <div class="price">${{p.priceNow}}</div>
+            <a class="maplink" ng-click="launch(p)">Click for details</a>
+        </div>
+
+        <div style="clear: both;"></div>
+    </div>
+  </div>
+ <div style="display: none"><a id="bv_popup_trigger" data-toggle="modal" href="#myModal1" class="bv_launcher op"><img src="/content/mymove/_jcr_content/teaserresourcecontainer/teaser4.img.icon.png"></a></div>
+ <div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+     <div class="modal-dialog">
+         <div class="modal-content">
+             <div class="modal-header">
+                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                 <h4 class="modal-title">Enter Your Location</h4>
+             </div>
+             <div class="modal-body">
+                 <p style="margin-bottom:20px;">In order for us to deliver options that are available for your specific location, we need the address you are moving to.</p>
+
+                 <div class="row">
+                     <div class="col-xs-5"><input type="text" class="form-control" placeholder="Street Address" ng-model="c.address1" style="width: 100%"></div>
+                     <div class="col-xs-3"><input type="text" class="form-control" placeholder="Apt #" style="width: 100%"></div>
+                     <div class="col-xs-4"><input type="text" class="form-control" placeholder="ZIP Code" ng-model="c.zip" style="width: 100%"></div>
+                     <div class="col-xs-5"><input type="text" class="form-control datepicker" placeholder="Move Date" ng-model="c.moveDate" style="width: 100%"></div>
+                     <div class="col-xs-2 text-center"><div style="display:block; padding-top:10px;"><strong>OR</strong></div></div>
+                     <div class="col-xs-5"><select class="form-control">
+                         <option value="Move Timeframe" selected="">Move Timeframe</option>
+                         <option value="Already moved">Already moved</option>
+                         <option value="Within 2 weeks">Within 2 weeks</option>
+                         <option value="2-4 weeks">2-4 weeks</option>
+                         <option value="1-3 months">1-3 months</option>
+                         <option value="4-6 months">4-6 months</option>
+                         <option value="Beyond 6 months">Beyond 6 months</option>
+                     </select></div>
+                 </div><!-- /row -->
+                 </div>
+             <div class="modal-footer">
+                 <button type="button" class="btn btn-default uppercase" data-dismiss="modal">Close</button>
+                 <button type="button" class="btn btn-style1 uppercase" data-dismiss="modal" ng-click="proceed()">Go</button>
+             </div>
+         </div><!-- /.modal-content -->
+     </div><!-- /.modal-dialog -->
+ </div><!-- /.modal -->

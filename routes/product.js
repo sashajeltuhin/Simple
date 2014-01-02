@@ -8,6 +8,7 @@
 var db = require('../db/dbaccess');
 var mongo = require('mongodb');
 var ObjectID = mongo.ObjectID;
+var csvtool = require('./csvtool');
 
 var colName = 'product';
 
@@ -220,4 +221,26 @@ exports.total = function(req, res){
             res.send({tot: rec});
         }
     });
+}
+
+exports.import = function(req, res){
+    var fn = req.body.fn;
+    csvtool.readCSV('/../tmp/files/' + fn, importRow, function(error, count){
+        if (error == null){
+            res.send({success:true, recs: count});
+        }
+        else{
+            console.log(error);
+            res.send({success:false, err: error});
+        }
+    });
+
+}
+
+function importRow(row, index){
+    console.log("importRow called", row);
+}
+
+exports.export = function(req, res){
+
 }

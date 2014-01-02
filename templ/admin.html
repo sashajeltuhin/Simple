@@ -9,7 +9,7 @@
 
 <div class="navbar navbar-inner"><div class="container"><ul class="nav">
 
-    <li><a href="#/admin"><img src="http://localhost/images/filter.jpg" ng-click="toggleFilter()" width="20" height="20"></a></li>
+    <li><a href="#/admin"><img src="http://localhost/images/filter.png" ng-click="toggleFilter()" width="20" height="20"></a></li>
     <li class="dropdown"><a href="#"class="dropdown-toggle"data-toggle="dropdown">Manage<b class="caret"></b></a>
         <ul class="dropdown-menu">
             <li><a href="#/admin" ng-click="loadProducts()">Products</a></li>
@@ -61,12 +61,14 @@
             <li><a href="#/admin" ng-click="loadLogFields()">Log fields</a></li>
             <li><a href="#/admin" ng-click="loadFields()">Field descriptors</a></li>
             <li><a href="#/admin" ng-click="loadSurveyFields()">Survey</a></li>
+            <li><a href="#/admin" ng-click="loadResponseFields()">Survey response</a></li>
             <li><a href="#/admin" ng-click="loadTenantFields()">Tenant</a></li>
             <li><a href="#/admin" ng-click="loadAppFields()">Application</a></li>
             <li><a href="#/admin" ng-click="loadConsumerFields()">Consumer</a></li>
             <li><a href="#/admin" ng-click="loadZipFields()">Geo</a></li>
             <li><a href="#/admin" ng-click="loadSegmentFields()">Segments</a></li>
             <li><a href="#/admin" ng-click="loadBlockFields()">Blocks</a></li>
+            <li><a href="#/admin" ng-click="loadDraftFields()">Drafts</a></li>
         </ul>
     </li>
     <li class="dropdown"><a href="#"class="dropdown-toggle"data-toggle="dropdown">Reports<b class="caret"></b></a>
@@ -75,6 +77,7 @@
             <li><a href="#/admin" ng-click="qualsByProv()">Quals</a></li>
             <li><a href="#/admin" ng-click="ordersByProv()">Orders</a></li>
             <li><a href="#/admin" ng-click="productGeo()">Product availability</a></li>
+            <li><mk-upload style="padding: 3px 20px" label="Import" path="file/upload" fnc="onImportUploaded($event)"></mk-upload></li>
             <li><a href="#/admin" ng-click="export()">Export to email list [SilverPop]</a></li>
         </ul>
     </li>

@@ -12,6 +12,7 @@ angular.module('cart').factory('mkPopup', ["$document", "$compile", "$rootScope"
             backdropClass: "modal-backdrop",
             footerTemplate: null,
             modalClass: "modal",
+            bodyClass: "",
             css: {
                 top: '100px',
                 left: '30%',
@@ -43,14 +44,14 @@ angular.module('cart').factory('mkPopup', ["$document", "$compile", "$rootScope"
                 if(options.template){
                     if(angular.isString(options.template)){
                         // Simple string template
-                        return '<div class="modal-body">' + options.template + '</div>';
+                        return '<div class="modal-body ' + options.bodyClass + '">' + options.template + '</div>';
                     } else {
                         // jQuery/JQlite wrapped object
-                        return '<div class="modal-body">' + options.template.html() + '</div>';
+                        return '<div class="modal-body ' + options.bodyClass + '">' + options.template.html() + '</div>';
                     }
                 } else {
                     // Template url
-                    return '<div class="modal-body" ng-include="\'' + options.templateUrl + '\'"></div>'
+                    return '<div class="modal-body ' + options.bodyClass + '" ng-include="\'' + options.templateUrl + '\'"></div>'
                 }
             })();
             //We don't have the scope we're gonna use yet, so just get a compile function for modal

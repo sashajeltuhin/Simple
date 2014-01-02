@@ -40,7 +40,7 @@ exports.delete = function(req, res){
     var filter = {_id : pid};
     db.delete(colName, filter, function(err, ret){
         if (err !== null){
-            handleError(res, "Cannot delete product ", err);
+            handleError(res, "Cannot delete field ", err);
         }
         else{
             res.send(pid);

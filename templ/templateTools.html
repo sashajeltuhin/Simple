@@ -1,0 +1,12 @@
+<div class="container" ng-controller="templateCtrl">
+    <div style="width: 90; margin: auto;min-height: 40px">
+        <div class="mkToolBtn"><a href="#/admin" ng-click="showTemplate()">Preview</a></div>
+        <div class="mkToolBtn"><a ng-click="openUpload()">Upload</a></div>
+        <div class="mkToolBtn"><a ng-click="showRaw()">Scratch Pad</a></div>
+        <div class="mkToolBtn"><a ng-click="newDraft()">New Draft</a></div>
+        <div class="mkToolBtn"><a ng-click="saveDraft()">Save Draft</a></div>
+        <div class="mkToolBtn"><a ng-click="publishDraft()">Publish</a></div>
+        <div class="mkToolBtn"><a ng-click="showIntscript()">Integration Script</a></div>
+    </div>
+    <div ng-include="modalTemplPage"></div>
+</div>

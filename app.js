@@ -26,10 +26,13 @@ var express = require('express')
   , fp = require('./routes/fup')
   , vp = require('./routes/vidup')
   , tmplUp = require('./routes/templateUp')
+  , imgUp = require('./routes/imgUp')
+  , fileUp = require('./routes/fileUp')
   , passport = require('passport')
   , auth = require('./routes/auth')
   , zip = require('./routes/zip')
-  , segment = require('./routes/segment');
+  , segment = require('./routes/segment')
+  , draft = require('./routes/draft');;
 
 var app = express();
 
@@ -44,6 +47,8 @@ app.configure(function(){
 //  app.use('/product/upload', produp.upload);
   app.use('/profile/vup', vp.vup);
   app.use('/step/template', tmplUp.upload);
+  app.use('/image/upload', imgUp.upload);
+  app.use('/file/upload', fileUp.upload);
   app.use(express.bodyParser());
   app.use(express.methodOverride());
   app.use(app.router);
@@ -84,6 +89,8 @@ app.post('/product/qual', product.qual);
 app.get('/product/del', product.delete);
 app.post('/product/total', product.total);
 app.post('/product/update', product.upsert);
+app.post('/product/import', product.import);
+app.post('/product/export', product.export);
 app.get('/product/default', product.default);
 app.post('/step/list', step.list);
 app.post('/step/update', step.save);
@@ -91,10 +98,17 @@ app.post('/step/delete', step.delete);
 app.post('/block/list', block.list);
 app.post('/block/update', block.save);
 app.post('/block/delete', block.delete);
+
+app.post('/draft/list', draft.list);
+app.post('/draft/update', draft.save);
+app.post('/draft/delete', draft.delete);
+app.post('/draft/publish', draft.publish);
+
 app.post('/person/list', person.list);
 app.post('/person/update', person.save);
 app.post('/consumer/list', consumer.list);
 app.post('/consumer/update', consumer.save);
+app.post('/product/export', consumer.export);
 app.post('/consumer/bytype', consumer.peopleByType);
 app.post('/consumer/abandons', consumer.abandons)
 
@@ -113,6 +127,7 @@ app.post('/segment/delete', segment.delete);
 
 app.post('/survey/list', survey.list);
 app.post('/survey/update', survey.save);
+app.post('/survey/delete', survey.delete);
 app.post('/log/list', log.list);
 app.post('/log/update', log.save);
 app.post('/log/totalOrders', log.totalOrders);
@@ -124,7 +139,7 @@ app.post('/log/totalRev', log.totalRev);
 app.post('/provider/list', provider.list);
 app.post('/provider/update', provider.save);
 app.post('/fields/list', fields.list);
-app.get('/fields/del', fields.delete);
+app.post('/fields/delete', fields.delete);
 app.post('/fields/total', fields.total);
 app.post('/fields/update', fields.upsert);
 app.get('/labels/list', labels.list);

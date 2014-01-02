@@ -2,8 +2,9 @@ var db = require('../db/dbaccess');
 var mongo = require('mongodb');
 var ObjectID = mongo.ObjectID;
 var dbname = 'ShopDB';
+var mkio =require('./mkfiles');
 
-var colName = 'survey';
+var colName = 'tmpldraft';
 
 
 
@@ -16,13 +17,36 @@ exports.list = function (req, res){
     var filter = db.getFilter(req.body);
     db.load(colName, filter, function(err, recs){
         if (err !== null){
-            handleError(res, "Cannot list steps ", err);
+            handleError(res, "Cannot list versions ", err);
         }
         else{
             res.send(recs);
         }
     });
 }
+
+exports.publish = function (req, res){
+    db.setDB('ShopDB');
+    var filter = db.getFilter(req.body);
+    db.load(colName, filter, function(err, recs){
+        if (err !== null){
+            handleError(res, "Cannot list versions ", err);
+        }
+        else{
+            var v = recs[0];
+            mkio.saveFile(v.version, '../tmp/' + v._id, function(e){
+                if (e == null){
+                    res.send(v);
+                }
+                else{
+                    handleError(res, "Cannot list versions ", e);
+                }
+            })
+
+        }
+    });
+}
+
 
 exports.save = function(req, res){
     db.setDB(dbname);
@@ -34,7 +58,7 @@ exports.save = function(req, res){
     }
     db.upsert(colName, vid, filter, function(err, newid){
         if (err !== null){
-            handleError(res, "Cannot add steps ", err);
+            handleError(res, "Cannot add versions ", err);
         }
         else{
             if (newid !== null){
@@ -53,11 +77,13 @@ exports.delete = function(req, res){
     var filter = {_id : pid};
     db.delete(colName, filter, function(err, ret){
         if (err !== null){
-            handleError(res, "Cannot delete question ", err);
+            handleError(res, "Cannot delete versions ", err);
         }
         else{
             res.send(pid);
         }
     });
 }
+
+
 

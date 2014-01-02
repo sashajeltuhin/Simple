@@ -155,6 +155,18 @@ h4.style4 {
     min-height: 400px;
     overflow: scroll;
 }
+.modalbodyLarge{
+    min-height: 600px;
+}
+
+.mkToolBtn{
+    position: relative;
+    float: left;
+    width: 60px;
+    height: 60px;
+    margin: 10px;
+    cursor: pointer;
+}
 
 .odd_row{
     position: relative;
@@ -271,4 +283,67 @@ h4.style4 {
     right:10px;
     -moz-border-radius:100px / 10px;
     border-radius:100px / 10px;
+}
+
+
+.mk_hroptlist li
+{
+    list-style: none;
+    display:inline;
+}
+
+.mk_label {
+    float: left;
+
+    text-align: left;
+}
+.mk_label_stacked {
+
+    text-align: left;
+}
+
+.queData{
+    position: relative;
+    min-width: 450px;
+    float: left;
+}
+.queAnswers{
+    position: relative;
+    min-width: 450px;
+    float: left;
+}
+
+.mkQueblock{
+    position: relative;
+    height: 120px;
+    margin: 10px;
+    max-width: 1200px;
+    overflow-x: scroll;
+}
+
+.mkQueLevel{
+    position: relative;
+    float: left;
+    height: 120px;
+    margin-right: 20px;
+    max-width: 400px;
+}
+
+.mkQueField{
+    position: relative;
+    float: left;
+    height: 120px;
+    margin: 10px;
+}
+.mkQueFieldRight{
+    position: relative;
+    float: right;
+    height: 120px;
+    margin: 10px;
+}
+.mkResponseField{
+    position: relative;
+    float: left;
+    height: 80px;
+    margin: 10px;
 }

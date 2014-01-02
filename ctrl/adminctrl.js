@@ -288,6 +288,19 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
         });
     }
 
+    $scope.onImportUploaded = function(event){
+        adminservice.import(event.name, selected, $http, function(recs){
+            mkPopup(
+                {
+                    template: '<div>' + recs + ' records imported</div>',
+                    title: 'Confirmation',
+                    scope: $scope,
+                    backdrop: false,
+                    success: {label: 'Got it'}
+                });
+        })
+    }
+
     $scope.createField = function(){
         selected = 'fields';
         createObj('New Attribute');
@@ -391,12 +404,7 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
 
     };
     function buildobj(meta, def){
-        var that = this;
-        var obj = {};
-        $.each(meta, function(i, key){
-            obj[key.fldname] = def!==undefined && def[key.fldname] !== undefined ? def[key.fldname] : key.defval;
-        });
-        return obj;
+        return adminservice.buildobj(meta, def);
     }
 
     function buildForm(meta){
@@ -468,6 +476,11 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
         $scope.viewTitle = "Survey attributes";
         loadMeta(f);
     }
+    $scope.loadResponseFields = function(){
+        var f = 'response';
+        $scope.viewTitle = "Survey response attributes";
+        loadMeta(f);
+    }
 
     $scope.loadTenantFields = function(){
         var f = 'tenant';
@@ -504,14 +517,23 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
         loadMeta(f);
     }
 
+    $scope.loadDraftFields = function(){
+        var f = 'tmpldraft';
+        $scope.viewTitle = "Template draft attributes";
+        loadMeta(f);
+    }
+
     function loadMeta (f){
         selected = 'fields';
+        viewMode = 'grid';
+        buildDefFilter();
         adminservice.loadMeta(selected, $http, function(m){
             adminservice.listObj(selected, {objname:f, 'order_by':{order:1}}, $http, function(d){
                 //$scope.colData = m;
                 //$scope.listData = d;
                 $scope.wrapper = serverUrl + 'grid.html';
                 buildGrid(m, d);
+                refreshFilter(m, refreshData);
             });
         });
     }
@@ -932,6 +954,17 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
         loadFancyList(serverUrl + 'sortlist.html');
     }
 
+    function getAppObj(appID){
+        var appObj = null;
+        $.each($scope.selTen.appObjects, function(i, a){
+            if (a.appID === appID){
+                appObj = a;
+                return appObj;
+            }
+        });
+        return appObj
+    }
+
     function addActiveApp(appField){
         var c = 0;
         $.each($scope.selTen.appObjects, function(i, a){
@@ -1071,6 +1104,10 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
     }
 
     $scope.openStepInfo = function(step){
+            step.isSurvey = step.name == "survey";
+            var appObj = getAppObj(step.app);
+            adminservice.setAppObj(appObj);
+            step.isCC = appObj !== null && appObj.agent === 'agent';
             $scope.obj = step;
             mkPopup(
                 {
@@ -1079,11 +1116,11 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
                     title: 'Flow step ' + step.title,
                     scope: $scope,
                     backdrop: false,
+                    bodyClass: "modalbodyLarge",
                     css: {
                         top: '100px',
                         left: '10%',
                         width: '80%',
-                        height: '80%',
                         margin: 'auto'
                     },
                     success: {label: 'Ok', fn: saveObj}
@@ -1091,38 +1128,16 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
             $scope.editStep();
     }
 
+    $scope.editTemplate = function(){
+        $scope.modalTabPage = serverUrl + 'templateTools.html';
+    }
+
+    $scope.editSurvey = function(){
+        $scope.modalTabPage = serverUrl + 'surveyTools.html';
+    }
+
     $scope.editScript = function(){
         $scope.modalTabPage = serverUrl + 'agentScript.html';
-    }
-
-    $scope.showRaw = function(){
-        adminservice.listObj('block', {cat:"action"}, $http, function(abs){
-            $scope.actionblocks = abs;
-        });
-        adminservice.listObj('block', {cat:"data"}, $http, function(dbs){
-            $scope.datablocks = dbs;
-        });
-        $scope.modalTabPage = serverUrl + 'rawHtml.html';
-    }
-
-    $scope.insertBlock = function(b){
-
-    }
-
-    $scope.tmplkeydown = function(event){
-        if (event.metaKey || event.ctrlKey){
-            if (event.which == 73){ //i
-                console.log('keydown ctrl - i', event);
-                if (event.position !== undefined){
-                    $scope.obj.rawhtml =
-                        [$scope.obj.rawhtml.slice(0, event.position), '^^^', $scope.obj.rawhtml.slice(event.position)].join('');
-                }
-            }
-        }
-    }
-
-    $scope.showIntscript = function(){
-        $scope.modalTabPage = serverUrl + 'intScript.html';
     }
 
     $scope.editStep = function(){
@@ -1133,22 +1148,7 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
 
     }
 
-    $scope.showTemplate = function(){
-        var appObj;
-        $.each($scope.selTen.appObjects, function(i, a){
-            if (a.appID === $scope.obj.app){
-                appObj = a;
-            }
-        });
-        $scope.modalTabPage = serverUrl + 'stepTmpl.html';
-        $scope.masterTmpl = appObj.template;
-    }
 
-    $scope.onTmplUploaded = function(fi){
-        console.log(fi);
-        console.log('step: ');
-        console.log($scope.step);
-    }
 
     $scope.loadSurvey = function(){
         selected = 'survey';
@@ -1245,7 +1245,7 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
         addActiveApp(extra.app);
         buildDefFilter(extra);
         //loadObjNGrid();
-        loadObjGrid();
+        loadObjGrid(true);
     }
 
     function loadFancyList(wrap, onload){
@@ -1271,17 +1271,41 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
     }
 
 
-    function loadObjGrid(){
-        var f  = $scope.cleanFilter;
-        adminservice.loadMeta(selected, $http, function(m){
-            adminservice.listObj(selected, f, $http, function(d){
-                viewMode = 'grid';
-                $scope.colData = m;
-                $scope.listData = d;
-                $scope.wrapper = serverUrl + 'grid.html';
-                buildGrid(m, d);
-                refreshFilter(m, refreshData);
+    function loadObjGrid(customFields){
+        if (customFields == true){
+            var metafilter = {};
+            metafilter.custom = false;
+            adminservice.loadMeta(selected, $http, function(m){
+                var custfilter = {};
+                custfilter.custom = true;
+                custfilter.tenant = $scope.selTen.name;
+                var mlist = m;
+                adminservice.loadMeta(selected, $http, function(c){
+                    if (c !== undefined){
+                        $.each(c, function(i, cf){
+                            m.push(cf);
+                        });
+                    }
+                    loadListBindGrid(m);
+                }, custfilter);
+            }, metafilter);
+        }
+        else{
+            adminservice.loadMeta(selected, $http, function(m){
+                loadListBindGrid(m);
             });
+        }
+    }
+
+    function loadListBindGrid(m){
+        var f = $scope.cleanFilter;
+        adminservice.listObj(selected, f, $http, function(d){
+            viewMode = 'grid';
+            $scope.colData = m;
+            $scope.listData = d;
+            $scope.wrapper = serverUrl + 'grid.html';
+            buildGrid(m, d);
+            refreshFilter(m, refreshData);
         });
     }
 

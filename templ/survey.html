@@ -1,7 +1,20 @@
-
-<div ui-sortable="sortableOptions" ng-model="listData">
-    <div class="row-fluid"  ng-repeat="q in listData" ng-class-odd="'odd_row'" ng-class-even="'even_row'">
-        <div class="span4"><h3>{{q.label}}</h3></div>
-        <div class="span1"><input type="checkbox" ng-model="q.value"></div>
+<h4>Survey Map</h4>
+<div class="mkToolBtn"><a ng-click="newQuestion()">New Question</a></div>
+<div style="clear: both" ui-sortable="sortableOptions" ng-model="queMap">
+    <div class="mkQueblock"  ng-repeat="q in queMap">
+         <div class="mkQueLevel"  ng-class-odd="'odd_row'" ng-class-even="'even_row'">
+            <div class="mkQueField"><img ng-src="{{q.imageUrl}}" width="40" height="50"><mk-upload label="Change" path="image/upload" fnc="onQueImgUploaded($event)"></mk-upload></div>
+            <div class="mkQueField" ng-click="editQue(q)" style="cursor:pointer;"><p><b>{{q.label}}</b></p></div>
+            <div class="mkQueFieldRight"><div class="btn btn-small" ng-click="deleteQue(q)">X</div></div>
+        </div>
+        <div class="mkQueLevel" ng-repeat="r in q.responses" ng-show="r.link">
+            <div class="mkQueField">
+                <div style="position: relative;clear: both">{{r.label}}</div>
+                <div style="position: relative"><img width="30" height="30" src="/images/arrow-right.png"></div>
+            </div>
+            <div class="mkQueField"><img ng-src="{{r.link.imageUrl}}" width="40" height="50"><mk-upload label="Change" path="image/upload" fnc="onQueImgUploaded($event)"></mk-upload></div>
+            <div class="mkQueField" ng-click="editQue(r.link)" style="cursor:pointer;"><p><b>{{r.link.label}}</b></p></div>
+            <div class="mkQueFieldRight"><div class="btn btn-small" ng-click="deleteQue(r.link)">X</div></div>
+        </div>
     </div>
 </div>
