@@ -1,5 +1,6 @@
 function surveyAdminCtrl($scope, $rootScope, $http, adminservice){
     var serverUrl = topUrl + '/templ/';
+    var imgUrl = '/tmp/images/';
     var QUE = "survey";
     var ANSWER = "response";
     $scope.customField = 'Existing';
@@ -21,11 +22,9 @@ function surveyAdminCtrl($scope, $rootScope, $http, adminservice){
         });
     }
 
-    $scope.onSelectField = function(){
-
-    }
 
     $scope.editQue = function(que, parentLink, parent){
+        $scope.selque = que;
         $scope.linkedAnswer = parentLink;
         $scope.parent = parent;
         $scope.queTitle = parent !== undefined && parent !== null ? parent.label + ' --> ' + $scope.selque.label : $scope.selque.label;
@@ -52,6 +51,11 @@ function surveyAdminCtrl($scope, $rootScope, $http, adminservice){
 
     $scope.editLinkedQue = function(a){
         $scope.editQue(a.link, a, $scope.selque);
+    }
+
+    $scope.removeLinkedQue = function(a){
+        delete a.link;
+        $scope.saveSurvey();
     }
 
 
@@ -116,17 +120,24 @@ function surveyAdminCtrl($scope, $rootScope, $http, adminservice){
         //check for new options
         var newopts = 0;
         $.each($scope.selque.responses, function(i, r){
+            r.order = i + 1;
             if (r.fresh == true && $scope.ca.fldopts !== undefined && $scope.ca.fldopts.indexOf(r.value) < 0){
                 $scope.ca.fldopts.push(r.value);
-                delete r.fresh;
-                newopts
+                newopts++;
             }
+            delete r.fresh;
         });
+
+        var ft = $scope.ca.fldtype.replace(/\W/g, '');
+
+        $scope.selque.type = ft == "bool" ? "bool" : "multiple";
+
         if (newopts > 0){
             adminservice.saveObj($scope.ca, "fields", $http, function(f){
                 console.log('saved field', f);
             });
         }
+
         //save parent survey if passed
         if ($scope.parent !== undefined && $scope.parent !== null){
             $scope.selque.parentID = $scope.parent._id;
@@ -162,10 +173,18 @@ function surveyAdminCtrl($scope, $rootScope, $http, adminservice){
         $scope.linkedAnswer = null;
         $scope.parent = null;
         var appObj = adminservice.getAppObj(appObj);
-        adminservice.listObj(QUE, {app:appObj.appID}, $http, function(d){
+        adminservice.listObj(QUE, {app:appObj.appID, order_by:{order:1}}, $http, function(d){
             $scope.queMap = d;
         });
         $scope.modalSurveyPage = serverUrl + 'survey.html';
+    }
+
+    $scope.saveMap = function(){
+        $.each($scope.queMap, function(i, q){
+            q.order = i + 1;
+            adminservice.saveObj(q, QUE, $http, function(p){
+            });
+        });
     }
 
     $scope.onFieldChange = function(){
@@ -225,11 +244,13 @@ function surveyAdminCtrl($scope, $rootScope, $http, adminservice){
     }
 
     $scope.onQueImgUploaded = function(event){
-        console.log(event);
+        var fn = event.name;
+        $scope.selque.imageUrl = imgUrl + fn;
     }
 
     $scope.onAnswerImgUploaded = function(event, a){
-        console.log(event);
+        var fn = event.name;
+        a.imageUrl = imgUrl + fn;
         console.log("a", a);
     }
 }

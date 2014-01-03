@@ -265,7 +265,7 @@ exports.count = function(colname, filter, callback){
 }
 
 exports.buildMetaCache = function(dbname, name, callback){
-    if(metacache[name] !== undefined){
+    if(metacache[name] !== undefined && metacache[name].length == 0){
         callback(true);
     }
     else
@@ -296,7 +296,8 @@ exports.checktypes = function(obj, objname, callback){
                     var key = objname + '.' +  k;
                     var f = metacache[key];
                     if(f !== undefined){
-                        if(f.fldtype == 'currency'|| f.fldtype == 'number'){
+                        var ft = f.fldtype.replace(/\W/g, '');
+                        if(ft == 'currency'|| ft == 'number'){
                             obj[k] = Number(obj[k]);
                         }
                     }

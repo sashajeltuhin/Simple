@@ -225,7 +225,7 @@ exports.total = function(req, res){
 
 exports.import = function(req, res){
     var fn = req.body.fn;
-    csvtool.readCSV('/../tmp/files/' + fn, importRow, function(error, count){
+    csvtool.readCSV('/../tmp/files/' + fn, colMap, importRow, function(error, count){
         if (error == null){
             res.send({success:true, recs: count});
         }
@@ -237,8 +237,27 @@ exports.import = function(req, res){
 
 }
 
-function importRow(row, index){
-    console.log("importRow called", row);
+exports.detectCols = function(req, res){
+    var fn = req.body.fn;
+    csvtool.readColumns('/../tmp/files/' + fn, null, function(error, row){
+        if (error == null){
+            res.send({success:true, map: row});
+        }
+        else{
+            console.log(error);
+            res.send({success:false, err: error});
+        }
+    });
+
+}
+
+function importRow(row, index, colMap){
+    var product = {};
+    for(var key in row){
+        var mapObj = colMap[index];
+        product[mapObj.field] = row[key];
+    }
+    console.log("product imported", product);
 }
 
 exports.export = function(req, res){

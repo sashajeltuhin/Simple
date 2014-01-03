@@ -1,15 +1,13 @@
-<div class="steps1 clearfix">
-    <ul>
-        <li ng-repeat="c in quecats" ng-class="currentQue.class">{{c}}</li>
-    </ul>
-</div>
+
+<div>{{currentQue.label}}</div>
 
 <div class="clearer h20">&nbsp;</div>
+
 <div class="box-1 style1" ng-repeat="r in currentQue.responses">
     <div class="inner clearfix">
         <div class="icons"><img src="assets/img/icon1.png"> <img src="assets/img/icon2.png"></div>
         <h4>{{r.label}}</h4>
-        <div align="center"><input ng-click="answer(r)" ng-model="r.value" type="checkbox"></div>
+        <div align="center"><input ng-click="answer(r)" ng-model="r.selected" type="checkbox"></div>
     </div>
 </div>
 

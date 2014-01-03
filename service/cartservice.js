@@ -47,9 +47,9 @@ angular.module('cart').factory('cartservice', function($http) {
             return '';
         }
         if (extenstion == true){
-            return chrome.extension.getURL('templ/' + this.currentstep().template);
+            return chrome.extension.getURL(this.currentstep().template);
         }
-        return serverUrl + '/templ/' + this.currentstep().template;
+        return serverUrl +  this.currentstep().template;
     }
 
     service.getCustomer = function(){

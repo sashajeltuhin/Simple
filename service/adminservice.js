@@ -6,6 +6,7 @@ angular.module('cart').factory('adminservice', function($q) {
     var fieldCache = {};
     var selTen = {};
     var selAppObj = {};
+    var selObj = {};
 
     service.setTenant = function(t){
         selTen = t;
@@ -21,6 +22,14 @@ angular.module('cart').factory('adminservice', function($q) {
 
     service.getAppObj = function(){
         return selAppObj;
+    }
+
+    service.setSelected = function(obj){
+        selObj = obj;
+    }
+
+    service.getSelected = function(){
+        return selObj;
     }
 
     service.resetCache = function(){
@@ -108,9 +117,9 @@ angular.module('cart').factory('adminservice', function($q) {
         });
     };
 
-    service.import = function(fileName, obj, $http, callback){
-        var filter = {fn: fileName};
-        $http.post(serverUrl + '/' + obj + '/import', filter).success(function (data) {
+    service.import = function(fileName, colMap, objname, $http, callback){
+        var filter = {fn: fileName, map : colMap};
+        $http.post(serverUrl + '/' + objname + '/import', filter).success(function (data) {
             if (data.success == true){
                 callback(data.recs);
             }else{
@@ -118,6 +127,17 @@ angular.module('cart').factory('adminservice', function($q) {
             }
         });
     };
+
+    service.getColumnMap = function(fileName, objname, $http, callback){
+        var filter = {fn: fileName};
+        $http.post(serverUrl +  '/' + objname + '/columnMap', filter).success(function (data) {
+            if (data.success == true){
+                callback(data.map);
+            }else{
+                console.log(data.err);
+            }
+        });
+    }
 
     service.deleteObj = function(fld, obj, $http, callback){
         $http.post(serverUrl + '/' + obj + '/delete', fld).success(function (data) {

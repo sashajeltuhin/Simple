@@ -22,7 +22,7 @@ angular.module('cart').directive('mkUpload', function($parse) {
                     var fileinfo = data.result[0];
                     var fnc = $parse(attr.fnc);
                     scope.$apply(function() {
-                        fnc(scope, { $event: fileinfo, $params: fileinfo });
+                        fnc(scope, { $event: fileinfo, obj:attr.path });
                     });
                     //scope.fnc({arg1: fileinfo});
                 },

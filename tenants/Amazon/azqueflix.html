@@ -11,7 +11,7 @@
     <div class="inner clearfix">
         <div class="icons"><img ng-src="{{r.imageUrl}}"></div>
         <h4>{{r.label}}</h4>
-        <div align="center"><input ng-click="answer(r)" ng-model="r.selected" ng-value="{r.selected:true}" type="radio"></div>
+        <div align="center"><input ng-click="answer(r)" ng-model="r.selected" ng-value="{r.selected == true}" type="radio"></div>
     </div>
 </div>
 </div>

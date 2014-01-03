@@ -32,7 +32,8 @@ var express = require('express')
   , auth = require('./routes/auth')
   , zip = require('./routes/zip')
   , segment = require('./routes/segment')
-  , draft = require('./routes/draft');;
+  , csvtool = require('./routes/csvtool')
+  , draft = require('./routes/draft');
 
 var app = express();
 
@@ -92,6 +93,8 @@ app.post('/product/update', product.upsert);
 app.post('/product/import', product.import);
 app.post('/product/export', product.export);
 app.get('/product/default', product.default);
+app.post('/product/columnMap', product.detectCols);
+
 app.post('/step/list', step.list);
 app.post('/step/update', step.save);
 app.post('/step/delete', step.delete);
@@ -124,6 +127,7 @@ app.post('/tenant/update', tenant.save);
 app.post('/segment/list', segment.list);
 app.post('/segment/update', segment.save);
 app.post('/segment/delete', segment.delete);
+
 
 app.post('/survey/list', survey.list);
 app.post('/survey/update', survey.save);

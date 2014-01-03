@@ -223,7 +223,9 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
     }
 
     $scope.saveChanges = function() {
-        console.log(changedFlds);
+        if (selected == ''){
+            return;
+        }
 
         var l = viewMode == 'grid'? changedlist: getChangedList();
         $.each(l, function(i, item){
@@ -288,17 +290,11 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
         });
     }
 
-    $scope.onImportUploaded = function(event){
-        adminservice.import(event.name, selected, $http, function(recs){
-            mkPopup(
-                {
-                    template: '<div>' + recs + ' records imported</div>',
-                    title: 'Confirmation',
-                    scope: $scope,
-                    backdrop: false,
-                    success: {label: 'Got it'}
-                });
-        })
+    $scope.import = function(){
+        adminservice.setSelected(selected);
+        $scope.viewTitle = "Import Data";
+        hideGrid();
+        $scope.wrapper = serverUrl + "columnMap.html";
     }
 
     $scope.createField = function(){
@@ -316,7 +312,6 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
     $scope.createProduct = function(){
         selected = 'product';
         createObj('New Product');
-
     };
 
     $scope.createStep = function(){
@@ -956,13 +951,18 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
 
     function getAppObj(appID){
         var appObj = null;
+
         $.each($scope.selTen.appObjects, function(i, a){
-            if (a.appID === appID){
+            if (appID !== undefined && a.appID === appID){
+                appObj = a;
+                return appObj;
+            }
+            else if(appID == undefined && a.active == true){
                 appObj = a;
                 return appObj;
             }
         });
-        return appObj
+        return $scope.selTen.appObjects[0];
     }
 
     function addActiveApp(appField){
@@ -1151,10 +1151,16 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
 
 
     $scope.loadSurvey = function(){
-        selected = 'survey';
-        $scope.viewTitle = "Surveys";
-        buildDefFilter();
-        loadFancyList(serverUrl + 'survey.html');
+//        selected = 'survey';
+//        $scope.viewTitle = "Surveys";
+//        buildDefFilter();
+//        loadFancyList(serverUrl + 'survey.html');
+        selected = '';
+        var appObj = getAppObj();
+        adminservice.setAppObj(appObj);
+        hideGrid();
+        $scope.wrapper = serverUrl + "surveyTools.html";
+        $scope.viewTitle = "Survey";
     }
 
     $scope.loadProvidersLst = function(){
