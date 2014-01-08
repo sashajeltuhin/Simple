@@ -42,7 +42,7 @@ exports.getFilter = function(f){
         if (Array.isArray(v)){
             filter.query[key] =  { $in: v };
         }
-        if (v.oper !== undefined && v.val !== undefined && Array.isArray(v.val)){
+        else if (v.oper !== undefined && v.val !== undefined && Array.isArray(v.val)){
             if (v.oper == 'in'){
                 filter.query[key] =  { $in:v.val };
             }

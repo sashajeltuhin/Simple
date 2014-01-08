@@ -29,8 +29,8 @@ sed -i '' "s/localhost/$4/g" *.html
 #cd ../assets/css
 #sed -i '' "s/localhost/$4/g" *.css
 
-/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --pack-extension=/users/sashajeltuhin/webstormprojects/amazonExt --pack-extension-key=/users/sashajeltuhin/webstormprojects/amazonExt.pem
+#/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --pack-extension=/users/sashajeltuhin/webstormprojects/amazonExt --pack-extension-key=/users/sashajeltuhin/webstormprojects/amazonExt.pem
 
-ssh -t sjeltuhin@simple.bridgevine.com "sudo bash /home/sjeltuhin/deploy/deployExt.sh"
+#ssh -t sjeltuhin@simple.bridgevine.com "sudo bash /home/sjeltuhin/deploy/deployExt.sh"
 #usage: deployExt Amazon amazonExt amazinjector.js 'server name
 

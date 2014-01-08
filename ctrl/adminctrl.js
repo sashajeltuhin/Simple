@@ -950,9 +950,8 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
         $scope.stepApps = [];
         var extra = {};
         extra.type = 'cart';
-        var appObj = adminservice.getAppObj();
-        extra.app = appObj.appID;
-
+        extra.app = {};
+        addActiveApp(extra.app);
         buildDefFilter(extra);
         loadFancyList(serverUrl + 'steplisthor.html', function(d){
             //apps
@@ -964,9 +963,7 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
         $scope.appElements = [];
         $scope.appWidgets = [];
         $scope.stepApps = [];
-        //var apps = $scope.cleanFilter.app;
-        var apps = [];
-        apps.push(adminservice.getAppObj().appID);
+        var apps = $scope.cleanFilter.app;
         for(var ii=0; ii< $scope.selTen.appObjects.length;ii++){
             if (apps.indexOf($scope.selTen.appObjects[ii].appID) !== -1){
                 $scope.stepApps.push($scope.selTen.appObjects[ii]);
@@ -990,12 +987,7 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
     }
 
     $scope.loadSegments = function(){
-//        $scope.viewTitle = "Segmentation and rules";
-//        var extra = {};
-//        extra.app = {};
-//        addActiveApp(extra.app);
-//        buildDefFilter(extra);
-//        loadFancyList(serverUrl + 'seglist.html');
+
         selected = '';
         $scope.viewTitle = "";
         var appObj = getAppObj();
@@ -1116,10 +1108,9 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
         selected = 'log';
         $scope.viewTitle = "Application Logs";
         var extra = {};
-        var appObj = adminservice.getAppObj();
-        extra.app = appObj.appID;
-//        extra.app = {};
-//        addActiveApp(extra.app);
+
+        extra.app = {};
+        addActiveApp(extra.app);
         buildDefFilter(extra);
         //loadObjNGrid();
         loadObjGrid();
@@ -1145,10 +1136,8 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
         selected = 'step';
         $scope.viewTitle = "UI Elements";
         var extra = {};
-        var appObj = adminservice.getAppObj();
-        extra.app = appObj.appID;
-//        extra.app = {};
-//        addActiveApp(extra.app);
+        extra.app = {};
+        addActiveApp(extra.app);
         buildDefFilter(extra);
         loadObjGrid();
     }
@@ -1178,12 +1167,9 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
         selected = 'consumer';
         $scope.viewTitle = "Consumers";
         var extra = {};
-        var appObj = adminservice.getAppObj();
-        extra.app = appObj.appID;
-//        extra.app = {};
-//        addActiveApp(extra.app);
+        extra.app = {};
+        addActiveApp(extra.app);
         buildDefFilter(extra);
-        //loadObjNGrid();
         loadObjGrid(true);
     }
 
