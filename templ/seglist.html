@@ -12,9 +12,10 @@
     <div class="quedel" ng-click="deleteRule(rule)"><img src="/images/step_del.png" width="20" height="20"></div>
     <div style="height: 60px;position: relative;clear: both;">
         <div class="mkToolBtnWide" ng-click="editRule(rule)"><h3 ng-class="{'stepactive': rule.active, '': !rule.active}" style="margin-top: 0px">{{rule.name}}</h3></div>
-        <div class="mkToolBtn" ng-click="createRule()">New rule</div>
-        <div class="mkToolBtn" ng-click="cloneRule(rule)">Clone rule</div>
-        <div class="mkToolBtn" ng-click="showDetail(rule)">Expressions</div>
+        <div class="mkToolBtnRight" ng-click="cloneRule(rule)">Clone rule</div>
+        <div class="mkToolBtnRight" ng-click="createRule()">New rule</div>
+        <div class="mkToolBtnRight"></div>
+        <div class="mkToolBtnRight" ng-click="showDetail(rule)">Expressions</div>
     </div>
     <div style="position: relative;height: 300px;" ng-show="rule.showDetail">
         <div style="position: relative;clear: left">

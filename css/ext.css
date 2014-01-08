@@ -168,6 +168,15 @@ h4.style4 {
     cursor: pointer;
 }
 
+.mkToolBtnRight{
+    position: relative;
+    float: right;
+    width: 60px;
+    height: 60px;
+    margin: 10px;
+    cursor: pointer;
+}
+
 .activeBtn {
     font-weight:bold;
     color:#ff7906;

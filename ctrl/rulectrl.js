@@ -2,6 +2,7 @@ function rulectrl($scope, $rootScope, $http, adminservice, mkPopup){
     var RULE = "rule";
     var SEG = "segment";
     var prodMeta = [];
+    var type = 'teas';
     init();
     loadRules();
 
@@ -49,6 +50,15 @@ function rulectrl($scope, $rootScope, $http, adminservice, mkPopup){
         });
     }
 
+    function refreshRules(){
+        if ($scope.adRule){
+            $scope.loadRules();
+        }
+        else{
+            $scope.loadQualRules();
+        }
+    }
+
     $scope.loadTeasRules = function(){
         loadRules();
     }
@@ -82,7 +92,7 @@ function rulectrl($scope, $rootScope, $http, adminservice, mkPopup){
             }
         }
         adminservice.editObj(newRule.name, newRule, RULE, mkPopup, $scope, $http, function(){
-            loadRules();
+            refreshRules();
         });
     }
 
@@ -96,7 +106,7 @@ function rulectrl($scope, $rootScope, $http, adminservice, mkPopup){
     $scope.createRule = function(){
         adminservice.createObj('New Rule', {}, RULE, mkPopup, $scope, $http, function(){
             adminservice.saveObj($scope.obj, RULE, $http, function(){
-                loadRules();
+                refreshRules();
             });
         });
     }
