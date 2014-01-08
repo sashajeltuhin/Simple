@@ -14,8 +14,11 @@ function agentprodctrl($scope, $rootScope, $http, $location, cartservice){
     loadProds();
     $scope.templateUrl = cartservice.getTemplateURL();
     function loadProds(){
+        var f = {};
         $scope.c = cartservice.getCustomer();
-        cartservice.loadproducts($scope.c, $http, function(data){
+        f.customer = $scope.c;
+        f.rule = "qual";
+        cartservice.loadproducts(f, $http, function(data){
             var teaser = cartservice.getTeaserProd();
             if (teaser !== undefined && teaser !== null){
                 data.splice(0, 0, teaser);
@@ -29,7 +32,10 @@ function agentprodctrl($scope, $rootScope, $http, $location, cartservice){
     }
 
     $scope.reloadProds = function(){
-        cartservice.loadproducts($scope.c, $http, function(data){
+        var f = {};
+        f.customer = $scope.c;
+        f.rule = "qual";
+        cartservice.loadproducts(f, $http, function(data){
             var teaser = cartservice.getTeaserProd();
             if (teaser !== undefined && teaser !== null){
                 data.splice(0, 0, teaser);

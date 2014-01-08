@@ -1,5 +1,6 @@
 function surveyctrl($scope, $rootScope, $http, $location, cartservice){
     $scope.topUrl = topUrl;
+    var serverUrl = topUrl;
     loadQuestions();
     $scope.step = cartservice.currentstep();
     $scope.templateUrl = cartservice.getTemplateURL();
@@ -22,6 +23,9 @@ function surveyctrl($scope, $rootScope, $http, $location, cartservice){
                     var c = {};
                     c.name = q.cat;
                     c.class = "";
+                    if (i == 0){
+                        c.class = "active";
+                    }
                     $scope.quecats.push(c);
                 }
             })
@@ -30,22 +34,29 @@ function surveyctrl($scope, $rootScope, $http, $location, cartservice){
 
     $scope.showsurveyQue = function(q){
         assignCurrent(q);
-        $scope.queTemplate = $scope.currentQue.templateUrl;
+        $scope.queTemplate = serverUrl + $scope.currentQue.templateUrl;
     }
 
     $scope.nextque = function(){
-        $.each($scope.currentQue.responses, function(i, r){
+        var link = null;
+        for(var i = 0; i < $scope.currentQue.responses.length; i++){
+            var r = $scope.currentQue.responses[i];
             if (r.selected && r.link){
-                $scope.showsurveyQue(r.link);
-                return;
+                link = r.link;
+                break;
             }
-        });
-        if ($scope.queindex < $scope.listData.length -1){
-            $scope.queindex++;
-            $scope.showsurveyQue($scope.listData[$scope.queindex]);
+        }
+        if (link !== null){
+            $scope.showsurveyQue(link);
         }
         else{
-            $scope.next();
+            if ($scope.queindex < $scope.listData.length -1){
+                $scope.queindex++;
+                $scope.showsurveyQue($scope.listData[$scope.queindex]);
+            }
+            else{
+                $scope.next();
+            }
         }
     }
 
@@ -60,14 +71,12 @@ function surveyctrl($scope, $rootScope, $http, $location, cartservice){
                c.class = "";
            }
         });
-        var rescount = $scope.currentQue.responses.length;
+
+//        if ($scope.currentQue.type == "bool"){
+//            $scope.currentQue.chosen = 'Yes';
+//        }
         $.each($scope.currentQue.responses, function(x, r){
-            if (rescount == 2 && x == 0){
-                r.selected = true;
-            }
-            else{
                 r.selected = false;
-            }
         });
     }
 

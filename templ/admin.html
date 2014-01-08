@@ -7,7 +7,7 @@
 </div>
 </div>
 
-<div class="navbar navbar-inner"><div class="container"><ul class="nav">
+<div class="navbar navbar-inner" ng-show="tenantPicked"><div class="container"><ul class="nav">
 
     <li><a href="#/admin"><img src="http://localhost/images/filter.png" ng-click="toggleFilter()" width="20" height="20"></a></li>
     <li class="dropdown"><a href="#"class="dropdown-toggle"data-toggle="dropdown">Manage<b class="caret"></b></a>
@@ -49,7 +49,7 @@
             <li><a href="#/admin" ng-click="createApp()">Application</a></li>
             <li><a href="#/admin" ng-click="createTenant()">Tenant</a></li>
             <li><a href="#/admin" ng-click="createGeo()">Geo mapping</a></li>
-            <li><a href="#/admin" ng-click="createSegment()">Demographic segment</a></li>
+            <li><a href="#/admin" ng-click="createSegRule()">Demographic segment</a></li>
             <li><a href="#/admin" ng-click="createBlock()">Template block</a></li>
         </ul>
     </li>
@@ -67,6 +67,7 @@
             <li><a href="#/admin" ng-click="loadConsumerFields()">Consumer</a></li>
             <li><a href="#/admin" ng-click="loadZipFields()">Geo</a></li>
             <li><a href="#/admin" ng-click="loadSegmentFields()">Segments</a></li>
+            <li><a href="#/admin" ng-click="loadRuleFields()">Rules</a></li>
             <li><a href="#/admin" ng-click="loadBlockFields()">Blocks</a></li>
             <li><a href="#/admin" ng-click="loadDraftFields()">Drafts</a></li>
         </ul>
@@ -85,6 +86,7 @@
         <ul class="dropdown-menu">
             <li><a href="#/admin" ng-click="saveChanges()">Save changes</a></li>
             <li><a href="#/admin" ng-click="saveMassChanges()">Mass update</a></li>
+            <li><a href="#/admin" ng-click="deleteRec()">Delete</a></li>
         </ul>
     </li></ul>
 </div>

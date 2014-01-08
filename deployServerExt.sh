@@ -20,13 +20,17 @@ cp -rfv simple/mods $2/mods
 cp -rfv simple/service $2/service
 cp -rfv simple/tenants/$1 $2/templ
 
-#cd $1
-#sed -i '' "s/localhost/$4/g" *.js
-#cd mods
-#sed -i '' "s/localhost/$4/g" *.js
-#cd ../templ
-#sed -i '' "s/localhost/$4/g" *.html
+cd $2
+sed -i '' "s/localhost/$4/g" *.js
+cd mods
+sed -i '' "s/localhost/$4/g" *.js
+cd ../templ
+sed -i '' "s/localhost/$4/g" *.html
+#cd ../assets/css
+#sed -i '' "s/localhost/$4/g" *.css
 
+/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --pack-extension=/users/sashajeltuhin/webstormprojects/amazonExt --pack-extension-key=/users/sashajeltuhin/webstormprojects/amazonExt.pem
 
-#usage: deployExt Amazon amazonExt amazinjector.js
+ssh -t sjeltuhin@simple.bridgevine.com "sudo bash /home/sjeltuhin/deploy/deployExt.sh"
+#usage: deployExt Amazon amazonExt amazinjector.js 'server name
 

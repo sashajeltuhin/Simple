@@ -1,23 +1,30 @@
 <div style="position: relative" ng-controller="exportctrl">
 
-<div style="width: 90; margin: auto;min-height: 40px;">
-<div class="mkToolBtn"><mk-upload style="padding: 3px 20px" label="Upload File" path="file/upload" fnc="onImportUploaded($event)"></mk-upload></div>
-<div class="mkToolBtn"><a ng-click="importData()">Import Data</a></div>
+<div style="position: relative;margin: auto;min-height: 40px;">
+    <div class="mkToolBtn"><mk-upload label="Upload File" path="file/upload" fnc="onImportUploaded($event)"></mk-upload></div>
+    <div class="mkToolBtn"><a ng-click="importData()">Import Data</a></div>
+    <div class="mkToolBtn"><a ng-click="defineDefs()">Defaults Values</a></div>
 </div>
-<div style="position:relative; max-height: 500px;overflow-y: scroll">
-    <div style="position:relative; float:left;margin: 30px; max-width: 300px" ui-sortable="sortableOptions" ng-model="fieldMap">
-        <div class="mkFieldContainer"  ng-repeat="f in fieldMap" ng-class-odd="'odd_row'" ng-class-even="'even_row'">
-                <div class="mkFieldBlock"><img src="/images/tick.png" width="40" height="50"></div>
-                <div class="mkFieldBlock"><p><b>{{f.label}}</b></p></div>
+    <div style="max-height: 500px;overflow-y: scroll;clear: left;">
+        <div style="position:relative;float: left; max-width:300px;margin: 10px;">
+            <h4>Attributes in {{selected}}</h4>
+            <div style="position:relative;" ui-sortable="sortableOptions" ng-model="fieldMap">
+                <div class="map_row mkFieldContainer"  ng-repeat="f in fieldMap">
+                        <div class="mkFieldBlock"><img src="/images/tick.png" width="30" height="30"></div>
+                        <div class="mkFieldBlock"><p><b>{{f.label}}</b></p></div>
+                </div>
+            </div>
         </div>
-    </div>
 
-    <div style="position:relative; float:left;margin: 30px;max-width: 300px">
-        <div class="mkFieldContainer"  ng-repeat="c in colMap" ng-class-odd="'odd_row'" ng-class-even="'even_row'">
-                <div style="position: relative; display: inline-block;vertical-align:middle"><img width="30" height="30" src="/images/arrow-right.png"></div>
-                <div class="mkFieldBlock" ng-click="excludeColumn(c)"><img src="/images/step_del.png" width="40" height="50"></div>
-                <div class="mkFieldBlock"><p><b>{{c}}</b></p></div>
+        <div style="position:relative;max-height: 500px;max-width:300px;float:left;margin: 10px;">
+            <h4>Columns in the file:</h4>
+            <div class="mkColContainer"  ng-repeat="c in colMap">
+                    <div style="position: relative; margin-left:-30px; margin-top: 15px; float: left"><img width="30" height="30" src="/images/arrow-right.png"></div>
+                    <div class="map_row mkFieldContainer" style="max-width: 300px">
+                        <div class="mkFieldBlock"><p><b>{{c}}</b></p></div>
+                        <div class="quedel" ng-click="excludeColumn(c)"><img src="/images/step_del.png" width="20" height="20"></div>
+                    </div>
+            </div>
         </div>
     </div>
-</div>
 </div>

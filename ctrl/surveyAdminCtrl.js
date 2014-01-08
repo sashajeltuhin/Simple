@@ -130,7 +130,9 @@ function surveyAdminCtrl($scope, $rootScope, $http, adminservice){
 
         var ft = $scope.ca.fldtype.replace(/\W/g, '');
 
-        $scope.selque.type = ft == "bool" ? "bool" : "multiple";
+        if ($scope.selque._id == undefined){
+            $scope.selque.type = ft == "bool" ? "bool" : "multiple";
+        }
 
         if (newopts > 0){
             adminservice.saveObj($scope.ca, "fields", $http, function(f){

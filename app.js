@@ -32,6 +32,7 @@ var express = require('express')
   , auth = require('./routes/auth')
   , zip = require('./routes/zip')
   , segment = require('./routes/segment')
+  , rule = require('./routes/rule')
   , csvtool = require('./routes/csvtool')
   , draft = require('./routes/draft');
 
@@ -87,7 +88,7 @@ app.post('/profile/update', profile.saveprofile);
 //app.post('/profile/upload', profile.upload_file);
 app.post('/product/list', product.list);
 app.post('/product/qual', product.qual);
-app.get('/product/del', product.delete);
+app.post('/product/delete', product.delete);
 app.post('/product/total', product.total);
 app.post('/product/update', product.upsert);
 app.post('/product/import', product.import);
@@ -127,6 +128,10 @@ app.post('/tenant/update', tenant.save);
 app.post('/segment/list', segment.list);
 app.post('/segment/update', segment.save);
 app.post('/segment/delete', segment.delete);
+
+app.post('/rule/list', rule.list);
+app.post('/rule/update', rule.save);
+app.post('/rule/delete', rule.delete);
 
 
 app.post('/survey/list', survey.list);

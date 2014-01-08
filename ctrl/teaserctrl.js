@@ -1,15 +1,19 @@
 function teaserctrl($scope, $rootScope, $http, $location, cartservice){
     $scope.topUrl = topUrl;
     $scope.step = cartservice.currentstep();
-    cartservice.getSocket().on('prodviewed', function (data) {
-        console.log('prodviewed called');
-        console.log(data);
-    });
+    $scope.app = cartservice.getAppObj();
+//    cartservice.getSocket().on('prodviewed', function (data) {
+//        console.log('prodviewed called');
+//        console.log(data);
+//    });
     loadProds();
     $scope.templateUrl = cartservice.getTemplateURL();
     function loadProds(){
+        var f = {};
         $scope.c = cartservice.getCustomer();
-        cartservice.loadproducts($scope.c, $http, function(data){
+        f.customer = $scope.c;
+        f.rule = "teas";
+        cartservice.loadproducts(f, $http, function(data){
             $scope.products = data;
 
             $.each(data, function(i, p){
@@ -20,8 +24,10 @@ function teaserctrl($scope, $rootScope, $http, $location, cartservice){
     }
 
     $scope.reloadProds = function(){
-
-        cartservice.loadproducts($scope.c, $http, function(data){
+        var f = {};
+        f.customer = $scope.c;
+        f.rule = "teas";
+        cartservice.loadproducts(f, $http, function(data){
             $scope.products = data;
             $.each(data, function(i, p){
                 p.lblDetails = "More Details";

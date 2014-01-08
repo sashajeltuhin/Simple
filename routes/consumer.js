@@ -15,6 +15,7 @@ var handleError = function(res, msg, err){
 exports.list = function (req, res){
     db.setDB('ShopDB');
     var filter = db.getFilter(req.body);
+    console.log("consumer filter: ", filter);
     db.load(colName, filter, function(err, recs){
         if (err !== null){
             handleError(res, "Cannot list consumer ", err);

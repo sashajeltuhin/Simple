@@ -42,6 +42,14 @@ exports.getFilter = function(f){
         if (Array.isArray(v)){
             filter.query[key] =  { $in: v };
         }
+        if (v.oper !== undefined && v.val !== undefined && Array.isArray(v.val)){
+            if (v.oper == 'in'){
+                filter.query[key] =  { $in:v.val };
+            }
+            else if (v.oper == 'all'){
+                filter.query[key] =  { $all:v.val };
+            }
+        }
         else if (String(key) == "_id"){
             filter.query[key]  = new ObjectID(v);
             }

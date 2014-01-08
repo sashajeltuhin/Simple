@@ -3,15 +3,21 @@
 
 <div class="clearer h20">&nbsp;</div>
 
-
-<div ng-repeat="r in currentQue.responses">
-<h4 class="style1" ng-show="r.order > 1"><strong><span>or</span></strong></h4>
-
-<div ng-class="{'box-1 style2 last': r.order > 1, 'box-1 style2': r.order == 1}">
+<div class="box-1 style2">
     <div class="inner clearfix">
-        <div class="icons"><img ng-src="{{r.imageUrl}}"></div>
-        <h4>{{r.label}}</h4>
-        <div align="center"><input ng-click="answer(r)" ng-model="r.selected" ng-value="{r.selected:true}" type="radio"></div>
+        <div class="icons"><img ng-src="{{topUrl}}{{currentQue.responses[0].imageUrl}}"></div>
+        <h4>{{currentQue.responses[0].label}}</h4>
+        <div align="center"><input ng-change="answer(currentQue.responses[0])" ng-model="currentQue.chosen" value="Yes" type="radio"></div>
     </div>
 </div>
+
+
+<h4 class="style1"><strong><span>or</span></strong></h4>
+
+<div class="box-1 style2 last">
+    <div class="inner clearfix">
+        <div class="icons"><img ng-src="{{topUrl}}{{currentQue.responses[1].imageUrl}}"></div>
+        <h4>{{currentQue.responses[1].label}}</h4>
+        <div align="center"><input ng-change="answer(currentQue.responses[1])" ng-model="currentQue.chosen" value="No" type="radio"></div>
+    </div>
 </div>

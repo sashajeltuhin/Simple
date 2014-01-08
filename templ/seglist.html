@@ -1,50 +1,53 @@
-<div style="margin-left: 50px;margin-top: 50px" ng-repeat="s in segs">
-    <div class="row-fluid">
-        <div class="span4"><h3>{{s.title}}</h3></div>
-        <div class="span2">Applies to {{s.app}}</div>
-        <div class="span2 btn btn-small bv_btn-custom" ng-click="createSegment()">New expression</div>
+<div style="position: relative" ng-controller="rulectrl">
+<div style="height: 60px;position: relative;clear: both;">
+    <div class="mkToolBtnWide" ng-class="{'activeBtn': adRule, '': !adRule}" ng-click="loadTeasRules()">Ad Rules</div>
+    <div class="mkToolBtnWide" ng-class="{'activeBtn': !adRule, '': adRule}"ng-click="loadQualRules()">Listing rules</div>
+</div>
+<div style="position: relative;clear: both;">
+    <div style="position: relative;float: left"><img width="100" height="70" ng-src="{{ruletypeUrl}}"></div>
+    <div style="position: relative;float: left;margin-left: 40px"><h3>{{viewTitle}}</h3></div>
+</div>
+<div style="position: relative;width: 70%;margin: auto; margin-top: 40px;" ui-sortable="sortableOptions" ng-model="listData">
+<div style="margin-left: 50px;margin-top: 50px;margin-bottom: 50px;border: 1px solid #0077b3;" ng-repeat="rule in listData">
+    <div class="quedel" ng-click="deleteRule(rule)"><img src="/images/step_del.png" width="20" height="20"></div>
+    <div style="height: 60px;position: relative;clear: both;">
+        <div class="mkToolBtnWide" ng-click="editRule(rule)"><h3 ng-class="{'stepactive': rule.active, '': !rule.active}" style="margin-top: 0px">{{rule.name}}</h3></div>
+        <div class="mkToolBtn" ng-click="createRule()">New rule</div>
+        <div class="mkToolBtn" ng-click="cloneRule(rule)">Clone rule</div>
+        <div class="mkToolBtn" ng-click="showDetail(rule)">Expressions</div>
     </div>
-<div ui-sortable="sortableOptions" ng-model="listData">
-    <div class="row-fluid"  ng-repeat="p in expBySeg(s)  | orderBy:'app'" ng-class-odd="'odd_row'" ng-class-even="'even_row'">
-        <div class="row-fluid">
-        <div class="span7 navbar navbar-inner"><div class="container">
-            <ul class="nav">
-                <li><a ng-click="editSegment(p)">Edit</a></li>
-                <li><a ng-click="cloneExp(p)">Clone</a></li>
-                <li><a ng-click="deleteSegment(p)">Delete</a></li>
-            </ul>
+    <div style="position: relative;height: 300px;" ng-show="rule.showDetail">
+        <div style="position: relative;clear: left">
+            <div ng-show="rule.limit"><p>Load <b>{{rule.limit}}</b> offers</p></div>
         </div>
+        <div style="position: relative;float:left;max-width: 400px;min-width:300px;clear: left;">
+            <div style="position: relative">
+                <div class="btn btn-small"  style="float: left;" ng-click="createSegment(rule)">+</div>
+                <h5 style="position: relative;float: left;margin-left: 10px">Consumer segments</h5>
+            </div>
+            <div ui-sortable="sortableOptions" ng-model="rule.dems" style="position:relative; clear:left;height: 150px;max-width:300px;overflow-y: scroll;border: solid #000000 1px">
+                <div class="map_row" style="position: relative;height: 50px;max-width: 290px;"  ng-repeat="dem in rule.dems">
+                    <div class="quedel" ng-click="deleteSegment(rule, dem)"><img src="/images/step_del.png" width="20" height="20"></div>
+                    <div style="position: relative;margin: 5px;height: 40px;cursor: pointer; text-align:center;" ng-click="editSegment(dem, rule)"><b>{{dem.title}}</b></div>
+                </div>
+            </div>
         </div>
+        <div  style="position: relative;float:left;max-width: 50px;margin-top: 80px;margin-left: 20px;margin-right: 20px">
+            <img width="30" height="30" src="/images/arrow-right.png">
         </div>
-        <div class="row-fluid">
-        <!--<div class="span1"><img src="{{p.image}}" width="40" height="40"/></div>-->
-
-        <div class="span2"><h4>{{p.exp}}</h4></div>
-        <div class="span2"><b>{{p.field}} {{p.oper}} {{p.val}}</b></div>
-        <div class="span3">maps to category <b>{{p.prodcat}} </b></div>
-        <div class="span2">Max Records <b>{{p.limit}} </b></div>
-        <div class="span2">Active <input type="checkbox" ng-model="p.active"></div>
+        <div style="position: relative;float:left;max-width: 400px;min-width:300px;">
+            <div style="position: relative">
+                <div class="btn btn-small" style="float: left;" ng-click="createProdRule(rule)">+</div>
+                <h5 style="position: relative;float: left;margin-left: 10px">Product filter</h5>
+            </div>
+            <div ui-sortable="sortableOptions" ng-model="rule.dems" style="position:relative;clear:left;height: 150px;max-width:300px;overflow-y: scroll;border: solid #000000 1px">
+                <div class="map_row" style="position: relative;height: 50px;max-width: 290px"  ng-repeat="cond in rule.conds">
+                    <div class="quedel" ng-click="deleteProdRule(rule, cond)"><img src="/images/step_del.png" width="20" height="20"></div>
+                    <div style="position: relative;margin: 5px;height: 40px; text-align:center;" ng-click="editProdRule(cond, rule)"><b>{{cond.title}}</b></div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
-
-    <div style="clear: both" ui-sortable="sortableOptions" ng-model="queMap">
-        <div class="mkQueblock"  ng-repeat="s in segs">
-            <div class="mkQueLevel"  ng-class-odd="'odd_row'" ng-class-even="'even_row'">
-                <div class="mkQueField"><img ng-src="{{q.imageUrl}}" width="40" height="50"><mk-upload label="Change" path="image/upload" fnc="onQueImgUploaded($event)"></mk-upload></div>
-                <div class="mkQueField" ng-click="editQue(q)" style="cursor:pointer;"><p><b>{{q.label}}</b></p></div>
-                <div class="mkQueFieldRight"><div class="btn btn-small" ng-click="deleteQue(q)">X</div></div>
-            </div>
-            <div class="mkQueLevel" ng-repeat="r in q.responses" ng-show="r.link" >
-                <div style="position: relative;display: inline-block;margin-top: 50px; clear: both">{{r.label}}</div>
-                <div style="position: relative; display: inline-block;vertical-align:middle"><img width="30" height="30" src="/images/arrow-right.png"></div>
-            </div>
-            <div class="mkQueLevel" ng-repeat="r in q.responses" ng-show="r.link" ng-class-odd="'odd_row'" ng-class-even="'even_row'">
-                <div class="mkQueField"><img ng-src="{{r.link.imageUrl}}" width="40" height="50"><mk-upload label="Change" path="image/upload" fnc="onQueImgUploaded($event)"></mk-upload></div>
-                <div class="mkQueField" ng-click="editQue(r.link)" style="cursor:pointer;"><p><b>{{r.link.label}}</b></p></div>
-                <div class="mkQueFieldRight"><div class="btn btn-small" ng-click="deleteQue(r.link)">X</div></div>
-            </div>
-        </div>
-    </div>
-
+</div>
 </div>

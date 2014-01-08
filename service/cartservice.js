@@ -42,6 +42,10 @@ angular.module('cart').factory('cartservice', function($http) {
         console.log(appObj);
     }
 
+    service.getAppObj = function(){
+        return appObj;
+    }
+
     service.getTemplateURL = function(){
         if (this.currentstep() == ''){
             return '';
@@ -285,7 +289,8 @@ angular.module('cart').factory('cartservice', function($http) {
     service.getIPinfo = function(callback){
         if (appObj.agent !== "agent"){
             console.log("Getting IP info");
-            var ipURL = extenstion == true?'http://www.codehelper.io/api/ips/' : 'http://www.codehelper.io/api/ips/?js&callback=?';
+            //var ipURL = extenstion == true?'http://www.codehelper.io/api/ips/' : 'http://www.codehelper.io/api/ips/?js&callback=?';
+            var ipURL = 'http://www.codehelper.io/api/ips/';
             $.getJSON(ipURL, function(response) {
                 service.customer.IP = response.IP;
                 service.customer.city = response.CityName;
@@ -363,7 +368,7 @@ angular.module('cart').factory('cartservice', function($http) {
 
     service.loadsurvey = function($http, callback){
         var url = serverUrl + '/survey/list';
-        $http.post(url, {app: this.getApp(), order_by:{order:1}}).success(function(result){
+        $http.post(url, {app: this.getApp(), active:true, order_by:{order:1}}).success(function(result){
 
             callback(result);
         });

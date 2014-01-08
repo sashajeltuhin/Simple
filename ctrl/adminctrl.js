@@ -14,6 +14,7 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
     $scope.viewTitle = "";
     $scope.currentApp = "";
     $scope.adminPage = serverUrl + "admin.html";
+    $scope.tenantPicked = false;
 
 
     start();
@@ -67,27 +68,6 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
         }
     }
 
-    $scope.cloneExp = function(exp){
-        var newExp = {};
-        selected = "segment";
-        for(var key in exp){
-            if (key !== '_id'){
-                newExp[key] = exp[key];
-            }
-        }
-        adminservice.loadMeta(selected, $http, function(meta){
-            $scope.obj = newExp;
-            var templ = buildForm(meta);
-            mkPopup(
-                {
-                    template: templ,
-                    title: "Clone expression",
-                    scope: $scope,
-                    backdrop: false,
-                    success: {label: 'Ok', fn: saveObj}
-                });
-        });
-    }
 
     $scope.cloneApp = function(app){
         var newApp = {};
@@ -156,12 +136,6 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
         } );
     }
 
-    $scope.deleteSegment = function(s){
-        adminservice.deleteObj(s, 'segment', $http, function(){
-            refreshData();
-        } );
-    }
-
     function cleanFilter(){
         $scope.cleanFilter = {};
         for(var key in $scope.selFilter){
@@ -222,8 +196,27 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
         return $scope.listData;
     }
 
+    $scope.deleteRec = function(){
+        if (viewMode == 'grid'){
+            var c = 0;
+            $.each(changedlist, function(i, item){
+                if (item.mk_rowsel == true)
+                {
+                    adminservice.deleteObj(item, selected, $http, function(){
+                        c++;
+                    });
+                }
+            });
+            if (c > 0){
+                refreshData();
+            }
+        }
+    }
+
+
     $scope.saveChanges = function() {
         if (selected == ''){
+            $scope.$broadcast("EV_SAVE_CHANGES");
             return;
         }
 
@@ -292,7 +285,7 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
 
     $scope.import = function(){
         adminservice.setSelected(selected);
-        $scope.viewTitle = "Import Data";
+        $scope.viewTitle = "Import " + $scope.viewTitle;
         hideGrid();
         $scope.wrapper = serverUrl + "columnMap.html";
     }
@@ -347,14 +340,14 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
         createObj('New Geo Mapping');
     }
 
-    $scope.createSegment = function(){
-        selected = 'segment';
-        createObj('New Demographic Segment');
-    }
-
     $scope.createBlock = function(){
         selected = 'block';
         createObj('New Template Block');
+    }
+
+    $scope.createSegRule = function(){
+        selected = "rule";
+        createObj('New Rule');
     }
 
     function createObj(heading, def){
@@ -371,33 +364,8 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
                 });
         });
 
-    };
-
-//    $scope.editStep = function(s){
-//        selected = 'step';
-//        editObj(s.title, s);
-//    }
-
-    $scope.editSegment = function(s){
-        selected = 'segment';
-        editObj(s.exp, s);
     }
 
-    function editObj(heading, obj){
-        adminservice.loadMeta(selected, $http, function(meta){
-            $scope.obj = obj;
-            var templ = buildForm(meta);
-            mkPopup(
-                {
-                    template: templ,
-                    title: heading,
-                    scope: $scope,
-                    backdrop: false,
-                    success: {label: 'Ok', fn: saveObj}
-                });
-        });
-
-    };
     function buildobj(meta, def){
         return adminservice.buildobj(meta, def);
     }
@@ -503,6 +471,12 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
     $scope.loadSegmentFields = function(){
         var f = 'segment';
         $scope.viewTitle = "Demographic segment attributes";
+        loadMeta(f);
+    }
+
+    $scope.loadRuleFields = function(){
+        var f = 'rule';
+        $scope.viewTitle = "Segmentation rules";
         loadMeta(f);
     }
 
@@ -935,6 +909,7 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
             $.each(t, function(i, app){
                 $scope.selTen.apps.push(app.appID);
                 adminservice.setTenant($scope.selTen);
+                $scope.tenantPicked = true;
 
             })
             openDash();
@@ -966,16 +941,7 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
     }
 
     function addActiveApp(appField){
-        var c = 0;
-        $.each($scope.selTen.appObjects, function(i, a){
-            if (a.active === true){
-                appField[a.appID] = true;
-                c++;
-            }
-        });
-        if (c == 0){
-            appField[$scope.selTen.appObjects[0].appID] = true;
-        }
+        adminservice.addActiveApp(appField);
     }
 
     $scope.loadCartSteps = function(){
@@ -984,9 +950,9 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
         $scope.stepApps = [];
         var extra = {};
         extra.type = 'cart';
-        extra.app = {};
-        //extra.agent ='consumer';
-        addActiveApp(extra.app);
+        var appObj = adminservice.getAppObj();
+        extra.app = appObj.appID;
+
         buildDefFilter(extra);
         loadFancyList(serverUrl + 'steplisthor.html', function(d){
             //apps
@@ -998,7 +964,9 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
         $scope.appElements = [];
         $scope.appWidgets = [];
         $scope.stepApps = [];
-        var apps = $scope.cleanFilter.app;
+        //var apps = $scope.cleanFilter.app;
+        var apps = [];
+        apps.push(adminservice.getAppObj().appID);
         for(var ii=0; ii< $scope.selTen.appObjects.length;ii++){
             if (apps.indexOf($scope.selTen.appObjects[ii].appID) !== -1){
                 $scope.stepApps.push($scope.selTen.appObjects[ii]);
@@ -1019,65 +987,24 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
             });
         });
 
-
-//        var cap = "";
-//        $scope.stepApps = [];
-//        $.each(d, function(i, s){
-//            if (cap !== s.app){
-//                cap = s.app;
-//                for(var ii=0; ii< $scope.selTen.appObjects.length;ii++){
-//                    if ($scope.selTen.appObjects[ii].appID == s.app){
-//                        $scope.stepApps.push($scope.selTen.appObjects[ii]);
-//                    }
-//                }
-//            }
-//        })
     }
 
     $scope.loadSegments = function(){
-        selected = 'segment';
-        $scope.viewTitle = "Segmentation and rules";
-        var extra = {};
-        extra.app = {};
-        var c = 0;
-        $.each($scope.selTen.appObjects, function(i, a){
-            if (a.active === true){
-                extra.app[a.appID] = true;
-                c++;
-            }
-        });
-        if (c == 0){
-            extra.app[$scope.selTen.appObjects[0].appID] = true;
-        }
-
-        buildDefFilter(extra);
-        loadFancyList(serverUrl + 'seglist.html', function(d){
-            refreshSegments(d);
-
-        });
+//        $scope.viewTitle = "Segmentation and rules";
+//        var extra = {};
+//        extra.app = {};
+//        addActiveApp(extra.app);
+//        buildDefFilter(extra);
+//        loadFancyList(serverUrl + 'seglist.html');
+        selected = '';
+        $scope.viewTitle = "";
+        var appObj = getAppObj();
+        adminservice.setAppObj(appObj);
+        hideGrid();
+        $scope.wrapper = serverUrl + 'seglist.html';
     }
 
-    function refreshSegments(d){
-        var seg = "";
-        $scope.segs = [];
-        $.each(d, function(i, e){
-            if (seg !== e.title){
-                seg = e.title;
-                $scope.segs.push(e);
-            }
-        })
-    }
 
-    $scope.expBySeg = function(s){
-        var list = [];
-        $.each($scope.listData, function(i, e){
-            if (e.title == s.title){
-                list.push(e);
-            }
-        });
-
-        return list;
-    }
 
     $scope.stepsByApp = function(app){
         var list = [];
@@ -1160,7 +1087,7 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
         adminservice.setAppObj(appObj);
         hideGrid();
         $scope.wrapper = serverUrl + "surveyTools.html";
-        $scope.viewTitle = "Survey";
+        $scope.viewTitle = "Survey Map";
     }
 
     $scope.loadProvidersLst = function(){
@@ -1172,10 +1099,10 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
     }
 
     $scope.loadSegmentList = function(){
-        selected = 'segment';
+        selected = 'rule';
         $scope.viewTitle = "Demographic segments";
         buildDefFilter();
-        loadObjNGrid();//loadObjGrid();
+        loadObjGrid();
     }
 
     $scope.loadBlockList = function(){
@@ -1189,8 +1116,10 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
         selected = 'log';
         $scope.viewTitle = "Application Logs";
         var extra = {};
-        extra.app = {};
-        addActiveApp(extra.app);
+        var appObj = adminservice.getAppObj();
+        extra.app = appObj.appID;
+//        extra.app = {};
+//        addActiveApp(extra.app);
         buildDefFilter(extra);
         //loadObjNGrid();
         loadObjGrid();
@@ -1208,8 +1137,7 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
         selected = 'zip';
         $scope.viewTitle = "Geo Mapping";
         buildDefFilter();
-        loadObjNGrid();
-//        loadObjGrid();
+        loadObjGrid();
     }
 
 
@@ -1217,11 +1145,14 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
         selected = 'step';
         $scope.viewTitle = "UI Elements";
         var extra = {};
-        extra.app = {};
-        addActiveApp(extra.app);
+        var appObj = adminservice.getAppObj();
+        extra.app = appObj.appID;
+//        extra.app = {};
+//        addActiveApp(extra.app);
         buildDefFilter(extra);
         loadObjGrid();
     }
+
     $scope.loadSurveyLst = function(){
         selected = 'survey';
         $scope.viewTitle = "Surveys";
@@ -1247,8 +1178,10 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
         selected = 'consumer';
         $scope.viewTitle = "Consumers";
         var extra = {};
-        extra.app = {};
-        addActiveApp(extra.app);
+        var appObj = adminservice.getAppObj();
+        extra.app = appObj.appID;
+//        extra.app = {};
+//        addActiveApp(extra.app);
         buildDefFilter(extra);
         //loadObjNGrid();
         loadObjGrid(true);
@@ -1421,7 +1354,14 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
         }
         $('#adminGrid').show();
         var columns = [];
-        columns.push({id:'head', width:20});
+        var rowSelector = {};
+        rowSelector.id = "mk_rowsel";
+        rowSelector.name = "";
+        rowSelector.field = "mk_rowsel";
+        rowSelector.width = 20;
+        rowSelector.editor = Slick.Editors.Checkbox;
+        rowSelector.formatter = Slick.Formatters.Checkmark;
+        columns.push(rowSelector);
         $.each(meta, function(i, fm){
             var col = {};
             col.id = fm.fldname;
@@ -1457,6 +1397,7 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
         grid.setSelectionModel(new Slick.CellSelectionModel());
 
         grid.onCellChange.subscribe(function(e,args){
+            console.log("cell changed", args);
             var changed = grid.getColumns()[args.cell].field;
             var id = args.item._id;
             var obj = changedFlds[id];

@@ -32,29 +32,33 @@ exports.list = function (req, res){
     });
 }
 
+function addGlobalConditions(seg, filter){
+    if (seg.limit !== undefined && Number(seg.limit) > 0){
+        filter.limit = seg.limit;
+    }
+}
+
 exports.qual = function (req, res){
     db.setDB('ShopDB');
-    var customer = req.body;
+    var customer = req.body.customer;
+    var rule = req.body.rule;
     var filter = {};
     filter.order_by = {priority:1};
 
-    db.load('segment', db.getFilter({app:customer.app}), function(err, list){
+    db.load('rule', db.getFilter({app:customer.app, type:rule}), function(err, list){
         if (err !== null){
             handleError(res, "Cannot list products ", err);
         }
         else{
+            var hit = false;
             for (var i = 0; i < list.length;i++){
                 var seg = list[i];
-                if(seg.active == true && fitsSegment(customer, seg)){
-                    if (seg.prodcat !== undefined && seg.prodcat!== ""){
-                        filter.cat = seg.prodcat;
-                    }
-                    if (seg.limit !== undefined && Number(seg.limit) > 0){
-                        filter.limit = seg.limit;
-                    }
-                    if (customer.lastStep == 'offer' && seg.offersize !== undefined && Number(seg.offersize) > 0){
-                        filter.limit = seg.offersize;
-                    }
+                if (seg.active && seg.global){
+                    addGlobalConditions(seg, filter);
+                }
+                if(hit == false && seg.active == true && fitsSegment(customer, seg)){
+                    buildProdFilter(filter, seg);
+                    hit = true;
                 }
             }
             if (customer.zip !== undefined && customer.zip !== ""){
@@ -75,30 +79,70 @@ exports.qual = function (req, res){
 
 function fitsSegment(customer, seg){
     var fits = false;
-
-    if(customer[seg.field] !== undefined){
-        var arr = seg.val.split(',');
-        switch(seg.oper){
-            case "=":
-                fits = customer[seg.field] == arr[0];
-                break;
-            case ">":
-                fits = customer[seg.field] > arr[0];
-                break;
-            case "<":
-                fits = customer[seg.field] < arr[0];
-                break;
-            case "between":
-                fits = customer[seg.field] > arr[0] && customer[seg.field] < arr[1];
-                break;
-        }
+    if (seg.dems == undefined && seg.conds == undefined){
+        return false;
     }
-    else{ //global
-        fits = true;
+    else if (seg.dems == undefined && seg.conds !== undefined && seg.conds.length > 0){
+        return true;
+    }
+
+     for (var i = 0; i < seg.dems.length; i++){
+        var f = seg.dems[i];
+        if(customer[f.field] !== undefined){
+            var arr = f.val.split(',');
+            switch(f.oper){
+                case "=":
+                    fits = customer[f.field] == arr[0];
+                    break;
+                case ">":
+                    fits = customer[f.field] > arr[0];
+                    break;
+                case "<":
+                    fits = customer[f.field] < arr[0];
+                    break;
+                case "between":
+                    fits = customer[f.field] > arr[0] && customer[f.field] < arr[1];
+                    break;
+            }
+            if (seg.oper == "any"){
+                if (fits == true){
+                    break;
+                }
+            }
+        }
+
     }
     return fits;
 }
 
+function buildProdFilter(filter, seg){
+    if (seg.conds !== undefined){
+        for (var i = 0; i < seg.conds.length; i++){
+            var f = seg.conds[i];
+            if (f.oper == "="){
+                filter[f.field] = f.val;
+            }
+            else if (f.oper == 'all'){
+                var o = {};
+                o.oper = f.oper;
+                o.val = f.val.split(',');
+                filter[f.field] = o;
+            }
+            else if (f.oper == 'in'){
+                var o = {};
+                o.oper = f.oper;
+                o.val = f.val.split(',');
+                filter[f.field] = o;
+            }
+            else{
+                filter[f.field] = f.oper + f.val;
+            }
+        }
+        if (seg.limit !== undefined && Number(seg.limit) > 0){
+            filter.limit = seg.limit;
+        }
+    }
+}
 
 exports.default = function (req, res){
     db.setDB('ShopDB');
@@ -225,6 +269,7 @@ exports.total = function(req, res){
 
 exports.import = function(req, res){
     var fn = req.body.fn;
+    var colMap = req.body.map
     csvtool.readCSV('/../tmp/files/' + fn, colMap, importRow, function(error, count){
         if (error == null){
             res.send({success:true, recs: count});
@@ -253,11 +298,26 @@ exports.detectCols = function(req, res){
 
 function importRow(row, index, colMap){
     var product = {};
-    for(var key in row){
-        var mapObj = colMap[index];
-        product[mapObj.field] = row[key];
+    console.log("product defaults", colMap.defs);
+    if (colMap.defs !== undefined){
+        for(var dk in colMap.defs){
+            product[dk] = colMap.defs[dk];
+        }
     }
-    console.log("product imported", product);
+
+    var i = 0;
+    for(var key in row){
+        var mapObj = colMap.map[i];
+        product[mapObj.field] = row[key];
+        i++;
+    }
+
+    if (product.title !== undefined && product.title.length !== 0 && product.title !== ""){
+        console.log("product imported", product);
+        db.insert(colName, product, function(err, rec){
+            console.log("with errors:", err);
+        });
+    }
 }
 
 exports.export = function(req, res){

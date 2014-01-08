@@ -166,9 +166,9 @@ function cartctrl($scope, $rootScope, $http, $location, cartservice){
     });
 
     $scope.$on("EV_ADD_PROD_NEXT", function(event, obj, c){
-        cartservice.getSocket().emit('viewprod', obj);
+        //cartservice.getSocket().emit('viewprod', obj);
         if (obj.teaser == true){
-            cartservice.setTeaserProd(obj);
+ //           cartservice.setTeaserProd(obj);
         }
         else{
             cartservice.addProduct(obj);

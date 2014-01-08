@@ -3,7 +3,7 @@
     width: 95%;
     min-height: 850px;
     height: 100%;
-    background-image:url('//localhost/img/background.jpg');
+    background-image:url('/img/background.jpg') ;
     /*background: -moz-linear-gradient(top,  rgba(254,255,255,1) 0%, rgba(221,241,249,1) 99%, rgba(160,216,239,1) 100%); *//* FF3.6+ */
     /*background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(254,255,255,1)), color-stop(99%,rgba(221,241,249,1)), color-stop(100%,rgba(160,216,239,1))); *//* Chrome,Safari4+ */
     /*background: -webkit-linear-gradient(top,  rgba(254,255,255,1) 0%,rgba(221,241,249,1) 99%,rgba(160,216,239,1) 100%); *//* Chrome10+,Safari5.1+ */
@@ -168,6 +168,19 @@ h4.style4 {
     cursor: pointer;
 }
 
+.activeBtn {
+    font-weight:bold;
+    color:#ff7906;
+}
+
+.mkToolBtnWide{
+    position: relative;
+    float: left;
+    height: 60px;
+    margin: 10px;
+    cursor: pointer;
+}
+
 .odd_row{
     position: relative;
     width:90%;
@@ -261,6 +274,14 @@ h4.style4 {
     margin-top: -5px;
     cursor: pointer;
 }
+
+.quedel{
+    position: relative;
+    float: right;
+    margin-right: -3px;
+    margin-top: -15px;
+    cursor: pointer;
+}
 .effectStep
 {
     position:relative;
@@ -334,6 +355,7 @@ h4.style4 {
     float: left;
     height: 120px;
     margin: 10px;
+    max-width: 200px;
 }
 .mkQueFieldRight{
     position: relative;
@@ -350,14 +372,43 @@ h4.style4 {
 
 .mkFieldContainer{
     position: relative;
-    clear: both;
+    float:left;
     height: 60px;
     margin: 10px;
     max-width: 200px;
+}
+.mkColContainer{
+    position: relative;
+    clear: both;
+    height: 60px;
+    margin: 10px;
+    max-width: 300px;
 }
 .mkFieldBlock{
     position: relative;
     float: left;
     height: 60px;
     margin: 10px;
+    max-width: 100px;
+}
+
+.mkColBlock{
+    position: relative;
+    float: left;
+    height: 60px;
+    margin: 10px;
+    max-width: 100px;
+}
+
+.map_row{
+    position: relative;
+    width: 100%;
+    background: -moz-linear-gradient(top,  rgba(254,255,255,1) 0%, rgba(221,241,249,1) 99%, rgba(160,216,239,1) 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(254,255,255,1)), color-stop(99%,rgba(221,241,249,1)), color-stop(100%,rgba(160,216,239,1)));
+    background: -webkit-linear-gradient(top,  rgba(254,255,255,1) 0%,rgba(221,241,249,1) 99%,rgba(160,216,239,1) 100%);
+    background: -o-linear-gradient(top,  rgba(254,255,255,1) 0%,rgba(221,241,249,1) 99%,rgba(160,216,239,1) 100%);
+    background: -ms-linear-gradient(top,  rgba(254,255,255,1) 0%,rgba(221,241,249,1) 99%,rgba(160,216,239,1) 100%);
+    background: linear-gradient(to bottom,  rgba(254,255,255,1) 0%,rgba(221,241,249,1) 99%,rgba(160,216,239,1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#feffff', endColorstr='#a0d8ef',GradientType=0 );
+
 }

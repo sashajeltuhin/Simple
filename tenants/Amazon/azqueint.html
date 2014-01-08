@@ -5,7 +5,7 @@
 
 <div class="box-1 style1" ng-repeat="r in currentQue.responses">
     <div class="inner clearfix">
-        <div class="icons"><img src="assets/img/icon1.png"> <img src="assets/img/icon2.png"></div>
+        <div class="icons"><img src="{{topUrl}}{{r.imageUrl}}"></div>
         <h4>{{r.label}}</h4>
         <div align="center"><input ng-click="answer(r)" ng-model="r.selected" type="checkbox"></div>
     </div>

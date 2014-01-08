@@ -1,4 +1,4 @@
-function exportctrl($scope, $rootScope, $http, $location, adminservice){
+function exportctrl($scope, $rootScope, $http, $location, adminservice, mkPopup){
     $scope.topUrl = topUrl;
     $scope.fileName = "";
     var selected = adminservice.getSelected();
@@ -7,6 +7,14 @@ function exportctrl($scope, $rootScope, $http, $location, adminservice){
     function loadFields(){
         adminservice.loadMeta(selected, $http, function(m){
             $scope.fieldMap = m;
+            $scope.obj = adminservice.buildobj(m);
+        });
+    }
+
+    $scope.defineDefs = function(){
+
+        adminservice.createObj('Assign default values', $scope.obj, selected, mkPopup, $scope, $http, function(){
+
         });
     }
 
@@ -23,14 +31,24 @@ function exportctrl($scope, $rootScope, $http, $location, adminservice){
     }
 
     $scope.importData = function(){
-        var map = [];
+        var importObj = {};
+        importObj.map = [];
         $.each($scope.colMap, function(i, c){
+            var fld = $scope.fieldMap[i];
             cm = {};
-            cm.field = fldname;
+            cm.field = fld.fldname;
             cm.col = c;
-            map.push(cm);
-        })
-        adminservice.import(event.name, map,  selected, $http, function(recs){
+
+            importObj.map.push(cm);
+        });
+        if ($scope.obj !== undefined){
+            importObj.defs = {};
+            for(var key in $scope.obj){
+                importObj.defs[key] = $scope.obj[key];
+            }
+
+        }
+        adminservice.import($scope.fileName, importObj,  selected, $http, function(recs){
             mkPopup(
                 {
                     template: '<div>' + recs + ' records imported</div>',
