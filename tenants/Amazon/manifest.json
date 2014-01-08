@@ -1,0 +1,19 @@
+{
+    "manifest_version": 2,
+    "name": "AZ",
+    "description": "Amazon",
+    "version": "1",
+    "update_url": "http://simple.bridgevine.com/chromex/amazon/updates.xml",
+    "permissions": ["tabs","http://localhost/*", "http://www.codehelper.io/*", "http://www.codehelper.io/*", "http://www.google.com/", "https://www.google.com/"],
+    "content_scripts": [
+        {
+            "matches": ["http://www.amazon.com/*", "https://www.amazon.com/*", "http://amazon.com/*", "https://amazon.com/*"],
+            "js": ["assets/js/jquery-1.10.2.min.js","assets/js/jquery-ui-1.10.3.custom.min.js", "assets/js/bootstrap.min.js", "assets/js/jquery.placeholder.min.js", "js/socket.io.js", "js/select2.js", "js/angular.min.js", "js/sortable.js", "mods/modExt.js", "js/detect.js", "service/mkpopupservice.js", "service/cartservice.js", "service/adminservice.js","amazinjector.js","dir/cartparms.js", "ctrl/cartctrl.js", "ctrl/teaserctrl.js","ctrl/prodctrl.js","ctrl/surveyctrl.js","ctrl/optctrl.js","dir/productDir.js","dir/cartDir.js", "dir/gameDir.js", "dir/providerDir.js","dir/sortlistDir.js"],
+            "css": ["assets/css/bootstrap.css", "assets/css/base.css","assets/css/buttons.css", "assets/css/font-awesome.css","assets/css/datepicker/jquery-ui-1.10.3.custom.css", "css/amazon.css"],
+            "run_at": "document_end"}
+    ],
+    "browser_action": {"default_icon": "16x16.png","default_popup": "templ/omconf.html", "default_name": "AZ"},
+    "web_accessible_resources" :[
+        "templ/azteascart.html", "templ/azsurvey.html", "templ/azteashor.html", "templ/azteasvert.html", "templ/mmcredit.html", "templ/mmprods.html","templ/mminst.html","templ/azcust.html","templ/mmcust.html","templ/mmorder.html","templ/mmconf.html","templ/webmm.html", "templ/sortlist.html", "templ/steplist.html"
+    ]
+}

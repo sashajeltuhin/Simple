@@ -1,0 +1,58 @@
+<li class="shoveler-cell" ng-repeat="p in products" style="margin-left: 10px; margin-right: 10px; ">
+    <div class="image p13nimp" data-asin="B001GTT0VO" data-ref="pd_cart_recs1">
+        <a ng-click="launch(p)" class="title" title="{{p.title}}">
+            <div class="imageContainer" style="margin-bottom: 6px; margin-top: 0px;">
+                <img ng-src="{{topUrl}}{{p.brandimgUrl}}" width="135" alt="" id="" height="135" border="0">
+                </div>
+            </a>
+        </div>
+    <div class="info"> <span>
+    <a href="" class="title" title="{{p.title}}">{{p.title}}</a> </span>
+        <div class="rating"><span class="rating-stars"><span class="crAvgStars" style="white-space:no-wrap;"><span class="asinReviewsSummary" name="B001GTT0VO" ref="pd_cart_recs_pop_" getargs="{&quot;refRID&quot;:&quot;022KR0V6YSMQFT4KXHE3&quot;}"> <a href="http://www.amazon.com/Cheetah-ALAMLB-Ballhead-Articulating-Displays/product-reviews/B001GTT0VO/ref=pd_cart_recs_img_1?ie=UTF8&amp;refRID=022KR0V6YSMQFT4KXHE3&amp;showViewpoints=1"><img src="http://g-ecx.images-amazon.com/images/G/01/x-locale/common/customer-reviews/ratings/stars-4-5._V192238104_.gif" width="55" alt="4.5 out of 5 stars" align="absbottom" title="4.5 out of 5 stars" height="12" border="0"></a>&nbsp;</span>(<a href="http://www.amazon.com/Cheetah-ALAMLB-Ballhead-Articulating-Displays/product-reviews/B001GTT0VO/ref=pd_cart_recs_txt_1?ie=UTF8&amp;refRID=022KR0V6YSMQFT4KXHE3&amp;showViewpoints=1">1,666</a>)</span></span></div>
+        <div class="price">${{p.priceNow}}</div>
+        <a class="maplink" ng-click="launch(p)">Click for details</a>
+    </div>
+</li>
+
+<div style="display: none"><a id="bv_popup_trigger" data-toggle="modal" href="#myModal1" class="bv_launcher op"><img src="/content/mymove/_jcr_content/teaserresourcecontainer/teaser4.img.icon.png"></a></div>
+<div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Enter Your Location</h4>
+            </div>
+            <div class="modal-body">
+                <p style="margin-bottom:20px;">In order for us to deliver options that are available for your specific location, we need the address you are moving to.</p>
+
+                <div class="row">
+                    <div class="col-xs-5"><input type="text" class="form-control" placeholder="Street Address" ng-model="c.address1" style="width: 100%"></div>
+                    <div class="col-xs-3"><input type="text" class="form-control" placeholder="Apt #" style="width: 100%"></div>
+                    <div class="col-xs-4"><input type="text" class="form-control" placeholder="ZIP Code" ng-model="c.zip" style="width: 100%"></div>
+                    <div class="col-xs-5"><input type="text" class="form-control datepicker" placeholder="Move Date" ng-model="c.moveDate" style="width: 100%"></div>
+                    <div class="col-xs-2 text-center"><div style="display:block; padding-top:10px;"><strong>OR</strong></div></div>
+                    <div class="col-xs-5"><select class="form-control">
+                        <option value="Move Timeframe" selected="">Move Timeframe</option>
+                        <option value="Already moved">Already moved</option>
+                        <option value="Within 2 weeks">Within 2 weeks</option>
+                        <option value="2-4 weeks">2-4 weeks</option>
+                        <option value="1-3 months">1-3 months</option>
+                        <option value="4-6 months">4-6 months</option>
+                        <option value="Beyond 6 months">Beyond 6 months</option>
+                    </select></div>
+                </div><!-- /row -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default uppercase" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-style1 uppercase" data-dismiss="modal" ng-click="proceed()">Go</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+<!--<div class="bucket" style="overflow:hidden">-->
+   <!--<div class="recsWrapper" id="shoveler">-->
+        <!--<div class="shoveler-heading"> <b class="h1">Customers Who Bought Items in Your Cart Also Bought</b> <div class="shoveler-sub-heading"> </div>-->
+           <!--</div>-->
+<!--<div class="shoveler-content"> <ul tabindex="-1"></ul></div> </div>-->
