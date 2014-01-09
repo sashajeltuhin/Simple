@@ -13,10 +13,10 @@ function rulectrl($scope, $rootScope, $http, adminservice, mkPopup){
     }
 
     $scope.$on("EV_SAVE_CHANGES", function(event){
-        $.each($scope.listData, function(i, item){
+        $.each($scope.ruleData, function(i, item){
             item.order = i + 1;
             adminservice.saveObj(item, RULE, $http, function(fld){
-                if (i == $scope.listData.length -1){
+                if (i == $scope.ruleData.length -1){
                     mkPopup(
                         {
                             template: '<div>Complete success</div>',
@@ -46,7 +46,7 @@ function rulectrl($scope, $rootScope, $http, adminservice, mkPopup){
         extra.type = 'teas';
         extra.order_by = {order:1};
         adminservice.listObj(RULE, extra, $http, function(meta){
-            $scope.listData = meta;
+            $scope.ruleData = meta;
         });
     }
 
@@ -73,14 +73,14 @@ function rulectrl($scope, $rootScope, $http, adminservice, mkPopup){
         extra.type = 'qual';
         extra.order_by = {order:1};
         adminservice.listObj(RULE, extra, $http, function(meta){
-            $scope.listData = meta;
+            $scope.ruleData = meta;
         });
     }
 
     $scope.deleteRule = function(rule){
         adminservice.deleteObj(rule, RULE, $http, function(){
-            var ind = $scope.listData.indexOf(rule);
-            $scope.listData.splice(ind, 1);
+            var ind = $scope.ruleData.indexOf(rule);
+            $scope.ruleData.splice(ind, 1);
         } );
     }
 

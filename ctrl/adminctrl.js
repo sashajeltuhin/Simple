@@ -927,17 +927,21 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
     function getAppObj(appID){
         var appObj = null;
 
-        $.each($scope.selTen.appObjects, function(i, a){
+        for (var i = 0; i < $scope.selTen.appObjects.length;i++){
+            var a = $scope.selTen.appObjects[i];
             if (appID !== undefined && a.appID === appID){
                 appObj = a;
-                return appObj;
+                break;
             }
             else if(appID == undefined && a.active == true){
                 appObj = a;
-                return appObj;
+                break;
             }
-        });
-        return $scope.selTen.appObjects[0];
+        }
+        if (appObj == null){
+            appObj = $scope.selTen.appObjects[0];
+        }
+        return appObj;
     }
 
     function addActiveApp(appField){
