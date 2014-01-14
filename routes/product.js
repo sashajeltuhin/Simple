@@ -9,10 +9,12 @@ var db = require('../db/dbaccess');
 var mongo = require('mongodb');
 var ObjectID = mongo.ObjectID;
 var csvtool = require('./csvtool');
+var winston = require('winston');
 
 var colName = 'product';
 
-
+winston.add(winston.transports.File, { filename: 'mkapplog.log' });
+winston.remove(winston.transports.Console);
 
 var handleError = function(res, msg, err){
     res.send({Error : {text:msg, det:err}});
@@ -39,6 +41,7 @@ function addGlobalConditions(seg, filter){
 }
 
 exports.qual = function (req, res){
+    winston.log('info', 'Qual call body: %', req.body);
     db.setDB('ShopDB');
     var customer = req.body.customer;
     var rule = req.body.rule;
