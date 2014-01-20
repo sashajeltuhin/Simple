@@ -1,0 +1,16 @@
+<div class="panel-body" ng-controller="authctrl">
+    <form role="form">
+        <div class="form-group">
+            <label>Email address</label>
+            <input type="text" class="form-control" placeholder="User name" ng-model="oper.uname">
+        </div>
+        <div class="form-group">
+            <label>Password</label>
+            <input type="password" class="form-control" placeholder="Password" ng-model="oper.upass">
+        </div>
+        <div class="checkbox">
+            <label> <input type="checkbox"> Check me out </label> </div>
+        <button type="submit" class="btn btn-sm btn-default" ng-click="login()">Sign in</button>
+        <div ng-show="errmsg">{{errmsg}}</div>
+    </form>
+</div>

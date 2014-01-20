@@ -34,7 +34,8 @@ var express = require('express')
   , segment = require('./routes/segment')
   , rule = require('./routes/rule')
   , csvtool = require('./routes/csvtool')
-  , draft = require('./routes/draft');
+  , draft = require('./routes/draft')
+  , session = require('./routes/adminsession');
 
 var app = express();
 
@@ -45,25 +46,24 @@ app.configure(function(){
   app.set('jsonp callback', true );
   app.use(express.favicon());
   app.use(express.logger('dev'));
-  app.use('/profile/upload', fp.imgup);
-//  app.use('/product/upload', produp.upload);
-  app.use('/profile/vup', vp.vup);
-  app.use('/step/template', tmplUp.upload);
-  app.use('/image/upload', imgUp.upload);
-  app.use('/file/upload', fileUp.upload);
   app.use(express.bodyParser());
   app.use(express.methodOverride());
+  app.use(passport.initialize());
+  app.use(passport.session());
   app.use(app.router);
   app.use(express.static(path.join(__dirname, 'public')));
 
     //auth
-    app.use(passport.initialize());
-    app.use(passport.session());
-
     passport.use(auth.localStrategy);
-
     passport.serializeUser(auth.serializeUser);
     passport.deserializeUser(auth.deserializeUser);
+    app.use('/profile/upload', fp.imgup);
+//  app.use('/product/upload', produp.upload);
+    app.use('/profile/vup', vp.vup);
+    app.use('/step/template', tmplUp.upload);
+    app.use('/image/upload', imgUp.upload);
+    app.use('/file/upload', fileUp.upload);
+
 });
 
 app.configure('development', function(){
@@ -71,93 +71,102 @@ app.configure('development', function(){
 });
 
 app.get('/adm', routes.index);
-app.get('/users', user.list);
-app.post('/video/list', video.list);
-app.get('/video/del', video.delete);
-app.post('/video/total', video.total);
-app.get('/video', video.listjp); //jsonp
-app.post('/video/update', video.addVideo);
-app.post('/cats/list', cat.list);
-app.get('/cats/del', cat.delete);
-app.post('/cats/total', cat.total);
-app.post('/cats/update', cat.addCat);
-app.get('/profile/loaddef', profile.loadprofiledef);
-app.get('/profile/load', profile.loadprofile);
-app.post('/profile/list', profile.loadprofiles);
-app.post('/profile/update', profile.saveprofile);
+app.post('/app/user/list', user.list);
+app.post('/app/user/update', user.save);
+app.post('/app/user/delete', user.delete);
+
+app.post('/app/session/list', session.list);
+app.post('/app/session/update', session.save);
+app.post('/app/session/delete', session.delete);
+
+
+app.post('/app/video/list', video.list);
+app.get('/app/video/del', video.delete);
+app.post('/app/video/total', video.total);
+app.get('/app/video', video.listjp); //jsonp
+app.post('/app/video/update', video.addVideo);
+app.post('/app/cats/list', cat.list);
+app.get('/app/cats/del', cat.delete);
+app.post('/app/cats/total', cat.total);
+app.post('/app/cats/update', cat.addCat);
+app.get('/app/profile/loaddef', profile.loadprofiledef);
+app.get('/app/profile/load', profile.loadprofile);
+app.post('/app/profile/list', profile.loadprofiles);
+app.post('/app/profile/update', profile.saveprofile);
 //app.post('/profile/upload', profile.upload_file);
-app.post('/product/list', product.list);
-app.post('/product/qual', product.qual);
-app.post('/product/delete', product.delete);
-app.post('/product/total', product.total);
-app.post('/product/update', product.upsert);
-app.post('/product/import', product.import);
-app.post('/product/export', product.export);
-app.get('/product/default', product.default);
-app.post('/product/columnMap', product.detectCols);
+app.post('/app/product/list', product.list);
+app.post('/app/product/qual', product.qual);
+app.post('/app/product/delete', product.delete);
+app.post('/app/product/total', product.total);
+app.post('/app/product/update', product.upsert);
+app.post('/app/product/import', product.import);
+app.post('/app/product/export', product.export);
+app.get('/app/product/default', product.default);
+app.post('/app/product/columnMap', product.detectCols);
 
-app.post('/step/list', step.list);
-app.post('/step/update', step.save);
-app.post('/step/delete', step.delete);
-app.post('/block/list', block.list);
-app.post('/block/update', block.save);
-app.post('/block/delete', block.delete);
+app.post('/app/step/list', step.list);
+app.post('/app/step/update', step.save);
+app.post('/app/step/delete', step.delete);
+app.post('/app/block/list', block.list);
+app.post('/app/block/update', block.save);
+app.post('/app/block/delete', block.delete);
 
-app.post('/draft/list', draft.list);
-app.post('/draft/update', draft.save);
-app.post('/draft/delete', draft.delete);
-app.post('/draft/publish', draft.publish);
+app.post('/app/draft/list', draft.list);
+app.post('/app/draft/update', draft.save);
+app.post('/app/draft/delete', draft.delete);
+app.post('/app/draft/publish', draft.publish);
 
-app.post('/person/list', person.list);
-app.post('/person/update', person.save);
-app.post('/consumer/list', consumer.list);
-app.post('/consumer/update', consumer.save);
-app.post('/product/export', consumer.export);
-app.post('/consumer/bytype', consumer.peopleByType);
-app.post('/consumer/abandons', consumer.abandons)
+app.post('/app/person/list', person.list);
+app.post('/app/person/update', person.save);
+app.post('/app/person/delete', person.delete);
+app.post('/app/consumer/list', consumer.list);
+app.post('/app/consumer/update', consumer.save);
+app.post('/app/product/export', consumer.export);
+app.post('/app/consumer/bytype', consumer.peopleByType);
+app.post('/app/consumer/abandons', consumer.abandons)
 
-app.post('/zip/list', zip.list);
-app.post('/zip/update', zip.save);
+app.post('/app/zip/list', zip.list);
+app.post('/app/zip/update', zip.save);
 
-app.post('/apps/list', apps.list);
-app.post('/apps/update', apps.save);
-app.post('/apps/delete', apps.delete);
-app.post('/tenant/list', tenant.list);
-app.post('/tenant/update', tenant.save);
+app.post('/app/apps/list', apps.list);
+app.post('/app/apps/update', apps.save);
+app.post('/app/apps/delete', apps.delete);
+app.post('/app/tenant/list', tenant.list);
+app.post('/app/tenant/update', tenant.save);
 
-app.post('/segment/list', segment.list);
-app.post('/segment/update', segment.save);
-app.post('/segment/delete', segment.delete);
+app.post('/app/segment/list', segment.list);
+app.post('/app/segment/update', segment.save);
+app.post('/app/segment/delete', segment.delete);
 
-app.post('/rule/list', rule.list);
-app.post('/rule/update', rule.save);
-app.post('/rule/delete', rule.delete);
+app.post('/app/rule/list', rule.list);
+app.post('/app/rule/update', rule.save);
+app.post('/app/rule/delete', rule.delete);
 
 
-app.post('/survey/list', survey.list);
-app.post('/survey/update', survey.save);
-app.post('/survey/delete', survey.delete);
-app.post('/log/list', log.list);
-app.post('/log/update', log.save);
-app.post('/log/totalOrders', log.totalOrders);
-app.post('/log/totalOrdersbyApp', log.totalOrdersByApp);
-app.post('/log/statsByProvider', log.statsByProvider);
-app.post('/log/convRate', log.convRate);
-app.post('/log/callTime', log.callTime);
-app.post('/log/totalRev', log.totalRev);
-app.post('/provider/list', provider.list);
-app.post('/provider/update', provider.save);
-app.post('/fields/list', fields.list);
-app.post('/fields/delete', fields.delete);
-app.post('/fields/total', fields.total);
-app.post('/fields/update', fields.upsert);
-app.get('/labels/list', labels.list);
-app.get('/labels/del', labels.delete);
-app.post('/labels/total', labels.total);
-app.post('/labels/update', labels.upsert);
-app.post('/auth/login', auth.login);
-app.post('/auth/logout', auth.logout);
-app.post('/auth/mayeye', auth.please);
+app.post('/app/survey/list', survey.list);
+app.post('/app/survey/update', survey.save);
+app.post('/app/survey/delete', survey.delete);
+app.post('/app/log/list', log.list);
+app.post('/app/log/update', log.save);
+app.post('/app/log/totalOrders', log.totalOrders);
+app.post('/app/log/totalOrdersbyApp', log.totalOrdersByApp);
+app.post('/app/log/statsByProvider', log.statsByProvider);
+app.post('/app/log/convRate', log.convRate);
+app.post('/app/log/callTime', log.callTime);
+app.post('/app/log/totalRev', log.totalRev);
+app.post('/app/provider/list', provider.list);
+app.post('/app/provider/update', provider.save);
+app.post('/app/fields/list', fields.list);
+app.post('/app/fields/delete', fields.delete);
+app.post('/app/fields/total', fields.total);
+app.post('/app/fields/update', fields.upsert);
+app.get('/app/labels/list', labels.list);
+app.get('/app/labels/del', labels.delete);
+app.post('/app/labels/total', labels.total);
+app.post('/app/labels/update', labels.upsert);
+app.post('/app/auth/login', auth.login);
+app.post('/app/auth/logout', auth.logout);
+app.post('/app/auth/mayeye', auth.please);
 
 
 

@@ -11,7 +11,7 @@ angular.module('cart').factory('cartservice', function($http) {
     var crumb = {};
     var cart = null;
     var appType = '';
-    var serverUrl = topUrl;
+    var serverUrl = topUrl + '/app';
     var exCart = null;
     var extenstion = false;
     service.customer = {};

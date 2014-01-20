@@ -1,10 +1,9 @@
 var db = require('../db/dbaccess');
 var mongo = require('mongodb');
-var auth = require('./auth');
 var ObjectID = mongo.ObjectID;
 var dbname = 'ShopDB';
 
-var colName = 'user';
+var colName = 'session';
 
 
 
@@ -15,29 +14,13 @@ var handleError = function(res, msg, err){
 exports.list = function (req, res){
     db.setDB('ShopDB');
     var filter = db.getFilter(req.body);
+    console.log("consumer filter: ", filter);
     db.load(colName, filter, function(err, recs){
         if (err !== null){
-            handleError(res, "Cannot list person ", err);
+            handleError(res, "Cannot list session ", err);
         }
         else{
             res.send(recs);
-        }
-    });
-}
-
-exports.loadUser = function(f, callback){
-    var filter = db.getFilter(f);
-    db.load(colName, filter, function(err, recs){
-        if (err !== null){
-            callback(err, null);
-        }
-        else{
-            if (recs !== undefined && recs.length > 0){
-                callback(null, recs[0]);
-            }
-            else{
-                callback("User does not exist", null);
-            }
         }
     });
 }
@@ -51,25 +34,42 @@ exports.save = function(req, res){
         vid._id = filter._id;
 
 
-        db.upsert(colName, vid, filter, function(err, newid){
-            if (err !== null){
-                handleError(res, "Cannot add person ", err);
-            }
-            else{
-                res.send(vid);
-            }
-        });
+    db.upsert(colName, vid, filter, function(err, newid){
+        if (err !== null){
+            handleError(res, "Cannot add session ", err);
+        }
+        else{
+            res.send(vid);
+        }
+    });
     }
     else{
-        createPerson(vid, res);
+        createSession(vid, res);
     }
 }
 
-function createPerson(p, res){
-    p.upass = auth.createPass(p.upass);
-    db.insert(colName, p, function(err, rec){
+exports.newSession = function(user, callback){
+    db.setDB(dbname);
+    var session = {};
+    session.uid = user._id;
+    session.fname = user.fname;
+    session.lname = user.lname;
+    session.time = new Date();
+    db.insert(colName, session, function(err, rec){
         if (err !== null){
-            handleError(res, "Cannot add person ", err);
+            callback(err, null);
+        }
+        else{
+            callback(null, rec);
+        }
+    })
+}
+
+
+function createSession(cons, res){
+    db.insert(colName, cons, function(err, rec){
+        if (err !== null){
+            handleError(res, "Cannot add session ", err);
         }
         else{
             res.send(rec);
@@ -91,6 +91,7 @@ exports.delete = function(req, res){
         }
     });
 }
+
 
 
 

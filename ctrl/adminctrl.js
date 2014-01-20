@@ -350,6 +350,11 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
         createObj('New Rule');
     }
 
+    $scope.createUser = function(){
+        selected = "user";
+        createObj('New User');
+    }
+
     function createObj(heading, def){
         adminservice.loadMeta(selected, $http, function(meta){
             $scope.obj = buildobj(meta, def);
@@ -489,6 +494,18 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
     $scope.loadDraftFields = function(){
         var f = 'tmpldraft';
         $scope.viewTitle = "Template draft attributes";
+        loadMeta(f);
+    }
+
+    $scope.loadUserFields = function(){
+        var f = 'user';
+        $scope.viewTitle = "User attributes";
+        loadMeta(f);
+    }
+
+    $scope.loadSessionFields = function(){
+        var f = 'session';
+        $scope.viewTitle = "Session attributes";
         loadMeta(f);
     }
 
@@ -660,13 +677,22 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
         return f;
     }
 
+    $scope.$on("EV_SIGNED_IN", function(event,obj){
+        start();
+    });
+
 
     function start (){
         hideGrid();
-        adminservice.listObj('tenant', {}, $http, function(t){
-            $scope.tenants = t;
+        if (adminservice.getsignedId().uid !== undefined){
+            adminservice.listObj('tenant', {}, $http, function(t){
+                $scope.tenants = t;
 
-        });
+            });
+        }
+        else{
+            $scope.wrapper = serverUrl + 'login.html';
+        }
     }
 
     $scope.onDash = function(){
@@ -1104,6 +1130,20 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
     $scope.loadBlockList = function(){
         selected = 'block';
         $scope.viewTitle = "Template blocks";
+        buildDefFilter();
+        loadObjGrid();
+    }
+
+    $scope.loadUsers = function(){
+        selected = 'user';
+        $scope.viewTitle = "Users";
+        buildDefFilter();
+        loadObjGrid();
+    }
+
+    $scope.loadSessions = function(){
+        selected = 'session';
+        $scope.viewTitle = "Sessions";
         buildDefFilter();
         loadObjGrid();
     }

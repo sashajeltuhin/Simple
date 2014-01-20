@@ -1,12 +1,18 @@
 angular.module('cart').factory('adminservice', function($q) {
 
     var service = {};
-    var serverUrl = topUrl;
+    var serverUrl = topUrl + '/app';
     var cache = [];
     var fieldCache = {};
     var selTen = {};
     var selAppObj = {};
     var selObj = {};
+
+    var signedId = {};
+
+    service.getsignedId = function(){
+        return signedId;
+    }
 
     service.setTenant = function(t){
         selTen = t;
@@ -35,6 +41,18 @@ angular.module('cart').factory('adminservice', function($q) {
     service.resetCache = function(){
         cache = [];
         fieldCache = {};
+    }
+
+    service.signIn = function(u, p, $http, callback){
+        var user = {};
+        user.username = u;
+        user.password = p;
+        $http.post(serverUrl + '/auth/login', user).success(function (data) {
+            signedId = data;
+            callback(null, data);
+        }).error(function(data, status) {
+                callback(data, null);
+        });
     }
 
     service.resetCacheObj = function(obj){

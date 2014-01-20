@@ -1,7 +1,8 @@
 var Auth
     , passport =        require('passport')
     , LocalStrategy =   require('passport-local').Strategy
-    , profile = require('./profile')
+    , person = require('./user')
+    , session = require('./adminsession')
     , sha = require("sha512crypt.js"),
       salt = "meyekid"
 //    , TwitterStrategy = require('passport-twitter').Strategy
@@ -13,10 +14,10 @@ var Auth
 
 module.exports = {
     login: function(req, res, next) {
-        passport.authenticate('local', function(err, user) {
+        passport.authenticate('local', function(err, user, msg) {
 
             if(err)     { return next(err); }
-            if(!user)   { return res.send(400); }
+            if(!user)   { return res.send(400, {"err": msg}); }
 
 
             req.logIn(user, function(err) {
@@ -25,7 +26,7 @@ module.exports = {
                 }
 
                 if(req.body.rememberme) req.session.cookie.maxAge = 1000 * 60 * 60 * 24 * 7;
-                res.json(200, { "role": user.role, "username": user.username });
+                res.json(200, user.session );
             });
         })(req, res, next);
     },
@@ -37,13 +38,9 @@ module.exports = {
     please: function(req, res){
 
     },
-    createPass: function (req, res){
-        var filter = {_id:req.body._id};
-        var p = sha._sha512crypt_intermediate(req.body.p, salt);
-        var pr = {_id: filter._id, pass:p};
-        profile.upsertProfile(filter, pr, function(){
-
-        });
+    createPass: function (rawPass){
+        var p = sha._sha512crypt_intermediate(rawPass, salt);
+        return p;
     },
     validate: function(user) {
 //        check(user.username, 'Username must be 1-20 characters long').len(1, 20);
@@ -60,21 +57,27 @@ module.exports = {
     localStrategy: new LocalStrategy(
         function(username, password, done) {
 
-            var filter = {nickname:username};
-            profile.loadUser(filter, function(err, u){
+            var filter = {uname:username};
+            person.loadUser(filter, function(err, u){
                 if(u == null){
-
-                }
-                else if (err == null){
-
+                    done(null, false, err);
                 }
                 else{
-                    var t = sha._sha512crypt_intermediate(u.pass, salt);
-                    if (t != password){
-
+                    var t = sha._sha512crypt_intermediate(password, salt);
+                    if (t !== u.upass){
+                        done(null, false, "Password does not match");
                     }
                     else{
-                        done(null, u);
+                        session.newSession(u, function(err, s){
+                            if(err !== null){
+                                done(null, false, "Session cannot be started");
+                            }
+                            else{
+                                u.session = s;
+                                done(null, u);
+                            }
+                        })
+
                     }
                 }
             });
@@ -152,13 +155,14 @@ module.exports = {
 //        );
 //    },
     serializeUser: function(user, done) {
-        done(null, user.id);
+        done(null, user._id);
     },
 
     deserializeUser: function(id, done) {
-//        var user = module.exports.findById(id);
-//
-//        if(user)    { done(null, user); }
-//        else        { done(null, false); }
+        var filter = {_id:id};
+        person.loadUser(filter, function(err, u){
+        if(u)    { done(null, u); }
+        else        { done(null, false); }
+        });
     }
 };
