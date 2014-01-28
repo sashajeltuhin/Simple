@@ -1,0 +1,43 @@
+
+<section class="vbox">
+    <section>
+        <div class="wrapper b-b b-light">
+            <a href="#" data-toggle="class" class="pull-left m-r-sm"><i class="fa fa-star-o fa-1x text"></i><i class="fa fa-star text-warning fa-1x text-active"></i></a>
+            <a href="#email-content, #email-list" data-toggle="class:show,hide" class="pull-right text">
+                <i class="fa fa-trash-o"></i>
+            </a>
+            <h4 class="m-n"> {{selnote.subject}}</h4>
+        </div>
+        <div class="text-sm padder m-t">
+            <div class="block clearfix m-b">
+                <a href="#" class="thumb-xs inline"><img ng-src="{{topurl}}{{selnote.senderAvatar}}" class="img-circle"></a>
+                  <span class="inline m-t-xs">{{selnote.senderName}}
+                   {{selnote.toGroup}}</span>
+                <div class="pull-right inline">May 12 (<em>4 days ago</em>)
+                    <div class="btn-group">
+                        <button class="btn btn-default btn-xs" data-toggle="tooltip" data-title="Reply"><i class="fa fa-reply"></i></button>
+                        <button class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></button>
+                        <ul class="dropdown-menu pull-right">
+                            <li><a href="#"><i class="fa fa-reply"></i> Reply</a></li>
+                            <li><a href="#"><i class="fa fa-signout"></i> Forward</a></li>
+                            <li><a href="#">Add Mika Sokeil to contact list</a></li>
+                            <li><a href="#">Mark as unread</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#">Delete this message</a></li>
+                            <li><a href="#">Report spam</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="line pull-in"></div>
+            {{selnote.message}}
+        </div>
+        <div class="padder">
+            <div class="panel text-sm bg-light">
+                <div class="panel-body">
+                    Click here to <a href="#">Reply</a> or <a href="#">Forward</a>
+                </div>
+            </div>
+        </div>
+    </section>
+</section>

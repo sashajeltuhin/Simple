@@ -12,6 +12,7 @@ angular.module('cart').factory('cartservice', function($http) {
     var cart = null;
     var appType = '';
     var serverUrl = topUrl + '/app';
+    var templBaseUrl = topUrl;
     var exCart = null;
     var extenstion = false;
     service.customer = {};
@@ -53,7 +54,7 @@ angular.module('cart').factory('cartservice', function($http) {
         if (extenstion == true){
             return chrome.extension.getURL(this.currentstep().template);
         }
-        return serverUrl +  this.currentstep().template;
+        return templBaseUrl +  this.currentstep().template;
     }
 
     service.getCustomer = function(){

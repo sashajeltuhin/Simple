@@ -35,6 +35,9 @@ var express = require('express')
   , rule = require('./routes/rule')
   , csvtool = require('./routes/csvtool')
   , draft = require('./routes/draft')
+  , note = require('./routes/note')
+  , action = require('./routes/action')
+  , db = require('./db/dbaccess')
   , session = require('./routes/adminsession');
 
 var app = express();
@@ -78,6 +81,18 @@ app.post('/app/user/delete', user.delete);
 app.post('/app/session/list', session.list);
 app.post('/app/session/update', session.save);
 app.post('/app/session/delete', session.delete);
+
+app.post('/app/note/list', note.list);
+app.post('/app/note/update', note.save);
+app.post('/app/note/delete', note.delete);
+
+app.post('/app/action/list', action.list);
+app.post('/app/action/update', action.save);
+app.post('/app/action/delete', action.delete);
+
+
+app.post('/app/report/total', db.total);
+app.post('/app/report/calc', db.compute);
 
 
 app.post('/app/video/list', video.list);
@@ -167,6 +182,7 @@ app.post('/app/labels/update', labels.upsert);
 app.post('/app/auth/login', auth.login);
 app.post('/app/auth/logout', auth.logout);
 app.post('/app/auth/mayeye', auth.please);
+app.post('/app/auth/there', auth.checkSession);
 
 
 

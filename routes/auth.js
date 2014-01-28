@@ -38,6 +38,29 @@ module.exports = {
     please: function(req, res){
 
     },
+    checkSession: function(req, res){
+        var f = req.body;
+        session.loadSessionbyID(f, function(err, data){
+           if (err !== null){
+               res.send(400, {"err": msg});
+           }
+            else if (data.length > 0){
+               var s = data[0];
+               var now = new Date();
+               var milInHour = 60 * 60 * 1000;
+               var diff = Math.abs(now.getTime() - s.time.getTime())/milInHour;
+               if (diff > 0 && diff < 24){
+                   res.send(s);
+               }
+               else{
+                   res.send({});
+               }
+           }
+            else{
+               res.send({});
+           }
+        });
+    },
     createPass: function (rawPass){
         var p = sha._sha512crypt_intermediate(rawPass, salt);
         return p;

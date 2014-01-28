@@ -2,7 +2,7 @@ angular.module('cart').directive('chartGen', function() {
         return{
             restrict: 'E',
             scope: { opt: '=opt'},
-            template: ' <div style="min-width: 310px; height: 400px; margin: 20px"></div>',
+            template: ' <div style="width: 250px; height: 300px; margin: 20px"></div>',
             link: function(scope, elem, attr){
 
                 var paintChart = function() {

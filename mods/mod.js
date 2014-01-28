@@ -1,5 +1,5 @@
 var topUrl = 'http://localhost';
-var myapp = angular.module("cart", ['ui.sortable','ui.date','ngGrid','ngSanitize'], function($routeProvider, $locationProvider){
+var myapp = angular.module("cart", ['ui.sortable','ui.date','ngGrid','ngSanitize', 'ngCookies'], function($routeProvider, $locationProvider){
     //$locationProvider.html5Mode(true);//.hashPrefix('!');
     $routeProvider.when('/offer', {
         template: '<div ng-include="templateUrl">Loading...</div>',

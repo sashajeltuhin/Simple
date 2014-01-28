@@ -1,20 +1,72 @@
-/**
- * Created with JetBrains WebStorm.
- * User: sashajeltuhin
- * Date: 3/27/13
- * Time: 8:30 PM
- * To change this template use File | Settings | File Templates.
- */
 var mongo = require('mongodb');
 var ObjectID = mongo.ObjectID;
-var dbname = 'meyekidDB';
+var dbname = 'ShopDB'; //'meyekidDB';
 var metacache = [];
+
+var setDBName = function(name){
+    dbname = name;
+}
+
+var getDB = function (c1, callback) {
+    var Server = mongo.Server,
+        Db = mongo.Db;
+    var server = new Server('localhost', 27017, { w:1, auto_reconnect:true});
+
+    db = new Db(dbname, server, {safe:true});
+    db.open(function (err, db) {
+        if (err != null) {
+            handleError("Error opening the database", err, c1);
+        }
+        else {
+            console.log("connected to " + dbname);
+            callback(null, db);
+        }
+
+    });
+}
+
+var handleError = function(msg, err, callback, db){
+    if (err != null){
+        if (db !== null && db !== undefined){
+            db.close();
+        }
+        var txt = msg + '. ' + err;
+        console.log(txt);
+        callback(txt);
+    }
+}
+
+var loadData = function(db, col, filter, callback){
+    if(filter.distinct !== undefined){
+        col.distinct(filter.distinct, filter.query, function(err, items) {
+            db.close();
+            if (err != null){
+                handleError('Enable to load list of videos', err, callback);
+            }
+            else{
+                callback(null, items);
+            }
+        });
+    }
+    else{
+        col.find(filter.query).skip(filter.skip).limit(filter.limit).sort(filter.order_by).toArray(function(err, items) {
+            db.close();
+            if (err != null){
+                handleError('Enable to load list of videos', err, callback);
+            }
+            else{
+                callback(null, items);
+            }
+        });
+    }
+}
+
 
 exports.setDB = function(name){
     dbname = name;
 }
 
-exports.getFilter = function(f){
+var prepFilter = function(f){
     var filter = {};
     filter.query = {};
     filter.order_by = {};
@@ -52,7 +104,7 @@ exports.getFilter = function(f){
         }
         else if (String(key) == "_id"){
             filter.query[key]  = new ObjectID(v);
-            }
+        }
         else{
             var str = String(v);
             if (str.indexOf("*") !== -1){
@@ -78,60 +130,9 @@ exports.getFilter = function(f){
     return filter;
 }
 
-
-var getDB = function (c1, callback) {
-    var Server = mongo.Server,
-        Db = mongo.Db;
-    var server = new Server('localhost', 27017, { w:1, auto_reconnect:true});
-
-    db = new Db(dbname, server, {safe:true});
-    db.open(function (err, db) {
-        if (err != null) {
-            handleError("Error opening the database", err, c1);
-        }
-        else {
-            console.log("connected to " + dbname);
-            callback(null, db);
-        }
-
-    });
-};
-
-var handleError = function(msg, err, callback, db){
-    if (err != null){
-        if (db !== null && db !== undefined){
-            db.close();
-        }
-        var txt = msg + '. ' + err;
-        console.log(txt);
-        callback(txt);
-    }
+exports.getFilter = function(f){
+    return prepFilter(f);
 }
-
-var loadData = function(db, col, filter, callback){
-    if(filter.distinct !== undefined){
-        col.distinct(filter.distinct, filter.query, function(err, items) {
-            db.close();
-            if (err != null){
-                handleError('Enable to load list of videos', err, callback);
-            }
-            else{
-                callback(null, items);
-            }
-        });
-    }
-    else{
-    col.find(filter.query).skip(filter.skip).limit(filter.limit).sort(filter.order_by).toArray(function(err, items) {
-        db.close();
-        if (err != null){
-            handleError('Enable to load list of videos', err, callback);
-        }
-        else{
-            callback(null, items);
-        }
-    });
-    }
-};
 
 
 exports.load = function (colname, filter, callback) {
@@ -150,6 +151,10 @@ exports.load = function (colname, filter, callback) {
 };
 
 exports.aggregate = function(colname, filter, callback){
+    computeData(colname, filter, callback);
+}
+
+var computeData = function(colname, filter, callback){
     getDB(callback, function (err, db) {
 
         db.collection(colname, function (err, collection) {
@@ -247,9 +252,40 @@ exports.upsert = function (colname, rawobj, filter, callback) {
         });
     });
 
-};
+}
 
-exports.count = function(colname, filter, callback){
+exports.compute = function(req, res){
+    setDBName(dbname);
+    var colName = req.body.obj;
+    var filter = req.body.filter;
+    var group = req.body.group;
+    var  f = [{ $match: filter}, {$group : group }];
+    computeData(colName, filter, function(err, recs){
+        if (err !== null){
+            callback(err, recs);
+        }
+        else{
+            callback (null, recs);
+        }
+    });
+}
+
+
+exports.total = function(req, res){
+    setDBName(dbname);
+    var colName = req.body.obj;
+    var f = prepFilter(req.body.filter);
+    count(colName, f, function(err, rec){
+        if (err !== null){
+            res.send({Error : {text:"Cannot provide total ", det:err}});
+        }
+        else{
+            res.send({data: rec});
+        }
+    });
+}
+
+var count = function(colname, filter, callback){
     getDB(callback, function(err, db){
         db.collection(colname, function(err, collection){
             if (err !== null){
@@ -257,7 +293,7 @@ exports.count = function(colname, filter, callback){
             }
             else
             {
-                collection.count(filter, function(err, rec) {
+                collection.count(filter.query, function(err, rec) {
                     db.close();
                     if (err != null){
                         handleError("Enable to total. ", err, callback, db );
@@ -270,6 +306,10 @@ exports.count = function(colname, filter, callback){
             }
         });
     });
+}
+
+exports.count = function(colname, filter, callback){
+    count(colname, filter, callback);
 }
 
 exports.buildMetaCache = function(dbname, name, callback){
@@ -294,7 +334,6 @@ exports.buildMetaCache = function(dbname, name, callback){
         }
     });
     }
-
 }
 
 exports.checktypes = function(obj, objname, callback){

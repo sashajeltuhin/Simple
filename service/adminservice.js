@@ -1,4 +1,4 @@
-angular.module('cart').factory('adminservice', function($q) {
+angular.module('cart').factory('adminservice', function($q, $cookies) {
 
     var service = {};
     var serverUrl = topUrl + '/app';
@@ -10,8 +10,17 @@ angular.module('cart').factory('adminservice', function($q) {
 
     var signedId = {};
 
-    service.getsignedId = function(){
+    service.getAdminSession = function(){
         return signedId;
+    }
+    function setsignedId (data){
+        signedId = data;
+        if (data == null || data == undefined){
+            delete $cookies.mk_uid;
+        }
+        else{
+            $cookies.mk_uid = data._id;
+        }
     }
 
     service.setTenant = function(t){
@@ -43,15 +52,45 @@ angular.module('cart').factory('adminservice', function($q) {
         fieldCache = {};
     }
 
+    service.authenticate = function($http, callback){
+        if (signedId._id !== undefined){
+            callback(signedId._id);
+        }
+        else{
+            var sid = $cookies.mk_uid;
+            if (sid !== undefined){
+                var f = {_id : sid};
+                $http.post(serverUrl + '/auth/there', f).success(function (data) {
+                        setsignedId(data);
+                        callback(signedId._id);
+                }).error(function(data, status) {
+                        callback(signedId._id);
+                    });
+            }
+            else{
+                callback(signedId._id);
+            }
+        }
+    }
+
     service.signIn = function(u, p, $http, callback){
         var user = {};
         user.username = u;
         user.password = p;
         $http.post(serverUrl + '/auth/login', user).success(function (data) {
-            signedId = data;
+            setsignedId(data);
             callback(null, data);
         }).error(function(data, status) {
                 callback(data, null);
+        });
+    }
+
+    service.signOut = function($http, callback){
+        $http.post(serverUrl + '/auth/logout').success(function () {
+            setsignedId(null);
+            callback(null);
+        }).error(function(data, status) {
+            callback(data);
         });
     }
 
@@ -208,6 +247,16 @@ angular.module('cart').factory('adminservice', function($q) {
             callback(data);
         });
     };
+
+    service.total = function(obj, f, $http, callback){
+        var url = serverUrl + '/report/total';
+        var filter = {};
+        filter.obj = obj;
+        filter.filter = f;
+        $http.post(url, filter).success(function(result){
+            callback(result);
+        });
+    }
 
     service.peopleStats = function(f, $http, callback){
         var url = serverUrl + '/consumer/bytype';

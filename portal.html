@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="en" class="app" ng-app="cart" ng-controller="adminctrl" ng-keydown="keydown($event)">
+<head>
+    <meta charset="utf-8" />
+    <title>Bridgevine | FUSE Portal</title>
+    <meta name="description" content="admin dashboard, admin" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+    <link rel="stylesheet" href="admin/css/bootstrap.css" type="text/css" />
+    <link rel="stylesheet" href="admin/css/animate.css" type="text/css" />
+    <link rel="stylesheet" href="admin/css/font-awesome.min.css" type="text/css" />
+    <link rel="stylesheet" href="admin/css/font.css" type="text/css" />
+    <link rel="stylesheet" href="admin/js/select2/select2.css" type="text/css" />
+    <!--<link rel="stylesheet" href="admin/js/calendar/bootstrap_calendar.css" type="text/css" />-->
+    <link rel="stylesheet" href="admin/css/app.css" type="text/css" />
+    <!--<link rel="stylesheet" href="admin/slickgrid/slick.grid.css" type="text/css"/>-->
+    <!--<link rel="stylesheet" href="admin/slickgrid/slick-default-theme.css" type="text/css"/>-->
+    <link rel="stylesheet" href="css/ng-grid.css"/>
+    <link rel="stylesheet" href="admin/css/mk_ext.css" type="text/css"/>
+
+    <script>
+        var adminURL = '/admin';
+    </script>
+    <!--[if lt IE 9]>
+    <script src="admin/js/ie/html5shiv.js"></script>
+    <script src="admin/js/ie/respond.min.js"></script>
+    <script src="admin/js/ie/excanvas.js"></script>
+    <![endif]-->
+</head>
+<body>
+<section class="vbox">
+<header class="bg-dark dk header navbar navbar-fixed-top-xs">
+    <div class="navbar-header aside-md">
+        <a class="btn btn-link visible-xs" data-toggle="class:nav-off-screen,open" data-target="#nav,html">
+            <i class="fa fa-bars"></i>
+        </a>
+        <a href="#" class="navbar-brand" data-toggle="fullscreen"><img src="admin/images/BVLogo.jpeg" class="m-r-sm">FUSE Portal</a>
+        <a class="btn btn-link visible-xs" data-toggle="dropdown" data-target=".nav-user">
+            <i class="fa fa-cog"></i>
+        </a>
+    </div>
+    <ul class="nav navbar-nav hidden-xs">
+        <li class="dropdown" ng-show="adminSession">
+            <a href="#" class="dropdown-toggle dker" data-toggle="dropdown">
+                <i class="fa fa-magic"></i>
+                <span class="font-bold">New</span>
+            </a>
+            <ul class="dropdown-menu animated fadeInDown">
+                <span class="arrow top"></span>
+                <li><a href="#/admin" ng-click="newField()">Attribute</a></li>
+                <li><a href="#/admin" ng-click="newProvider()">Provider</a></li>
+                <li><a href="#/admin" ng-click="createProduct()">Product</a></li>
+                <li><a href="#/admin" ng-click="createStep()">Flow step</a></li>
+                <li><a href="#/admin" ng-click="createQuestion()">Question</a></li>
+                <li><a href="#/admin" ng-click="createApp()">Application</a></li>
+                <li><a href="#/admin" ng-click="createTenant()">Tenant</a></li>
+                <li><a href="#/admin" ng-click="createGeo()">Geo mapping</a></li>
+                <li><a href="#/admin" ng-click="createSegRule()">Demographic segment</a></li>
+                <li><a href="#/admin" ng-click="createBlock()">Template block</a></li>
+                <li><a href="#/admin" ng-click="createUser()">User</a></li>
+                <li><a href="#/admin" ng-click="createNote()">Message</a></li>
+                <li><a href="#/admin" ng-click="createAction()">Action</a></li>
+            </ul>
+            <!--<section class="dropdown-menu aside-xl on animated fadeInLeft no-borders lt">-->
+                <!--<div class="wrapper lter m-t-n-xs">-->
+                    <!--<a href="#" class="thumb pull-left m-r">-->
+                        <!--<img src="admin/images/avatar.jpg" class="img-circle">-->
+                    <!--</a>-->
+                    <!--<div class="clear">-->
+                        <!--<a href="#"><span class="text-white font-bold">@Mike Mcalidek</a></span>-->
+                        <!--<small class="block">Art Director</small>-->
+                        <!--<a href="#" class="btn btn-xs btn-success m-t-xs">Upgrade</a>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--<div class="row m-l-none m-r-none m-b-n-xs text-center">-->
+                    <!--<div class="col-xs-4">-->
+                        <!--<div class="padder-v">-->
+                            <!--<span class="m-b-xs h4 block text-white">245</span>-->
+                            <!--<small class="text-muted">Followers</small>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <!--<div class="col-xs-4 dk">-->
+                        <!--<div class="padder-v">-->
+                            <!--<span class="m-b-xs h4 block text-white">55</span>-->
+                            <!--<small class="text-muted">Likes</small>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <!--<div class="col-xs-4">-->
+                        <!--<div class="padder-v">-->
+                            <!--<span class="m-b-xs h4 block text-white">2,035</span>-->
+                            <!--<small class="text-muted">Photos</small>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</section>-->
+        </li>
+        <li class="dropdown" ng-show="adminSession">
+            <a href="#" class="dropdown-toggle dker" data-toggle="dropdown">
+                <i class="fa fa-bar-chart-o"></i>
+                <span class="font-bold">Reports</span>
+            </a>
+            <ul class="dropdown-menu animated fadeInDown">
+                <span class="arrow top"></span>
+                <li><a href="#/admin" ng-click="ordersReport()">Performance</a></li>
+                <li><a href="#/admin" ng-click="qualsByProv()">Quals</a></li>
+                <li><a href="#/admin" ng-click="ordersByProv()">Orders</a></li>
+                <li><a href="#/admin" ng-click="productGeo()">Product availability</a></li>
+                <li><a href="#/admin" ng-click="import()">Import</a></li>
+                <li><a href="#/admin" ng-click="export()">Export to email list [SilverPop]</a></li>
+            </ul>
+        </li>
+        <li class="dropdown" ng-show="adminSession">
+            <a href="#" class="dropdown-toggle dker" data-toggle="dropdown">
+                <i class="fa fa-list"></i>
+                <span class="font-bold">Data</span>
+            </a>
+            <ul class="dropdown-menu animated fadeInDown">
+                <span class="arrow top"></span>
+                <li><a href="#/admin" ng-click="loadProducts()">Products</a></li>
+                <li><a href="#/admin" ng-click="loadProvidersLst()">Providers</a></li>
+                <li><a href="#/admin" ng-click="loadConsumerLst()">Consumers</a></li>
+                <li class="divider"></li>
+                <li><a href="#/admin" ng-click="loadStepsLst()">Flow</a></li>
+                <li><a href="#/admin" ng-click="loadLogs()">Logs</a></li>
+                <li><a href="#/admin" ng-click="loadSurveyLst()">Survey</a></li>
+                <li><a href="#/admin" ng-click="loadAppLst()">Applications</a></li>
+                <li><a href="#/admin" ng-click="loadTenantLst()">Tenants</a></li>
+                <li><a href="#/admin" ng-click="loadZips()">Geo</a></li>
+                <li><a href="#/admin" ng-click="loadSegmentList()">Demographic segements</a></li>
+                <li><a href="#/admin" ng-click="loadBlockList()">Template blocks</a></li>
+                <li><a href="#/admin" ng-click="loadUsers()">Users</a></li>
+                <li><a href="#/admin" ng-click="loadSessions()">Sessions</a></li>
+                <li><a href="#/admin" ng-click="loadNotes()">Notes</a></li>
+                <li><a href="#/admin" ng-click="loadSessions()">Messages</a></li>
+            </ul>
+        </li>
+        <li class="dropdown" ng-show="adminSession">
+            <a href="#" class="dropdown-toggle dker" data-toggle="dropdown">
+                <i class="fa fa-book"></i>
+                <span class="font-bold">Metadata</span>
+            </a>
+            <ul class="dropdown-menu animated fadeInDown">
+                <span class="arrow top"></span>
+                <li><a href="#/admin" ng-click="loadProductFields()">Product fields</a></li>
+                <li><a href="#/admin" ng-click="loadProviderFields()">Provider fields</a></li>
+                <li><a href="#/admin" ng-click="loadStepFields()">Flow step fields</a></li>
+                <li><a href="#/admin" ng-click="loadLogFields()">Log fields</a></li>
+                <li><a href="#/admin" ng-click="loadFields()">Field descriptors</a></li>
+                <li><a href="#/admin" ng-click="loadSurveyFields()">Survey</a></li>
+                <li><a href="#/admin" ng-click="loadResponseFields()">Survey response</a></li>
+                <li><a href="#/admin" ng-click="loadTenantFields()">Tenant</a></li>
+                <li><a href="#/admin" ng-click="loadAppFields()">Application</a></li>
+                <li><a href="#/admin" ng-click="loadConsumerFields()">Consumer</a></li>
+                <li><a href="#/admin" ng-click="loadZipFields()">Geo</a></li>
+                <li><a href="#/admin" ng-click="loadSegmentFields()">Segments</a></li>
+                <li><a href="#/admin" ng-click="loadRuleFields()">Rules</a></li>
+                <li><a href="#/admin" ng-click="loadBlockFields()">Blocks</a></li>
+                <li><a href="#/admin" ng-click="loadDraftFields()">Drafts</a></li>
+                <li><a href="#/admin" ng-click="loadUserFields()">Users</a></li>
+                <li><a href="#/admin" ng-click="loadSessionFields()">Sessions</a></li>
+                <li><a href="#/admin" ng-click="loadNoteFields()">Messages</a></li>
+                <li><a href="#/admin" ng-click="loadActionFields()">Actions</a></li>
+            </ul>
+        </li>
+        <!--<li><a href="#">-->
+            <!--<i class="fa fa-building-o"></i>-->
+            <!--<span class="font-bold">Tenant: </span></a>-->
+            <!--<select id="admin_sel_tenenat" ng-options="t.name for t in tenants" ng-model="selTen" ng-change="pickTenant()" style="margin-top:10px">-->
+            <!--</select></a>-->
+        <!--</li>-->
+        <!--<li>-->
+            <!--<div class="m-t m-l">-->
+                <!--<a href="price.html" class="dropdown-toggle btn btn-xs btn-primary" title="Upgrade"><i class="fa fa-long-arrow-up"></i></a>-->
+            <!--</div>-->
+        <!--</li>-->
+    </ul>
+    <ul class="nav navbar-nav navbar-right hidden-xs nav-user">
+        <!--<li class="hidden-xs">-->
+            <!--<a href="#" class="dropdown-toggle dk" data-toggle="dropdown">-->
+                <!--<i class="fa fa-bell"></i>-->
+                <!--<span class="badge badge-sm up bg-danger m-l-n-sm">Save</span>-->
+            <!--</a>-->
+        <!--</li>-->
+        <!--<li class="hidden-xs">-->
+            <!--<a href="#" class="dropdown-toggle dk" data-toggle="dropdown">-->
+                <!--<i class="fa fa-bell"></i>-->
+                <!--<span class="badge badge-sm up bg-danger m-l-n-sm">Delete</span>-->
+            <!--</a>-->
+        <!--</li>-->
+        <li class="hidden-xs" ng-controller="messagectrl">
+            <a href="#" class="dropdown-toggle dk" data-toggle="dropdown" ng-show="adminSession">
+                <i class="fa fa-bell"></i>
+                <mk-notify num="newtotal"></mk-notify>
+            </a>
+            <section class="dropdown-menu aside-xl" ng-include="msgalert">
+
+            </section>
+        </li>
+        <li class="dropdown hidden-xs" ng-show="adminSession">
+            <a href="#" class="dropdown-toggle dker" data-toggle="dropdown" ng-show="adminSession"><i class="fa fa-fw fa-search"></i></a>
+            <section class="dropdown-menu aside-xl animated fadeInUp">
+                <section class="panel bg-white">
+                    <form role="search">
+                        <div class="form-group wrapper m-b-none">
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Search">
+                    <span class="input-group-btn">
+                      <button type="submit" class="btn btn-info btn-icon"><i class="fa fa-search"></i></button>
+                    </span>
+                            </div>
+                        </div>
+                    </form>
+                </section>
+            </section>
+        </li>
+        <li class="dropdown" ng-show="adminSession">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+            <span class="thumb-sm avatar pull-left">
+              <img ng-src="{{topUrl}}{{adminSession.imageUrl}}">
+            </span>
+                {{adminSession.fname}} {{adminSession.lname}} <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu animated fadeInRight">
+                <span class="arrow top"></span>
+                <li>
+                    <a href="#">Settings</a>
+                </li>
+                <li>
+                    <a href="#" ng-click="openAdminProfile()">Profile</a>
+                </li>
+                <li>
+                    <a href="#">
+                        <span class="badge bg-danger pull-right">3</span>
+                        Notifications
+                    </a>
+                </li>
+                <li>
+                    <a href="docs.html">Help</a>
+                </li>
+                <li class="divider"></li>
+                <li ng-controller="authctrl">
+                    <a href="#/admin" ng-click="logout()" >Sign out</a>
+                </li>
+            </ul>
+        </li>
+    </ul>
+</header>
+<section>
+<section class="hbox stretch">
+<!-- .aside -->
+<aside class="bg-dark lter aside-md hidden-print" id="nav">
+<section class="vbox" ng-show="adminSession">
+<header class="header bg-primary lter text-center clearfix">
+    <div class="btn-group">
+        <!--<button type="button" class="btn btn-sm btn-dark btn-icon" title="New project"><i class="fa fa-plus"></i></button>-->
+        <div class="btn-group hidden-nav-xs">
+            <button type="button" class="btn btn-sm btn-primary dropdown-toggle" data-toggle="dropdown">
+                <span>{{selTen.name}}</span>
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu text-left">
+                <li ng-repeat="t in tenants"><a href="#/admin" ng-click="switchTenant(t)">{{t.name}}</a></li>
+            </ul>
+        </div>
+    </div>
+</header>
+<section class="w-f scrollable">
+<div class="slim-scroll" data-height="auto" data-disable-fade-out="true" data-distance="0" data-size="5px" data-color="#333333">
+
+<!-- nav -->
+<nav class="nav-primary hidden-xs">
+<ul class="nav">
+<li  class="active">
+    <a href="#/admin" ng-click="onDash()" class="active">
+        <i class="fa fa-dashboard icon">
+            <b class="bg-danger"></b>
+        </i>
+        <span>Dashboard</span>
+    </a>
+</li>
+<li >
+    <a href="#layout"  >
+        <i class="fa fa-cogs icon">
+            <b class="bg-warning"></b>
+        </i>
+                        <span class="pull-right">
+                          <i class="fa fa-angle-down text"></i>
+                          <i class="fa fa-angle-up text-active"></i>
+                        </span>
+        <span>Tools</span>
+    </a>
+    <ul class="nav lt">
+        <li >
+            <a href="#/admin" ng-click="loadProviders()" >
+                <i class="fa fa-angle-right"></i>
+                <span>Provider Priority</span>
+            </a>
+        </li>
+        <li >
+            <a href="#/admin" ng-click="loadSegments()" >
+                <i class="fa fa-angle-right"></i>
+                <span>Recommendation Engine</span>
+            </a>
+        </li>
+        <li >
+            <a href="#/admin" ng-click="loadSurvey()" >
+                <i class="fa fa-angle-right"></i>
+                <span>Consumer Survey</span>
+            </a>
+        </li>
+        <li >
+            <a href="#/admin" ng-click="updateGeo()" >
+                <i class="fa fa-angle-right"></i>
+                <span>Geo Mapping</span>
+            </a>
+        </li>
+    </ul>
+</li>
+<li >
+    <a href="#UI"  >
+        <i class="fa fa-eye icon">
+            <b class="bg-warning"></b>
+        </i>
+                        <span class="pull-right">
+                          <i class="fa fa-angle-down text"></i>
+                          <i class="fa fa-angle-up text-active"></i>
+                        </span>
+        <span>UX</span>
+    </a>
+    <ul class="nav lt">
+        <li >
+            <a href="#/admin" ng-click="loadCartSteps()" >
+                <i class="fa fa-angle-right"></i>
+                <span>Flow Management</span>
+            </a>
+        </li>
+        <li >
+            <a href="#/admin" ng-click="viewFlow()" >
+                <i class="fa fa-angle-right"></i>
+                <span>Preview</span>
+            </a>
+        </li>
+    </ul>
+</li>
+
+<li >
+    <a href="#CRM"  >
+        <i class="fa fa-users icon">
+            <b class="bg-primary"></b>
+        </i>
+                        <span class="pull-right">
+                          <i class="fa fa-angle-down text"></i>
+                          <i class="fa fa-angle-up text-active"></i>
+                        </span>
+        <span>CRM</span>
+    </a>
+    <ul class="nav lt">
+        <li >
+            <a href="#/admin" ng-click="loadConsumerLst()" >
+                <i class="fa fa-angle-right"></i>
+                <span>Consumers</span>
+            </a>
+        </li>
+    </ul>
+</li>
+<li >
+    <a href="#pages"  >
+        <i class="fa fa-phone icon">
+            <b class="bg-primary"></b>
+        </i>
+                        <span class="pull-right">
+                          <i class="fa fa-angle-down text"></i>
+                          <i class="fa fa-angle-up text-active"></i>
+                        </span>
+        <span>Call Center</span>
+    </a>
+    <ul class="nav lt">
+        <li >
+            <a href="#/admin" ng-click="openCallCenter()" >
+                <i class="fa fa-angle-right"></i>
+                <span>Agent's portal</span>
+            </a>
+        </li>
+    </ul>
+</li>
+<li >
+    <a href="#sec"  >
+        <i class="fa fa-lock icon">
+            <b class="bg-primary"></b>
+        </i>
+                        <span class="pull-right">
+                          <i class="fa fa-angle-down text"></i>
+                          <i class="fa fa-angle-up text-active"></i>
+                        </span>
+        <span>Security</span>
+    </a>
+    <ul class="nav lt">
+        <li >
+            <a href="#/admin" ng-click="openUserManagement()" >
+                <i class="fa fa-angle-right"></i>
+                <span>User Management</span>
+            </a>
+        </li>
+    </ul>
+</li>
+<li >
+    <a href="#/admin" ng-click="openInbox()" >
+        <b class="badge bg-danger pull-right">3</b>
+        <i class="fa fa-envelope-o icon">
+            <b class="bg-primary dker"></b>
+        </i>
+        <span>Message Center</span>
+    </a>
+</li>
+<!--<li >-->
+    <!--<a href="notebook.html"  >-->
+        <!--<i class="fa fa-pencil icon">-->
+            <!--<b class="bg-info"></b>-->
+        <!--</i>-->
+        <!--<span>Notes</span>-->
+    <!--</a>-->
+<!--</li>-->
+</ul>
+</nav>
+<!-- / nav -->
+</div>
+</section>
+
+<footer class="footer lt hidden-xs b-t b-dark">
+    <div id="chat" class="dropup">
+        <section class="dropdown-menu on aside-md m-l-n">
+            <section class="panel bg-white">
+                <header class="panel-heading b-b b-light">Active chats</header>
+                <div class="panel-body animated fadeInRight">
+                    <p class="text-sm">No active chats.</p>
+                    <p><a href="#" class="btn btn-sm btn-default">Start a chat</a></p>
+                </div>
+            </section>
+        </section>
+    </div>
+    <div id="invite" class="dropup">
+        <section class="dropdown-menu on aside-md m-l-n">
+            <section class="panel bg-white">
+                <header class="panel-heading b-b b-light">
+                    John <i class="fa fa-circle text-success"></i>
+                </header>
+                <div class="panel-body animated fadeInRight">
+                    <p class="text-sm">No contacts in your lists.</p>
+                    <p><a href="#" class="btn btn-sm btn-facebook"><i class="fa fa-fw fa-facebook"></i> Invite from Facebook</a></p>
+                </div>
+            </section>
+        </section>
+    </div>
+    <a href="#nav" data-toggle="class:nav-xs" class="pull-right btn btn-sm btn-dark btn-icon">
+        <i class="fa fa-angle-left text"></i>
+        <i class="fa fa-angle-right text-active"></i>
+    </a>
+    <div class="btn-group hidden-nav-xs">
+        <button type="button" title="Chats" class="btn btn-icon btn-sm btn-dark" data-toggle="dropdown" data-target="#chat"><i class="fa fa-comment-o"></i></button>
+        <button type="button" title="Contacts" class="btn btn-icon btn-sm btn-dark" data-toggle="dropdown" data-target="#invite"><i class="fa fa-facebook"></i></button>
+    </div>
+</footer>
+</section>
+</aside>
+<!-- /.aside -->
+<section id="content">
+<section class="vbox">
+<section class="scrollable padder">
+<!--<ul class="breadcrumb no-border no-radius b-b b-light pull-in">-->
+    <!--<li><a href="index.html"><i class="fa fa-home"></i> Home</a></li>-->
+    <!--<li class="active">Dashboard</li>-->
+<!--</ul>-->
+
+<div ng-include="wrapper"></div>
+<!--<div style="position: relative;height: 100%;width: 100%" id="adminGrid"/>-->
+</section>
+</section>
+<a href="#" class="hide nav-off-screen-block" data-toggle="class:nav-off-screen" data-target="#nav"></a>
+</section>
+<aside class="bg-light lter b-l aside-md hide" id="notes">
+    <div class="wrapper">Notification</div>
+</aside>
+</section>
+</section>
+</section>
+<script src="js/leaflet/leaflet.js"></script>
+<script src="admin/js/jquery.min.js"></script>
+<script src="admin/js/jquery-ui-1.10.3.custom.min.js"></script>
+<!-- Bootstrap -->
+<script src="admin/js/bootstrap.js"></script>
+<!-- App -->
+<script src="admin/js/app.js"></script>
+<script src="admin/js/app.plugin.js"></script>
+<script src="admin/js/slimscroll/jquery.slimscroll.min.js"></script>
+<script src="js/jquery.iframe-transport.js"></script>
+<script src="js/jquery.fileupload.js"></script>
+<script src="js/angular.min.js" type="text/javascript"></script>
+<script src="js/angular-sanitize.min.js" type="text/javascript"></script>
+<script src="js/angular-cookies.min.js" type="text/javascript"></script>
+<script src="js/sortable.js" type="text/javascript"></script>
+<script src="js/date.js" type="text/javascript"></script>
+<!--<script src="admin/slickgrid/lib/jquery.event.drag-2.2.js"></script>-->
+<!--<script src="admin/slickgrid/slick.core.js"></script>-->
+<!--<script src="admin/slickgrid/plugins/slick.cellrangedecorator.js"></script>-->
+<!--<script src="admin/slickgrid/plugins/slick.cellrangeselector.js"></script>-->
+<!--<script src="admin/slickgrid/plugins/slick.cellselectionmodel.js"></script>-->
+<!--<script src="admin/slickgrid/slick.formatters.js"></script>-->
+<!--<script src="admin/slickgrid/slick.editors.js"></script>-->
+<!--<script src="admin/slickgrid/slick.grid.js"></script>-->
+<script src="js/select2.js" type="text/javascript"></script>
+<script src="js/highcharts.js" type="text/javascript"></script>
+<script src="js/highcharts-more.js" type="text/javascript"></script>
+<script src="js/ng-grid-2.0.7.min.js" type="text/javascript"></script>
+<script src="mods/mod.js" type="text/javascript"></script>
+<script src="js/detect.js"></script>
+<script src="service/mkpopupservice.js" type="text/javascript"></script>
+<script src="service/filterservice.js" type="text/javascript"></script>
+<script src="service/cartservice.js" type="text/javascript"></script>
+<script src="service/adminservice.js" type="text/javascript"></script>
+<script src="dir/cartparms.js" type="text/javascript"></script>
+<script src="dir/mkuploadDir.js" type="text/javascript"></script>
+<script src="dir/dynamic.js" type="text/javascript"></script>
+<script src="ctrl/authctrl.js" type="text/javascript"></script>
+<script src="ctrl/userctrl.js" type="text/javascript"></script>
+<script src="ctrl/prodctrl.js" type="text/javascript"></script>
+<script src="ctrl/teaserctrl.js" type="text/javascript"></script>
+<script src="ctrl/cartadminctrl.js" type="text/javascript"></script>
+<script src="ctrl/surveyctrl.js" type="text/javascript"></script>
+<script src="ctrl/templateCtrl.js" type="text/javascript"></script>
+<script src="ctrl/surveyAdminCtrl.js" type="text/javascript"></script>
+<script src="ctrl/optctrl.js" type="text/javascript"></script>
+<script src="ctrl/messagectrl.js" type="text/javascript"></script>
+<script src="ctrl/dashctrl.js" type="text/javascript"></script>
+<script src="ctrl/adminctrl.js" type="text/javascript"></script>
+<script src="ctrl/exportctrl.js" type="text/javascript"></script>
+<script src="ctrl/rulectrl.js" type="text/javascript"></script>
+<script src="dir/gridDir.js" type="text/javascript"></script>
+<script src="dir/mknotify.js" type="text/javascript"></script>
+<script src="dir/leafletDir.js" type="text/javascript"></script>
+<script src="dir/mkkeydown.js" type="text/javascript"></script>
+<script src="dir/selectDir.js" type="text/javascript"></script>
+<script src="dir/mkselectDir.js" type="text/javascript"></script>
+<script src="dir/productDir.js" type="text/javascript"></script>
+<script src="dir/cartDir.js" type="text/javascript"></script>
+<script src="dir/gameDir.js" type="text/javascript"></script>
+<script src="dir/providerDir.js" type="text/javascript"></script>
+<script src="dir/sortlistDir.js" type="text/javascript"></script>
+<script src="dir/chartDir.js" type="text/javascript"></script>
+<script src="dir/chartDirGen.js" type="text/javascript"></script>
+<script src="inputlector.js" type="text/javascript"></script>
+<script src="admin/js/charts/easypiechart/jquery.easy-pie-chart.js"></script>
+<script src="admin/js/charts/sparkline/jquery.sparkline.min.js"></script>
+<!--<script src="admin/js/charts/flot/jquery.flot.min.js"></script>-->
+<!--<script src="admin/js/charts/flot/jquery.flot.tooltip.min.js"></script>-->
+<!--<script src="admin/js/charts/flot/jquery.flot.resize.js"></script>-->
+<!--<script src="admin/js/charts/flot/jquery.flot.grow.js"></script>-->
+<!--<script src="admin/js/charts/flot/demo.js"></script>-->
+
+<!--<script src="admin/js/calendar/bootstrap_calendar.js"></script>-->
+<!--<script src="admin/js/calendar/demo.js"></script>-->
+
+<!--<script src="admin/js/sortable/jquery.sortable.js"></script>-->
+
+</body>
+</html>

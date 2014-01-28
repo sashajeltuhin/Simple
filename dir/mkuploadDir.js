@@ -3,7 +3,7 @@ angular.module('cart').directive('mkUpload', function($parse) {
     return{
         restrict: 'EA',
         //scope: { path: '&path', fnc: '&fnc'},
-        template: '<input class="mk_profImg" type="file" name="files[]" multiple/><div style="btn" style="position: relative ;cursor: pointer;width: 100%;height: 100%">{{mkUploadLabel}}</div>' +
+        template: '<input class="mk_profImg" style="display: none" type="file" name="files[]" multiple/><div style="btn" style="position: relative ;cursor: pointer;width: 100%;height: 100%">{{mkUploadLabel}}</div>' +
                 '<div class="bar" style="width: 0%;background: green;height: 18px"></div>',
         link: function(scope, elem, attr){
             scope.mkUploadLabel = attr.label;

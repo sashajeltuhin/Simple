@@ -6,7 +6,7 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
     var changedFlds = {};
     var selected = '';
     var viewMode = "grid";
-    var serverUrl = topUrl + '/templ/';
+    var serverUrl = topUrl + adminURL + '/templ/';
     $scope.rootUrl = topUrl;
     $scope.filterOpen = true;
     $scope.filters = [];
@@ -15,6 +15,7 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
     $scope.currentApp = "";
     $scope.adminPage = serverUrl + "admin.html";
     $scope.tenantPicked = false;
+
 
 
     start();
@@ -283,6 +284,12 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
         });
     }
 
+    $scope.saveNewObj = function(){
+        adminservice.saveObj($scope.obj, selected, $http, function(fld){
+            openDash();
+        });
+    }
+
     $scope.import = function(){
         adminservice.setSelected(selected);
         $scope.viewTitle = "Import " + $scope.viewTitle;
@@ -293,6 +300,12 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
     $scope.createField = function(){
         selected = 'fields';
         createObj('New Attribute');
+
+    };
+
+    $scope.newField = function(){
+        selected = 'fields';
+        newObj('New Attribute');
 
     };
 
@@ -355,6 +368,16 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
         createObj('New User');
     }
 
+    $scope.createNote = function(){
+        selected = "user";
+        createObj('New Message');
+    }
+
+    $scope.createAction = function(){
+        selected = "user";
+        createObj('New Action');
+    }
+
     function createObj(heading, def){
         adminservice.loadMeta(selected, $http, function(meta){
             $scope.obj = buildobj(meta, def);
@@ -369,6 +392,16 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
                 });
         });
 
+    }
+
+    function newObj(heading, def){
+        hideGrid();
+        $scope.viewTitle = heading;
+        adminservice.loadMeta(selected, $http, function(meta){
+            $scope.obj = buildobj(meta, def);
+            $scope.wrapper = serverUrl + 'genericNew.html';
+            $scope.propsEl = buildForm(meta);
+        });
     }
 
     function buildobj(meta, def){
@@ -395,14 +428,14 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
                 var atts = '';
 
                 if(metafld.opts !== undefined && metafld.opts.length > 0){
-                    var sel = $('<select ng-model="obj.' + metafld.fldname + '"></select>').appendTo(w);
+                    var sel = $('<select class="form-control" ng-model="obj.' + metafld.fldname + '"></select>').appendTo(w);
                     $.each(metafld.opts, function(i, o){
                         var optval = metafld.optfld !== undefined ? o[metafld.optfld] : o;
                         sel.append('<option value="' + optval + '">'+ optval +'</option>');
                     });
                 }
                 else{
-                    var ed = inputtype == 'textarea' ? '<textarea ng-model="obj.' + metafld.fldname + '" ></textarea>': '<input type="' + inputtype + '" ng-model="obj.' + metafld.fldname + '" class="' + cls + '" ' + atts + '>';
+                    var ed = inputtype == 'textarea' ? '<textarea class="form-control" ng-model="obj.' + metafld.fldname + '" ></textarea>': '<input class="form-control" type="' + inputtype + '" ng-model="obj.' + metafld.fldname + '" class="' + cls + '" ' + atts + '>';
                     var ctrl = $(ed).appendTo(w);
                 }
             }
@@ -509,6 +542,18 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
         loadMeta(f);
     }
 
+    $scope.loadNoteFields = function(){
+        var f = 'note';
+        $scope.viewTitle = "Message attributes";
+        loadMeta(f);
+    }
+
+    $scope.loadActionFields = function(){
+        var f = 'action';
+        $scope.viewTitle = "Action attributes";
+        loadMeta(f);
+    }
+
     function loadMeta (f){
         selected = 'fields';
         viewMode = 'grid';
@@ -517,8 +562,8 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
             adminservice.listObj(selected, {objname:f, 'order_by':{order:1}}, $http, function(d){
                 //$scope.colData = m;
                 //$scope.listData = d;
-                $scope.wrapper = serverUrl + 'grid.html';
-                buildGrid(m, d);
+                $scope.wrapper = serverUrl + 'spread.html';
+                buildNGrid(m, d);
                 refreshFilter(m, refreshData);
             });
         });
@@ -681,22 +726,49 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
         start();
     });
 
+    $scope.$on("EV_SIGNED_OUT", function(event){
+        $scope.adminSession = null;
+        $scope.wrapper = serverUrl + 'login.html';
+        $scope.viewTitle = "";
+    });
+
 
     function start (){
         hideGrid();
-        if (adminservice.getsignedId().uid !== undefined){
-            adminservice.listObj('tenant', {}, $http, function(t){
-                $scope.tenants = t;
-
-            });
-        }
-        else{
-            $scope.wrapper = serverUrl + 'login.html';
-        }
+        adminservice.authenticate($http, function(uid){
+            if (uid !== undefined){
+                $scope.adminSession = adminservice.getAdminSession();
+                adminservice.listObj('tenant', {}, $http, function(t){
+                    $scope.tenants = t;
+                    if (t.length > 0){
+                        selectTenant(t[0]);
+                    }
+                    $scope.msgalert = serverUrl + 'newnotes.html';
+                });
+            }
+            else {
+                $scope.wrapper = serverUrl + 'login.html';
+            }
+        });
     }
 
     $scope.onDash = function(){
         openDash();
+    }
+
+    $scope.$on("EV_SWITCH_VIEW", function(event, view){
+        $scope.wrapper = serverUrl + view;
+    });
+
+    $scope.openAdminProfile = function(){
+        $scope.viewTitle = "Profile"
+        $scope.wrapper = serverUrl + 'adminprofile.html';
+    }
+
+    $scope.openUserManagement = function(){
+        $scope.viewTitle = "User Management"
+        $scope.subTools = serverUrl + 'secTools.html';
+        $scope.wrapper = serverUrl + 'userList.html';
     }
 
     function gaugeOptions(title, metric, data){
@@ -833,6 +905,15 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
             chart: {
                 type: 'column'
             },
+            colors: ['#89cc97',
+                '#AA4643',
+                '#89A54E',
+                '#80699B',
+                '#3D96AE',
+                '#DB843D',
+                '#92A8CD',
+                '#A47D7C',
+                '#B5CA92'],
             credits: {
                 enabled: false
             },
@@ -868,6 +949,12 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
             series: data
         }
         return opt;
+    }
+
+    $scope.openInbox = function(){
+        $scope.viewTitle = "Message Center";
+        $scope.subTools = serverUrl + 'inboxTools.html';
+        $scope.wrapper = serverUrl + 'inbox.html';
     }
 
     function openDash(){
@@ -926,7 +1013,11 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
 
     $scope.pickTenant = function(){
         console.log($('#admin_sel_tenenat').val());
-        $scope.selTen = $scope.tenants[$('#admin_sel_tenenat').val()];
+        selectTenant($scope.tenants[$('#admin_sel_tenenat').val()]);
+    }
+
+    function selectTenant(tenant){
+        $scope.selTen = tenant;
         $scope.filters = [];
         adminservice.resetCache();
         adminservice.listObj('apps', {tenant:$scope.selTen.name}, $http, function(t){
@@ -936,11 +1027,15 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
                 $scope.selTen.apps.push(app.appID);
                 adminservice.setTenant($scope.selTen);
                 $scope.tenantPicked = true;
+                $scope.$broadcast("EV_TENANT_PICKED", $scope.selTen);
 
             })
             openDash();
-
         });
+    }
+
+    $scope.switchTenant = function(t){
+        selectTenant(t);
     }
 
     $scope.loadProviders = function(){
@@ -1117,35 +1212,35 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
         selected = 'provider';
         $scope.viewTitle = "Providers";
         buildDefFilter();
-        loadObjGrid();
+        loadObjNGrid();
     }
 
     $scope.loadSegmentList = function(){
         selected = 'rule';
         $scope.viewTitle = "Demographic segments";
         buildDefFilter();
-        loadObjGrid();
+        loadObjNGrid();
     }
 
     $scope.loadBlockList = function(){
         selected = 'block';
         $scope.viewTitle = "Template blocks";
         buildDefFilter();
-        loadObjGrid();
+        loadObjNGrid();
     }
 
     $scope.loadUsers = function(){
         selected = 'user';
         $scope.viewTitle = "Users";
         buildDefFilter();
-        loadObjGrid();
+        loadObjNGrid();
     }
 
     $scope.loadSessions = function(){
         selected = 'session';
         $scope.viewTitle = "Sessions";
         buildDefFilter();
-        loadObjGrid();
+        loadObjNGrid();
     }
 
     $scope.loadLogs = function(){
@@ -1156,23 +1251,21 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
         extra.app = {};
         addActiveApp(extra.app);
         buildDefFilter(extra);
-        //loadObjNGrid();
-        loadObjGrid();
+        loadObjNGrid();
     }
 
     $scope.loadProducts = function(){
         selected = 'product';
         $scope.viewTitle = "Products";
         buildDefFilter();
-        //loadObjNGrid();
-        loadObjGrid();
+        loadObjNGrid();
     }
 
     $scope.loadZips = function(){
         selected = 'zip';
         $scope.viewTitle = "Geo Mapping";
         buildDefFilter();
-        loadObjGrid();
+        loadObjNGrid();
     }
 
 
@@ -1183,14 +1276,14 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
         extra.app = {};
         addActiveApp(extra.app);
         buildDefFilter(extra);
-        loadObjGrid();
+        loadObjNGrid();
     }
 
     $scope.loadSurveyLst = function(){
         selected = 'survey';
         $scope.viewTitle = "Surveys";
         buildDefFilter();
-        loadObjGrid();
+        loadObjNGrid();
     }
 
     $scope.loadAppLst = function(){
@@ -1199,14 +1292,30 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
         var extra = {};
         extra.tenant = $scope.selTen.name;
         buildDefFilter(extra);
-        loadObjGrid();
+        loadObjNGrid();
     }
+
     $scope.loadTenantLst = function(){
         selected = 'tenant';
         $scope.viewTitle = "Tenants";
         buildDefFilter();
-        loadObjGrid();
+        loadObjNGrid();
     }
+
+    $scope.loadMessageLst = function(){
+        selected = 'note';
+        $scope.viewTitle = "Messages";
+        buildDefFilter();
+        loadObjNGrid();
+    }
+
+    $scope.loadActionLst = function(){
+        selected = 'action';
+        $scope.viewTitle = "Actions";
+        buildDefFilter();
+        loadObjNGrid();
+    }
+
     $scope.loadConsumerLst = function(){
         selected = 'consumer';
         $scope.viewTitle = "Consumers";
@@ -1214,7 +1323,8 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
         extra.app = {};
         addActiveApp(extra.app);
         buildDefFilter(extra);
-        loadObjGrid(true);
+        loadObjNGrid(true);
+        //loadObjGrid(true);
     }
 
     function loadFancyList(wrap, onload){
@@ -1273,40 +1383,65 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
             $scope.colData = m;
             $scope.listData = d;
             $scope.wrapper = serverUrl + 'grid.html';
-            buildGrid(m, d);
+            //buildGrid(m, d);
             refreshFilter(m, refreshData);
         });
     }
 
-    function loadObjNGrid(){
-        var f  = $scope.cleanFilter;
-        adminservice.loadMeta(selected, $http, function(m){
-            adminservice.listObj(selected, f, $http, function(d){
-                viewMode = 'grid';
-                $scope.colData = m;
-                $scope.wrapper = serverUrl + 'spread.html';
-                buildNGrid(m, d);
-                refreshFilter(m, refreshData);
+    function loadObjNGrid(customFields){
+        if (customFields == true){
+            var metafilter = {};
+            metafilter.custom = false;
+            adminservice.loadMeta(selected, $http, function(m){
+                var custfilter = {};
+                custfilter.custom = true;
+                custfilter.tenant = $scope.selTen.name;
+                var mlist = m;
+                adminservice.loadMeta(selected, $http, function(c){
+                    if (c !== undefined){
+                        $.each(c, function(i, cf){
+                            m.push(cf);
+                        });
+                    }
+                    loadListBindNGGrid(m);
+                }, custfilter);
+            }, metafilter);
+        }
+        else{
+            adminservice.loadMeta(selected, $http, function(m){
+                loadListBindNGGrid(m);
             });
-        });
+        }
     }
 
-    $scope.loadProvidersNG = function(){
-        selected = 'provider';
-        $scope.viewTitle = "Providers";
-        buildDefFilter();
-        loadObjNGrid();
+    function loadListBindNGGrid(m){
+        var f = $scope.cleanFilter;
+        adminservice.listObj(selected, f, $http, function(d){
+            viewMode = 'grid';
+            $scope.colData = m;
+            $scope.listData = d;
+            $scope.wrapper = serverUrl + 'spread.html';
+            buildNGrid(m, d);
+            refreshFilter(m, refreshData);
+        });
     }
 
     function buildNGrid(meta, data) {
         hideGrid();
+        $scope.subTools = serverUrl + 'gridTools.html';
         $scope.listData = data;
         $scope.gridcolumns = [];
-        //columns.push({field:'head', width:20});
+        var rowSelector = {};
+        rowSelector.field = "mk_rowsel";
+        rowSelector.displayName = " ";
+        rowSelector.editableCellTemplate = '<div><input ng-model="row.entity.mk_rowsel" type="checkbox" ng-change="gridValChange(row.entity, col )"></input></div>'
+        rowSelector.width = 50;
+        rowSelector.enableCellEdit = true;
+        $scope.gridcolumns.push(rowSelector);
         $.each(meta, function(i, fm){
             var col = {};
             col.field = fm.fldname;
-            col.name = fm.label;
+            col.displayName = fm.label;
             col.enableCellEdit = true;
             col.resizable = true;
             var checkTmpl = '<div><input ng-model="row.entity.' + fm.fldname + '" type="checkbox" ng-change="gridValChange(row.entity, col )"></input></div>';
@@ -1345,7 +1480,7 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
         });
 
         $scope.$on('ngGridEventScroll', function(event, obj){
-            console.log('scrolling');
+//            console.log('scrolling');
         });
 
         $scope.gridOptions = {
@@ -1353,6 +1488,7 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
             enableCellSelection: true,
             enableRowSelection: false,
             enableCellEdit: true,
+            enableColumnResize: true,
             virtualizationThreshold: 40,
             columnDefs: 'gridcolumns'
         };

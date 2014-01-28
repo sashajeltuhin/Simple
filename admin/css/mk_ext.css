@@ -1,0 +1,270 @@
+.ngridStyle{
+    position:relative;
+    border: 1px solid rgb(212,212,212);
+    min-height:600px;
+    width: 95%;
+    margin:auto;
+}
+
+.mkToolBtn{
+    position: relative;
+    float: left;
+    width: 60px;
+    height: 60px;
+    margin: 10px;
+    cursor: pointer;
+}
+
+.mkToolBtnRight{
+    position: relative;
+    float: right;
+    width: 60px;
+    height: 60px;
+    margin: 10px;
+    cursor: pointer;
+}
+
+.activeBtn {
+    font-weight:bold;
+    color:#ff7906;
+}
+
+.mkToolBtnWide{
+    position: relative;
+    float: left;
+    height: 60px;
+    margin: 10px;
+    cursor: pointer;
+}
+
+.odd_row{
+    position: relative;
+    width:90%;
+    margin: auto;
+    padding-top: 10px;
+    margin-top: 10px;
+    background: -moz-linear-gradient(top,  rgba(254,255,255,1) 0%, rgba(221,241,249,1) 99%, rgba(160,216,239,1) 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(254,255,255,1)), color-stop(99%,rgba(221,241,249,1)), color-stop(100%,rgba(160,216,239,1)));
+    background: -webkit-linear-gradient(top,  rgba(254,255,255,1) 0%,rgba(221,241,249,1) 99%,rgba(160,216,239,1) 100%);
+    background: -o-linear-gradient(top,  rgba(254,255,255,1) 0%,rgba(221,241,249,1) 99%,rgba(160,216,239,1) 100%);
+    background: -ms-linear-gradient(top,  rgba(254,255,255,1) 0%,rgba(221,241,249,1) 99%,rgba(160,216,239,1) 100%);
+    background: linear-gradient(to bottom,  rgba(254,255,255,1) 0%,rgba(221,241,249,1) 99%,rgba(160,216,239,1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#feffff', endColorstr='#a0d8ef',GradientType=0 );
+
+}
+
+.even_row{
+    position: relative;
+    width:90%;
+    margin: auto;
+    padding-top: 10px;
+    margin-top: 10px;
+    background: -moz-linear-gradient(top,  rgba(254,255,255,1) 0%, rgba(221,241,249,1) 99%, rgba(160,216,239,1) 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(254,255,255,1)), color-stop(99%,rgba(221,241,249,1)), color-stop(100%,rgba(160,216,239,1)));
+    background: -webkit-linear-gradient(top,  rgba(254,255,255,1) 0%,rgba(221,241,249,1) 99%,rgba(160,216,239,1) 100%);
+    background: -o-linear-gradient(top,  rgba(254,255,255,1) 0%,rgba(221,241,249,1) 99%,rgba(160,216,239,1) 100%);
+    background: -ms-linear-gradient(top,  rgba(254,255,255,1) 0%,rgba(221,241,249,1) 99%,rgba(160,216,239,1) 100%);
+    background: linear-gradient(to bottom,  rgba(254,255,255,1) 0%,rgba(221,241,249,1) 99%,rgba(160,216,239,1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#feffff', endColorstr='#a0d8ef',GradientType=0 );
+
+}
+#bv_cart_panel{
+    background-image: linear-gradient(to bottom, #ffffff, #f2f2f2);
+    background-repeat: repeat-x;
+}
+
+.bv_btn-custom {
+    background-color: #0099CC;
+    /*background-color: hsl(92, 93%, 37%) !important;*/
+    /*background-repeat: repeat-x;*/
+    /*filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#66d307", endColorstr="#58b606");*/
+    /*background-image: -khtml-gradient(linear, left top, left bottom, from(#66d307), to(#58b606));*/
+    /*background-image: -moz-linear-gradient(top, #66d307, #58b606);*/
+    /*background-image: -ms-linear-gradient(top, #66d307, #58b606);*/
+    /*background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #66d307), color-stop(100%, #58b606));*/
+    /*background-image: -webkit-linear-gradient(top, #66d307, #58b606);*/
+    /*background-image: -o-linear-gradient(top, #66d307, #58b606);*/
+    /*background-image: linear-gradient(#66d307, #58b606);*/
+    /*border-color: #58b606 #58b606 hsl(92, 93%, 35.5%);*/
+    /*color: #fff !important;*/
+    /*text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.09);*/
+    /*-webkit-font-smoothing: antialiased;*/
+}
+.mk_profImg{
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    display: none;
+    z-index: 2;
+}
+
+.stepbox{
+    position:relative;
+    height:50px;
+    background:#FFF;
+    margin:40px auto;
+
+}
+.stepboxnum{
+    position: relative;
+    font-size: 2em;
+    float: left;
+    cursor: pointer;
+    margin-left: -5px;
+    margin-top: -10px;
+}
+.stepactive{
+    color: #0099CC;
+    cursor: pointer;
+}
+
+.stepbox h4{
+    text-align:center;
+    position:relative;
+    top:2px;
+}
+.stepdel{
+    position: relative;
+    float: right;
+    margin-right: -3px;
+    margin-top: -5px;
+    cursor: pointer;
+}
+
+.quedel{
+    position: relative;
+    float: right;
+    margin-right: -3px;
+    margin-top: -15px;
+    cursor: pointer;
+}
+.effectStep
+{
+    position:relative;
+    cursor: pointer;
+    -webkit-box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+    -moz-box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+    box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+}
+.effectStep:before, .effectStep:after
+{
+    content:"";
+    position:absolute;
+    z-index:-1;
+    -webkit-box-shadow:0 0 20px rgba(0,0,0,0.8);
+    -moz-box-shadow:0 0 20px rgba(0,0,0,0.8);
+    box-shadow:0 0 20px rgba(0,0,0,0.8);
+    top:50%;
+    bottom:0;
+    left:10px;
+    right:10px;
+    -moz-border-radius:100px / 10px;
+    border-radius:100px / 10px;
+}
+
+
+.mk_hroptlist li
+{
+    list-style: none;
+    display:inline;
+}
+
+.mk_label {
+    float: left;
+
+    text-align: left;
+}
+.mk_label_stacked {
+
+    text-align: left;
+}
+
+.queData{
+    position: relative;
+    min-width: 450px;
+    float: left;
+}
+.queAnswers{
+    position: relative;
+    min-width: 450px;
+    float: left;
+}
+
+.mkQueblock{
+    position: relative;
+    height: 120px;
+    margin: 10px;
+    max-width: 1200px;
+    overflow-x: scroll;
+}
+
+.mkQueLevel{
+    position: relative;
+    float: left;
+    height: 120px;
+    margin-right: 20px;
+    max-width: 400px;
+}
+
+.mkQueField{
+    position: relative;
+    float: left;
+    height: 120px;
+    margin: 10px;
+    max-width: 200px;
+}
+.mkQueFieldRight{
+    position: relative;
+    float: right;
+    height: 120px;
+    margin: 10px;
+}
+.mkResponseField{
+    position: relative;
+    float: left;
+    height: 80px;
+    margin: 10px;
+}
+
+.mkFieldContainer{
+    position: relative;
+    float:left;
+    height: 60px;
+    margin: 10px;
+    max-width: 200px;
+}
+.mkColContainer{
+    position: relative;
+    clear: both;
+    height: 60px;
+    margin: 10px;
+    max-width: 300px;
+}
+.mkFieldBlock{
+    position: relative;
+    float: left;
+    height: 60px;
+    margin: 10px;
+    max-width: 100px;
+}
+
+.mkColBlock{
+    position: relative;
+    float: left;
+    height: 60px;
+    margin: 10px;
+    max-width: 100px;
+}
+
+.map_row{
+    position: relative;
+    width: 100%;
+    background: -moz-linear-gradient(top,  rgba(254,255,255,1) 0%, rgba(221,241,249,1) 99%, rgba(160,216,239,1) 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(254,255,255,1)), color-stop(99%,rgba(221,241,249,1)), color-stop(100%,rgba(160,216,239,1)));
+    background: -webkit-linear-gradient(top,  rgba(254,255,255,1) 0%,rgba(221,241,249,1) 99%,rgba(160,216,239,1) 100%);
+    background: -o-linear-gradient(top,  rgba(254,255,255,1) 0%,rgba(221,241,249,1) 99%,rgba(160,216,239,1) 100%);
+    background: -ms-linear-gradient(top,  rgba(254,255,255,1) 0%,rgba(221,241,249,1) 99%,rgba(160,216,239,1) 100%);
+    background: linear-gradient(to bottom,  rgba(254,255,255,1) 0%,rgba(221,241,249,1) 99%,rgba(160,216,239,1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#feffff', endColorstr='#a0d8ef',GradientType=0 );
+
+}

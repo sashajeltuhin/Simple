@@ -12,7 +12,7 @@ var handleError = function(res, msg, err){
 }
 
 exports.list = function (req, res){
-    db.setDB('ShopDB');
+    db.setDB(dbname);
     var filter = db.getFilter(req.body);
     db.load(colName, filter, function(err, recs){
         if (err !== null){

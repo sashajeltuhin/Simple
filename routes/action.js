@@ -3,9 +3,7 @@ var mongo = require('mongodb');
 var ObjectID = mongo.ObjectID;
 var dbname = 'ShopDB';
 
-var colName = 'session';
-
-
+var colName = 'action';
 
 var handleError = function(res, msg, err){
     res.send({Error : {text:msg, det:err}});
@@ -17,7 +15,7 @@ exports.list = function (req, res){
     console.log("consumer filter: ", filter);
     db.load(colName, filter, function(err, recs){
         if (err !== null){
-            handleError(res, "Cannot list session ", err);
+            handleError(res, "Cannot list action ", err);
         }
         else{
             res.send(recs);
@@ -25,19 +23,6 @@ exports.list = function (req, res){
     });
 }
 
-exports.loadSessionbyID = function(f, callback){
-    db.setDB(dbname);
-    var filter = db.getFilter(f);
-    console.log("consumer filter: ", filter);
-    db.load(colName, filter, function(err, recs){
-        if (err !== null){
-            callback(err, null);
-        }
-        else{
-            callback(null, recs);
-        }
-    });
-}
 
 exports.save = function(req, res){
     db.setDB(dbname);
@@ -50,7 +35,7 @@ exports.save = function(req, res){
 
     db.upsert(colName, vid, filter, function(err, newid){
         if (err !== null){
-            handleError(res, "Cannot add session ", err);
+            handleError(res, "Cannot add action ", err);
         }
         else{
             res.send(vid);
@@ -58,33 +43,16 @@ exports.save = function(req, res){
     });
     }
     else{
-        createSession(vid, res);
+        createAction(vid, res);
     }
 }
 
-exports.newSession = function(user, callback){
-    db.setDB(dbname);
-    var session = {};
-    session.uid = user._id;
-    session.fname = user.fname;
-    session.lname = user.lname;
-    session.imageUrl = user.imageUrl;
-    session.time = new Date();
-    db.insert(colName, session, function(err, rec){
-        if (err !== null){
-            callback(err, null);
-        }
-        else{
-            callback(null, rec);
-        }
-    })
-}
 
 
-function createSession(cons, res){
+function createAction(cons, res){
     db.insert(colName, cons, function(err, rec){
         if (err !== null){
-            handleError(res, "Cannot add session ", err);
+            handleError(res, "Cannot add note ", err);
         }
         else{
             res.send(rec);
@@ -99,7 +67,7 @@ exports.delete = function(req, res){
     var filter = {_id : pid};
     db.delete(colName, filter, function(err, ret){
         if (err !== null){
-            handleError(res, "Cannot delete user ", err);
+            handleError(res, "Cannot delete action ", err);
         }
         else{
             res.send(pid);

@@ -1,0 +1,32 @@
+<section class="vbox" ng-controller="messagectrl">
+    <section>
+        <div class="wrapper b-b b-light">
+            <a href="#" data-toggle="class" class="pull-left m-r-sm"><i class="fa fa-star-o fa-1x text"></i><i class="fa fa-star text-warning fa-1x text-active"></i></a>
+            <a href="#/admin" ng-click="openInbox()" class="pull-right text">
+                <i class="fa fa-trash-o"></i>
+            </a>
+            <textarea class="form-control no-border" rows="2" placeholder="Subject of the message..." ng-model="selnote.subject"></textarea>
+        </div>
+        <div class="text-sm padder m-t">
+            <div class="block clearfix m-b">
+                <input mk-select listfn="listUsers(q)" loadfn="selectSender(id)" multiple="1" style="width:260px" type="hidden" placeholder="Add recipients...">
+                <ul class="nav navbar-nav navbar-right hidden-xs nav-user">
+                    <li class="hidden-xs" ng-controller="messagectrl">
+                        <a href="#" ng-click="sendNote()">
+                            <i class="fa fa-share"></i>
+                         </a>
+                    </li>
+                 </ul>
+            </div>
+            <div class="line pull-in"></div>
+            <textarea class="form-control no-border" rows="20" placeholder="Message text..." ng-model="selnote.message"></textarea>
+        </div>
+        <div class="padder">
+            <div class="panel text-sm bg-light">
+                <div class="panel-body">
+                    Click here to <a href="#">Reply</a> or <a href="#">Forward</a>
+                </div>
+            </div>
+        </div>
+    </section>
+</section>

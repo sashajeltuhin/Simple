@@ -1,0 +1,26 @@
+
+<div class="mkToolBtn"><a ng-click="newQuestion()">New Question</a></div>
+<div class="mkToolBtn"><a ng-click="saveMap()">Save</a></div>
+
+<div style="clear: both" ui-sortable="sortableOptions" ng-model="queMap">
+    <div class="mkQueblock"  ng-repeat="q in queMap">
+         <div class="mkQueLevel"  ng-class-odd="'odd_row'" ng-class-even="'even_row'">
+            <div class="mkQueField"><img ng-src="{{q.imageUrl}}" width="40" height="50"><mk-upload label="Change" path="image/upload" fnc="onQueImgUploaded($event)"></mk-upload></div>
+            <div class="mkQueField" ng-show="q.active"><img src="/images/tick.png" width="30" height="30"></div>
+             <div class="mkQueField" ng-show="!q.active"><div style="position: relative;width: 30px"></div></div>
+            <div class="mkQueField" ng-click="editQue(q)" style="cursor:pointer;"><p><b>{{q.label}}</b></p></div>
+            <div class="quedel" ng-click="deleteQue(q)"><img src="/images/step_del.png" width="20" height="20"></div>
+        </div>
+        <div class="mkQueLevel" ng-repeat="r in q.responses" ng-show="r.link" >
+            <div style="position: relative;display: inline-block;margin-top: 50px; clear: both">{{r.label}}</div>
+            <div style="position: relative; display: inline-block;vertical-align:middle"><img width="30" height="30" src="/images/arrow-right.png"></div>
+        </div>
+        <div class="mkQueLevel" ng-repeat="r in q.responses" ng-show="r.link" ng-class-odd="'odd_row'" ng-class-even="'even_row'">
+            <div class="mkQueField"><img ng-src="{{r.link.imageUrl}}" width="40" height="50"><mk-upload label="Change" path="image/upload" fnc="onQueImgUploaded($event)"></mk-upload></div>
+            <div class="mkQueField" ng-show="q.active"><img src="/images/tick.png" width="30" height="30"></div>
+            <div class="mkQueField" ng-show="!q.active"><div style="position: relative;width: 30px"></div></div>
+            <div class="mkQueField" ng-click="editQue(r.link, r, q)" style="cursor:pointer;"><p><b>{{r.link.label}}</b></p></div>
+            <div class="quedel" ng-click="deleteQue(q)"><img src="/images/step_del.png" width="20" height="20"></div>
+        </div>
+    </div>
+</div>

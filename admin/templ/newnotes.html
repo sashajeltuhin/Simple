@@ -1,0 +1,20 @@
+<section class="panel bg-white">
+    <header class="panel-heading b-light bg-light">
+        <strong>You have <span class="count">{{newtotal}}</span> notifications</strong>
+    </header>
+    <div class="list-group list-group-alt animated fadeInRight">
+        <a href="#" class="media list-group-item" ng-repeat="note in newnotes">
+                  <span class="pull-left thumb-sm">
+                    <img ng-src="{{note.senderAvatar}}" alt="{{note.senderName}}" class="img-circle">
+                  </span>
+                  <span class="media-body block m-b-none">
+                    {{note.subject}}<br>
+                    <small class="text-muted">10 minutes ago</small>
+                  </span>
+        </a>
+    </div>
+    <footer class="panel-footer text-sm">
+        <a href="#" class="pull-right"><i class="fa fa-cog"></i></a>
+        <a href="#" data-toggle="class:show animated fadeInRight" ng-click="openInbox()">See all the notifications</a>
+    </footer>
+</section>

@@ -1,0 +1,91 @@
+<div style="width: 90; margin: auto;min-height: 40px;">
+    <div class="mkToolBtn"><a href="#/admin" ng-click="surveyMap()">Question Map</a></div>
+    <div class="mkToolBtn"><a ng-click="newQuestion()">New Question</a></div>
+    <div class="mkToolBtn"><a ng-click="saveSurvey()">Save</a></div>
+    <div class="mkToolBtn" ng-show="linkedAnswer"><a ng-click="backtoParent()">Back to parent</a></div>
+</div>
+<h4 style="clear:both">{{queTitle}}</h4>
+<div class="queData">
+    <div style="position: relative; float: left">
+    <img ng-src="{{selque.imageUrl}}" height="60" width="50">
+    <mk-upload label="Change" path="image/upload" fnc="onQueImgUploaded($event)"></mk-upload>
+    </div>
+    <div style="position:relative;float: left; margin-left: 30px">
+        <div style="position: relative;clear: both">
+            <label style="clear: both" class="mk_label">Published</label>
+            <input style="float: left;margin-left: 20px" type="checkbox" ng-model="selque.active">
+        </div>
+        <textarea ng-model="selque.label"></textarea>
+    </div>
+
+    <div style="position: relative;clear: both">
+        <label style="clear: both" class="mk_label">Template</label>
+        <input style="float: left;margin-left: 20px" type="text" ng-model="selque.templateUrl">
+    </div>
+    <div style="position: relative;clear: both">
+        <label style="clear: both" class="mk_label">Category</label>
+        <input style="float: left;margin-left: 20px" type="text" ng-model="selque.cat">
+    </div>
+
+    <!--<label class="mk_label_stacked">Type</label>-->
+    <!--<select ng-model="selque.type" ng-options="o for o in quetypes"></select>-->
+
+
+    <div style="position: relative; clear: both">
+        <p><b>Save answers in consumer attribute:</b></p>
+        <ul class="mk_hroptlist">
+            <li>
+                <label class="mk_label">Pick existing</label>
+                <input style="float:left;margin-left: 5px;" ng-model="customField" value="Existing" type="radio">
+            </li>
+            <li>
+                <label style="margin-left: 20px;" class="mk_label">Create new</label>
+                <input style="float:left;margin-left: 5px;" ng-model="customField" value="New" type="radio">
+            </li>
+        </ul>
+        <label class="mk_label_stacked">Consumer Attibute</label>
+        <div style="position:relative;margin: 5px">
+            <select ng-show="customField == 'Existing'" ng-options="o.fldname as o.label for o in customAtts" ng-change="onFieldChange()" ng-model="selque.value" ng-change="onSelectField()"></select>
+            <div ng-show="customField == 'Existing'" class="btn" ng-click="deleteSelField()">x</div>
+        </div>
+
+        <input ng-show="customField == 'New'" type="text" ng-model="ca.label">
+    </div>
+</div>
+
+<div class="queAnswers">
+    <h4>Responses</h4>
+
+    <div style="width:100%">
+        <div class="btn btn-small" ng-click="newAnswer(selque)">+</div>
+        <div ui-sortable="sortableOptions" ng-model="selque.responses">
+            <div style="height: 100px; clear: both" ng-repeat="a in selque.responses" ng-class-odd="'odd_row'" ng-class-even="'even_row'">
+                <div class="mkResponseField"><img width="30" height="50" ng-src="{{a.imageUrl}}"><mk-upload label="Change" path="image/upload" fnc="onAnswerImgUploaded($event, a)"></mk-upload></div>
+                <div class="mkResponseField">
+                    <div style="position: relative;clear: both">
+                        <img width="30" height="30" src="/images/linkedque.png" ng-click="editLinkedQue(a)" ng-show="a.link">
+                    </div>
+                    <div style="position: relative;clear: both">
+                        <img width="30" height="30" src="/images/unlink.png" ng-click="removeLinkedQue(a)" ng-show="a.link">
+                    </div>
+                </div>
+                <div class="mkResponseField">
+                    <div style="position: relative;clear: both">
+                        <img width="30" height="30" src="/images/newlink.png" ng-click="newLinkedQue(a, selque)" ng-show="!a.link">
+                    </div>
+                </div>
+                <div class="mkResponseField">
+                    <div style="position: relative;clear: both">
+                        <select style="width: 180px" ng-show="!a.fresh" ng-model="a.value" ng-options="o for o in ca.fldopts"></select>
+                        <input style="width: 180px" ng-show="a.fresh" type="text" ng-model="a.value">
+                    </div>
+                    <div style="position: relative">
+                        <textarea style="width: 180px" ng-model="a.label"></textarea>
+                    </div>
+                </div>
+                <div class="mkResponseField"><div class="btn" ng-click="deleteAnswer(a, selque)">x</div></div>
+            </div>
+        </div>
+    </div>
+
+</div>
