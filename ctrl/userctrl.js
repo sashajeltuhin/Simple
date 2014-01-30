@@ -1,12 +1,8 @@
 function userctrl($scope, $http, adminservice){
-    loadUser();
-     function loadUser(){
-        var s = adminservice.getAdminSession();
-        var f = {};
-        f._id = s.uid;
-        adminservice.listObj('user',f,  $http, function(data){
-            $scope.adminUser = data[0];
-        });
-    }
+    $scope.rootUrl = topUrl;
+    $scope.selUser = adminservice.getSelUser();
+    var date = new Date($scope.selUser.startDate);
+    $scope.since = date.getMonth() + ' ' + date.getFullYear();
+
 
 }

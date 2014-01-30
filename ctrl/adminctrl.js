@@ -44,6 +44,14 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
             });
     }
 
+    $scope.$on('EV_FILTER_APPLY', function(event, obj){
+        $scope.selFilter = obj;
+        refreshData();
+    });
+
+    $scope.$on('EV_FILTER_RESET', function(event){
+        clearFilter();
+    });
 
     function refreshData(){
         cleanFilter();
@@ -564,7 +572,7 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
                 //$scope.listData = d;
                 $scope.wrapper = serverUrl + 'spread.html';
                 buildNGrid(m, d);
-                refreshFilter(m, refreshData);
+                //refreshFilter(m, refreshData);
             });
         });
     }
@@ -760,9 +768,14 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
         $scope.wrapper = serverUrl + view;
     });
 
-    $scope.openAdminProfile = function(){
-        $scope.viewTitle = "Profile"
-        $scope.wrapper = serverUrl + 'adminprofile.html';
+    $scope.openMe = function(){
+        var s = adminservice.getAdminSession();
+        var f = {};
+        f._id = s.uid;
+        adminservice.listObj('user',f,  $http, function(data){
+            adminservice.setSelUser(data[0]);
+            $scope.wrapper = serverUrl + 'adminprofile.html';
+        });
     }
 
     $scope.openUserManagement = function(){
@@ -1422,11 +1435,12 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
             $scope.listData = d;
             $scope.wrapper = serverUrl + 'spread.html';
             buildNGrid(m, d);
-            refreshFilter(m, refreshData);
+            //refreshFilter(m, refreshData);
         });
     }
 
     function buildNGrid(meta, data) {
+        $scope.$broadcast("EV_FILTER_REBUILD", meta, $scope.selFilter);
         hideGrid();
         $scope.subTools = serverUrl + 'gridTools.html';
         $scope.listData = data;

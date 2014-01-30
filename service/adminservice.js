@@ -9,6 +9,24 @@ angular.module('cart').factory('adminservice', function($q, $cookies) {
     var selObj = {};
 
     var signedId = {};
+    var selUser = {};
+    var selFilter = {};
+
+    service.setSelUser = function(u){
+        selUser = u;
+    }
+
+    service.getSelUser = function(){
+        return selUser;
+    }
+
+    service.setFilter = function(f){
+        selFilter = f;
+    }
+
+    service.getFilter = function(){
+        return selFilter;
+    }
 
     service.getAdminSession = function(){
         return signedId;

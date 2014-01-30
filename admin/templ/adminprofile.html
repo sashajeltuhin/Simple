@@ -10,60 +10,77 @@
 </section>
 <section class="vbox">
 <header class="header bg-white b-b b-light">
-    <p>{{adminUser.fname}} {{adminUser.lname}}'s profile</p>
+    <p>{{selUser.fname}} {{selUser.lname}}'s profile</p>
 </header>
 <section>
 <section class="hbox stretch">
-<aside class="aside-lg bg-light lter b-r">
+<aside class="col-lg-4 bg-light lter b-r">
     <section class="vbox">
         <section>
             <div class="wrapper">
                 <div class="clearfix m-b">
                     <a href="#" class="pull-left thumb m-r">
-                        <img ng-src="{{topUrl}}{{adminUser.imageUrl}}" class="img-circle">
+                        <img ng-src="{{rootUrl}}{{selUser.imageUrl}}" class="img-circle">
                     </a>
                     <div class="clear">
-                        <div class="h3 m-t-xs m-b-xs">{{adminUser.fname}} {{adminUser.lname}}</div>
-                        <small class="text-muted"><i class="fa fa-map-marker"></i> London, UK</small>
+                        <div class="h3 m-t-xs m-b-xs">{{selUser.fname}} {{selUser.lname}}</div>
+                        <small class="text-muted"><i class="fa fa-map-marker"></i>{{selUser.dept}}</small>
+                    </div>
+                    <div class="clear">
+                        <small class="text-muted"><i class="fa fa-map-marker"></i>Since {{since}}</small>
                     </div>
                 </div>
                 <div class="panel wrapper panel-success">
                     <div class="row">
                         <div class="col-xs-4">
                             <a href="#">
-                                <span class="m-b-xs h4 block">245</span>
-                                <small class="text-muted">Followers</small>
+                                <span class="m-b-xs h4 block">45</span>
+                                <small class="text-muted">Logins</small>
                             </a>
                         </div>
                         <div class="col-xs-4">
                             <a href="#">
-                                <span class="m-b-xs h4 block">55</span>
-                                <small class="text-muted">Following</small>
+                                <span class="m-b-xs h4 block">15</span>
+                                <small class="text-muted">Actions</small>
                             </a>
                         </div>
                         <div class="col-xs-4">
                             <a href="#">
                                 <span class="m-b-xs h4 block">2,035</span>
-                                <small class="text-muted">Tweets</small>
+                                <small class="text-muted">Messages</small>
                             </a>
                         </div>
                     </div>
                 </div>
-                <div class="btn-group btn-group-justified m-b">
-                    <a class="btn btn-primary btn-rounded" data-toggle="button">
-                            <span class="text">
-                              <i class="fa fa-eye"></i> Follow
-                            </span>
-                            <span class="text-active">
-                              <i class="fa fa-eye-slash"></i> Following
-                            </span>
-                    </a>
-                    <a class="btn btn-dark btn-rounded" data-loading-text="Connecting">
-                        <i class="fa fa-comment-o"></i> Chat
-                    </a>
+                <div class="wrapper">
+                    <section class="panel panel-default">
+                        <form>
+                            <textarea class="form-control no-border" rows="3" placeholder="Quick message..."></textarea>
+                        </form>
+                        <footer class="panel-footer bg-light lter">
+                            <button class="btn btn-info pull-right btn-sm">POST</button>
+                            <ul class="nav nav-pills nav-sm">
+                                <li><a href="#"><i class="fa fa-camera text-muted"></i></a></li>
+                                <li><a href="#"><i class="fa fa-video-camera text-muted"></i></a></li>
+                            </ul>
+                        </footer>
+                    </section>
                 </div>
+                <!--<div class="btn-group btn-group-justified m-b">-->
+                    <!--<a class="btn btn-primary btn-rounded" data-toggle="button">-->
+                            <!--<span class="text">-->
+                              <!--<i class="fa fa-eye"></i> Follow-->
+                            <!--</span>-->
+                            <!--<span class="text-active">-->
+                              <!--<i class="fa fa-eye-slash"></i> Following-->
+                            <!--</span>-->
+                    <!--</a>-->
+                    <!--<a class="btn btn-dark btn-rounded" data-loading-text="Connecting">-->
+                        <!--<i class="fa fa-comment-o"></i> Chat-->
+                    <!--</a>-->
+                <!--</div>-->
                 <div>
-                    <small class="text-uc text-xs text-muted">about me</small>
+                    <small class="text-uc text-xs text-muted">about {{selUser.fname}}</small>
                     <p>Artist</p>
                     <small class="text-uc text-xs text-muted">info</small>
                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi id neque quam. Aliquam sollicitudin venenatis ipsum ac feugiat.</p>
@@ -80,6 +97,8 @@
     </section>
 </aside>
 <aside class="bg-white">
+<div class="m-t-xs m-b-xs">Access Privileges</div>
+<section class="hbox stretch">
 <section class="vbox">
 <header class="header bg-light bg-gradient">
     <ul class="nav nav-tabs nav-white">
@@ -88,7 +107,7 @@
         <li class=""><a href="#interaction" data-toggle="tab">Interaction</a></li>
     </ul>
 </header>
-<section>
+<section class="vbox">
 <div class="tab-content">
 <div class="tab-pane active" id="activity">
 <ul class="list-group no-radius m-b-none m-t-n-xxs list-group-lg no-border">
@@ -317,56 +336,355 @@
 </div>
 </section>
 </section>
+<aside class="bg-light lter b-r aside-md hidden-print nav-xs-right" id="accessnav">
+<header class="footer lt hidden-xs b-t b-light">
+    <a href="#accessnav" data-toggle="class:nav-xs" class="btn btn-sm btn-default btn-icon">
+        <i class="fa fa-angle-right text"></i>
+        <i class="fa fa-angle-left text-active"></i>
+    </a>
+</header>
+<section class="vbox">
+<header class="header bg-primary lter text-center clearfix">
+    <div class="btn-group">
+        <button type="button" class="btn btn-sm btn-dark btn-icon" title="New project"><i class="fa fa-plus"></i></button>
+        <div class="btn-group hidden-nav-xs">
+            <button type="button" class="btn btn-sm btn-primary dropdown-toggle" data-toggle="dropdown">
+                Switch Project
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu text-left">
+                <li><a href="#">Project</a></li>
+                <li><a href="#">Another Project</a></li>
+                <li><a href="#">More Projects</a></li>
+            </ul>
+        </div>
+    </div>
+</header>
+<section class="w-f ">
+<div class="slim-scroll" data-height="auto" data-disable-fade-out="true" data-distance="0" data-size="5px" data-color="#333333">
+
+<!-- nav -->
+<nav class="nav-primary hidden-xs">
+<ul class="nav">
+<li >
+    <a href="index.html"  >
+        <i class="fa fa-dashboard icon">
+            <b class="bg-danger"></b>
+        </i>
+        <span>Workset</span>
+    </a>
+</li>
+<li  class="active">
+    <a href="#layout"   class="active">
+        <i class="fa fa-columns icon">
+            <b class="bg-warning"></b>
+        </i>
+                        <span class="pull-right">
+                          <i class="fa fa-angle-down text"></i>
+                          <i class="fa fa-angle-up text-active"></i>
+                        </span>
+        <span>Layouts</span>
+    </a>
+    <ul class="nav lt">
+        <li >
+            <a href="layout-c.html" >
+                <i class="fa fa-angle-right"></i>
+                <span>Color option</span>
+            </a>
+        </li>
+        <li  class="active">
+            <a href="layout-r.html"  class="active">
+                <i class="fa fa-angle-right"></i>
+                <span>Right nav</span>
+            </a>
+        </li>
+        <li >
+            <a href="layout-h.html" >
+                <i class="fa fa-angle-right"></i>
+                <span>H-Layout</span>
+            </a>
+        </li>
+    </ul>
+</li>
+<li >
+    <a href="#uikit"  >
+        <i class="fa fa-flask icon">
+            <b class="bg-success"></b>
+        </i>
+                        <span class="pull-right">
+                          <i class="fa fa-angle-down text"></i>
+                          <i class="fa fa-angle-up text-active"></i>
+                        </span>
+        <span>UI kit</span>
+    </a>
+    <ul class="nav lt">
+        <li >
+            <a href="buttons.html" >
+                <i class="fa fa-angle-right"></i>
+                <span>Buttons</span>
+            </a>
+        </li>
+        <li >
+            <a href="icons.html" >
+                <b class="badge bg-info pull-right">369</b>
+                <i class="fa fa-angle-right"></i>
+                <span>Icons</span>
+            </a>
+        </li>
+        <li >
+            <a href="grid.html" >
+                <i class="fa fa-angle-right"></i>
+                <span>Grid</span>
+            </a>
+        </li>
+        <li >
+            <a href="widgets.html" >
+                <b class="badge  pull-right">8</b>
+                <i class="fa fa-angle-right"></i>
+                <span>Widgets</span>
+            </a>
+        </li>
+        <li >
+            <a href="components.html" >
+                <i class="fa fa-angle-right"></i>
+                <span>Components</span>
+            </a>
+        </li>
+        <li >
+            <a href="list.html" >
+                <i class="fa fa-angle-right"></i>
+                <span>List group</span>
+            </a>
+        </li>
+        <li >
+            <a href="#table" >
+                <i class="fa fa-angle-down text"></i>
+                <i class="fa fa-angle-up text-active"></i>
+                <span>Table</span>
+            </a>
+            <ul class="nav bg">
+                <li >
+                    <a href="table-static.html" >
+                        <i class="fa fa-angle-right"></i>
+                        <span>Table static</span>
+                    </a>
+                </li>
+                <li >
+                    <a href="table-datatable.html" >
+                        <i class="fa fa-angle-right"></i>
+                        <span>Datatable</span>
+                    </a>
+                </li>
+                <li >
+                    <a href="table-datagrid.html" >
+                        <i class="fa fa-angle-right"></i>
+                        <span>Datagrid</span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li >
+            <a href="#form" >
+                <i class="fa fa-angle-down text"></i>
+                <i class="fa fa-angle-up text-active"></i>
+                <span>Form</span>
+            </a>
+            <ul class="nav bg">
+                <li >
+                    <a href="form-elements.html" >
+                        <i class="fa fa-angle-right"></i>
+                        <span>Form elements</span>
+                    </a>
+                </li>
+                <li >
+                    <a href="form-validation.html" >
+                        <i class="fa fa-angle-right"></i>
+                        <span>Form validation</span>
+                    </a>
+                </li>
+                <li >
+                    <a href="form-wizard.html" >
+                        <i class="fa fa-angle-right"></i>
+                        <span>Form wizard</span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li >
+            <a href="chart.html" >
+                <i class="fa fa-angle-right"></i>
+                <span>Chart</span>
+            </a>
+        </li>
+        <li >
+            <a href="fullcalendar.html" >
+                <i class="fa fa-angle-right"></i>
+                <span>Fullcalendar</span>
+            </a>
+        </li>
+        <li >
+            <a href="portlet.html" >
+                <i class="fa fa-angle-right"></i>
+                <span>Portlet</span>
+            </a>
+        </li>
+        <li >
+            <a href="timeline.html" >
+                <i class="fa fa-angle-right"></i>
+                <span>Timeline</span>
+            </a>
+        </li>
+    </ul>
+</li>
+<li >
+    <a href="#pages"  >
+        <i class="fa fa-file-text icon">
+            <b class="bg-primary"></b>
+        </i>
+                        <span class="pull-right">
+                          <i class="fa fa-angle-down text"></i>
+                          <i class="fa fa-angle-up text-active"></i>
+                        </span>
+        <span>Pages</span>
+    </a>
+    <ul class="nav lt">
+        <li >
+            <a href="gallery.html" >
+                <i class="fa fa-angle-right"></i>
+                <span>Gallery</span>
+            </a>
+        </li>
+        <li >
+            <a href="profile.html" >
+                <i class="fa fa-angle-right"></i>
+                <span>Profile</span>
+            </a>
+        </li>
+        <li >
+            <a href="invoice.html" >
+                <i class="fa fa-angle-right"></i>
+                <span>Invoice</span>
+            </a>
+        </li>
+        <li >
+            <a href="intro.html" >
+                <i class="fa fa-angle-right"></i>
+                <span>Intro</span>
+            </a>
+        </li>
+        <li >
+            <a href="master.html" >
+                <i class="fa fa-angle-right"></i>
+                <span>Master</span>
+            </a>
+        </li>
+        <li >
+            <a href="gmap.html" >
+                <i class="fa fa-angle-right"></i>
+                <span>Google Map</span>
+            </a>
+        </li>
+        <li >
+            <a href="jvectormap.html" >
+                <i class="fa fa-angle-right"></i>
+                <span>Vector Map</span>
+            </a>
+        </li>
+        <li >
+            <a href="signin.html" >
+                <i class="fa fa-angle-right"></i>
+                <span>Signin</span>
+            </a>
+        </li>
+        <li >
+            <a href="signup.html" >
+                <i class="fa fa-angle-right"></i>
+                <span>Signup</span>
+            </a>
+        </li>
+        <li >
+            <a href="404.html" >
+                <i class="fa fa-angle-right"></i>
+                <span>404</span>
+            </a>
+        </li>
+    </ul>
+</li>
+<li >
+    <a href="mail.html"  >
+        <b class="badge bg-danger pull-right">3</b>
+        <i class="fa fa-envelope-o icon">
+            <b class="bg-primary dker"></b>
+        </i>
+        <span>Message</span>
+    </a>
+</li>
+<li >
+    <a href="notebook.html"  >
+        <i class="fa fa-pencil icon">
+            <b class="bg-info"></b>
+        </i>
+        <span>Notes</span>
+    </a>
+</li>
+</ul>
+</nav>
+<!-- / nav -->
+</div>
+</section>
+</section>
 </aside>
-<aside class="col-lg-4 b-l">
-    <section class="vbox">
-        <section>
-            <div class="wrapper">
-                <section class="panel panel-default">
-                    <form>
-                        <textarea class="form-control no-border" rows="3" placeholder="Quick message..."></textarea>
-                    </form>
-                    <footer class="panel-footer bg-light lter">
-                        <button class="btn btn-info pull-right btn-sm">POST</button>
-                        <ul class="nav nav-pills nav-sm">
-                            <li><a href="#"><i class="fa fa-camera text-muted"></i></a></li>
-                            <li><a href="#"><i class="fa fa-video-camera text-muted"></i></a></li>
-                        </ul>
-                    </footer>
-                </section>
-                <section class="panel panel-default">
-                    <h4 class="font-thin padder">Latest Tweets</h4>
-                    <ul class="list-group">
-                        <li class="list-group-item">
-                            <p>Wellcome <a href="#" class="text-info">@Drew Wllon</a> and play this web application template, have fun1 </p>
-                            <small class="block text-muted"><i class="fa fa-clock-o"></i> 2 minuts ago</small>
-                        </li>
-                        <li class="list-group-item">
-                            <p>Morbi nec <a href="#" class="text-info">@Jonathan George</a> nunc condimentum ipsum dolor sit amet, consectetur</p>
-                            <small class="block text-muted"><i class="fa fa-clock-o"></i> 1 hour ago</small>
-                        </li>
-                        <li class="list-group-item">
-                            <p><a href="#" class="text-info">@Josh Long</a> Vestibulum ullamcorper sodales nisi nec adipiscing elit. </p>
-                            <small class="block text-muted"><i class="fa fa-clock-o"></i> 2 hours ago</small>
-                        </li>
-                    </ul>
-                </section>
-                <section class="panel clearfix bg-info lter">
-                    <div class="panel-body">
-                        <a href="#" class="thumb pull-left m-r">
-                            <img src="images/avatar.jpg" class="img-circle">
-                        </a>
-                        <div class="clear">
-                            <a href="#" class="text-info">@Mike Mcalidek <i class="fa fa-twitter"></i></a>
-                            <small class="block text-muted">2,415 followers / 225 tweets</small>
-                            <a href="#" class="btn btn-xs btn-success m-t-xs">Follow</a>
-                        </div>
-                    </div>
-                </section>
-            </div>
-        </section>
-    </section>
+</section>
 </aside>
+<!--<aside class="col-lg-4 b-l">-->
+    <!--<section class="vbox">-->
+        <!--<section>-->
+            <!--<div class="wrapper">-->
+                <!--<section class="panel panel-default">-->
+                    <!--<form>-->
+                        <!--<textarea class="form-control no-border" rows="3" placeholder="Quick message..."></textarea>-->
+                    <!--</form>-->
+                    <!--<footer class="panel-footer bg-light lter">-->
+                        <!--<button class="btn btn-info pull-right btn-sm">POST</button>-->
+                        <!--<ul class="nav nav-pills nav-sm">-->
+                            <!--<li><a href="#"><i class="fa fa-camera text-muted"></i></a></li>-->
+                            <!--<li><a href="#"><i class="fa fa-video-camera text-muted"></i></a></li>-->
+                        <!--</ul>-->
+                    <!--</footer>-->
+                <!--</section>-->
+                <!--<section class="panel panel-default">-->
+                    <!--<h4 class="font-thin padder">Latest Tweets</h4>-->
+                    <!--<ul class="list-group">-->
+                        <!--<li class="list-group-item">-->
+                            <!--<p>Wellcome <a href="#" class="text-info">@Drew Wllon</a> and play this web application template, have fun1 </p>-->
+                            <!--<small class="block text-muted"><i class="fa fa-clock-o"></i> 2 minuts ago</small>-->
+                        <!--</li>-->
+                        <!--<li class="list-group-item">-->
+                            <!--<p>Morbi nec <a href="#" class="text-info">@Jonathan George</a> nunc condimentum ipsum dolor sit amet, consectetur</p>-->
+                            <!--<small class="block text-muted"><i class="fa fa-clock-o"></i> 1 hour ago</small>-->
+                        <!--</li>-->
+                        <!--<li class="list-group-item">-->
+                            <!--<p><a href="#" class="text-info">@Josh Long</a> Vestibulum ullamcorper sodales nisi nec adipiscing elit. </p>-->
+                            <!--<small class="block text-muted"><i class="fa fa-clock-o"></i> 2 hours ago</small>-->
+                        <!--</li>-->
+                    <!--</ul>-->
+                <!--</section>-->
+                <!--<section class="panel clearfix bg-info lter">-->
+                    <!--<div class="panel-body">-->
+                        <!--<a href="#" class="thumb pull-left m-r">-->
+                            <!--<img src="images/avatar.jpg" class="img-circle">-->
+                        <!--</a>-->
+                        <!--<div class="clear">-->
+                            <!--<a href="#" class="text-info">@Mike Mcalidek <i class="fa fa-twitter"></i></a>-->
+                            <!--<small class="block text-muted">2,415 followers / 225 tweets</small>-->
+                            <!--<a href="#" class="btn btn-xs btn-success m-t-xs">Follow</a>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</section>-->
+            <!--</div>-->
+        <!--</section>-->
+    <!--</section>-->
+<!--</aside>-->
 </section>
 </section>
 </section>
