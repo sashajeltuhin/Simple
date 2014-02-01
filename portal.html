@@ -11,8 +11,10 @@
     <link rel="stylesheet" href="admin/css/font-awesome.min.css" type="text/css" />
     <link rel="stylesheet" href="admin/css/font.css" type="text/css" />
     <link rel="stylesheet" href="admin/js/select2/select2.css" type="text/css" />
-    <!--<link rel="stylesheet" href="admin/js/calendar/bootstrap_calendar.css" type="text/css" />-->
+    <link rel="stylesheet" href="admin/js/nestable/nestable.css" type="text/css">
     <link rel="stylesheet" href="admin/css/app.css" type="text/css" />
+    <link rel="stylesheet" href="admin/js/calendar/bootstrap_calendar.css" type="text/css" />
+
     <!--<link rel="stylesheet" href="admin/slickgrid/slick.grid.css" type="text/css"/>-->
     <!--<link rel="stylesheet" href="admin/slickgrid/slick-default-theme.css" type="text/css"/>-->
     <link rel="stylesheet" href="css/ng-grid.css"/>
@@ -254,6 +256,7 @@
     <div class="btn-group">
         <!--<button type="button" class="btn btn-sm btn-dark btn-icon" title="New project"><i class="fa fa-plus"></i></button>-->
         <div class="btn-group hidden-nav-xs">
+            <button type="button" class="btn btn-sm btn-dark btn-icon" title="Edit" ng-click="editTenant()"><i class="fa fa-pencil"></i></button>
             <button type="button" class="btn btn-sm btn-primary dropdown-toggle" data-toggle="dropdown">
                 <span>{{selTen.name}}</span>
                 <span class="caret"></span>
@@ -497,7 +500,9 @@
 <script src="js/angular.min.js" type="text/javascript"></script>
 <script src="js/angular-sanitize.min.js" type="text/javascript"></script>
 <script src="js/angular-cookies.min.js" type="text/javascript"></script>
+<script src="admin/js/calendar/bootstrap_calendar.js"></script>
 <script src="js/sortable.js" type="text/javascript"></script>
+<script src="admin/js/nestable/jquery.nestable.js"></script>
 <script src="js/date.js" type="text/javascript"></script>
 <!--<script src="admin/slickgrid/lib/jquery.event.drag-2.2.js"></script>-->
 <!--<script src="admin/slickgrid/slick.core.js"></script>-->
@@ -522,7 +527,9 @@
 <script src="dir/dynamic.js" type="text/javascript"></script>
 <script src="ctrl/authctrl.js" type="text/javascript"></script>
 <script src="ctrl/filterctrl.js" type="text/javascript"></script>
+<script src="ctrl/providerctrl.js" type="text/javascript"></script>
 <script src="ctrl/userctrl.js" type="text/javascript"></script>
+<script src="ctrl/tenantctrl.js" type="text/javascript"></script>
 <script src="ctrl/userlistctrl.js" type="text/javascript"></script>
 <script src="ctrl/prodctrl.js" type="text/javascript"></script>
 <script src="ctrl/teaserctrl.js" type="text/javascript"></script>
@@ -539,8 +546,10 @@
 <script src="dir/gridDir.js" type="text/javascript"></script>
 <script src="dir/mknotify.js" type="text/javascript"></script>
 <script src="dir/leafletDir.js" type="text/javascript"></script>
+<script src="dir/calendarDir.js" type="text/javascript"></script>
 <script src="dir/mkkeydown.js" type="text/javascript"></script>
 <script src="dir/selectDir.js" type="text/javascript"></script>
+<script src="dir/mknestableDir.js" type="text/javascript"></script>
 <script src="dir/mkselectDir.js" type="text/javascript"></script>
 <script src="dir/productDir.js" type="text/javascript"></script>
 <script src="dir/cartDir.js" type="text/javascript"></script>
@@ -558,7 +567,7 @@
 <!--<script src="admin/js/charts/flot/jquery.flot.grow.js"></script>-->
 <!--<script src="admin/js/charts/flot/demo.js"></script>-->
 
-<!--<script src="admin/js/calendar/bootstrap_calendar.js"></script>-->
+
 <!--<script src="admin/js/calendar/demo.js"></script>-->
 
 <!--<script src="admin/js/sortable/jquery.sortable.js"></script>-->

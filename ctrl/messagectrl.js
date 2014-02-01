@@ -18,12 +18,18 @@ function messagectrl($scope, $http, adminservice){
 
     $scope.newNote = function(){
         $scope.selnote = {};
-        $scope.$emit("EV_SWITCH_VIEW", 'compose.html');
+        var obj = {};
+        obj.view = 'compose.html';
+        obj.title = "New Message";
+        $scope.$emit("EV_SWITCH_VIEW", obj);
     }
 
     $scope.openNote = function(n){
         $scope.selnote = n;
-        $scope.$emit("EV_SWITCH_VIEW", 'notedetail.html');
+        var obj = {};
+        obj.view = 'notedetail.html';
+        obj.title = "Message";
+        $scope.$emit("EV_SWITCH_VIEW", obj);
     }
 
     $scope.sendNote = function(){

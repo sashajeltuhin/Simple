@@ -2,7 +2,7 @@ exports.upload = function(req, res, next){
 
     var fp = require('jquery-file-upload-middleware');
     fp.fileHandler({
-        uploadDir:'./tmp/files',
+        uploadDir: './tmp/files',
         uploadUrl: '/tmp/files'
     })(req, res, next);
 

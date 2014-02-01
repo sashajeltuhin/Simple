@@ -1,0 +1,76 @@
+<div  ng-controller="userctrl">
+<section class="panel panel-default">
+    <div class="row m-l-none m-r-none">
+        <div class="col-lg-6">
+            <h3 class="m-b-none">{{viewTitle}}</h3>
+        </div>
+        <div class="col-lg-6" ng-include="subTools">
+        </div>
+    </div>
+</section>
+
+<section class="hbox stretch">
+<aside class="col-lg-4 bg-light lter b-r">
+    <section class="vbox">
+        <section>
+            <div class="wrapper bg-light lter">
+                <div class="clearfix m-b">
+                    <a href="#" class="pull-left thumb m-r">
+                        <img ng-src="{{rootUrl}}{{selUser.logo}}" class="img-circle">
+                        <mk-upload label="Add avatar" path="app/upload/image" fnc="onProfileImage($event)"></mk-upload>
+                    </a>
+                </div>
+                <section class="panel panel-default">
+                    <header class="panel-heading font-bold">Credentials</header>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <input type="text" class="form-control" ng-model="selUser.uname" placeholder="Username">
+                        </div>
+                        <div class="form-group">
+                            <input type="email" class="form-control" ng-model="selUser.email" placeholder="Enter email">
+                        </div>
+                        <div class="form-group">
+                            <input type="password" class="form-control" placeholder="Enter Password">
+                        </div>
+                        <div class="form-group">
+                            <input type="password" class="form-control" ng-model="selUser.upass" placeholder="Confirm Password">
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </section>
+
+    </section>
+</aside>
+<aside class="bg-white">
+<section class="vbox">
+
+    <section class="panel panel-default">
+        <header class="panel-heading font-bold">User information</header>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-4">
+                    <input type="text" class="form-control" ng-model="selUser.fname" placeholder="First name">
+                </div>
+                <div class="col-md-4">
+                    <input type="text" class="form-control" ng-model="selUser.lname" placeholder="Last Name">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-2">
+                    <input type="text" class="form-control" ng-model="selUser.zip" placeholder="Zip code">
+                </div>
+                <div class="col-md-3">
+                    <select ng-options="o for o in departments"  ng-model="selUser.dept" placeholder="Select department"></select>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-sm btn-default" ng-click="createUser()">Create Account</button>
+        </div>
+    </section>
+</section>
+</aside>
+
+</section>
+</section>
+</section>
+</div>

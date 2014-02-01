@@ -1,4 +1,4 @@
-<div  ng-controller="userctrl">
+<div  ng-controller="tenantctrl">
 <section class="panel panel-default">
     <div class="row m-l-none m-r-none">
         <div class="col-lg-6">
@@ -10,7 +10,7 @@
 </section>
 <section class="vbox">
 <header class="header bg-white b-b b-light">
-    <p>{{selUser.fname}} {{selUser.lname}}'s profile</p>
+    <p>{{selTenant.name}}</p>
 </header>
 <section>
 <section class="hbox stretch">
@@ -20,15 +20,15 @@
             <div class="wrapper bg-light lter">
                 <div class="clearfix m-b">
                     <a href="#" class="pull-left thumb m-r">
-                        <img ng-src="{{rootUrl}}{{selUser.imageUrl}}" class="img-circle">
-                        <mk-upload label="Change" path="app/upload/image" fnc="onProfileImage($event)"></mk-upload>
+                        <img ng-src="{{rootUrl}}{{selTenant.logo}}" class="img-circle">
+                        <mk-upload label="Change" path="app/upload/image" fnc="onTenantLogo($event)"></mk-upload>
                     </a>
                     <div class="clear">
-                        <div class="h3 m-t-xs m-b-xs">{{selUser.fname}} {{selUser.lname}}</div>
-                        <small class="text-muted"><i class="fa fa-map-marker"></i>{{selUser.dept}}</small>
+                        <div class="h3 m-t-xs m-b-xs">{{selTenant.name}}</div>
+                        <!--<small class="text-muted"><i class="fa fa-map-marker"></i>{{selTenant.dept}}</small>-->
                     </div>
                     <div class="clear">
-                        <small class="text-muted"><i class="fa fa-map-marker"></i>Since {{since}}</small>
+                        <small class="text-muted"><i class="fa fa-map-marker"></i>Plugged into FUSE since {{since}}</small>
                     </div>
                 </div>
                 <div class="panel wrapper panel-success">
@@ -81,9 +81,7 @@
                     <!--</a>-->
                 <!--</div>-->
                 <div>
-                    <small class="text-uc text-xs text-muted">about {{selUser.fname}}</small>
-                    <p>Artist</p>
-                    <small class="text-uc text-xs text-muted">info</small>
+                    <small class="text-uc text-xs text-muted">About {{selTenant.name}}</small>
                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi id neque quam. Aliquam sollicitudin venenatis ipsum ac feugiat.</p>
                     <div class="line"></div>
                     <small class="text-uc text-xs text-muted">connection</small>
@@ -98,28 +96,28 @@
     </section>
 </aside>
 <aside class="bg-white">
-<div class="h4 m-t-xs m-b-xs">Access Privileges</div>
 <section class="hbox stretch">
 <section class="vbox">
 <header class="header bg-light bg-gradient">
     <ul class="nav nav-tabs nav-white">
-        <li class="active"><a href="#tenants" ng-click="loadTenants()" data-toggle="tab">Tenants</a></li>
-        <li class=""><a href="#apps" ng-click="loadApps()" data-toggle="tab">Applications</a></li>
-        <li class=""><a href="#actions" ng-click="loadActions()" data-toggle="tab">Actions</a></li>
+        <li class="active"><a href="#tenants" ng-click="loadProviders()" data-toggle="tab">Providers</a></li>
+        <li class=""><a href="#actions" ng-click="loadApps()" data-toggle="tab">Applications</a></li>
+        <li class=""><a href="#actions" ng-click="loadActions()" data-toggle="tab">Features</a></li>
     </ul>
 </header>
 <section class="vbox">
 <div class="tab-content">
 <div class="tab-pane active" id="tenants">
-<mk-nest class="dd" group="1" onchangefn="onAddTenant(list)">
+<mk-nest class="dd" group="1" onchangefn="onAddProvider(list)">
 <ol class="dd-list list-group no-radius m-b-none m-t-n-xxs list-group-lg no-border">
-<li class="dd-item list-group-item" data-id="{{$index}}" ng-repeat="t in mytenants">
+<li class="dd-item list-group-item" data-id="{{$index}}" ng-repeat="t in myproviders">
     <span class="pull-right">
-        <a href="#" ng-click="removeTenant(t)"><i class="fa fa-times icon-muted fa-fw"></i></a>
+        <a href="#" ng-click="manageProvider(t)"><i class="fa fa-pencil icon-muted fa-fw m-r-xs"></i></a>
+        <a href="#" ng-click="removeProvider(t)"><i class="fa fa-times icon-muted fa-fw"></i></a>
      </span>
     <div class="dd-handle">
         <a href="#" class="thumb-sm pull-left m-r-sm">
-            <img ng-src="{{topURL}}{{t.logo}}" class="img-circle">
+            <img ng-src="{{rootUrl}}{{t.logo}}" class="img-circle">
         </a>
         <a href="#" class="clear">
             <strong class="block">{{t.name}}</strong>
@@ -183,7 +181,7 @@
                 <div class="dd-handle dd3-handle">Drag</div>
                 <div class="dd3-content">
                     <a href="#" class="thumb-sm pull-left m-r-sm">
-                        <img ng-src="{{topURL}}{{i.imageUrl}}" class="img-circle">
+                        <img ng-src="{{rootUrl}}{{i.imageUrl}}" class="img-circle">
                     </a>
                     <a href="#" >
                         <span>{{i.name}}</span>

@@ -92,14 +92,23 @@ var prepFilter = function(f){
         var v = f[key];
 
         if (Array.isArray(v)){
+            if (key == '_id'){
+                v = convertIDs(v);
+            }
             filter.query[key] =  { $in: v };
         }
         else if (v.oper !== undefined && v.val !== undefined && Array.isArray(v.val)){
+            if (key == '_id'){
+                v.val = convertIDs(v.val);
+            }
             if (v.oper == 'in'){
                 filter.query[key] =  { $in:v.val };
             }
             else if (v.oper == 'all'){
                 filter.query[key] =  { $all:v.val };
+            }
+            else if (v.oper == '<>'){
+                filter.query[key] =  { $nin:v.val };
             }
         }
         else if (String(key) == "_id"){
@@ -128,6 +137,19 @@ var prepFilter = function(f){
         }
     }
     return filter;
+}
+
+function convertIDs(v){
+    if (v == undefined){
+        return [];
+    }
+    else{
+        var ar = [];
+        for(var i = 0; i < v.length; i++){
+            ar.push(new ObjectID(v[i]));
+        }
+        return ar;
+    }
 }
 
 exports.getFilter = function(f){

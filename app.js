@@ -43,30 +43,28 @@ var express = require('express')
 var app = express();
 
 app.configure(function(){
-  app.set('port', process.env.PORT || 3000);
-  app.set('views', __dirname + '/views');
-  app.set('view engine', 'jade');
-  app.set('jsonp callback', true );
-  app.use(express.favicon());
-  app.use(express.logger('dev'));
-  app.use(express.bodyParser());
-  app.use(express.methodOverride());
-  app.use(passport.initialize());
-  app.use(passport.session());
-  app.use(app.router);
-  app.use(express.static(path.join(__dirname, 'public')));
+    app.set('port', process.env.PORT || 3000);
+    app.set('views', __dirname + '/views');
+    app.set('view engine', 'jade');
+    app.set('jsonp callback', true );
+    app.use(express.favicon());
+    app.use(express.logger('dev'));
+    app.use('/profile/upload', fp.imgup);
+    app.use('/profile/vup', vp.vup);
+    app.use('/app/upload/template', tmplUp.upload);
+    app.use('/app/upload/image', imgUp.upload);
+    app.use('/app/upload/file', fileUp.upload);
+    app.use(express.bodyParser());
+    app.use(express.methodOverride());
+    app.use(passport.initialize());
+    app.use(passport.session());
+    app.use(app.router);
+    app.use(express.static(path.join(__dirname, 'public')));
 
     //auth
     passport.use(auth.localStrategy);
     passport.serializeUser(auth.serializeUser);
     passport.deserializeUser(auth.deserializeUser);
-    app.use('/profile/upload', fp.imgup);
-//  app.use('/product/upload', produp.upload);
-    app.use('/profile/vup', vp.vup);
-    app.use('/step/template', tmplUp.upload);
-    app.use('/image/upload', imgUp.upload);
-    app.use('/file/upload', fileUp.upload);
-
 });
 
 app.configure('development', function(){

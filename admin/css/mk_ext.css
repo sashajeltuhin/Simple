@@ -268,3 +268,7 @@
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#feffff', endColorstr='#a0d8ef',GradientType=0 );
 
 }
+.map-page{
+    height:100%;
+    min-height: 600px;
+}

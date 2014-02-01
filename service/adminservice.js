@@ -6,6 +6,8 @@ angular.module('cart').factory('adminservice', function($q, $cookies) {
     var fieldCache = {};
     var selTen = {};
     var selAppObj = {};
+    var selObjName = '';
+
     var selObj = {};
 
     var signedId = {};
@@ -58,10 +60,18 @@ angular.module('cart').factory('adminservice', function($q, $cookies) {
     }
 
     service.setSelected = function(obj){
-        selObj = obj;
+        selObjName = obj;
     }
 
     service.getSelected = function(){
+        return selObjName;
+    }
+
+    service.setSelObj = function(obj){
+        selObj = obj;
+    }
+
+    service.getSelObj= function(){
         return selObj;
     }
 

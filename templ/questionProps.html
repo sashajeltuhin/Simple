@@ -60,7 +60,7 @@
         <div class="btn btn-small" ng-click="newAnswer(selque)">+</div>
         <div ui-sortable="sortableOptions" ng-model="selque.responses">
             <div style="height: 100px; clear: both" ng-repeat="a in selque.responses" ng-class-odd="'odd_row'" ng-class-even="'even_row'">
-                <div class="mkResponseField"><img width="30" height="50" ng-src="{{a.imageUrl}}"><mk-upload label="Change" path="image/upload" fnc="onAnswerImgUploaded($event, a)"></mk-upload></div>
+                <div class="mkResponseField"><img width="30" height="50" ng-src="{{a.imageUrl}}"><mk-upload label="Change" path="upload/image" fnc="onAnswerImgUploaded($event, a)"></mk-upload></div>
                 <div class="mkResponseField">
                     <div style="position: relative;clear: both">
                         <img width="30" height="30" src="/images/linkedque.png" ng-click="editLinkedQue(a)" ng-show="a.link">

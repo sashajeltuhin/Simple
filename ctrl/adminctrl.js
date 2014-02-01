@@ -746,7 +746,7 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
         adminservice.authenticate($http, function(uid){
             if (uid !== undefined){
                 $scope.adminSession = adminservice.getAdminSession();
-                adminservice.listObj('tenant', {}, $http, function(t){
+                adminservice.listObj('tenant', {order_by:{order:1}}, $http, function(t){
                     $scope.tenants = t;
                     if (t.length > 0){
                         selectTenant(t[0]);
@@ -764,8 +764,10 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
         openDash();
     }
 
-    $scope.$on("EV_SWITCH_VIEW", function(event, view){
-        $scope.wrapper = serverUrl + view;
+    $scope.$on("EV_SWITCH_VIEW", function(event, obj){
+        $scope.viewTitle = obj.title;
+        $scope.subTools = serverUrl + obj.toolbar;
+        $scope.wrapper = serverUrl + obj.view;
     });
 
     $scope.openMe = function(){
@@ -774,8 +776,16 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
         f._id = s.uid;
         adminservice.listObj('user',f,  $http, function(data){
             adminservice.setSelUser(data[0]);
+            $scope.viewTitle = "User Management"
+            $scope.subTools = serverUrl + 'secTools.html';
             $scope.wrapper = serverUrl + 'adminprofile.html';
         });
+    }
+
+    $scope.editTenant = function(){
+        $scope.viewTitle = "Tenant Configurations"
+        $scope.subTools = serverUrl + 'secTools.html';
+        $scope.wrapper = serverUrl + 'tenantDetail.html';
     }
 
     $scope.openUserManagement = function(){
@@ -1507,6 +1517,7 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
             columnDefs: 'gridcolumns'
         };
         $scope.gridValChange = function(entity, col){
+            console.log("cell changed", entity);
             var changed = col.field;
             var id = entity._id;
             var obj = changedFlds[id];

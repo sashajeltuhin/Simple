@@ -1,5 +1,6 @@
 var db = require('../db/dbaccess');
 var mongo = require('mongodb');
+var auth = require('./auth');
 var ObjectID = mongo.ObjectID;
 var dbname = 'ShopDB';
 
@@ -13,7 +14,9 @@ var handleError = function(res, msg, err){
 
 exports.list = function (req, res){
     db.setDB(dbname);
-    var filter = db.getFilter(req.body);
+    var userFilter = req.body;
+    console.log(req.user);
+    var filter = db.getFilter(userFilter);
     db.load(colName, filter, function(err, recs){
         if (err !== null){
             handleError(res, "Cannot list tenant ", err);
