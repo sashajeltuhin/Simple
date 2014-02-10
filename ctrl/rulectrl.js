@@ -36,9 +36,11 @@ function rulectrl($scope, $rootScope, $http, adminservice, mkPopup){
         rule.showDetail = rule.showDetail == undefined || rule.showDetail == false ? true : false;
     }
 
+
     function loadRules(){
         $scope.viewTitle = "Rules for Targeted Recommendations";
         $scope.ruletypeUrl = '/images/targetad.jpg';
+
         $scope.adRule = true;
         var extra = {};
         var appObj = adminservice.getAppObj();

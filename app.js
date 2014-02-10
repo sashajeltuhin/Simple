@@ -49,6 +49,8 @@ app.configure(function(){
     app.set('jsonp callback', true );
     app.use(express.favicon());
     app.use(express.logger('dev'));
+    app.use(express.cookieParser());
+    app.use(express.session({secret: 'meyekids'}));
     app.use('/profile/upload', fp.imgup);
     app.use('/profile/vup', vp.vup);
     app.use('/app/upload/template', tmplUp.upload);

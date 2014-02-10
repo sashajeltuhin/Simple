@@ -1142,6 +1142,7 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
         adminservice.setAppObj(appObj);
         hideGrid();
         $scope.wrapper = serverUrl + 'seglist.html';
+        $scope.subTools = serverUrl + 'ruleTools.html';
     }
 
 
@@ -1168,6 +1169,17 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
         });
 
         return list;
+    }
+
+    $scope.openWidgetDetail = function(w){
+        var appObj = getAppObj(w.app);
+        adminservice.setAppObj(appObj);
+        $scope.obj = w;
+        var obj = {};
+        obj.view = 'stepDetail.html';
+        obj.title = "Widget Configuration";
+        obj.toolbar = 'widgetTools.html';
+        $scope.$emit("EV_SWITCH_VIEW", obj);
     }
 
     $scope.openStepInfo = function(step){
@@ -1445,7 +1457,7 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
             $scope.listData = d;
             $scope.wrapper = serverUrl + 'spread.html';
             buildNGrid(m, d);
-            //refreshFilter(m, refreshData);
+            refreshFilter(m, refreshData);
         });
     }
 
@@ -1615,7 +1627,7 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
           if (a.active == true && a.agent == 'consumer'){
               hideGrid();
               cartservice.setAppObj(a);
-              $scope.masterTmpl = $scope.rootUrl +'/'+ a.template;
+              $scope.masterTmpl = $scope.rootUrl +'/'+ a.template + '?preview=1';
 
               $scope.filterOpen = false;
               $scope.wrapper = serverUrl + 'flow.html';

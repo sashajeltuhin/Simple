@@ -1,0 +1,132 @@
+<!--<div style="margin-left: 50px;margin-top: 20px" ng-repeat="a in stepApps">-->
+    <!--<div class="navbar navbar-inner"><div class="container">-->
+    <!--<ul class="nav">-->
+        <!--<li class="active"><a class="brand">{{a.name}}</a></li>-->
+        <!--<li><a>Active <input type="checkbox" ng-model="a.active"></a></li>-->
+        <!--<li><a  ng-click="cloneApp(a)">Clone</a></li>-->
+        <!--<li><a  ng-click="createStep()">New step</a></li>-->
+        <!--<li><a  ng-click="deleteApp(a)">Delete</a></li>-->
+    <!--</ul>-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--&lt;!&ndash;<div class="row-fluid">&ndash;&gt;-->
+        <!--&lt;!&ndash;<div class="span4"><h3>{{a.name}}</h3></div>&ndash;&gt;-->
+        <!--&lt;!&ndash;<div class="span2">Active <input type="checkbox" ng-model="a.active"></div>&ndash;&gt;-->
+        <!--&lt;!&ndash;<div class="span2 btn btn-small bv_btn-custom" ng-click="cloneApp(a)">Clone</div>&ndash;&gt;-->
+        <!--&lt;!&ndash;<div class="span1 btn btn-small" ng-click="deleteApp(a)">Delete</div>&ndash;&gt;-->
+    <!--&lt;!&ndash;</div>&ndash;&gt;-->
+    <!--&lt;!&ndash;<div class="row-fluid">&ndash;&gt;-->
+        <!--&lt;!&ndash;<h4>Cart</h4>&ndash;&gt;-->
+        <!--&lt;!&ndash;<div class="btn btn-small bv_btn-custom" ng-click="createStep()">New step</div>&ndash;&gt;-->
+    <!--&lt;!&ndash;</div>&ndash;&gt;-->
+    <!--<div ui-sortable="sortableOptions" class="row-fluid" ng-model="appElements[a.appID]">-->
+            <!--<div class="span2 stepbox effectStep"  ng-repeat="p in appElements[a.appID]" >-->
+                <!--&lt;!&ndash;<div ng-class="{'stepboxnum stepactive': p.visible,'stepboxnum': !p.visible}">{{p.order}}</div>&ndash;&gt;-->
+                <!--<div class="stepdel" ng-click="deleteStep(p)"><img src="/images/step_del.png" width="20" height="20"></div>-->
+            <!--<h4 ng-click="openStepInfo(p)" ng-class="{'stepactive': p.visible,'': !p.visible}">{{p.title}}</h4>-->
+            <!--</div>-->
+    <!--</div>-->
+    <!--&lt;!&ndash;<div class="row-fluid" ng-show="a.agent=='agent'">&ndash;&gt;-->
+        <!--&lt;!&ndash;<h4>Stand-alone widgets</h4>&ndash;&gt;-->
+        <!--&lt;!&ndash;<div class="btn btn-small bv_btn-custom" ng-click="createWidget()">New widget</div>&ndash;&gt;-->
+    <!--&lt;!&ndash;</div>&ndash;&gt;-->
+    <!--&lt;!&ndash;<div class="row-fluid">&ndash;&gt;-->
+        <!--&lt;!&ndash;<div class="span2 stepbox effectStep" ng-repeat="w in appWidgets[a.appID]">&ndash;&gt;-->
+            <!--&lt;!&ndash;<h4  ng-click="openStepInfo(w)">{{w.title}}</h4>&ndash;&gt;-->
+        <!--&lt;!&ndash;</div>&ndash;&gt;-->
+    <!--&lt;!&ndash;</div>&ndash;&gt;-->
+<!--</div>-->
+
+<section class="hbox stretch">
+    <!-- .aside -->
+    <div class="row">
+    <aside class="col-lg-4" ng-repeat="a in stepApps">
+        <section class="vbox">
+            <!--<header class="header bg-white b-b b-light">-->
+                <!--<a href="#aside" data-toggle="class:show" class="btn btn-sm btn-default pull-right">Create</a>-->
+                <!--<p>{{a.name}}</p>-->
+            <!--</header>-->
+            <section class="wrapper">
+                <div class="timeline">
+                    <article class="timeline-item active">
+                        <div class="timeline-caption">
+                            <div class="panel bg-primary lter no-borders">
+                                <div class="panel-body">
+                                    <span class="timeline-icon"><i class="fa fa-th-large time-icon bg-primary"></i></span>
+                                    <span class="h3 timeline-date">{{a.agent}}</span>
+                                    <h3>
+                                        <span>{{a.name}}</span>
+                                    </h3>
+                                    <div class="m-t-sm timeline-action">
+                                        <span class="pull-left m-r-sm"><a>Active <input type="checkbox" ng-model="a.active"></a></span>
+                                        <button class="btn btn-sm btn-default btn-bg" ng-click="cloneApp(a)"><i class="fa fa-copy"></i> Copy</button>
+                                        <button class="btn btn-sm btn-default btn-bg" ng-click="createStep()"><i class="fa fa-check"></i> New Widget</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                    <div ui-sortable="sortableOptions" ng-model="appElements[a.appID]">
+                    <article class="timeline-item" ng-repeat="p in appElements[a.appID]">
+                        <div class="timeline-caption">
+                            <div class="panel panel-default">
+                                <div class="panel-body">
+                                    <span class="arrow left"></span>
+                                    <span class="timeline-icon"><i class="fa fa-file time-icon bg-primary"></i></span>
+                                    <span class="timeline-date">{{p.title}}</span>
+                                    <p>
+                                        <span ng-class="{'stepactive': p.visible,'': !p.visible}" ng-click="openWidgetDetail(p)">{{p.title}}</span>
+                                        {{p.desc}}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                    <div class="timeline-footer"><a href="#" ng-click="createStep()"><i class="fa fa-plus time-icon inline-block bg-dark"></i></a></div>
+                    </div>
+                </div>
+            </section>
+        </section>
+    </aside>
+    </div>
+    <!-- /.aside -->
+    <!-- .aside -->
+    <aside class="aside-lg bg-white b-l hide" id="aside">
+        <div class="wrapper">
+            <h4 class="m-t-none">Timeline</h4>
+            <form>
+                <div class="form-group">
+                    <label>Name</label>
+                    <input type="text" placeholder="Event name" class="input-sm form-control">
+                </div>
+                <div class="form-group">
+                    <label>Date</label>
+                    <input type="text" placeholder="Event name" class="datepicker input-sm form-control">
+                </div>
+                <div class="form-group">
+                    <label>Time</label>
+                    <input type="text" placeholder="eg. 3:00 pm" class="input-sm form-control">
+                </div>
+                <div class="form-group">
+                    <label>Type</label>
+                    <div>
+                        <div class="btn-group">
+                            <button data-toggle="dropdown" class="btn btn-sm btn-default dropdown-toggle">
+                                <span class="dropdown-label">Choose a type</span>
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu dropdown-select">
+                                <li><a href="#"><input type="radio" name="d-s-r">Travel</a></li>
+                                <li class=""><a href="#"><input type="radio" name="d-s-r">Phone</a></li>
+                                <li class=""><a href="#"><input type="radio" name="d-s-r">Meeting</a></li>
+                                <li class=""><a href="#"><input type="radio" name="d-s-r">Appointment</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="m-t-lg"><button class="btn btn-sm btn-default">Add step</button></div>
+            </form>
+        </div>
+    </aside>
+    <!-- /.aside -->
+</section>

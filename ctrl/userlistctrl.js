@@ -13,14 +13,16 @@ function userlistctrl($scope, $http, adminservice){
         var obj = {};
         obj.view = 'adminprofile.html';
         obj.title = "User Management";
+        obj.toolbar = 'secTools.html';
         $scope.$emit("EV_SWITCH_VIEW", obj);
     }
 
-    $scope.openNewUser = function(){
+    $scope.openNew = function(){
         adminservice.setSelUser({});
         var obj = {};
         obj.view = 'createUser.html';
         obj.title = "User Management";
+        obj.toolbar = 'secTools.html';
         $scope.$emit("EV_SWITCH_VIEW", obj);
     }
 

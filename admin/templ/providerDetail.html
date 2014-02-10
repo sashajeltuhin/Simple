@@ -14,110 +14,109 @@
 </header>
 <section>
 <section class="hbox stretch">
-<aside class="col-lg-4 bg-light lter b-r">
-    <section class="vbox">
-        <section>
-            <div class="wrapper bg-light lter">
-                <div class="clearfix m-b">
-                    <a href="#" class="pull-left thumb m-r">
-                        <img ng-src="{{rootUrl}}{{selProvider.logo}}" class="img-full">
-                        <mk-upload label="Change" path="app/upload/image" fnc="onProviderLogo($event)"></mk-upload>
-                    </a>
-                    <div class="clear">
-                        <div class="h3 m-t-xs m-b-xs">{{selProvider.name}}</div>
-                    </div>
-                </div>
-                <div class="panel wrapper panel-success">
-                    <div class="row">
-                        <div class="col-xs-4">
-                            <a href="#">
-                                <span class="m-b-xs h4 block">2</span>
-                                <small class="text-muted">Outages</small>
-                            </a>
-                        </div>
-                        <div class="col-xs-4">
-                            <a href="#">
-                                <span class="m-b-xs h4 block">15</span>
-                                <small class="text-muted">Conversion</small>
-                            </a>
-                        </div>
-                        <div class="col-xs-4">
-                            <a href="#">
-                                <span class="m-b-xs h4 block">2,035</span>
-                                <small class="text-muted">Products</small>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="wrapper">
-                    <section class="panel bg-primary b-light">
-                        <header class="panel-heading bg-primary dker no-border"><strong>Calendar of events</strong></header>
-                        <mk-calendar class="bg-primary m-l-n-xxs m-r-n-xxs" events="events"></mk-calendar>
-                        <div class="list-group">
-                            <a href="#" class="list-group-item text-ellipsis">
-                                <span class="badge bg-danger">7:30</span>
-                                Meet a friend
-                            </a>
-                            <a href="#" class="list-group-item text-ellipsis">
-                                <span class="badge bg-success">9:30</span>
-                                Have a kick off meeting with .inc company
-                            </a>
-                            <a href="#" class="list-group-item text-ellipsis">
-                                <span class="badge bg-light">19:30</span>
-                                Milestone release
-                            </a>
-                        </div>
-                    </section>
-                </div>
-                <!--<div class="btn-group btn-group-justified m-b">-->
-                    <!--<a class="btn btn-primary btn-rounded" data-toggle="button">-->
-                            <!--<span class="text">-->
-                              <!--<i class="fa fa-eye"></i> Follow-->
-                            <!--</span>-->
-                            <!--<span class="text-active">-->
-                              <!--<i class="fa fa-eye-slash"></i> Following-->
-                            <!--</span>-->
-                    <!--</a>-->
-                    <!--<a class="btn btn-dark btn-rounded" data-loading-text="Connecting">-->
-                        <!--<i class="fa fa-comment-o"></i> Chat-->
-                    <!--</a>-->
-                <!--</div>-->
-                <div>
-                    <small class="text-uc text-xs text-muted">About {{selProvider.name}}</small>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi id neque quam. Aliquam sollicitudin venenatis ipsum ac feugiat.</p>
-                    <div class="line"></div>
-                    <small class="text-uc text-xs text-muted">connection</small>
-                    <p class="m-t-sm">
-                        <a href="#" class="btn btn-rounded btn-twitter btn-icon"><i class="fa fa-twitter"></i></a>
-                        <a href="#" class="btn btn-rounded btn-facebook btn-icon"><i class="fa fa-facebook"></i></a>
-                        <a href="#" class="btn btn-rounded btn-gplus btn-icon"><i class="fa fa-google-plus"></i></a>
-                    </p>
-                </div>
-            </div>
-        </section>
-    </section>
-</aside>
-<aside class="bg-white">
+<aside class=" bg-light lter b-r">
 <section class="hbox stretch">
 <section class="vbox">
 <header class="header bg-light bg-gradient">
     <ul class="nav nav-tabs nav-white">
-        <li class="active"><a href="#tenants" ng-click="showCoverage()" data-toggle="tab">Coverage</a></li>
-        <li class=""><a href="#actions" ng-click="loadApps()" data-toggle="tab">Product</a></li>
-        <li class=""><a href="#actions" ng-click="loadActions()" data-toggle="tab">Rules</a></li>
+        <li class="active"><a href="#main" data-toggle="tab">At a glance</a></li>
+        <li class=""><a href="#map" ng-click="showCoverage()" data-toggle="tab">Coverage</a></li>
+        <li class=""><a href="#prods" ng-click="loadApps()" data-toggle="tab">Product</a></li>
+        <li class=""><a href="#rules" ng-click="loadActions()" data-toggle="tab">Rules</a></li>
     </ul>
 </header>
 <section class="vbox">
 <div class="tab-content">
-<div class="tab-pane active" id="tenants">
+    <div class="tab-pane active" id="main">
+         <div class="col-lg-4 wrapper bg-light lter">
+                            <div class="clearfix m-b">
+                                <a href="#" class="pull-left thumb m-r">
+                                    <img ng-src="{{rootUrl}}{{selProvider.logo}}" class="img-full">
+                                    <mk-upload label="Change" path="app/upload/image" fnc="onProviderLogo($event)"></mk-upload>
+                                </a>
+                                <div class="clear">
+                                    <div class="h3 m-t-xs m-b-xs">{{selProvider.name}}</div>
+                                </div>
+                            </div>
+                            <div class="panel wrapper panel-success">
+                                <div class="row">
+                                    <div class="col-xs-4">
+                                        <a href="#">
+                                            <span class="m-b-xs h4 block">2</span>
+                                            <small class="text-muted">Outages</small>
+                                        </a>
+                                    </div>
+                                    <div class="col-xs-4">
+                                        <a href="#">
+                                            <span class="m-b-xs h4 block">15</span>
+                                            <small class="text-muted">Conversion</small>
+                                        </a>
+                                    </div>
+                                    <div class="col-xs-4">
+                                        <a href="#">
+                                            <span class="m-b-xs h4 block">2,035</span>
+                                            <small class="text-muted">Products</small>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="wrapper">
+                                <section class="panel bg-primary b-light">
+                                    <header class="panel-heading bg-primary dker no-border"><strong>Calendar of events</strong></header>
+                                    <mk-calendar class="bg-primary m-l-n-xxs m-r-n-xxs" events="events"></mk-calendar>
+                                    <div class="list-group">
+                                        <a href="#" class="list-group-item text-ellipsis">
+                                            <span class="badge bg-danger">7:30</span>
+                                            Meet a friend
+                                        </a>
+                                        <a href="#" class="list-group-item text-ellipsis">
+                                            <span class="badge bg-success">9:30</span>
+                                            Have a kick off meeting with .inc company
+                                        </a>
+                                        <a href="#" class="list-group-item text-ellipsis">
+                                            <span class="badge bg-light">19:30</span>
+                                            Milestone release
+                                        </a>
+                                    </div>
+                                </section>
+                            </div>
+                            <!--<div class="btn-group btn-group-justified m-b">-->
+                            <!--<a class="btn btn-primary btn-rounded" data-toggle="button">-->
+                            <!--<span class="text">-->
+                            <!--<i class="fa fa-eye"></i> Follow-->
+                            <!--</span>-->
+                            <!--<span class="text-active">-->
+                            <!--<i class="fa fa-eye-slash"></i> Following-->
+                            <!--</span>-->
+                            <!--</a>-->
+                            <!--<a class="btn btn-dark btn-rounded" data-loading-text="Connecting">-->
+                            <!--<i class="fa fa-comment-o"></i> Chat-->
+                            <!--</a>-->
+                            <!--</div>-->
+                            <div>
+                                <small class="text-uc text-xs text-muted">about {{selProvider.name}}</small>
+                                <p>Artist</p>
+                                <small class="text-uc text-xs text-muted">info</small>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi id neque quam. Aliquam sollicitudin venenatis ipsum ac feugiat.</p>
+                                <div class="line"></div>
+                                <small class="text-uc text-xs text-muted">connection</small>
+                                <p class="m-t-sm">
+                                    <a href="#" class="btn btn-rounded btn-twitter btn-icon"><i class="fa fa-twitter"></i></a>
+                                    <a href="#" class="btn btn-rounded btn-facebook btn-icon"><i class="fa fa-facebook"></i></a>
+                                    <a href="#" class="btn btn-rounded btn-gplus btn-icon"><i class="fa fa-google-plus"></i></a>
+                                </p>
+                            </div>
+                        </div>
+    </div>
+<div class="tab-pane" id="map">
     <leaflet center="center" markers="markers" paths="paths" class="map-page"></leaflet>
 </div>
-<div class="tab-pane" id="apps">
+<div class="tab-pane" id="prods">
     <div class="text-center wrapper">
         <i class="fa fa-spinner fa fa-spin fa fa-large"></i>
     </div>
 </div>
-<div class="tab-pane" id="actions">
+<div class="tab-pane" id="rules">
     <div class="text-center wrapper">
         <i class="fa fa-spinner fa fa-spin fa fa-large"></i>
     </div>

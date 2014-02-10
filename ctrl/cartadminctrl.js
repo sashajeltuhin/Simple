@@ -24,7 +24,15 @@ function cartadminctrl($scope, $rootScope, $http, $location, cartservice){
     console.log("Controller init. Customer:");
     console.log($scope.c);
 
+    $scope.previewStep = getURLParameter('step');
+    $scope.previewMode = getURLParameter('preview');
+    if ($scope.previewStep !== undefined){
+        cartservice.setSingleTempl($scope.previewStep);
+    }
 
+    function getURLParameter(name) {
+        return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search)||[,""])[1].replace(/\+/g, '%20'))||null
+    }
 
     $scope.start = function(z, cust, appType, extension, prod, exCart){
         $scope.wrapperUrl = serverUrl + 'adminTmpl.html';

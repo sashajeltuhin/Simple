@@ -1,26 +1,75 @@
 
-<div class="mkToolBtn"><a ng-click="newQuestion()">New Question</a></div>
-<div class="mkToolBtn"><a ng-click="saveMap()">Save</a></div>
+<!--<div class="mkToolBtn"><a ng-click="newQuestion()">New Question</a></div>-->
+<!--<div class="mkToolBtn"><a ng-click="saveMap()">Save</a></div>-->
 
-<div style="clear: both" ui-sortable="sortableOptions" ng-model="queMap">
-    <div class="mkQueblock"  ng-repeat="q in queMap">
-         <div class="mkQueLevel"  ng-class-odd="'odd_row'" ng-class-even="'even_row'">
-            <div class="mkQueField"><img ng-src="{{q.imageUrl}}" width="40" height="50"><mk-upload label="Change" path="image/upload" fnc="onQueImgUploaded($event)"></mk-upload></div>
-            <div class="mkQueField" ng-show="q.active"><img src="/images/tick.png" width="30" height="30"></div>
-             <div class="mkQueField" ng-show="!q.active"><div style="position: relative;width: 30px"></div></div>
-            <div class="mkQueField" ng-click="editQue(q)" style="cursor:pointer;"><p><b>{{q.label}}</b></p></div>
-            <div class="quedel" ng-click="deleteQue(q)"><img src="/images/step_del.png" width="20" height="20"></div>
-        </div>
-        <div class="mkQueLevel" ng-repeat="r in q.responses" ng-show="r.link" >
-            <div style="position: relative;display: inline-block;margin-top: 50px; clear: both">{{r.label}}</div>
-            <div style="position: relative; display: inline-block;vertical-align:middle"><img width="30" height="30" src="/images/arrow-right.png"></div>
-        </div>
-        <div class="mkQueLevel" ng-repeat="r in q.responses" ng-show="r.link" ng-class-odd="'odd_row'" ng-class-even="'even_row'">
-            <div class="mkQueField"><img ng-src="{{r.link.imageUrl}}" width="40" height="50"><mk-upload label="Change" path="image/upload" fnc="onQueImgUploaded($event)"></mk-upload></div>
-            <div class="mkQueField" ng-show="q.active"><img src="/images/tick.png" width="30" height="30"></div>
-            <div class="mkQueField" ng-show="!q.active"><div style="position: relative;width: 30px"></div></div>
-            <div class="mkQueField" ng-click="editQue(r.link, r, q)" style="cursor:pointer;"><p><b>{{r.link.label}}</b></p></div>
-            <div class="quedel" ng-click="deleteQue(q)"><img src="/images/step_del.png" width="20" height="20"></div>
-        </div>
-    </div>
+<!--<div style="clear: both" ui-sortable="sortableOptions" ng-model="queMap">-->
+    <!--<div class="mkQueblock"  ng-repeat="q in queMap">-->
+         <!--<div class="mkQueLevel"  ng-class-odd="'odd_row'" ng-class-even="'even_row'">-->
+            <!--<div class="mkQueField"><img ng-src="{{q.imageUrl}}" width="40" height="50"><mk-upload label="Change" path="image/upload" fnc="onQueImgUploaded($event)"></mk-upload></div>-->
+            <!--<div class="mkQueField" ng-show="q.active"><img src="/images/tick.png" width="30" height="30"></div>-->
+             <!--<div class="mkQueField" ng-show="!q.active"><div style="position: relative;width: 30px"></div></div>-->
+            <!--<div class="mkQueField" ng-click="editQue(q)" style="cursor:pointer;"><p><b>{{q.label}}</b></p></div>-->
+            <!--<div class="quedel" ng-click="deleteQue(q)"><img src="/images/step_del.png" width="20" height="20"></div>-->
+        <!--</div>-->
+        <!--<div class="mkQueLevel" ng-repeat="r in q.responses" ng-show="r.link" >-->
+            <!--<div style="position: relative;display: inline-block;margin-top: 50px; clear: both">{{r.label}}</div>-->
+            <!--<div style="position: relative; display: inline-block;vertical-align:middle"><img width="30" height="30" src="/images/arrow-right.png"></div>-->
+        <!--</div>-->
+        <!--<div class="mkQueLevel" ng-repeat="r in q.responses" ng-show="r.link" ng-class-odd="'odd_row'" ng-class-even="'even_row'">-->
+            <!--<div class="mkQueField"><img ng-src="{{r.link.imageUrl}}" width="40" height="50"><mk-upload label="Change" path="image/upload" fnc="onQueImgUploaded($event)"></mk-upload></div>-->
+            <!--<div class="mkQueField" ng-show="q.active"><img src="/images/tick.png" width="30" height="30"></div>-->
+            <!--<div class="mkQueField" ng-show="!q.active"><div style="position: relative;width: 30px"></div></div>-->
+            <!--<div class="mkQueField" ng-click="editQue(r.link, r, q)" style="cursor:pointer;"><p><b>{{r.link.label}}</b></p></div>-->
+            <!--<div class="quedel" ng-click="deleteQue(q)"><img src="/images/step_del.png" width="20" height="20"></div>-->
+        <!--</div>-->
+    <!--</div>-->
+<!--</div>-->
+
+<div class="row">
+    <aside class="col-lg-6">
+        <section class="vbox">
+            <!--<header class="header bg-white b-b b-light">-->
+                <!--<a href="#aside" data-toggle="class:show" class="btn btn-sm btn-default pull-right">Create</a>-->
+                <!--<p>{{a.name}}</p>-->
+            <!--</header>-->
+            <section class="wrapper">
+                <div class="timeline">
+                    <article class="timeline-item active">
+                        <div class="timeline-caption">
+                            <div class="panel bg-primary lter no-borders">
+                                <div class="panel-body">
+                                    <span class="timeline-icon"><i class="fa fa-th-large time-icon bg-primary"></i></span>
+                                    <span class="h3 timeline-date">{{obj.title}}</span>
+                                    <h3>
+                                        <span>Survey flow</span>
+                                    </h3>
+                                    <div class="m-t-sm timeline-action">
+                                        <button class="btn btn-sm btn-default btn-bg" ng-click="cloneSurvey()"><i class="fa fa-copy"></i> Copy</button>
+                                        <button class="btn btn-sm btn-default btn-bg" ng-click="newQuestion()"><i class="fa fa-check"></i> New Question</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                    <div ui-sortable="sortableOptions" ng-model="queMap">
+                        <article class="timeline-item" ng-repeat="q in queMap">
+                            <div class="timeline-caption">
+                                <div ng-class="{'panel sub1 panel-default': q.parentID,'panel panel-default': !q.parentID}">
+                                    <div class="panel-body">
+                                        <span class="arrow left"></span>
+                                        <span class="timeline-icon"><i ng-class="{'fa fa-chain time-icon': q.parentID,'fa fa-question time-icon bg-primary': !q.parentID}"></i></span>
+                                        <span class="timeline-date"></span>
+                                        <p>
+                                            <span><a href="#" ng-click="editQue(q)">{{q.label}}</a></span>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+                        <div class="timeline-footer"><a href="#" ng-click="createStep()"><i class="fa fa-plus time-icon inline-block bg-dark"></i></a></div>
+                    </div>
+                </div>
+            </section>
+        </section>
+    </aside>
 </div>

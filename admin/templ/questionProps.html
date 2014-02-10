@@ -1,10 +1,19 @@
-<div style="width: 90; margin: auto;min-height: 40px;">
-    <div class="mkToolBtn"><a href="#/admin" ng-click="surveyMap()">Question Map</a></div>
-    <div class="mkToolBtn"><a ng-click="newQuestion()">New Question</a></div>
-    <div class="mkToolBtn"><a ng-click="saveSurvey()">Save</a></div>
-    <div class="mkToolBtn" ng-show="linkedAnswer"><a ng-click="backtoParent()">Back to parent</a></div>
-</div>
-<h4 style="clear:both">{{queTitle}}</h4>
+<!--<div style="width: 90; margin: auto;min-height: 40px;">-->
+    <!--<div class="mkToolBtn"><a href="#/admin" ng-click="surveyMap()">Question Map</a></div>-->
+    <!--<div class="mkToolBtn"><a ng-click="newQuestion()">New Question</a></div>-->
+    <!--<div class="mkToolBtn"><a ng-click="saveSurvey()">Save</a></div>-->
+    <!--<div class="mkToolBtn" ng-show="linkedAnswer"><a ng-click="backtoParent()">Back to parent</a></div>-->
+<!--</div>-->
+<!--<h4 style="clear:both">{{queTitle}}</h4>-->
+<section class="panel panel-default">
+    <div class="row m-l-none m-r-none">
+        <div class="col-lg-6">
+            <h3 class="m-b-none">{{viewTitle}}</h3>
+        </div>
+        <div class="col-lg-6" ng-include="subTools">
+        </div>
+    </div>
+</section>
 <div class="queData">
     <div style="position: relative; float: left">
     <img ng-src="{{selque.imageUrl}}" height="60" width="50">
@@ -13,18 +22,18 @@
     <div style="position:relative;float: left; margin-left: 30px">
         <div style="position: relative;clear: both">
             <label style="clear: both" class="mk_label">Published</label>
-            <input style="float: left;margin-left: 20px" type="checkbox" ng-model="selque.active">
+            <input style="float: left;margin-left: 20px" class="form-control" type="checkbox" ng-model="selque.active">
         </div>
-        <textarea ng-model="selque.label"></textarea>
+        <textarea class="form-control" ng-model="selque.label"></textarea>
     </div>
 
     <div style="position: relative;clear: both">
         <label style="clear: both" class="mk_label">Template</label>
-        <input style="float: left;margin-left: 20px" type="text" ng-model="selque.templateUrl">
+        <input style="float: left;margin-left: 20px" class="form-control" type="text" ng-model="selque.templateUrl">
     </div>
     <div style="position: relative;clear: both">
         <label style="clear: both" class="mk_label">Category</label>
-        <input style="float: left;margin-left: 20px" type="text" ng-model="selque.cat">
+        <input style="float: left;margin-left: 20px" class="form-control" type="text" ng-model="selque.cat">
     </div>
 
     <!--<label class="mk_label_stacked">Type</label>-->
@@ -32,24 +41,27 @@
 
 
     <div style="position: relative; clear: both">
-        <p><b>Save answers in consumer attribute:</b></p>
-        <ul class="mk_hroptlist">
-            <li>
-                <label class="mk_label">Pick existing</label>
-                <input style="float:left;margin-left: 5px;" ng-model="customField" value="Existing" type="radio">
-            </li>
-            <li>
-                <label style="margin-left: 20px;" class="mk_label">Create new</label>
-                <input style="float:left;margin-left: 5px;" ng-model="customField" value="New" type="radio">
-            </li>
-        </ul>
-        <label class="mk_label_stacked">Consumer Attibute</label>
+        <div class="form-group">
+            <p><b>Save answers in consumer attribute:</b></p>
+            <ul class="mk_hroptlist">
+                <li>
+                    <label class="mk_label">Pick existing</label>
+                    <input style="float:left;margin-left: 5px;" ng-model="customField" value="Existing" type="radio">
+                </li>
+                <li>
+                    <label style="margin-left: 20px;" class="mk_label">Create new</label>
+                    <input style="float:left;margin-left: 5px;" ng-model="customField" value="New" type="radio">
+                </li>
+            </ul>
+        </div>
+        <div class="form-group">
         <div style="position:relative;margin: 5px">
             <select ng-show="customField == 'Existing'" ng-options="o.fldname as o.label for o in customAtts" ng-change="onFieldChange()" ng-model="selque.value" ng-change="onSelectField()"></select>
             <div ng-show="customField == 'Existing'" class="btn" ng-click="deleteSelField()">x</div>
         </div>
 
         <input ng-show="customField == 'New'" type="text" ng-model="ca.label">
+        </div>
     </div>
 </div>
 
@@ -57,7 +69,7 @@
     <h4>Responses</h4>
 
     <div style="width:100%">
-        <div class="btn btn-small" ng-click="newAnswer(selque)">+</div>
+        <button class="btn btn-success btn-sm" ng-click="newAnswer(selque)"><i class="fa fa-plus"></i> Response</button>
         <div ui-sortable="sortableOptions" ng-model="selque.responses">
             <div style="height: 100px; clear: both" ng-repeat="a in selque.responses" ng-class-odd="'odd_row'" ng-class-even="'even_row'">
                 <div class="mkResponseField"><img width="30" height="50" ng-src="{{a.imageUrl}}"><mk-upload label="Change" path="image/upload" fnc="onAnswerImgUploaded($event, a)"></mk-upload></div>

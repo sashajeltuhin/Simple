@@ -1,14 +1,31 @@
 function dashctrl($scope, $http, adminservice){
-    var tenObj = adminservice.getTenant();
-    loadreport('consumer', {tenant:tenObj.name});
+
+    refresh();
 
     $scope.$on("EV_TENANT_PICKED", function(event, t){
-        loadreport("consumer", {tenant:t.name});
+        refresh();
     });
 
-    function loadreport(obj, filter){
+    function refresh(){
+        var tenObj = adminservice.getTenant();
+        $scope.providers = tenObj.providers == undefined? 0 : tenObj.providers.length;
+
+        loadreport('consumer', {tenant:tenObj.name}, function(data){
+            $scope.total = data;
+        });
+        loadreport('consumer', {tenant:tenObj.name, type:'client'}, function(data){
+            $scope.orders = data;
+        });
+        loadreport('user', {tenant:tenObj.name}, function(data){
+            $scope.admins = data;
+        });
+    }
+
+    function loadreport(obj, filter, callback){
         adminservice.total(obj, filter, $http, function(d){
-            $scope.total = d.data;
+            if (callback !== undefined){
+                callback(d.data);
+            }
         });
     }
 }

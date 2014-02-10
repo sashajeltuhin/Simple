@@ -11,14 +11,14 @@
                 <small class="text-muted text-uc">Consumers</small>
             </a>
         </div>
-        <div class="col-sm-6 col-md-3 padder-v b-r b-light lt">
+        <div class="col-sm-6 col-md-3 padder-v b-r b-light">
                     <span class="fa-stack fa-2x pull-left m-r-sm">
                       <i class="fa fa-circle fa-stack-2x text-primary"></i>
                       <i class="fa fa-random fa-stack-1x text-white"></i>
                       <span class="easypiechart pos-abt" data-percent="100" data-line-width="4" data-track-Color="#fff" data-scale-Color="false" data-size="50" data-line-cap='butt' data-animate="2000" data-target="#bugs" data-update="3000"></span>
                     </span>
             <a class="clear" href="#">
-                <span class="h3 block m-t-xs"><strong id="bugs">7</strong></span>
+                <span class="h3 block m-t-xs"><strong id="bugs">{{providers}}   </strong></span>
                 <small class="text-muted text-uc">Providers</small>
             </a>
         </div>
@@ -29,7 +29,7 @@
                       <span class="easypiechart pos-abt" data-percent="100" data-line-width="4" data-track-Color="#f5f5f5" data-scale-Color="false" data-size="50" data-line-cap='butt' data-animate="3000" data-target="#firers" data-update="5000"></span>
                     </span>
             <a class="clear" href="#">
-                <span class="h3 block m-t-xs"><strong id="firers">359</strong></span>
+                <span class="h3 block m-t-xs"><strong id="firers">{{orders}}</strong></span>
                 <small class="text-muted text-uc">Orders</small>
             </a>
         </div>
@@ -40,7 +40,7 @@
                       <span class="easypiechart pos-abt" data-percent="100" data-line-width="4" data-track-Color="#f5f5f5" data-scale-Color="false" data-size="50" data-line-cap='butt' data-animate="3000" data-target="#firers" data-update="5000"></span>
                     </span>
             <a class="clear" href="#">
-                <span class="h3 block m-t-xs"><strong id="admins">3</strong></span>
+                <span class="h3 block m-t-xs"><strong id="admins">{{admins}}</strong></span>
                 <small class="text-muted text-uc">Admin Users</small>
             </a>
         </div>
@@ -51,7 +51,7 @@
         <section class="panel panel-default">
             <header class="panel-heading font-bold">Multiple</header>
             <div class="panel-body">
-                <chart-gen opt="gaugeOpt"></chart-gen>
+                <chart-gen style="position: relative; width: 450px; height: 300px; margin: 20px" opt="gaugeOpt"></chart-gen>
             </div>
         </section>
     </div>
@@ -59,7 +59,7 @@
         <section class="panel panel-default">
             <header class="panel-heading font-bold">Real-time update</header>
             <div class="panel-body">
-                <chart-gen opt="abanOpt"></chart-gen>
+                <chart-gen style="position: relative; width: 450px; height: 300px; margin: 20px" opt="abanOpt"></chart-gen>
             </div>
         </section>
     </div>

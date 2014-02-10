@@ -1,0 +1,22 @@
+<div class="timelinehor">
+    <article class="timeline-item-hor">
+
+    </article>
+
+    <div ui-sortable="sortableOptions" ng-model="q.responses">
+        <article class="timeline-item-hor" ng-repeat="r in q.responses">
+            <div class="timeline-caption">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <span class="arrow left"></span>
+                        <span class="timeline-icon"><i class="fa fa-question time-icon bg-primary"></i></span>
+                        <span class="timeline-date">{{r.label}}</span>
+                        <p>
+                            {{r.link.label}}
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </article>
+    </div>
+</div>

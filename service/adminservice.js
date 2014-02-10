@@ -347,7 +347,7 @@ angular.module('cart').factory('adminservice', function($q, $cookies) {
         for(var key in meta){
             var metafld = meta[key];
             if (metafld.editable == true){
-                var block = $('<div class="control-group"><label class="control-label">' + metafld.label + '</label></div>').appendTo(top);
+                var block = $('<div class="form-group"><label class="control-label">' + metafld.label + '</label></div>').appendTo(top);
                 var w =  $('<div class="controls"></div>').appendTo(block);
                 var inputtype = 'text';
                 switch (metafld.fldtype){
@@ -362,7 +362,7 @@ angular.module('cart').factory('adminservice', function($q, $cookies) {
                 var atts = '';
 
                 var opts = null;
-                if (optionscallback !== undefined){
+                if (optionscallback !== undefined && optionscallback !== null){
                     opts = optionscallback(metafld, obj);
                 }
                 if (opts == null){
@@ -370,14 +370,14 @@ angular.module('cart').factory('adminservice', function($q, $cookies) {
                 }
 
                 if(opts !== undefined && opts.length > 0){
-                    var sel = $('<select ng-model="obj.' + metafld.fldname + '"></select>').appendTo(w);
+                    var sel = $('<select class="form-control" ng-model="obj.' + metafld.fldname + '"></select>').appendTo(w);
                     $.each(opts, function(i, o){
                         var optval = metafld.optfld !== undefined ? o[metafld.optfld] : o;
                         sel.append('<option value="' + optval + '">'+ optval +'</option>');
                     });
                 }
                 else{
-                    var ed = inputtype == 'textarea' ? '<textarea ng-model="obj.' + metafld.fldname + '" ></textarea>': '<input type="' + inputtype + '" ng-model="obj.' + metafld.fldname + '" class="' + cls + '" ' + atts + '>';
+                    var ed = inputtype == 'textarea' ? '<textarea class="form-control" ng-model="obj.' + metafld.fldname + '" ></textarea>': '<input class="form-control" type="' + inputtype + '" ng-model="obj.' + metafld.fldname + '" class="' + cls + '" ' + atts + '>';
                     var ctrl = $(ed).appendTo(w);
                 }
             }

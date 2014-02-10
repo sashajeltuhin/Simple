@@ -272,3 +272,35 @@
     height:100%;
     min-height: 600px;
 }
+
+
+.timelinehor {
+    display: table;
+    height: 100%;
+    border-spacing: 0;
+    table-layout: fixed;
+    position: relative;
+    border-collapse: collapse;
+}
+.timelinehor:before {
+    content: "";
+    height: 6px;
+    margin-top: -4px;
+    position: absolute;
+    top: 50%;
+    top: 0;
+    right: 30px;
+    background-color: #ddd;
+    z-index: 0;
+}
+
+.timeline-item-hor {
+    display: table-cell;
+}
+
+.timeline-caption .panel .sub1 {
+    display: inline-block;
+    position: relative;
+    margin-left: 35px;
+    text-align: left;
+}

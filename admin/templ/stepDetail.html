@@ -1,0 +1,109 @@
+<div  ng-controller="templateCtrl">
+<section class="panel panel-default">
+    <div class="row m-l-none m-r-none">
+        <div class="col-lg-6">
+            <h3 class="m-b-none">{{viewTitle}}</h3>
+        </div>
+        <div class="col-lg-6" ng-include="subTools">
+        </div>
+    </div>
+</section>
+<section class="vbox">
+<header class="header bg-white b-b b-light">
+    <p>{{obj.title}}</p>
+</header>
+<section>
+<section class="hbox stretch">
+<aside class=" bg-light lter b-r">
+<section class="hbox stretch">
+<section class="vbox">
+<header class="header bg-light bg-gradient">
+    <ul class="nav nav-tabs nav-white">
+        <li class="active"><a href="#main" data-toggle="tab">Properties</a></li>
+        <li class=""><a href="#edit" ng-click="showRaw()" data-toggle="tab">Editor</a></li>
+        <li class=""><a href="#ques" ng-click="editSurvey()" data-toggle="tab" ng-show="obj.isSurvey">Questions</a></li>
+        <li class=""><a href="#preview" ng-click="showTemplate()" data-toggle="tab">Preview</a></li>
+        <li class=""><a href="#int" ng-click="showIntscript()" data-toggle="tab">Integration</a></li>
+    </ul>
+</header>
+<section class="vbox">
+<div class="tab-content">
+<div class="tab-pane active" id="main">
+    <div class="col-lg-4 wrapper bg-light lter">
+        <div dynamic="propsEl"></div>
+    </div>
+</div>
+<div class="tab-pane" id="edit">
+    <div class="line pull-in"></div>
+    <textarea class="form-control no-border" rows="30" placeholder="HTML template text..." ng-model="obj.rawhtml" mk-keydown="tmplkeydown($event)"></textarea>
+</div>
+<div class="tab-pane" id="ques" ng-show="obj.isSurvey" ng-include="modalTabPage">
+
+</div>
+<div class="tab-pane" id="preview">
+    <iframe style="width: 100%; min-height: 600px" ng-src="{{masterTmpl}}?step={{obj._id}}"></iframe>
+
+</div>
+<div class="tab-pane" id="int">
+    <div class="line pull-in"></div>
+    <textarea class="form-control no-border" rows="30" placeholder="Integration script..." ng-model="obj.integration"></textarea>
+
+</div>
+</div>
+</section>
+</section>
+</section>
+</aside>
+<!--<aside class="col-lg-4 b-l">-->
+    <!--<section class="vbox">-->
+        <!--<section>-->
+            <!--<div class="wrapper">-->
+                <!--<section class="panel panel-default">-->
+                    <!--<form>-->
+                        <!--<textarea class="form-control no-border" rows="3" placeholder="Quick message..."></textarea>-->
+                    <!--</form>-->
+                    <!--<footer class="panel-footer bg-light lter">-->
+                        <!--<button class="btn btn-info pull-right btn-sm">POST</button>-->
+                        <!--<ul class="nav nav-pills nav-sm">-->
+                            <!--<li><a href="#"><i class="fa fa-camera text-muted"></i></a></li>-->
+                            <!--<li><a href="#"><i class="fa fa-video-camera text-muted"></i></a></li>-->
+                        <!--</ul>-->
+                    <!--</footer>-->
+                <!--</section>-->
+                <!--<section class="panel panel-default">-->
+                    <!--<h4 class="font-thin padder">Latest Tweets</h4>-->
+                    <!--<ul class="list-group">-->
+                        <!--<li class="list-group-item">-->
+                            <!--<p>Wellcome <a href="#" class="text-info">@Drew Wllon</a> and play this web application template, have fun1 </p>-->
+                            <!--<small class="block text-muted"><i class="fa fa-clock-o"></i> 2 minuts ago</small>-->
+                        <!--</li>-->
+                        <!--<li class="list-group-item">-->
+                            <!--<p>Morbi nec <a href="#" class="text-info">@Jonathan George</a> nunc condimentum ipsum dolor sit amet, consectetur</p>-->
+                            <!--<small class="block text-muted"><i class="fa fa-clock-o"></i> 1 hour ago</small>-->
+                        <!--</li>-->
+                        <!--<li class="list-group-item">-->
+                            <!--<p><a href="#" class="text-info">@Josh Long</a> Vestibulum ullamcorper sodales nisi nec adipiscing elit. </p>-->
+                            <!--<small class="block text-muted"><i class="fa fa-clock-o"></i> 2 hours ago</small>-->
+                        <!--</li>-->
+                    <!--</ul>-->
+                <!--</section>-->
+                <!--<section class="panel clearfix bg-info lter">-->
+                    <!--<div class="panel-body">-->
+                        <!--<a href="#" class="thumb pull-left m-r">-->
+                            <!--<img src="images/avatar.jpg" class="img-circle">-->
+                        <!--</a>-->
+                        <!--<div class="clear">-->
+                            <!--<a href="#" class="text-info">@Mike Mcalidek <i class="fa fa-twitter"></i></a>-->
+                            <!--<small class="block text-muted">2,415 followers / 225 tweets</small>-->
+                            <!--<a href="#" class="btn btn-xs btn-success m-t-xs">Follow</a>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</section>-->
+            <!--</div>-->
+        <!--</section>-->
+    <!--</section>-->
+<!--</aside>-->
+</section>
+</section>
+</section>
+</div>

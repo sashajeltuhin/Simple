@@ -1,6 +1,7 @@
 function userctrl($scope, $http, adminservice){
     $scope.rootUrl = topUrl;
     $scope.selUser = adminservice.getSelUser();
+    $scope.selTenant = adminservice.getTenant();
     if ($scope.selUser._id !== undefined){
         var date = new Date($scope.selUser.startDate);
         $scope.since = date.getMonth() + ' ' + date.getFullYear();
@@ -17,7 +18,9 @@ function userctrl($scope, $http, adminservice){
         }
     }
     else{
-
+        if ($scope.selUser.imageUrl == undefined){
+            $scope.selUser.imageUrl  = $scope.selTenant.userImageUrl;
+        }
     }
 
     $scope.onProfileImage = function(event){
@@ -78,6 +81,10 @@ function userctrl($scope, $http, adminservice){
         });
     }
 
+    $scope.saveObj = function(){
+        saveUser();
+    }
+
     function saveUser(callback){
         adminservice.saveObj($scope.selUser, 'user', $http, function(d){
             $scope.selUser = d;
@@ -87,7 +94,7 @@ function userctrl($scope, $http, adminservice){
         });
     }
 
-    $scope.openNewUser = function(){
+    $scope.openNew = function(){
         adminservice.setSelUser({});
         var obj = {};
         obj.view = 'createUser.html';
@@ -96,16 +103,19 @@ function userctrl($scope, $http, adminservice){
     }
 
     $scope.createUser = function(){
-        $scope.selUser.tenant = adminservice.getTenant().name;
-        $scope.selUser.tid = adminservice.getTenant()._id;
+
+        $scope.selUser.tenant = $scope.selTenant.name;
+        $scope.selUser.tid = $scope.selTenant._id;
         $scope.selUser.tenants = [];
         $scope.selUser.tenants.push($scope.selUser.tid);
         $scope.selUser.startDate = new Date();
+
         saveUser(function(){
             adminservice.setSelUser($scope.selUser);
             var obj = {};
             obj.view = 'adminprofile.html';
             obj.title = "User Management";
+            obj.toolbar = 'secTools.html';
             $scope.$emit("EV_SWITCH_VIEW", obj);
         });
     }

@@ -8,8 +8,9 @@ function tenantctrl($scope, $http, adminservice){
     if ($scope.selTenant.providers == undefined){
         $scope.selTenant.providers = [];
         $scope.myproviders = [];
-
-
+    }
+    if ($scope.selTenant.sessionTimeout == undefined){
+        $scope.selTenant.sessionTimeout = 24;
     }
 
     function getDummyProv(){
@@ -25,6 +26,12 @@ function tenantctrl($scope, $http, adminservice){
     $scope.onTenantLogo = function(event){
         var url = event.url.replace(topUrl, "");
         $scope.selTenant.logo = url;
+        saveTenant();
+    }
+
+    $scope.onUserAvatar = function(event){
+        var url = event.url.replace(topUrl, "");
+        $scope.selTenant.userImageUrl = url;
         saveTenant();
     }
 
@@ -97,6 +104,35 @@ function tenantctrl($scope, $http, adminservice){
             if (callback !== undefined){
                 callback();
             }
+        });
+    }
+
+    $scope.saveObj = function(){
+        saveTenant();
+    }
+
+    $scope.loadDepts = function(){
+        $scope.newDept = {};
+        if ($scope.selTenant.departments == undefined){
+            $scope.selTenant.departments = [];
+        }
+    }
+
+    $scope.addDept = function(){
+        $scope.selTenant.departments.push($scope.newDept);
+        saveTenant(function(){
+            $scope.loadDepts();
+        });
+    }
+
+    $scope.removeDept = function(d){
+        for(var i = $scope.selTenant.departments.length - 1; i >=0; i--){
+            if (d.name == $scope.selTenant.departments[i].name){
+                $scope.selTenant.departments.splice(i, 1);
+            }
+        }
+        saveTenant(function(){
+            $scope.loadDepts();
         });
     }
 

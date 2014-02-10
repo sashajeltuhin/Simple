@@ -1,5 +1,5 @@
 function surveyAdminCtrl($scope, $rootScope, $http, adminservice){
-    var serverUrl = topUrl + '/templ/';
+    var serverUrl = topUrl + adminURL + '/templ/';
     var imgUrl = '/tmp/images/';
     var QUE = "survey";
     var ANSWER = "response";
@@ -41,6 +41,7 @@ function surveyAdminCtrl($scope, $rootScope, $http, adminservice){
         });
         $scope.queTitle = "Edit Properties";
         $scope.modalSurveyPage = serverUrl + 'questionProps.html';
+        $scope.subTools = serverUrl + 'queTools.html';
     }
 
     $scope.backtoParent = function(){
@@ -176,7 +177,16 @@ function surveyAdminCtrl($scope, $rootScope, $http, adminservice){
         $scope.parent = null;
         var appObj = adminservice.getAppObj(appObj);
         adminservice.listObj(QUE, {app:appObj.appID, order_by:{order:1}}, $http, function(d){
-            $scope.queMap = d;
+            $scope.queMap = [];
+            for(var i = 0; i < d.length; i++){
+                $scope.queMap.push(d[i]);
+                for(var r = 0; r < d[i].responses.length; r++){
+                    if (d[i].responses[r].link !== undefined){
+                        $scope.queMap.push(d[i].responses[r].link);
+                    }
+                }
+            }
+            //$scope.queMap = d;
         });
         $scope.modalSurveyPage = serverUrl + 'survey.html';
     }

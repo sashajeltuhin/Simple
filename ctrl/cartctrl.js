@@ -24,7 +24,6 @@ function cartctrl($scope, $rootScope, $http, $location, cartservice){
     console.log($scope.c);
 
 
-
     $scope.start = function(z, cust, appType, extension, prod, exCart){
         cust.zip = z;
         cartservice.setExCart(exCart);

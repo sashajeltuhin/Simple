@@ -1,6 +1,9 @@
 function templateCtrl($scope, $rootScope, $http, adminservice){
-    var serverUrl = topUrl + '/templ/';
-    showHtml();
+    var serverUrl = topUrl + adminURL + '/templ/';
+    adminservice.loadMeta('step', $http, function(meta){
+        $scope.propsEl = adminservice.buildForm(meta, null, $scope.obj);
+    });
+    //showHtml();
 
     function init(){
         var stepID = $scope.obj._id;

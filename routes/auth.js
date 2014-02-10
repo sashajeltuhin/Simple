@@ -46,20 +46,67 @@ module.exports = {
            }
             else if (data.length > 0){
                var s = data[0];
-               var now = new Date();
-               var milInHour = 60 * 60 * 1000;
-               var diff = Math.abs(now.getTime() - s.time.getTime())/milInHour;
-               if (diff > 0 && diff < 24){
-                   res.send(s);
-               }
-               else{
-                   res.send({});
-               }
+               session.getTimeOut(s, function(time){
+                   var now = new Date();
+                   var milInHour = 60 * 60 * 1000;
+                   var diff = Math.abs(now.getTime() - s.time.getTime())/milInHour;
+                   if (diff > 0 && diff < time){
+                       res.send(s);
+                   }
+                   else{
+                       res.send({});
+                   }
+               })
            }
             else{
                res.send({});
            }
         });
+    },
+    applyRowFilter: function(req, res, userFilter, secFilter){
+        if (req.user == undefined){
+            res.send(400, {"err": 'Unauthorized to access data'});
+        }
+        else{
+            for(var key in secFilter){
+                var fieldValue = req.user[secFilter[key]]; //assumed to be an array
+                if (userFilter[key] !== undefined && fieldValue.length > 0){
+                    var userValue = userFilter[key].val !== undefined? userFilter[key].val : userFilter[key];
+                    var allowed = [];
+                        if (Array.isArray(userValue)){
+                            if (userFilter[key].oper !== undefined && userFilter[key].oper == "<>"){//remove excluded from the allowed list
+                                for(var i = 0; i < fieldValue.length; i++){
+                                    if (userValue.indexOf(fieldValue[i]) < 0){
+                                        allowed.push(fieldValue[i]);
+                                    }
+                                }
+                            }
+                            else{
+                                for(var i = 0 ; i < userValue.length; i++){
+                                    if (fieldValue.indexOf(userValue[i]) >= 0){
+                                        allowed.push(userValue[i]);
+                                    }
+                                }
+                            }
+                            userFilter[key] = allowed;
+                        }
+                        else if (fieldValue.indexOf(userValue) < 0){ //single value
+                            userFilter[key] = fieldValue;
+                        }
+                        else if (fieldValue.indexOf(userFilter[key]) >= 0 && userFilter[key].oper == "<>"){
+                            for(var i = 0; i < fieldValue.length; i++){
+                                if (userValue!== fieldValue[i]){
+                                    allowed.push(fieldValue[i]);
+                                }
+                            }
+                            userFilter[key] = allowed;
+                        }
+
+                }else if(userFilter[key] == undefined && fieldValue.length > 0) {
+                    userFilter[key] = fieldValue;
+                }
+            }
+        }
     },
     createPass: function (rawPass){
         var p = sha._sha512crypt_intermediate(rawPass, salt);

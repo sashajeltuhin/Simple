@@ -1,5 +1,6 @@
 var db = require('../db/dbaccess');
 var mongo = require('mongodb');
+var tenant = require('./tenant');
 var ObjectID = mongo.ObjectID;
 var dbname = 'ShopDB';
 
@@ -66,6 +67,7 @@ exports.newSession = function(user, callback){
     db.setDB(dbname);
     var session = {};
     session.uid = user._id;
+    session.tid = user.tid;
     session.fname = user.fname;
     session.lname = user.lname;
     session.imageUrl = user.imageUrl;
@@ -76,6 +78,20 @@ exports.newSession = function(user, callback){
         }
         else{
             callback(null, rec);
+        }
+    })
+}
+
+exports.getTimeOut = function(s, callback){
+    tenant.loadByID(s.tid, function(err, t){
+        if(err !== null){
+            callback(-1);
+        }
+        else if (t.length > 0 && t[0].sessionTimeout !== undefined){
+            callback(t[0].sessionTimeout);
+        }
+        else{
+            callback(-1);
         }
     })
 }

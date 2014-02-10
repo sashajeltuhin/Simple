@@ -19,7 +19,7 @@ angular.module('cart').factory('cartservice', function($http) {
     var localCart = {};
     var tenant = '';
     var appObj = {};
-    var singleTempl = "";
+    var singleTempl = null;
     var teaserProd = null;
 
     service.getSocket = function(){
@@ -237,7 +237,7 @@ angular.module('cart').factory('cartservice', function($http) {
             $http.post(url, f).success(function(st){
                     console.log(st);
                     $.each(st, function(i, s){
-                        if (admin == true && singleTempl !== ""){
+                        if (admin == true && singleTempl !== null && singleTempl.length > 0){
                             if (singleTempl === s._id){
                                 steps[0] = s;
                                 stepNames[s._id] = 0;
@@ -249,7 +249,7 @@ angular.module('cart').factory('cartservice', function($http) {
                         }
                     });
                     singleTempl = "";
-                    curstep = st[0];
+                    curstep = steps[0];
                     if (appObj.agent !== "agent"){
                         service.customer.OS = BrowserDetect.OS;
                         service.customer.browser = BrowserDetect.browser;
@@ -290,8 +290,8 @@ angular.module('cart').factory('cartservice', function($http) {
     service.getIPinfo = function(callback){
         if (appObj.agent !== "agent"){
             console.log("Getting IP info");
-            //var ipURL = extenstion == true?'http://www.codehelper.io/api/ips/' : 'http://www.codehelper.io/api/ips/?js&callback=?';
-            var ipURL = 'http://www.codehelper.io/api/ips/';
+            var ipURL = admin == false ? 'http://www.codehelper.io/api/ips/' : 'http://www.codehelper.io/api/ips/?js&callback=?';
+            //var ipURL = 'http://www.codehelper.io/api/ips/';
             $.getJSON(ipURL, function(response) {
                 service.customer.IP = response.IP;
                 service.customer.city = response.CityName;

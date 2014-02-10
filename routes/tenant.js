@@ -15,7 +15,9 @@ var handleError = function(res, msg, err){
 exports.list = function (req, res){
     db.setDB(dbname);
     var userFilter = req.body;
-    console.log(req.user);
+    var secFilter = {_id: 'tenants'};
+//    auth.applyRowFilter(req, res, userFilter, secFilter);
+
     var filter = db.getFilter(userFilter);
     db.load(colName, filter, function(err, recs){
         if (err !== null){
@@ -23,6 +25,19 @@ exports.list = function (req, res){
         }
         else{
             res.send(recs);
+        }
+    });
+}
+
+exports.loadByID = function(tid, callback){
+    db.setDB(dbname);
+    var filter = db.getFilter({_id: tid});
+    db.load(colName, filter, function(err, recs){
+        if (err !== null){
+            callback(err, null);
+        }
+        else{
+            callback(null, recs);
         }
     });
 }

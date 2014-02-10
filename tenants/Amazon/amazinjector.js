@@ -29,19 +29,31 @@ function onStep (step){
             //$('#bv_cart_cont').insertAfter($('#BUYBOX')); detail
 
             //$('#bv_cart_cont').insertBefore($('#cart-item-recs div:first')); //cart vert
-            $('#bv_cart_cont').insertAfter($('#cart-gutter'));
+            if ($('#cart-gutter').length > 0){
+                $('#bv_cart_cont').insertAfter($('#cart-gutter'));
+            }else{
+                $('#bv_cart_cont').insertAfter($('#sc-buy-box'));
+            }
+            //$('#bv_cart_cont').insertAfter($('#sc-buy-box'));
         }
         else if (step.name == 'teaser' && step.app == 'AZ2')
         {
             console.log('adding step 1 AZ2');
-            var lst = $('#cartRecsButtonWrapper').find('ul');
+            //var lst = $('#cartRecsButtonWrapper').find('ul');
+            var lst = $('#a-carousel-viewport').find('ol');
             lst.prepend($('#bv_cart_cont')); // cart hor
         }
         else{// (step.order == 2){
             console.log('adding step 2');
 //            $('#cart-standard-center').children().hide();
             console.log($('#cart-upsell'));
-            $('#bv_cart_cont').insertAfter($('#cart-upsell'));
+            if ($('#cart-upsell').length > 0){
+                $('#bv_cart_cont').insertAfter($('#cart-upsell'));
+            }
+            else{
+                $('#bv_cart_cont').insertAfter($('#sc-upsell'));
+            }
+            //$('#bv_cart_cont').insertAfter($('#sc-upsell'));
 
         }
     }
@@ -54,14 +66,25 @@ $(document).ready(function(){
 //        // Here you can use anything you defined in the loaded script
 //    });
     console.log("document ready");
+    var pctrl = {};
     var cont = $.find('#cart-subtotal');
+    if (cont.length > 0){
+        pctrl= $('#cart-subtotal').find('.ourprice');
+    }
+    else{
+        cont = $.find('#sc-buy-box');
+        pctrl= $('#sc-buy-box').find('.a-color-price');
+    }
+    //var cont = $.find('#sc-buy-box');
     console.log(cont);
     if (cont.length > 0)
     {
         where = 'cart';
 
     //cart
-    var pctrl= $('#cart-subtotal').find('.ourprice');
+
+    //var pctrl= $('#cart-subtotal').find('.ourprice');
+    //var pctrl= $('#sc-buy-box').find('.a-color-price');
     console.log(pctrl);
     var price = pctrl.html();
     if (price.indexOf('$') !== -1){

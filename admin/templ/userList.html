@@ -20,7 +20,7 @@
         <img ng-src="{{rootUrl}}{{u.imageUrl}}" class="img-circle">
     </a>
     <a href="#" class="clear" ng-click="openDetail(u)">
-        <span class="pull-right label label-sm bg-primary text-uc">{{u.dept}}</span>
+        <span class="pull-right label label-sm bg-primary text-uc">{{u.dept.name}}</span>
         <strong>{{u.fname}} {{u.lname}}</strong>
         <span>Since {{u.startDate}}</span>
     </a>

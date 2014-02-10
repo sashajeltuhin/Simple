@@ -101,8 +101,9 @@
 <header class="header bg-light bg-gradient">
     <ul class="nav nav-tabs nav-white">
         <li class="active"><a href="#tenants" ng-click="loadProviders()" data-toggle="tab">Providers</a></li>
-        <li class=""><a href="#actions" ng-click="loadApps()" data-toggle="tab">Applications</a></li>
-        <li class=""><a href="#actions" ng-click="loadActions()" data-toggle="tab">Features</a></li>
+        <li class=""><a href="#apps" ng-click="loadApps()" data-toggle="tab">Applications</a></li>
+        <li class=""><a href="#depts" ng-click="loadDepts()" data-toggle="tab">Departments</a></li>
+        <li class=""><a href="#configs" data-toggle="tab">Settings</a></li>
     </ul>
 </header>
 <section class="vbox">
@@ -133,10 +134,67 @@
         <i class="fa fa-spinner fa fa-spin fa fa-large"></i>
     </div>
 </div>
-<div class="tab-pane" id="actions">
-    <div class="text-center wrapper">
-        <i class="fa fa-spinner fa fa-spin fa fa-large"></i>
-    </div>
+<div class="tab-pane" id="depts">
+    <section class="panel panel-default pos-rlt clearfix">
+        <header class="panel-heading">
+            <ul class="nav nav-pills pull-right">
+                <li>
+                    <a href="#" class="panel-toggle btn btn-default btn-sm m-b">
+                        <i class="fa fa-minus icon-muted text-active"></i>
+                        <i class="fa fa-plus icon-muted text"></i>Add</a>
+                </li>
+            </ul>New Department
+        </header>
+        <div class="panel-body clearfix collapse">
+            <div class="form-group"><input type="text" ng-model="newDept.name" class="form-control" placeholder="Name"> </div>
+            <button class="btn btn-success" ng-click="addDept()">Save</button>
+        </div>
+    </section>
+    <ul class="list-group no-radius m-b-none m-t-n-xxs list-group-lg no-border">
+        <li class="list-group-item" ng-repeat="d in selTenant.departments">
+    <span class="pull-right">
+        <a href="#" ng-click="removeDept(d)"><i class="fa fa-times icon-muted fa-fw"></i></a>
+     </span>
+            <a href="#" class="thumb-sm pull-left m-r-sm">
+                <i class="fa fa-tablet"></i>
+            </a>
+            <a href="#" class="clear">
+                <strong class="block">{{d.name}}</strong>
+            </a>
+        </li>
+    </ul>
+</div>
+<div class="tab-pane" id="configs">
+    <section class="vbox">
+        <section>
+            <div class="wrapper bg-light lter">
+                <div class="clearfix m-b">
+                    <a href="#" class="pull-left thumb m-r">
+                        <img ng-src="{{rootUrl}}{{selTenant.userImageUrl}}" class="img-circle">
+                        <mk-upload label="Change" path="app/upload/image" fnc="onUserAvatar($event)"></mk-upload>
+                    </a>
+                    <div class="clear">
+                        <div class="h4 m-t-xs m-b-xs">Default User Avatar</div>
+                        <!--<small class="text-muted"><i class="fa fa-map-marker"></i>{{selTenant.dept}}</small>-->
+                    </div>
+                    <div class="clear">
+                        <small class="text-muted"></i>Select an image that will appear as User Avatar by default</small>
+                    </div>
+                </div>
+                <div class="clearfix m-b">
+                    <div class="row">
+                    <div class="form-group col-md-3">
+                    <label>Session timeout</label>
+                        <div class="input-group m-b"><span class="input-group-addon"><i class="fa fa-clock-o icon"></i></span>
+                            <input type="text" placeholder="Session timeout" ng-model="selTenant.sessionTimeout" class="form-control" style="text-align:right">
+                            <span class="input-group-addon">hr</span>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </section>
 </div>
 </div>
 </section>
