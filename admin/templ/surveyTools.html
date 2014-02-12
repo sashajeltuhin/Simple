@@ -1,3 +1,13 @@
-<div class="container" ng-controller="surveyAdminCtrl">
+<div style="position: relative" ng-controller="surveyAdminCtrl">
+    <section class="panel panel-default">
+        <div class="row m-l-none m-r-none">
+            <div class="col-lg-6">
+                <h3 class="m-b-none">{{viewTitle}}</h3>
+            </div>
+            <div class="col-lg-6" ng-include="subTools">
+            </div>
+        </div>
+    </section>
+
     <div ng-include="modalSurveyPage"></div>
 </div>

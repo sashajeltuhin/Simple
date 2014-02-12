@@ -7,6 +7,12 @@ function surveyAdminCtrl($scope, $rootScope, $http, adminservice){
 
     init();
 
+    $scope.sortableOptions = {
+        update: function(e, ui){
+            updateMapOrder();
+        }
+    };
+
     function init(){
         loadCustAtts();
         adminservice.loadMeta(QUE, $http, function(meta){
@@ -175,28 +181,45 @@ function surveyAdminCtrl($scope, $rootScope, $http, adminservice){
     function openqueMap(){
         $scope.linkedAnswer = null;
         $scope.parent = null;
+
         var appObj = adminservice.getAppObj(appObj);
         adminservice.listObj(QUE, {app:appObj.appID, order_by:{order:1}}, $http, function(d){
             $scope.queMap = [];
-            for(var i = 0; i < d.length; i++){
-                $scope.queMap.push(d[i]);
-                for(var r = 0; r < d[i].responses.length; r++){
-                    if (d[i].responses[r].link !== undefined){
-                        $scope.queMap.push(d[i].responses[r].link);
-                    }
-                }
-            }
-            //$scope.queMap = d;
+            $scope.queParents = d;
+            refreshqueMap();
         });
         $scope.modalSurveyPage = serverUrl + 'survey.html';
     }
 
+    function refreshqueMap(){
+        $scope.queMap = [];
+        for(var i = 0; i < $scope.queParents.length; i++){
+            $scope.queMap.push($scope.queParents[i]);
+            for(var r = 0; r < $scope.queParents[i].responses.length; r++){
+                if ($scope.queParents[i].responses[r].link !== undefined){
+                    $scope.queMap.push($scope.queParents[i].responses[r].link);
+                }
+            }
+        }
+    }
+
+    function updateMapOrder(){
+        $.each($scope.queParents, function(i, item){
+            item.order = i + 1;
+        });
+        $scope.saveMap();
+    }
+
     $scope.saveMap = function(){
-        $.each($scope.queMap, function(i, q){
-            q.order = i + 1;
+        var c = 0;
+        $.each($scope.queParents, function(i, q){
             adminservice.saveObj(q, QUE, $http, function(p){
+                c++;
             });
         });
+        if (c == $scope.queParents.length){
+            openqueMap();
+        }
     }
 
     $scope.onFieldChange = function(){

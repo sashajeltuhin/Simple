@@ -1,6 +1,6 @@
 angular.module('cart').directive('mkKeydown',  function ($parse) {
     return function (scope, element, attrs) {
-        element.bind("keydown keypress", function (event) {
+        element.bind("keydown keypress mousedown", function (event) {
             var position = element[0].selectionStart;//window.getSelection().getRangeAt(0).startOffset;
             var fnc = $parse(attrs.mkKeydown);
             event.position = position;

@@ -111,7 +111,7 @@ var prepFilter = function(f){
                 filter.query[key] =  { $nin:v.val };
             }
         }
-        else if (String(key) == "_id"){
+        else if (String(key) == "_id" || String (key) == 'uid'){
             filter.query[key]  = new ObjectID(v);
         }
         else{

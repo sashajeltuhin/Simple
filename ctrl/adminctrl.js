@@ -125,25 +125,73 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
         } );
     }
 
-    $scope.deleteStep = function(s){
-        $scope.obj = s;
-        mkPopup(
-            {
-                template: '<div>Delete ' + s.title + '?</div>',
-                title: 'Warning',
-                scope: $scope,
-                backdrop: false,
-                success: {label: 'OK', fn: delStep},
-                cancel: {label: 'No'}
-            });
+//    $scope.deleteStep = function(s){
+//        $scope.obj = s;
+//        mkPopup(
+//            {
+//                template: '<div>Delete ' + s.title + '?</div>',
+//                title: 'Warning',
+//                scope: $scope,
+//                backdrop: false,
+//                success: {label: 'OK', fn: delStep},
+//                cancel: {label: 'No'}
+//            });
+//
+//    }
+//
+//    function delStep(){
+//        adminservice.deleteObj($scope.obj, 'step', $http, function(){
+//            refreshData();
+//        } );
+//    }
 
-    }
-
-    function delStep(){
-        adminservice.deleteObj($scope.obj, 'step', $http, function(){
-            refreshData();
+    $scope.deleteStep = function(s, siblings){
+        adminservice.deleteObj(s, 'step', $http, function(){
+            for(var i = siblings - 1; i >=0; i--){
+                if (s._id == siblings[i]._id){
+                    siblings.splice(i, 1);
+                }
+            }
         } );
     }
+
+    $scope.openWidgetDetail = function(w){
+        var appObj = getAppObj(w.app);
+        adminservice.setAppObj(appObj);
+        $scope.obj = w;
+        var obj = {};
+        obj.view = 'stepDetail.html';
+        obj.title = "Widget Configuration";
+        obj.toolbar = 'widgetTools.html';
+        $scope.$emit("EV_SWITCH_VIEW", obj);
+    }
+
+    $scope.createStep = function(app, siblings){
+        var obj = {};
+        obj.view = 'stepDetail.html';
+        obj.title = "New Flow Element";
+        obj.toolbar = 'widgetTools.html';
+        var def = {};
+        def.app = app.appID;
+        def.order = siblings.length + 1;
+        def.type = 'cart';
+        obj.def = def;
+        newObj(obj.title, obj.def, obj.view, obj.toolbar);
+    };
+
+    $scope.createWidget = function(app){
+        var obj = {};
+        obj.view = 'stepDetail.html';
+        obj.title = "New Widget";
+        obj.toolbar = 'widgetTools.html';
+        var def = {};
+        def.app = app.appID;
+        def.order = siblings.length + 1;
+        def.type = 'notify';
+        obj.def = def;
+        newObj(obj.title, obj.def, obj.view, obj.toolbar);
+    }
+
 
     function cleanFilter(){
         $scope.cleanFilter = {};
@@ -220,6 +268,10 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
                 refreshData();
             }
         }
+    }
+
+    $scope.saveObj = function(){
+        $scope.saveChanges();
     }
 
 
@@ -328,19 +380,19 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
         createObj('New Product');
     };
 
-    $scope.createStep = function(){
-        selected = 'step';
-        var def = {};
-        def.type = 'cart';
-        createObj('New Flow Element', def);
-    };
-
-    $scope.createWidget = function(){
-        selected = 'step';
-        var def = {};
-        def.type = 'notify';
-        createObj('New Widget', def);
-    }
+//    $scope.createStep = function(){
+//        selected = 'step';
+//        var def = {};
+//        def.type = 'cart';
+//        createObj('New Flow Element', def);
+//    };
+//
+//    $scope.createWidget = function(){
+//        selected = 'step';
+//        var def = {};
+//        def.type = 'notify';
+//        createObj('New Widget', def);
+//    }
 
     $scope.createQuestion = function(){
         selected = 'survey';
@@ -402,13 +454,23 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
 
     }
 
-    function newObj(heading, def){
+
+    function newObj(heading, def, wrap, tools){
         hideGrid();
         $scope.viewTitle = heading;
         adminservice.loadMeta(selected, $http, function(meta){
             $scope.obj = buildobj(meta, def);
-            $scope.wrapper = serverUrl + 'genericNew.html';
-            $scope.propsEl = buildForm(meta);
+            if (tools !== undefined){
+                $scope.subTools = serverUrl + tools;
+            }
+            if (wrap == undefined){
+                $scope.wrapper = serverUrl + 'genericNew.html';
+            }
+            else{
+                $scope.wrapper = serverUrl + wrap;
+            }
+
+            $scope.propsEl = buildForm(meta, $scope.obj);
         });
     }
 
@@ -765,9 +827,17 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
     }
 
     $scope.$on("EV_SWITCH_VIEW", function(event, obj){
+        if (obj.app !== undefined){
+            var appObj = getAppObj(obj.app);
+            adminservice.setAppObj(appObj);
+        }
         $scope.viewTitle = obj.title;
         $scope.subTools = serverUrl + obj.toolbar;
         $scope.wrapper = serverUrl + obj.view;
+    });
+
+    $scope.$on("EV_CREATE_OBJ", function(event, obj){
+        newObj(obj.title, obj.def, obj.view, obj.toolbar);
     });
 
     $scope.openMe = function(){
@@ -1095,6 +1165,7 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
     $scope.loadCartSteps = function(){
         selected = 'step';
         $scope.viewTitle = "User Flow";
+        $scope.subTools = serverUrl + 'widgetTools.html';
         $scope.stepApps = [];
         var extra = {};
         extra.type = 'cart';
@@ -1171,16 +1242,6 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
         return list;
     }
 
-    $scope.openWidgetDetail = function(w){
-        var appObj = getAppObj(w.app);
-        adminservice.setAppObj(appObj);
-        $scope.obj = w;
-        var obj = {};
-        obj.view = 'stepDetail.html';
-        obj.title = "Widget Configuration";
-        obj.toolbar = 'widgetTools.html';
-        $scope.$emit("EV_SWITCH_VIEW", obj);
-    }
 
     $scope.openStepInfo = function(step){
             step.isSurvey = step.name == "survey";
@@ -1238,6 +1299,7 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
         var appObj = getAppObj();
         adminservice.setAppObj(appObj);
         hideGrid();
+        $scope.subTools = serverUrl + 'queTools.html';
         $scope.wrapper = serverUrl + "surveyTools.html";
         $scope.viewTitle = "Survey Map";
     }

@@ -1,9 +1,11 @@
 function templateCtrl($scope, $rootScope, $http, adminservice){
     var serverUrl = topUrl + adminURL + '/templ/';
-    adminservice.loadMeta('step', $http, function(meta){
+    var STEP = 'step';
+    var carerpos = 0;
+    adminservice.loadMeta(STEP, $http, function(meta){
         $scope.propsEl = adminservice.buildForm(meta, null, $scope.obj);
     });
-    //showHtml();
+//    //showHtml();
 
     function init(){
         var stepID = $scope.obj._id;
@@ -30,10 +32,18 @@ function templateCtrl($scope, $rootScope, $http, adminservice){
     }
 
     $scope.insertBlock = function(b){
+        insertText(b.template, carerpos);
+    }
 
+    function insertText(text, position){
+        if (position !== undefined){
+            $scope.obj.rawhtml =
+                [$scope.obj.rawhtml.slice(0, position), text, $scope.obj.rawhtml.slice(position)].join('');
+        }
     }
 
     $scope.tmplkeydown = function(event){
+        carerpos = event.position + 1;
         if (event.metaKey || event.ctrlKey){
             if (event.which == 73){ //i
                 console.log('keydown ctrl - i', event);
@@ -64,6 +74,12 @@ function templateCtrl($scope, $rootScope, $http, adminservice){
 
     $scope.saveDraft = function(){
 
+    }
+
+    $scope.saveObj = function(){
+        adminservice.saveObj($scope.obj, STEP, $http, function(s){
+            $scope.loadCartSteps();
+        });
     }
 
     $scope.publishDraft = function(){

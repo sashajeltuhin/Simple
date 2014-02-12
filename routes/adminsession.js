@@ -14,7 +14,11 @@ var handleError = function(res, msg, err){
 
 exports.list = function (req, res){
     db.setDB(dbname);
-    var filter = db.getFilter(req.body);
+    var f = req.body;
+    if (f.uid !== undefined){
+        f.uid = new ObjectID(f.uid);
+    }
+    var filter = db.getFilter(f);
     console.log("consumer filter: ", filter);
     db.load(colName, filter, function(err, recs){
         if (err !== null){

@@ -5,6 +5,9 @@ function userctrl($scope, $http, adminservice){
     if ($scope.selUser._id !== undefined){
         var date = new Date($scope.selUser.startDate);
         $scope.since = date.getMonth() + ' ' + date.getFullYear();
+        loadreport('session', {uid: $scope.selUser._id}, function(data){
+            $scope.logins = data;
+        });
 
         if ($scope.selUser.tenants == undefined){
             $scope.selUser.tenants = [];
@@ -117,6 +120,14 @@ function userctrl($scope, $http, adminservice){
             obj.title = "User Management";
             obj.toolbar = 'secTools.html';
             $scope.$emit("EV_SWITCH_VIEW", obj);
+        });
+    }
+
+    function loadreport(obj, filter, callback){
+        adminservice.total(obj, filter, $http, function(d){
+            if (callback !== undefined){
+                callback(d.data);
+            }
         });
     }
 }

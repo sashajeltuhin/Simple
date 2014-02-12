@@ -298,9 +298,12 @@
     display: table-cell;
 }
 
-.timeline-caption .panel .sub1 {
+.timeline-caption .subpanel1 {
     display: inline-block;
     position: relative;
-    margin-left: 35px;
+    margin-left: 45px;
     text-align: left;
+    margin-bottom: 20px;
+    background-color: #ffffff;
+    border-color: #e8e8e8;
 }

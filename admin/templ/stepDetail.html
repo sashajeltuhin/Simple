@@ -34,8 +34,100 @@
     </div>
 </div>
 <div class="tab-pane" id="edit">
-    <div class="line pull-in"></div>
-    <textarea class="form-control no-border" rows="30" placeholder="HTML template text..." ng-model="obj.rawhtml" mk-keydown="tmplkeydown($event)"></textarea>
+    <section class="hbox stretch">
+        <div class="line pull-in"></div>
+        <textarea class="form-control no-border" rows="30" placeholder="HTML template text..." ng-model="obj.rawhtml" mk-keydown="tmplkeydown($event)"></textarea>
+        <aside class="bg-light lter b-r aside-md hidden-print nav-xs-right" id="editornav">
+            <section class="vbox">
+                <header class="header bg-primary lter text-center clearfix">
+                    <div class="row">
+                        <a href="#editornav" data-toggle="class:nav-xs" class="pull-left btn btn-sm btn-default btn-icon">
+                            <i class="fa fa-angle-right text"></i>
+                            <i class="fa fa-angle-left text-active"></i>
+                        </a>
+                        <div class="btn-group">
+                            <!--<button type="button" class="btn btn-sm btn-dark btn-icon"></button>-->
+                            <div class="btn-group hidden-nav-xs">
+                                <button type="button" class="btn btn-sm btn-primary" ng-click="load()">
+                                    Apply
+                                </button>
+                                <button type="button" class="btn btn-sm" ng-click="reset()">
+                                    Reset
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </header>
+                <section class="w-f ">
+                    <div class="slim-scroll" data-height="auto" data-disable-fade-out="true" data-distance="0" data-size="5px" data-color="#333333">
+
+                        <!-- nav -->
+                        <nav class="nav-primary hidden-xs">
+                            <ul class="nav">
+                                <li >
+                                    <a href="#"  >
+                                        <i class="fa fa-dashboard icon">
+                                            <b class="bg-danger"></b>
+                                        </i>
+                                        <span>Versions</span>
+                                    </a>
+                                    <ul class="nav lt" style="display: block">
+                                        <li ng-repeat="v in versions">
+                                            <a href="#/admin" ng-click="loadVersion(v)" >
+                                                <i class="fa fa-angle-right"></i>
+                                                <span>{{v.time}}</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li  class="active">
+                                    <a href="#layout"   class="active">
+                                        <i class="fa fa-filter icon">
+                                            <b class="bg-warning"></b>
+                                        </i>
+                            <span class="pull-right">
+                              <i class="fa fa-angle-down text"></i>
+                              <i class="fa fa-angle-up text-active"></i>
+                            </span>
+                                        <span>Actions</span>
+                                    </a>
+                                    <ul class="nav lt" style="display: block">
+                                        <li ng-repeat="ab in actionblocks">
+                                            <a href="#/admin" ng-click="insertBlock(ab)" >
+                                                <i class="fa fa-angle-right"></i>
+                                                <span>{{ab.name}}</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li  class="active">
+                                    <a href="#layout"   class="active">
+                                        <i class="fa fa-filter icon">
+                                            <b class="bg-warning"></b>
+                                        </i>
+                            <span class="pull-right">
+                              <i class="fa fa-angle-down text"></i>
+                              <i class="fa fa-angle-up text-active"></i>
+                            </span>
+                                        <span>Data</span>
+                                    </a>
+                                    <ul class="nav lt" style="display: block">
+                                        <li ng-repeat="db in datablocks">
+                                            <a href="#/admin" ng-click="insertBlock(db)" >
+                                                <i class="fa fa-angle-right"></i>
+                                                <span>{{db.name}}</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </nav>
+                        <!-- / nav -->
+                    </div>
+                </section>
+            </section>
+        </aside>
+    </section>
 </div>
 <div class="tab-pane" id="ques" ng-show="obj.isSurvey" ng-include="modalTabPage">
 
