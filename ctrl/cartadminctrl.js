@@ -70,12 +70,7 @@ function cartadminctrl($scope, $rootScope, $http, $location, cartservice){
             $scope.step = cartservice.currentstep();
             $scope.c = cartservice.getCustomer();
 
-            var passedstep = getURLParameter('step');
-
-            var single = cartservice.stepByName(passedstep);
-            var showstep = single !== null ? single : steps[0];
-            $scope.step = showstep;
-            $scope.changeView(showstep);
+            $scope.changeView($scope.step);
 
 
         });

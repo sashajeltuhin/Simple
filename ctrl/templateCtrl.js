@@ -1,17 +1,29 @@
 function templateCtrl($scope, $rootScope, $http, adminservice){
     var serverUrl = topUrl + adminURL + '/templ/';
     var STEP = 'step';
-    var carerpos = 0;
+    var caretpos = 0;
+
+
     adminservice.loadMeta(STEP, $http, function(meta){
         $scope.propsEl = adminservice.buildForm(meta, null, $scope.obj);
     });
+
+    init();
 //    //showHtml();
 
     function init(){
         var stepID = $scope.obj._id;
+        initDraft();
         adminservice.listObj('draft', {stepID:stepID}, $http, function(data){
             $scope.versions = data;
         });
+    }
+    function initDraft(){
+        $scope.draft = {};
+        $scope.draft.stepID = $scope.obj._id;
+        $scope.draft.type = $scope.obj.name;
+        $scope.draft.app = $scope.obj.app;
+        $scope.draft.tenant = adminservice.getTenant();
     }
 
     function showHtml(){
@@ -32,25 +44,25 @@ function templateCtrl($scope, $rootScope, $http, adminservice){
     }
 
     $scope.insertBlock = function(b){
-        insertText(b.template, carerpos);
+        insertText(b.template, caretpos);
     }
 
     function insertText(text, position){
         if (position !== undefined){
+            if ($scope.obj.rawhtml == undefined){
+                $scope.obj.rawhtml = "";
+            }
             $scope.obj.rawhtml =
                 [$scope.obj.rawhtml.slice(0, position), text, $scope.obj.rawhtml.slice(position)].join('');
         }
     }
 
     $scope.tmplkeydown = function(event){
-        carerpos = event.position + 1;
+        caretpos = event.position + 1;
         if (event.metaKey || event.ctrlKey){
             if (event.which == 73){ //i
                 console.log('keydown ctrl - i', event);
-                if (event.position !== undefined){
-                    $scope.obj.rawhtml =
-                        [$scope.obj.rawhtml.slice(0, event.position), '^^^', $scope.obj.rawhtml.slice(event.position)].join('');
-                }
+                insertText('^^^', caretpos);
             }
         }
     }
@@ -73,7 +85,15 @@ function templateCtrl($scope, $rootScope, $http, adminservice){
     }
 
     $scope.saveDraft = function(){
-
+        if ($scope.draft.time == undefined){
+            $scope.draft.time = new Date();
+        }
+        $scope.draft.changed = new Date();
+        $scope.draft.version = $scope.obj.rawhtml;
+        adminservice.saveObj($scope.draft, 'draft', $http, function(){
+            $scope.saveObj();
+            initDraft();
+        });
     }
 
     $scope.saveObj = function(){
@@ -82,8 +102,22 @@ function templateCtrl($scope, $rootScope, $http, adminservice){
         });
     }
 
-    $scope.publishDraft = function(){
+    $scope.publish = function(){
+        if ($scope.draft.time == undefined){
+            $scope.draft.time = new Date();
+        }
+        $scope.draft.changed = new Date();
+        $scope.draft.published = new Date();
+        $scope.draft.version = $scope.obj.rawhtml;
+        adminservice.saveObj($scope.draft, 'draft', $http, function(){
+            $scope.saveObj();
+            initDraft();
+        });
+    }
 
+    $scope.loadVersion = function(v){
+        $scope.draft.version = v.version;
+        $scope.obj.rawhtml = v.version;
     }
 
     $scope.showIntscript = function(){

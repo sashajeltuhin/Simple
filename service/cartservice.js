@@ -235,7 +235,6 @@ angular.module('cart').factory('cartservice', function($http) {
 
             var url = serverUrl + '/step/list';
             $http.post(url, f).success(function(st){
-                    console.log(st);
                     $.each(st, function(i, s){
                         if (admin == true && singleTempl !== null && singleTempl.length > 0){
                             if (singleTempl === s._id){
@@ -267,7 +266,7 @@ angular.module('cart').factory('cartservice', function($http) {
                             service.updateCustomer(function(c){
                                 service.customer = c;
                                 service.logAction("call_start", 0, true);
-                                callback(st);
+                                callback(steps);
                                 service.getIPinfo();
                             });
                         });
@@ -277,7 +276,7 @@ angular.module('cart').factory('cartservice', function($http) {
                         service.updateCustomer(function(c){
                             service.customer = c;
                             service.logAction("call_start", 0, true);
-                            callback(st);
+                            callback(steps);
                             service.getIPinfo();
                         });
                     }

@@ -175,6 +175,7 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
         def.app = app.appID;
         def.order = siblings.length + 1;
         def.type = 'cart';
+        def.rawhtml = "";
         obj.def = def;
         newObj(obj.title, obj.def, obj.view, obj.toolbar);
     };
@@ -188,6 +189,7 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
         def.app = app.appID;
         def.order = siblings.length + 1;
         def.type = 'notify';
+        def.rawhtml = "";
         obj.def = def;
         newObj(obj.title, obj.def, obj.view, obj.toolbar);
     }

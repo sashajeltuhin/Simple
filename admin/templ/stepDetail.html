@@ -2,16 +2,13 @@
 <section class="panel panel-default">
     <div class="row m-l-none m-r-none">
         <div class="col-lg-6">
-            <h3 class="m-b-none">{{viewTitle}}</h3>
+            <h3 class="m-b-none">{{viewTitle}} - {{obj.title}}</h3>
         </div>
         <div class="col-lg-6" ng-include="subTools">
         </div>
     </div>
 </section>
 <section class="vbox">
-<header class="header bg-white b-b b-light">
-    <p>{{obj.title}}</p>
-</header>
 <section>
 <section class="hbox stretch">
 <aside class=" bg-light lter b-r">
@@ -36,6 +33,74 @@
 <div class="tab-pane" id="edit">
     <section class="hbox stretch">
         <div class="line pull-in"></div>
+        <div class="btn-toolbar m-b-sm btn-editor">
+            <div class="btn-group">
+                <a class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" title="" data-original-title="Hyperlink"><i class="fa fa-save"></i>
+                </a>
+                <div class="dropdown-menu">
+                    <div class="input-group m-l-xs m-r-xs">
+                        <input class="form-control input-medium" placeholder="Comment" type="text" ng-model="draft.comment">
+                        <div class="input-group-btn">
+                            <button class="btn btn-default btn-sm" ng-click="saveDraft()" type="button">Save</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="btn-group">
+                <a class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" title="" data-original-title="Hyperlink"><i class="fa fa-eject"></i>
+                </a>
+                <div class="dropdown-menu">
+                    <div class="input-group m-l-xs m-r-xs">
+                        <input class="form-control input-medium" placeholder="Comment" type="text" data-edit="createLink">
+                        <div class="input-group-btn">
+                            <button class="btn btn-default btn-sm" ng-click="publish()" type="button">Publish</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="btn-group">
+                <div class="btn-group">
+                    <a class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" title="" data-original-title="Font"><i class="fa fa-bars"></i><b class="caret"></b>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li ng-repeat="ab in actionblocks">
+                            <a href="#/admin" ng-click="insertBlock(ab)" >
+                                <i class="fa fa-angle-right"></i>
+                                <span>{{ab.name}}</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="btn-group">
+                <div class="btn-group">
+                    <a class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" title="" data-original-title="Font"><i class="fa fa-bars"></i>Insert<b class="caret"></b>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li ng-repeat="db in datablocks">
+                            <a href="#/admin" ng-click="insertBlock(db)" >
+                                <i class="fa fa-angle-right"></i>
+                                <span>{{db.name}}</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="btn-group"> <a class="btn btn-default btn-sm" title="" id="pictureBtn" data-original-title="Insert picture (or just drag &amp; drop)"><i class="fa fa-picture-o"></i>
+            </a>
+                <input type="file" data-role="magic-overlay" data-target="#pictureBtn" data-edit="insertImage" style="opacity: 0; position: absolute; top: 0px; left: 0px; width: 35px; height: 30px; ">
+            </div>
+            <div class="btn-group">
+                <a class="btn btn-default btn-sm" data-edit="undo" title="" data-original-title="Undo (Ctrl/Cmd+Z)"><i class="fa fa-undo"></i>
+                </a>
+                <a class="btn btn-default btn-sm" data-edit="redo" title="" data-original-title="Redo (Ctrl/Cmd+Y)"><i class="fa fa-repeat"></i>
+                </a>
+            </div>
+            <input type="text" class="form-control-trans pull-left" data-edit="inserttext" id="voiceBtn" x-webkit-speech="" style="width: 25px; height: 28px; display: none; ">
+        </div>
         <textarea class="form-control no-border" rows="30" placeholder="HTML template text..." ng-model="obj.rawhtml" mk-keydown="tmplkeydown($event)"></textarea>
         <aside class="bg-light lter b-r aside-md hidden-print nav-xs-right" id="editornav">
             <section class="vbox">
@@ -45,17 +110,6 @@
                             <i class="fa fa-angle-right text"></i>
                             <i class="fa fa-angle-left text-active"></i>
                         </a>
-                        <div class="btn-group">
-                            <!--<button type="button" class="btn btn-sm btn-dark btn-icon"></button>-->
-                            <div class="btn-group hidden-nav-xs">
-                                <button type="button" class="btn btn-sm btn-primary" ng-click="load()">
-                                    Apply
-                                </button>
-                                <button type="button" class="btn btn-sm" ng-click="reset()">
-                                    Reset
-                                </button>
-                            </div>
-                        </div>
                     </div>
                 </header>
                 <section class="w-f ">
@@ -64,58 +118,23 @@
                         <!-- nav -->
                         <nav class="nav-primary hidden-xs">
                             <ul class="nav">
-                                <li >
-                                    <a href="#"  >
-                                        <i class="fa fa-dashboard icon">
+
+                                <li  class="active">
+                                    <a href="#layout"   class="active">
+                                        <i class="fa fa-filter icon">
                                             <b class="bg-danger"></b>
                                         </i>
+                            <span class="pull-right">
+                              <i class="fa fa-angle-down text"></i>
+                              <i class="fa fa-angle-up text-active"></i>
+                            </span>
                                         <span>Versions</span>
                                     </a>
                                     <ul class="nav lt" style="display: block">
                                         <li ng-repeat="v in versions">
                                             <a href="#/admin" ng-click="loadVersion(v)" >
                                                 <i class="fa fa-angle-right"></i>
-                                                <span>{{v.time}}</span>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li  class="active">
-                                    <a href="#layout"   class="active">
-                                        <i class="fa fa-filter icon">
-                                            <b class="bg-warning"></b>
-                                        </i>
-                            <span class="pull-right">
-                              <i class="fa fa-angle-down text"></i>
-                              <i class="fa fa-angle-up text-active"></i>
-                            </span>
-                                        <span>Actions</span>
-                                    </a>
-                                    <ul class="nav lt" style="display: block">
-                                        <li ng-repeat="ab in actionblocks">
-                                            <a href="#/admin" ng-click="insertBlock(ab)" >
-                                                <i class="fa fa-angle-right"></i>
-                                                <span>{{ab.name}}</span>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li  class="active">
-                                    <a href="#layout"   class="active">
-                                        <i class="fa fa-filter icon">
-                                            <b class="bg-warning"></b>
-                                        </i>
-                            <span class="pull-right">
-                              <i class="fa fa-angle-down text"></i>
-                              <i class="fa fa-angle-up text-active"></i>
-                            </span>
-                                        <span>Data</span>
-                                    </a>
-                                    <ul class="nav lt" style="display: block">
-                                        <li ng-repeat="db in datablocks">
-                                            <a href="#/admin" ng-click="insertBlock(db)" >
-                                                <i class="fa fa-angle-right"></i>
-                                                <span>{{db.name}}</span>
+                                                <span>{{v.comment}} {{v.time}}</span>
                                             </a>
                                         </li>
                                     </ul>
