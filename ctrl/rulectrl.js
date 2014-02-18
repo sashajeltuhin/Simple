@@ -3,10 +3,17 @@ function rulectrl($scope, $rootScope, $http, adminservice, mkPopup){
     var SEG = "segment";
     var prodMeta = [];
     var type = 'teas';
+    var params = adminservice.getRuleParams();
+    $scope.adRule = true;
+    if (params !== undefined && params !== null){
+        $scope.adRule = params.adRule;
+        $scope.selRule = params.selRule;
+    }
     init();
-    loadRules();
+    refreshRules();
 
     function init(){
+
         adminservice.listObj("fields", {objname:"product", order_by:{"title":1}}, $http, function(meta){
             prodMeta = meta;
         });
@@ -52,20 +59,7 @@ function rulectrl($scope, $rootScope, $http, adminservice, mkPopup){
         });
     }
 
-    function refreshRules(){
-        if ($scope.adRule){
-            $scope.loadRules();
-        }
-        else{
-            $scope.loadQualRules();
-        }
-    }
-
-    $scope.loadTeasRules = function(){
-        loadRules();
-    }
-
-    $scope.loadQualRules = function(){
+    function loadQualRules(){
         $scope.viewTitle = "Rules for Targeted Offers";
         $scope.ruletypeUrl = '/images/targetlist.gif';
         $scope.adRule = false;
@@ -77,6 +71,25 @@ function rulectrl($scope, $rootScope, $http, adminservice, mkPopup){
         adminservice.listObj(RULE, extra, $http, function(meta){
             $scope.ruleData = meta;
         });
+    }
+
+    function refreshRules(){
+        if ($scope.adRule){
+            loadRules();
+        }
+        else{
+            loadQualRules();
+        }
+
+        adminservice.setRuleParams(null);
+    }
+
+    $scope.loadTeasRules = function(){
+        loadRules();
+    }
+
+    $scope.loadQualRules = function(){
+        loadQualRules();
     }
 
     $scope.deleteRule = function(rule){
@@ -121,44 +134,98 @@ function rulectrl($scope, $rootScope, $http, adminservice, mkPopup){
         return null;
     }
 
+    $scope.newObj = function(){
+        var appObj = adminservice.getAppObj();
+        var rule = {};
+        rule.app = appObj.appID;
+        rule.type = $scope.adRule == true ? 'teas' : 'qual';
+        rule.limit = 2;
+        rule.name = "New Rule";
+        $scope.ruleData.push(rule);
+    }
+
+
     $scope.createSegment = function(rule){
-        if (rule.dems == undefined){
-            rule.dems = [];
+        $scope.selrule = rule;
+        var cond = {};
+        cond.app = rule.app;
+        cond.obj = 'consumer';
+        adminservice.setSelObj(cond, addSegment);
+        var obj = {};
+        obj.view = 'ruleDetail.html';
+        obj.title = "New Demographic Segment";
+        obj.toolbar = 'ruleTools.html';
+        $scope.$emit("EV_SWITCH_VIEW", obj);
+    }
+
+    function addSegment(seg){
+        if ($scope.selrule.dems == undefined){
+            $scope.selrule.dems = [];
         }
-        var exp = {};
-        exp.obj = "consumer";
-        adminservice.createObj('New Demographic Segment', exp, SEG, mkPopup, $scope, $http, function(){
-            rule.dems.push($scope.obj);
-            adminservice.saveObj(rule, RULE, $http, function(){
-            });
-        });
+        $scope.selrule.dems.push(seg);
+        afterSegEdit();
     }
 
     $scope.createProdRule = function(rule){
-        if (rule.conds == undefined){
-            rule.conds = [];
-        }
-        var exp = {};
-        exp.obj = "product";
-        adminservice.createObj('New Product Condition', exp, SEG, mkPopup, $scope, $http,  function(){
-            rule.conds.push($scope.obj);
-            adminservice.saveObj(rule, RULE, $http, function(){
-            });
-        },updateProdFieldList);
+        $scope.selrule = rule;
+        var cond = {};
+        cond.app = rule.app;
+        cond.obj = 'product';
+        adminservice.setSelObj(cond, addProdGroup);
+        var obj = {};
+        obj.view = 'ruleDetail.html';
+        obj.title = "New Product Group";
+        obj.toolbar = 'ruleTools.html';
+        $scope.$emit("EV_SWITCH_VIEW", obj);
     }
 
-    $scope.editSegment = function(seg, rule){
-        adminservice.editObj(seg.title, seg, SEG, mkPopup, $scope, $http, function(){
-            adminservice.saveObj(rule, RULE, $http, function(){
-            });
+    function addProdGroup(seg){
+        if ($scope.selrule.conds == undefined){
+            $scope.selrule.conds = [];
+        }
+        $scope.selrule.conds.push(seg);
+        afterSegEdit();
+
+    }
+
+    function saveRule(rule, callback){
+        adminservice.saveObj(rule, RULE, $http, function(){
+            if (callback !== undefined){
+                callback();
+            }
         });
     }
 
+
+    $scope.editSegment = function(seg, rule){
+        $scope.selrule = rule;
+        adminservice.setSelObj(seg, afterSegEdit);
+        var obj = {};
+        obj.view = 'ruleDetail.html';
+        obj.title = seg.title;
+        obj.toolbar = 'ruleTools.html';
+        $scope.$emit("EV_SWITCH_VIEW", obj);
+    }
+
     $scope.editProdRule = function(seg, rule){
-        adminservice.editObj(seg.title, seg, SEG, mkPopup, $scope, $http, function(){
-            adminservice.saveObj(rule, RULE, $http, function(){
-            });
-        },updateProdFieldList);
+        $scope.selrule = rule;
+        adminservice.setSelObj(seg, afterSegEdit);
+        var obj = {};
+        obj.view = 'ruleDetail.html';
+        obj.title = seg.title;
+        obj.toolbar = 'ruleTools.html';
+        $scope.$emit("EV_SWITCH_VIEW", obj);
+    }
+
+    function afterSegEdit(){
+        var p = {};
+        p.adRule = $scope.adRule;
+        p.selRule = $scope.selrule;
+        adminservice.setRuleParams(p);
+        saveRule($scope.selrule, function(){
+            $scope.loadSegments();
+        });
+
     }
 
     $scope.deleteSegment = function(rule, seg){

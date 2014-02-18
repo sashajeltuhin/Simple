@@ -1,0 +1,17 @@
+
+<section class="m-t-lg wrapper-md animated fadeInDown" ng-controller="providerctrl">
+    <div class="container aside-xxl"><a class="navbar-brand block" href="#">{{viewTitle}}</a>
+        <section class="panel panel-default m-t-lg bg-white">
+            <form class="panel-body wrapper-lg">
+                <form role="form">
+                    <a href="#" class="pull-left thumb m-r">
+                        <img ng-src="{{rootUrl}}{{selProvider.logo}}" class="img-full">
+                        <mk-upload label="Change" path="app/upload/image" fnc="onProviderLogo($event)"></mk-upload>
+                    </a>
+                    <div class="panel-body" ng-include="fd.template" ng-repeat="fd in fieldList"></div>
+                    <!--<div dynamic="propsEl"></div>-->
+                </form>
+                <a href="#" ng-click="saveChanges()" class="btn btn-default btn-block">Save & Close</a></form>
+        </section>
+    </div>
+</section>

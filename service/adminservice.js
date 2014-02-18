@@ -2,6 +2,8 @@ angular.module('cart').factory('adminservice', function($q, $cookies) {
 
     var service = {};
     var serverUrl = topUrl + '/app';
+    var resourceUrl = topUrl + adminURL + '/templ/';
+    var templUrl = resourceUrl + 'ctrls/';
     var cache = [];
     var fieldCache = {};
     var selTen = {};
@@ -13,6 +15,9 @@ angular.module('cart').factory('adminservice', function($q, $cookies) {
     var signedId = {};
     var selUser = {};
     var selFilter = {};
+    var selCallBack = null;
+    var ruleParams = null;
+    var filterdata = {};
 
     service.setSelUser = function(u){
         selUser = u;
@@ -20,6 +25,14 @@ angular.module('cart').factory('adminservice', function($q, $cookies) {
 
     service.getSelUser = function(){
         return selUser;
+    }
+
+    service.setRuleParams = function(p){
+        ruleParams = p;
+    }
+
+    service.getRuleParams = function(){
+        return ruleParams;
     }
 
     service.setFilter = function(f){
@@ -67,8 +80,12 @@ angular.module('cart').factory('adminservice', function($q, $cookies) {
         return selObjName;
     }
 
-    service.setSelObj = function(obj){
+    service.setSelObj = function(obj, callback){
         selObj = obj;
+        selCallBack = callback;
+    }
+    service.getSelCallback = function(){
+        return selCallBack;
     }
 
     service.getSelObj= function(){
@@ -196,6 +213,16 @@ angular.module('cart').factory('adminservice', function($q, $cookies) {
     service.saveObj = function(fld, obj, $http, callback){
         delete fld.mk_rowsel;
         $http.post(serverUrl + '/' + obj + '/update', fld).success(function (data) {
+            callback(data);
+            if (obj == 'fields'){
+                service.resetCacheObj(fld.objname);
+            }
+        });
+    };
+
+    service.publishTemplate = function(fld, obj, $http, callback){
+        delete fld.mk_rowsel;
+        $http.post(serverUrl + '/' + obj + '/publish', fld).success(function (data) {
             callback(data);
             if (obj == 'fields'){
                 service.resetCacheObj(fld.objname);
@@ -342,6 +369,64 @@ angular.module('cart').factory('adminservice', function($q, $cookies) {
         return obj;
     }
 
+    service.bindObjData = function(obj, fields){
+        for (var i = 0; i < fields.length; i++){
+            var fd = fields[i];
+            obj[fd.fldname] = fd.fldvalue;
+        }
+    }
+
+    service.bindObj = function(meta, obj, fieldCallback){
+        var fieldList = [];
+        for(var key in meta){
+            var metafld = meta[key];
+            metafld = fieldCallback(metafld)
+            if (metafld !== null && metafld.editable == true){
+                var fd = {};
+                fieldList.push(fd);
+                fd.label = metafld.label;
+                fd.fldname = metafld.fldname;
+
+                if (metafld.opts !== undefined){
+                    fd.options = [];
+                    fd.template = templUrl + 'dropdown.html';
+                    $.each(metafld.opts, function(i, item){
+                        var opt = {};
+                        fd.options.push(opt);
+
+                        var optval = metafld.optfld !== undefined ? item[metafld.optfld]: item;
+                        opt.optvalue = optval;
+                        opt.label = optval;
+                    });
+                    fd.fldvalue = obj[metafld.fldname];
+                }
+                else {
+                    switch (metafld.fldtype){
+                        case 'text':
+                            fd.template = templUrl + 'text.html';
+                            break;
+                        case 'bool':
+                            fd.template = templUrl + 'checkbox.html';
+                            break;
+                        case 'longtext':
+                            fd.template = templUrl + 'textarea.html';
+                            break;
+                        default:
+                            fd.template = templUrl + 'text.html';
+                            break;
+
+                    }
+                    if (obj[metafld.fldname] == undefined){
+                        obj[metafld.fldname] = "";
+                    }
+                    fd.fldvalue = obj[metafld.fldname];
+                }
+            }
+
+        }
+        return fieldList;
+    }
+
     service.buildForm = function(meta, optionscallback, obj){
         var top = $('<div></div>');
         for(var key in meta){
@@ -430,6 +515,14 @@ angular.module('cart').factory('adminservice', function($q, $cookies) {
         });
 
     };
+
+    service.setFilterData = function(filterData){
+        filterdata = filterData;
+    }
+
+    service.getFilterData = function(){
+        return filterdata;
+    }
 
 
     return service;

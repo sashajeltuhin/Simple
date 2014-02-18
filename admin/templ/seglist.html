@@ -1,67 +1,4 @@
 <div style="position: relative" ng-controller="rulectrl">
-<!--<div style="height: 60px;position: relative;clear: both;">-->
-    <!--<div class="mkToolBtnWide" ng-class="{'activeBtn': adRule, '': !adRule}" ng-click="loadTeasRules()">Ad Rules</div>-->
-    <!--<div class="mkToolBtnWide" ng-class="{'activeBtn': !adRule, '': adRule}"ng-click="loadQualRules()">Listing rules</div>-->
-<!--</div>-->
-<!--<div style="position: relative;clear: both;">-->
-    <!--<div style="position: relative;float: left"><img width="100" height="70" ng-src="{{ruletypeUrl}}"></div>-->
-    <!--<div style="position: relative;float: left;margin-left: 40px"><h3>{{viewTitle}}</h3></div>-->
-<!--</div>-->
-<!--<div style="position: relative;width: 70%;margin: auto; margin-top: 40px;" ui-sortable="sortableOptions" ng-model="ruleData">-->
-<!--<div style="margin-left: 50px;margin-top: 50px;margin-bottom: 50px;border: 1px solid #0077b3;" ng-repeat="rule in ruleData">-->
-    <!--<div class="quedel" ng-click="deleteRule(rule)"><img src="/images/step_del.png" width="20" height="20"></div>-->
-    <!--<div style="height: 60px;position: relative;clear: both;">-->
-        <!--<div class="mkToolBtnWide" ng-click="editRule(rule)"><h3 ng-class="{'stepactive': rule.active, '': !rule.active}" style="margin-top: 0px">{{rule.name}}</h3></div>-->
-        <!--<div class="mkToolBtnRight" ng-click="cloneRule(rule)">Clone rule</div>-->
-        <!--<div class="mkToolBtnRight" ng-click="createRule()">New rule</div>-->
-        <!--<div class="mkToolBtnRight"></div>-->
-        <!--<div class="mkToolBtnRight" ng-click="showDetail(rule)">Expressions</div>-->
-    <!--</div>-->
-    <!--<div style="position: relative;height: 300px;" ng-show="rule.showDetail">-->
-        <!--<div style="position: relative;clear: left">-->
-            <!--<div ng-show="rule.limit"><p>Load <b>{{rule.limit}}</b> offers</p></div>-->
-        <!--</div>-->
-        <!--<div style="position: relative;float:left;max-width: 400px;min-width:300px;clear: left;">-->
-            <!--<div style="position: relative">-->
-                <!--<div class="btn btn-small"  style="float: left;" ng-click="createSegment(rule)">+</div>-->
-                <!--<h5 style="position: relative;float: left;margin-left: 10px">Consumer segments</h5>-->
-            <!--</div>-->
-            <!--<div ui-sortable="sortableOptions" ng-model="rule.dems" style="position:relative; clear:left;height: 150px;max-width:300px;overflow-y: scroll;border: solid #000000 1px">-->
-                <!--<div class="map_row" style="position: relative;height: 50px;max-width: 290px;"  ng-repeat="dem in rule.dems">-->
-                    <!--<div class="quedel" ng-click="deleteSegment(rule, dem)"><img src="/images/step_del.png" width="20" height="20"></div>-->
-                    <!--<div style="position: relative;margin: 5px;height: 40px;cursor: pointer; text-align:center;" ng-click="editSegment(dem, rule)"><b>{{dem.title}}</b></div>-->
-                <!--</div>-->
-            <!--</div>-->
-        <!--</div>-->
-        <!--<div  style="position: relative;float:left;max-width: 50px;margin-top: 80px;margin-left: 20px;margin-right: 20px">-->
-            <!--<img width="30" height="30" src="/images/arrow-right.png">-->
-        <!--</div>-->
-        <!--<div style="position: relative;float:left;max-width: 400px;min-width:300px;">-->
-            <!--<div style="position: relative">-->
-                <!--<div class="btn btn-small" style="float: left;" ng-click="createProdRule(rule)">+</div>-->
-                <!--<h5 style="position: relative;float: left;margin-left: 10px">Product filter</h5>-->
-            <!--</div>-->
-            <!--<div ui-sortable="sortableOptions" ng-model="rule.conds" style="position:relative;clear:left;height: 150px;max-width:300px;overflow-y: scroll;border: solid #000000 1px">-->
-                <!--<div class="map_row" style="position: relative;height: 50px;max-width: 290px"  ng-repeat="cond in rule.conds">-->
-                    <!--<div class="quedel" ng-click="deleteProdRule(rule, cond)"><img src="/images/step_del.png" width="20" height="20"></div>-->
-                    <!--<div style="position: relative;margin: 5px;height: 40px; text-align:center;" ng-click="editProdRule(cond, rule)"><b>{{cond.title}}</b></div>-->
-                <!--</div>-->
-            <!--</div>-->
-        <!--</div>-->
-    <!--</div>-->
-<!--</div>-->
-<!--</div>-->
-    <!--<section class="panel panel-default portlet-item">-->
-        <!--<header class="panel-heading">-->
-            <!--<ul class="nav nav-pills pull-right">-->
-                <!--<li> <a href="#" class="panel-toggle text-muted"><i class="fa fa-caret-down text-active"></i><i class="fa fa-caret-up text"></i></a>-->
-                <!--</li>-->
-            <!--</ul> News <span class="badge bg-info">32</span>-->
-        <!--</header>-->
-         <!--<section class="panel-body">-->
-
-         <!--</section>-->
-    <!--</section>-->
     <section class="panel panel-default">
         <div class="row m-l-none m-r-none">
             <div class="col-lg-6">
@@ -80,7 +17,6 @@
                     <a href="#"> <i class="fa fa-bullseye fa-stack-1x text-white"></i>
                     </a>
                     <div class="clear">
-                        <div class="h3 m-t-xs m-b-xs text-white"> {{rule.name}}
                             <ul class="nav nav-pills pull-right">
                                 <li> <a href="#" ng-click="editRule(rule)" class="panel-toggle text-muted"><i class="fa fa-pencil"></i></a>
                                 </li>
@@ -91,6 +27,7 @@
                             </ul>
                             <!--<i class="fa fa-circle text-white pull-right text-xs m-t-sm"></i>-->
                         </div>
+                        <div class="h3 m-t-xs m-b-xs text-white"> {{rule.name}}
                         <div class="col-xs-4">
                             <div class="padder-v">
                                 <span class="m-b-xs h3 block text-white">{{rule.limit}}</span>
@@ -139,33 +76,48 @@
                         </div>
                     </div>
                 </section>
-                <div class="row">
-                    <div class="col-lg-5">
-                        <div class="btn btn-small" ng-click="createSegment(rule)"><i class="fa fa-plus"></i></div>
-                        <div class="list-group no-radius alt">
-                            <div ui-sortable="sortableOptions" ng-model="rule.conds">
-                                <a class="list-group-item" href="#" ng-repeat="dem in rule.dems">
-                                    <span class="badge bg-danger" ng-click="deleteSegment(rule, dem)">x</span>
-                                    <i class="fa icon-muted"></i> {{dem.title}}
-                                </a>
+                <section class="panel panel-default">
+                    <header class="panel-heading font-bold">Mappings</header>
+                        <div class="panel-body collapse">
+                            <div class="row">
+                                <div class="col-lg-5">
+                                    <div class="row">
+                                        <button class="col-sm-2 btn btn-small btn-success btn-rounded" ng-click="createSegment(rule)"><i class="fa fa-plus"></i></button>
+                                        <label class="col-sm-6" ng-click="createSegment(rule)">Demographic group</label>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="list-group no-radius alt">
+                                            <div ui-sortable="sortableOptions" ng-model="rule.conds">
+                                                <a class="list-group-item" href="#" ng-click="editSegment(dem, rule)" ng-repeat="dem in rule.dems">
+                                                    <span class="badge bg-danger" ng-click="deleteSegment(rule, dem)">x</span>
+                                                    <i class="fa icon-muted"></i> {{dem.title}}
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2">
+                                    <img width="30" height="30" src="/images/arrow-right.png">
+                                </div>
+                                <div class="col-lg-5">
+                                    <div class="row">
+                                        <button class="col-sm-2 btn btn-small btn-success btn-rounded" ng-click="createProdRule(rule)"><i class="fa fa-plus"></i></button>
+                                        <label class="col-sm-6" ng-click="createProdRule(rule)">Product group</label>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="list-group no-radius alt">
+                                        <div ui-sortable="sortableOptions" ng-model="rule.conds">
+                                            <a class="list-group-item" href="#" ng-click="editProdRule(cond, rule)" ng-repeat="cond in rule.conds">
+                                                <span class="badge bg-danger" ng-click="deleteProdRule(rule, cond)">x</span>
+                                                <i class="fa icon-muted"></i> {{cond.title}}
+                                            </a>
+                                        </div>
+                                    </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-lg-2">
-                        <img width="30" height="30" src="/images/arrow-right.png">
-                    </div>
-                    <div class="col-lg-5">
-                        <div class="btn btn-small" ng-click="createProdRule(rule)"><i class="fa fa-plus"></i></div>
-                        <div class="list-group no-radius alt">
-                            <div ui-sortable="sortableOptions" ng-model="rule.conds">
-                                <a class="list-group-item" href="#" ng-repeat="cond in rule.conds">
-                                    <span class="badge bg-danger" ng-click="deleteProdRule(rule, cond)">x</span>
-                                    <i class="fa icon-muted"></i> {{cond.title}}
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                </section>
             </section>
         </section>
     </div>

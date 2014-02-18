@@ -1,9 +1,17 @@
-function filterctrl($scope){
+function filterctrl($scope, adminservice){
     var serverUrl = topUrl + adminURL + '/templ/';
     var templUrl = serverUrl + 'ctrls/';
     $scope.rootUrl = topUrl;
     var origFilter = {};
     var origMeta = [];
+
+    var filterdata = adminservice.getFilterData();
+    if (filterdata.m !== undefined && filterdata.f !== undefined){
+        origMeta = filterdata.m;
+        origFilter = filterdata.f;
+        $scope.filter = filterdata.f;
+        reload(filterdata.m, $scope.filter);
+    }
 
     $scope.$on("EV_FILTER_REBUILD", function(event, meta, filter){
         origMeta = meta;

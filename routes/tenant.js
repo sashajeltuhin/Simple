@@ -50,6 +50,9 @@ exports.save = function(req, res){
         filter._id = new ObjectID(vid._id);
         vid._id = filter._id;
     }
+    else{
+        vid.startDate = new Date();
+    }
     db.upsert(colName, vid, filter, function(err, newid){
         if (err !== null){
             handleError(res, "Cannot add tenant ", err);

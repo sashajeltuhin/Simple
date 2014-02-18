@@ -37,6 +37,16 @@ exports.readCSV = function(fileName, colMap, onRowCallback, completeCallback){
         });
 }
 
+exports.writeCSV = function(fileName, data, callback){
+    var stream = fs.createWriteStream(__dirname + fileName);
+    stream.on('error', function (error) {
+        if (completeCallback !== null){
+            completeCallback(error, null);
+        }
+    });
+    csv().from(data).to.stream(stream);
+}
+
 exports.readColumns = function(fileName, onRowCallback, completeCallback){
     var stream = fs.createReadStream(__dirname + fileName);
     stream.on('error', function (error) {

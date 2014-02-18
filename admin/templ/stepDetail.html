@@ -26,8 +26,11 @@
 <section class="vbox">
 <div class="tab-content">
 <div class="tab-pane active" id="main">
-    <div class="col-lg-4 wrapper bg-light lter">
-        <div dynamic="propsEl"></div>
+    <div class="col-lg-6 wrapper bg-light lter">
+        <form role="form">
+            <div class="panel-body" ng-include="fd.template" ng-repeat="fd in fieldList"></div>
+            <!--<div dynamic="propsEl"></div>-->
+        </form>
     </div>
 </div>
 <div class="tab-pane" id="edit">
@@ -35,7 +38,7 @@
         <div class="line pull-in"></div>
         <div class="btn-toolbar m-b-sm btn-editor">
             <div class="btn-group">
-                <a class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" title="" data-original-title="Hyperlink"><i class="fa fa-save"></i>
+                <a class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" title="" data-original-title="Hyperlink"><i class="fa fa-save"></i>Save Draft
                 </a>
                 <div class="dropdown-menu">
                     <div class="input-group m-l-xs m-r-xs">
@@ -47,7 +50,7 @@
                 </div>
             </div>
             <div class="btn-group">
-                <a class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" title="" data-original-title="Hyperlink"><i class="fa fa-eject"></i>
+                <a class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" title="" data-original-title="Hyperlink"><i class="fa fa-eject"></i>Publish
                 </a>
                 <div class="dropdown-menu">
                     <div class="input-group m-l-xs m-r-xs">
@@ -61,7 +64,7 @@
 
             <div class="btn-group">
                 <div class="btn-group">
-                    <a class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" title="" data-original-title="Font"><i class="fa fa-bars"></i><b class="caret"></b>
+                    <a class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" title="" data-original-title="Font"><i class="fa fa-bars"></i>Insert Actions<b class="caret"></b>
                     </a>
                     <ul class="dropdown-menu">
                         <li ng-repeat="ab in actionblocks">
@@ -76,7 +79,7 @@
 
             <div class="btn-group">
                 <div class="btn-group">
-                    <a class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" title="" data-original-title="Font"><i class="fa fa-bars"></i>Insert<b class="caret"></b>
+                    <a class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" title="" data-original-title="Font"><i class="fa fa-bars"></i>Insert Data<b class="caret"></b>
                     </a>
                     <ul class="dropdown-menu">
                         <li ng-repeat="db in datablocks">
@@ -88,6 +91,31 @@
                     </ul>
                 </div>
             </div>
+            <div class="btn-group">
+                <div class="btn-group">
+                    <a class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" title="" data-original-title="Font"><i class="fa fa-bars"></i>Insert Input Field<b class="caret"></b>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li ng-repeat="ib in inputblocks">
+                            <a href="#/admin" ng-click="insertBlock(ib)" >
+                                <i class="fa fa-angle-right"></i>
+                                <span>{{ib.name}}</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+
+            <div class="btn-group">
+                <a class="btn btn-default btn-sm" ng-click="newField()"><i class="fa fa-undo"></i>New Attribute
+                </a>
+            </div>
+            <div class="btn-group">
+                <a class="btn btn-default btn-sm" ng-click="newBlock()"><i class="fa fa-undo"></i>New UI Element
+                </a>
+            </div>
+
 
             <div class="btn-group"> <a class="btn btn-default btn-sm" title="" id="pictureBtn" data-original-title="Insert picture (or just drag &amp; drop)"><i class="fa fa-picture-o"></i>
             </a>
@@ -134,7 +162,7 @@
                                         <li ng-repeat="v in versions">
                                             <a href="#/admin" ng-click="loadVersion(v)" >
                                                 <i class="fa fa-angle-right"></i>
-                                                <span>{{v.comment}} {{v.time}}</span>
+                                                <span>{{v.comment}} {{v.changedFormatted}}</span>
                                             </a>
                                         </li>
                                     </ul>

@@ -5,17 +5,31 @@ function templateCtrl($scope, $rootScope, $http, adminservice){
 
 
     adminservice.loadMeta(STEP, $http, function(meta){
-        $scope.propsEl = adminservice.buildForm(meta, null, $scope.obj);
+        //$scope.propsEl = adminservice.buildForm(meta, null, $scope.obj);
+        $scope.fieldList = adminservice.bindObj(meta, $scope.obj, prepareField);
     });
 
     init();
 //    //showHtml();
+
+    function prepareField(metafld){
+        var mf = metafld;
+        if (metafld.fldname == "script" || metafld.fldname == "controller" || metafld.fldname == "rawhtml" || metafld.fldname == "integration"){
+            mf = null;
+        }
+        return mf;
+    }
 
     function init(){
         var stepID = $scope.obj._id;
         initDraft();
         adminservice.listObj('draft', {stepID:stepID}, $http, function(data){
             $scope.versions = data;
+            $.each($scope.versions, function(i, v){
+                var date = new Date(v.changed);
+                var time = date.toTimeString().replace(/.*(\d{2}:\d{2}:\d{2}).*/, "$1");
+                v.changedFormatted = date.getDate() + '-' + date.getMonth() + '-' + date.getFullYear() + ' ' + time;
+            })
         });
     }
     function initDraft(){
@@ -32,6 +46,9 @@ function templateCtrl($scope, $rootScope, $http, adminservice){
         });
         adminservice.listObj('block', {cat:"data"}, $http, function(dbs){
             $scope.datablocks = dbs;
+        });
+        adminservice.listObj('block', {cat:"input"}, $http, function(ibs){
+            $scope.inputblocks = ibs;
         });
         $scope.modalTemplPage = serverUrl + 'rawHtml.html';
     }
@@ -68,6 +85,14 @@ function templateCtrl($scope, $rootScope, $http, adminservice){
     }
 
     $scope.showTemplate = function(){
+
+
+        var appObj = currentApp();
+        $scope.modalTemplPage = serverUrl + 'stepTmpl.html';
+        $scope.masterTmpl = appObj.template;
+    }
+
+    function currentApp(){
         var appObj;
         var tenObj = adminservice.getTenant();
         $.each(tenObj.appObjects, function(i, a){
@@ -75,8 +100,7 @@ function templateCtrl($scope, $rootScope, $http, adminservice){
                 appObj = a;
             }
         });
-        $scope.modalTemplPage = serverUrl + 'stepTmpl.html';
-        $scope.masterTmpl = appObj.template;
+        return appObj;
     }
 
     $scope.onTmplUploaded = function(fi){
@@ -90,15 +114,21 @@ function templateCtrl($scope, $rootScope, $http, adminservice){
         }
         $scope.draft.changed = new Date();
         $scope.draft.version = $scope.obj.rawhtml;
-        adminservice.saveObj($scope.draft, 'draft', $http, function(){
+        adminservice.saveObj($scope.draft, 'draft', $http, function(saved){
             $scope.saveObj();
             initDraft();
         });
     }
 
     $scope.saveObj = function(){
+        var n = $scope.obj._id == undefined;
+        adminservice.bindObjData($scope.obj, $scope.fieldList);
         adminservice.saveObj($scope.obj, STEP, $http, function(s){
-            $scope.loadCartSteps();
+            $scope.obj = s;
+            if (n == true){
+                var appObj = currentApp();
+                $scope.loadCartSteps(appObj);
+            }
         });
     }
 
@@ -109,7 +139,8 @@ function templateCtrl($scope, $rootScope, $http, adminservice){
         $scope.draft.changed = new Date();
         $scope.draft.published = new Date();
         $scope.draft.version = $scope.obj.rawhtml;
-        adminservice.saveObj($scope.draft, 'draft', $http, function(){
+        adminservice.publishTemplate($scope.draft, 'draft', $http, function(filename){
+            $scope.obj.template = filename;
             $scope.saveObj();
             initDraft();
         });
@@ -123,4 +154,19 @@ function templateCtrl($scope, $rootScope, $http, adminservice){
     $scope.showIntscript = function(){
         $scope.modalTemplPage = serverUrl + 'intScript.html';
     }
+
+    $scope.newBlock = function(){
+        var block = {};
+        adminservice.setSelObj(block, backToEdit);
+        var obj = {};
+        obj.view = 'blockDetail.html';
+        obj.title = "New UI Element";
+        $scope.$emit("EV_SWITCH_VIEW", obj);
+    }
+
+    function backToEdit(b){
+
+    }
+
+
 }

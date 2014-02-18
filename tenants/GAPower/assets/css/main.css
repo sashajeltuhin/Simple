@@ -1,0 +1,1040 @@
+/* ======================= */
+/* ! Main styles for GPC   */
+/* ======================= */
+
+@import url("http://fast.fonts.com/t/1.css?apiType=css&projectid=89e2d7cf-6511-41e6-8d54-cc8203f28779");
+@import url(http://fonts.googleapis.com/css?family=Open+Sans);
+@import url(http://fonts.googleapis.com/css?family=Arimo:400,700);
+
+
+@font-face{
+    font-family:"UniversLTW01-67BoldCn";
+    src:url("/css/web-fonts/Fonts/076b8d7a-91b5-4c89-86a1-546b980072c7.eot?iefix") format("embedded-opentype");}
+@font-face{
+    font-family:"UniversLTW01-67BoldCn";
+    src:url("/css/web-fonts/Fonts/076b8d7a-91b5-4c89-86a1-546b980072c7.eot?iefix");
+    src:url("/css/web-fonts/Fonts/21decb60-b395-4de2-bd04-e38eb2a56d2f.woff") format("woff"),url("/css/web-fonts/Fonts/091058d4-36b2-43f6-80d3-16c88e098061.ttf") format("truetype"),url("/css/web-fonts/Fonts/827d22bc-e38b-4ccf-8a21-1f9aaa76e402.svg#827d22bc-e38b-4ccf-8a21-1f9aaa76e402") format("svg");
+}
+
+@font-face{
+    font-family:"UniversLTW01-57Condense 723821";
+    src:url("/css/web-fonts/Fonts/aefefc4e-9cb8-4e8e-8599-dda705456734.eot?iefix") format("embedded-opentype");}
+@font-face{
+    font-family:"UniversLTW01-57Condense 723821";
+    src:url("/css/web-fonts/Fonts/aefefc4e-9cb8-4e8e-8599-dda705456734.eot?iefix");
+    src:url("/css/web-fonts/Fonts/1eaf27c0-f4de-4273-9f4c-1b3236ad2f3c.woff") format("woff"),url("/css/web-fonts/Fonts/9b913baf-b1f0-47d2-8c76-42f59650058f.ttf") format("truetype"),url("/css/web-fonts/Fonts/0abcce12-2274-4ee7-b6d5-0066b5f5f670.svg#0abcce12-2274-4ee7-b6d5-0066b5f5f670") format("svg");
+}
+
+@font-face{
+    font-family:"UniversLTW01-55Oblique";
+    src:url("/css/web-fonts/Fonts/783e01cd-5eb8-41d7-a380-a18673f2983b.eot?iefix") format("eot");}
+@font-face{
+    font-family:"UniversLTW01-55Oblique";
+    src:url("/css/web-fonts/Fonts/783e01cd-5eb8-41d7-a380-a18673f2983b.eot?iefix");
+    src:url("/css/web-fonts/Fonts/90c17e08-290d-4eba-ab33-77c81c1f559d.woff") format("woff"),url("/css/web-fonts/Fonts/d93b9eab-632d-4aaf-b7fa-5c17060d62fc.ttf") format("truetype"),url("/css/web-fonts/Fonts/caa7a31a-310f-4020-8311-89816a31472f.svg#caa7a31a-310f-4020-8311-89816a31472f") format("svg");
+}
+@font-face{
+    font-family:"Univers LT W01 55 Roman";
+    src:url("/css/web-fonts/Fonts/b5c30ea8-0700-4fd2-aa12-cc45074693a9.eot?iefix") format("eot");}
+@font-face{
+    font-family:"Univers LT W01 55 Roman";
+    src:url("/css/web-fonts/Fonts/b5c30ea8-0700-4fd2-aa12-cc45074693a9.eot?iefix");
+    src:url("/css/web-fonts/Fonts/7b95cb9a-a288-4405-97a0-13095f56a903.woff") format("woff"),url("/css/web-fonts/Fonts/c7481806-4ea4-40db-a623-7bc352bbbe43.ttf") format("truetype"),url("/css/web-fonts/Fonts/ac8280da-3de5-456d-bd77-8f01665452a9.svg#ac8280da-3de5-456d-bd77-8f01665452a9") format("svg");
+}
+
+@font-face{
+    font-family:"UniversLTW01-47LightCn";
+    src:url("/css/web-fonts/Fonts/296c59c2-74b0-41c1-bcfd-23d22a713f86.eot?iefix") format("embedded-opentype");}
+@font-face{
+    font-family:"UniversLTW01-47LightCn";
+    src:url("/css/web-fonts/Fonts/296c59c2-74b0-41c1-bcfd-23d22a713f86.eot?iefix");
+    src:url("/css/web-fonts/Fonts/609beecf-8d23-4a8c-bbf5-d22ee8db2fc9.woff") format("woff"),url("/css/web-fonts/Fonts/a6595b8d-d4a3-4f01-bf21-0b53617d4b1c.ttf") format("truetype"),url("/css/web-fonts/Fonts/1cd9ef2f-b358-4d39-8628-6481d9e1c8ce.svg#1cd9ef2f-b358-4d39-8628-6481d9e1c8ce") format("svg");
+
+}
+
+
+@font-face {
+    font-family: "ITC Garamond W01 Light";
+    src: url("/css/web-fonts/Fonts/41126e8f-73e9-4837-b973-f23fcf825867.eot?iefix") format("eot");
+}
+
+@font-face {
+    font-family: "ITC Garamond W01 Light";
+    src: url("/css/web-fonts/Fonts/9b8097e1-1970-498d-9940-226c0dcea8c0.woff") format("woff"), url("/css/web-fonts/Fonts/40c7da3c-fc2b-45e8-a18a-6af8cb1aba54.ttf") format("truetype"), url("/css/web-fonts/Fonts/001805c5-53a1-4d8a-b6b1-8d9929c337d2.svg#001805c5-53a1-4d8a-b6b1-8d9929c337d2") format("svg");
+}
+
+@font-face{
+    font-family:"ITCGaramondW01-BoldItal";
+    src:url("/css/web-fonts/Fonts/bf885c4e-544e-4f30-9b1b-93a7d18913ee.eot?iefix") format("eot");}
+@font-face{
+    font-family:"ITCGaramondW01-BoldItal";
+    src:url("/css/web-fonts/Fonts/bf885c4e-544e-4f30-9b1b-93a7d18913ee.eot?iefix");
+    src:url("/css/web-fonts/Fonts/f60e2ab3-20eb-4133-b4ca-d87ecfaf6474.woff") format("woff"),url("/css/web-fonts/Fonts/809bcb1b-7aea-4bd9-8f6c-8267b81e4202.ttf") format("truetype"),url("/css/web-fonts/Fonts/856c1065-4ec4-4125-8c23-8f75453b7b72.svg#856c1065-4ec4-4125-8c23-8f75453b7b72") format("svg");
+}
+/* Remove the following styles to allow the scroll bar when browser is narrow */
+html {/*overflow-x: hidden; overflow-y: scroll;*/} /* eliminate white space in fluid layout */
+
+body, html {height: 100%; width: 100%; margin: 0; padding: 0; }
+
+@media screen and (-webkit-min-device-pixel-ratio:0) { /* Fix for dual scrollbar in IE, add overflow-x: hidden; to safari/chrome */
+    body {/*overflow-x: hidden;*/}
+}
+
+header {
+    /*width: 100%; min-width:100%;*/
+    width:960px;
+    margin:0 auto;
+    /*border-bottom: solid 1px #5b5b5b;*/
+    margin-top: -15px; /* included to hide box-shadow */
+    z-index: 5;
+    padding: 0;
+
+    /*box-shadow: 2px 2px 5px #7b7b7b;*/
+    /* 	behavior: url(/PIE.htc); */
+    /* ======================================================================= */
+    /* ! PIE.htc may be included to bring IE up to speed http://css3pie.com/   */
+    /* ======================================================================= */
+}
+
+/* container for header items */
+header #banner {
+    width:760px; padding-right:200px;
+    position:relative;
+}
+
+#logo {
+    border-right:1px solid #e1e1e1;
+    display:block;
+    height:90px;
+    width:193px;
+    padding-left:7px;
+    position:absolute;
+}
+
+/* ================ */
+/* ! Main Content   */
+/* ================ */
+
+/* Container holds left nav, main-content and right sidebar (aside) */
+#container {
+    width: 960px;
+    margin: 0 auto;
+    padding-left:16px;
+    min-height:100%;
+    margin-bottom:-435px; /* accommodate footer */
+    background: transparent;
+    position:relative;
+    z-index: 1;
+    background-position:right 108px !important;
+    background-repeat:no-repeat;
+}
+
+#content-wrapper {
+    float:left;
+    width:760px;
+    margin-left:200px;
+}
+
+#shadow-strip {
+    background:transparent url(/images/content-bg-shadow.png) 0 0 repeat-y;
+    width: 6px;
+    height:100%;
+    position:absolute; top:0px;left:200px;
+    z-index:2;
+}
+
+#first-sidebar {
+    float:left;
+    width:200px;
+    margin-left:-960px;
+
+}
+
+body h1, body h2, body h3, body h4, body h5, body h6 {
+    font-weight: normal;
+}
+
+
+body h1 {
+    font-family: 'UniversLTW01-67BoldCn','Arimo',sans-serif;
+    font-size: 48px;
+    line-height: 48px;
+}
+body h2 {
+    font-family: 'UniversLTW01-47LightCn','Arimo',sans-serif;
+    font-size: 28px;
+    line-height: 28px;
+}
+body h3 {
+    font-family: 'UniversLTW01-57Condense 723821','Arimo',sans-serif;
+    font-size: 24px;
+    line-height: 24px;
+}
+body h4 {
+    font-family: 'UniversLTW01-57Condense 723821','Arimo',sans-serif;
+    font-size: 18px;
+    line-height: 18px;
+}
+
+body h5 {
+    font-family: 'UniversLTW01-57Condense 723821','Arimo',sans-serif;
+    font-size: 16px;
+    line-height: 16px;
+}
+
+
+
+h2.separated, h3.separated, p.separated{
+    border-bottom: 1px #ccc solid;
+    margin: 30px 0 10px;
+    padding-bottom: 10px;
+}
+
+/*Alternate Headers Styles*/
+
+
+#container .headerLight {
+    color: #FFF;
+}
+
+#container .headerDark {
+    color: #000;
+}
+
+#container h1.headerShadow {
+    color: #FFF;
+    text-shadow: 0.03em 0.07em 0.05em rgba(0, 0, 0, 0.5);
+}
+
+#container h2.headerShadow {
+    color: #FFF;
+    text-shadow: 0.08em 0.09em 0.09em rgba(0, 0, 0, 0.5);
+}
+
+.no-sidebar #container {
+    background-position:210px 18px;
+}
+
+/* Add hidden class to remove elements from the DOM */
+.hidden {display: none !important;}
+
+
+.landing-page aside.contact-locator {
+    /*
+        position:relative;
+        margin-top:-190px;
+    */
+    position:absolute;top:100px;right:0;
+    font-size:1em;
+
+}
+.landing-page #content-header aside.contact-locator p {
+    color:#636363;	padding:0;width:auto;margin:auto;
+}
+aside.contact-locator h4{
+    color:#000;
+}
+
+#container #sidebar aside h1, #container #sidebar aside h2, #container #sidebar h3, #container #sidebar h4 { line-height:auto; margin-top:0; }
+#container #sidebar aside h3 { font-size:22px; }
+
+#container #sidebar aside.with-header-image { padding-top:50px; }
+
+#container #sidebar aside.with-tall-header-image { padding-top:80px; }
+#container #sidebar aside.with-header-image img.header, #container #sidebar aside.with-tall-header-image img.header { position:absolute; left:0; top:0; }
+
+#container #sidebar aside.with-tall-header-image.even-taller {
+    padding-top: 120px;
+}
+/*
+
+.overview #content section.landing-promo a img#our-business-icon + h4 { width:70%;padding-left:100px; margin-bottom:10px;}
+.overview #content section.landing-promo a img#our-projects-icon + h4 { width:70%;padding-left:70px; margin-bottom:10px;}
+
+.overview #content section.landing-promo a img.promo-image{ position: absolute; top: -1.3em; left: 0; margin-left:10px; cursor:pointer; }
+
+.overview #content section.landing-promo p {margin-top:0;}
+
+.overview #content section.landing-promo {width:30%}
+*/
+
+#log-in-main { position: absolute;  right: -1px; }
+
+#content-container {
+    padding-bottom:450px;
+    position:relative;
+    width:960px;
+    z-index:2;
+}
+
+#main-content {
+    float:left;
+    width:720px; margin-left:200px; padding:0px 20px; /* must all add up to 960 */
+    z-index:4; /* above left sidebar */
+}
+
+.with-sidebar #main-content {
+    width:540px; padding-right:200px;
+}
+
+.with-sidebar #content-header {
+    width:740px;
+}
+/*
+.with-sidebar #content-container {
+	width:530px; padding-right:200px; /* provide gutter for #sidebar */
+    }
+*/
+
+/* .landing-page #content { margin-top:10px; width: 760px;} */
+
+#content-container ul li p{ margin-bottom:1em;}
+#content-container ul.tabs li { margin-bottom:auto; }
+
+
+.detail ul {
+    list-style:none;
+}
+.detail.with-bullets ul {
+    list-style:disc;
+}
+.detail ul li {
+    font-size:14px;
+}
+
+.detail strong {
+    font-weight:bold;
+}
+
+/* Styling for log-in now button, will eventually show-hide content */
+#log-in-now {
+    font-weight: bold;
+    z-index:3;
+    width:200px;
+    margin:0;
+    position:relative; left:-10px;
+    padding-left:10px;
+    background-repeat: no-repeat;
+    background: #868686; /* Old browsers */
+    background: -moz-linear-gradient(left,  #868686 0%, #535353 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, right top, color-stop(0%,#868686), color-stop(100%,#535353)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(left,  #868686 0%,#535353 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(left,  #868686 0%,#535353 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(left,  #868686 0%,#535353 100%); /* IE10+ */
+    background: linear-gradient(left,  #868686 0%,#535353 100%); /* W3C */
+    -pie-background: linear-gradient(left,  #868686 0%,#535353 100%);
+    /* 	behavior: url(/PIE.htc); */
+
+}
+
+#log-in-now a {
+    color: #fff;
+    display:block;
+    line-height:2em;
+}
+
+#content-container #first-sidebar h2 {
+    font-family: Arial,  'Open Sans', sans-serif;
+    font-size: 16px;
+    margin-top:0.55em;
+    margin-bottom:1em;
+}
+
+
+#content-container ol li {font-size: .875em;}
+
+/* .learning-power-inner #content h2 {color: #000; font-size: 1.3125em;} */
+
+#content-header {
+    position:relative;
+    padding: 16px 0 20px 20px; padding-bottom:0;
+    width:740px;
+    margin-left:-20px;
+    /*border-left: solid 1px #d5d5d5;*/
+    z-index:1;
+    /*margin-bottom:40px;*/
+    background-position:0 20px !important;
+}
+
+/* Use for Small-Size Banners */
+.with-graphic #content-header { min-height: 11em; margin-bottom:0;}
+
+/*Use for Full-Size Banners*/
+.landing-page.with-graphic #content-header { min-height: 25em; margin-bottom:0;}
+
+#content-header.medium-graphic {
+    min-height: 250px;
+}
+
+#content-header h1 { z-index:1; margin-bottom:0; color: #000;}
+#content-header h2 { margin-top:0; }
+
+.landing-page #content-header p {
+    margin: 10px 0 10px 0;
+    color: #636363;
+}
+
+#content-header.with-sidebar {
+    margin-right:210px;
+}
+
+#content-header .sidebar {
+    position:absolute; top:0; right:-200px;
+}
+
+.overview #content-header .sidebar {
+    position:absolute; top:100px; right:0px;
+}
+
+#content-header .sidebar * { /* reset */
+    margin:0;
+    padding:0;
+    line-height:1.25em;
+}
+
+.sidebar a, #content-container p a{
+    color:#C00;
+    text-decoration: underline;
+}
+#content-container .promo p a { text-decoration:none; }
+
+/* aside.sidebar p {font-size:0.875em} */
+
+#content-header .sidebar h1 {
+    font-size:1em; margin-bottom:1em;
+}
+#content-header .sidebar p {
+    color:#333;
+}
+/* Twirler block styles */
+
+#content-container .energy-feature {
+    border-bottom: 1px solid #fff;
+    vertical-align: top;
+    position:relative;
+    padding-left: 20px;
+    display:block;
+    padding-bottom:15px;
+}
+
+
+#content-container .energy-feature h4 {
+    background:none;
+    display: block;
+    color: #D60D17;
+    cursor: pointer;
+    text-decoration: none;
+    padding-bottom:10px;
+    margin-bottom: -0.5em;
+    margin-top: 10px;
+    line-height: 20px;
+    font-family: 'Open Sans',sans-serif;
+    font-size: 16px;
+}
+
+
+.energy-feature .teaser, .with-teaser .teaser {text-decoration: none; padding-left: 1em;}
+
+/*
+.with-teaser .detail p{
+	cursor: pointer;
+}
+*/
+
+/* Toggle content */
+#content-container .content-twirler {
+    background: transparent url(/images/nav-arrow.png) 0 .18em no-repeat;
+    padding-left: .85em;
+    cursor: pointer;
+}
+
+#content-container .content-twirler.active {background-position: -0.157em -4em;}
+
+#content-container .content-toggle {padding-left: 1em;}
+
+/* show hide content with twirler reveal teaser */
+.energy-feature .teaser span, .with-teaser .teaser span {
+    color: #C00;
+    position: absolute;
+    right: 2em;
+    cursor: pointer;
+}
+
+
+.energy-feature .last {border:none;}
+
+.energy-feature span {
+    background: url("/images/more-link_bold.png") no-repeat scroll 0 bottom transparent;
+    display: block;
+    height: 10px;
+    left: -20px;
+    position: absolute;
+    top: 4px;
+    width: 9px;
+    left: 0px;
+    cursor: pointer;
+
+}
+
+
+.energy-feature.active span, .with-teaser.active span {background-position: 0px 4px;}
+
+.energy-feature .detail, .with-teaser .detail {display: none; padding-left: 1em;}
+
+
+.with-teaser .teaser span {
+    position: absolute;
+    right: 2em;
+    cursor: pointer;
+}
+
+.with-teaser h4 {
+    cursor: pointer;
+    position: relative;
+    margin-bottom: -.5em;
+    *line-height: 22px;
+    /* 	background: transparent url(/images/nav-arrow.png) 0 0 no-repeat; */
+}
+
+.with-teaser.active h4 {
+    background-position: -2px -34px;
+}
+
+.with-teaser .detail {
+    display: none;
+    padding-left: 1em;
+}
+
+
+
+#content .with-teaser h4{
+    background:none;
+    display: block;
+    font-size: 14px;
+    font-weight: bold;
+    color: #D60D17;
+    cursor: pointer;
+    text-decoration: none;
+    line-height: 1.3;
+    padding-bottom:10px;
+}
+
+.with-teaser {
+    border-bottom: 1px solid #CCC;
+    vertical-align: top;
+    position: relative;
+    padding-left: 20px;
+    display:block;
+    padding-bottom:15px;
+}
+
+.with-teaser.last {
+    border:none;
+}
+
+
+.with-teaser span {
+    background: url("/images/more-link_bold.png") no-repeat scroll 0 bottom
+    transparent;
+    display: block;
+    height: 10px;
+    left: -20px;
+    position: absolute;
+    top: 4px;
+    width: 9px;
+    left: 0px;
+    cursor: pointer;
+}
+
+
+.with-teaser.active span {
+    background-position: 0px 4px;
+}
+
+
+.no-header #content-container {
+    padding-top: 3em;
+}
+
+/* Features including links/icons example here /learning-power/students/puzzles-and-activities.asp */
+.additional-resources-link {width: 30%; float: left; text-align: center;}
+
+.additional-resources-link.two-across {width: 47%; }
+.additional-resources-link.two-across li { width:100%; }
+.additional-resources-link p { margin-top: -0.2em;}
+
+/* =============== */
+/* ! Search form   */
+/* =============== */
+#search-form {
+    text-align:right;width:200px;/*  margin-left:750px; top:1em; */
+    position:absolute; right:30px; top:10px;
+    margin:0;padding:0;
+    font-size:0.75em;
+    /* display:none; */
+}
+
+#search-form #search-form-input {
+    border:2px solid #cecece;
+    color:#cecece;
+    width:150px;
+    line-height:18px;
+    height:18px;
+    -webkit-border-top-left-radius: 5px;
+    -webkit-border-bottom-left-radius: 5px;
+    -moz-border-radius-topleft: 5px;
+    -moz-border-radius-bottomleft: 5px;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    padding-left:5px;padding-right:5px;
+}
+#search-form #search-form-input:focus {
+    color:#000;
+}
+#search-form #form-search-button {
+    width:auto;position:absolute; margin-left:-2px;
+    border:none;
+    font-size:0;
+    background-image:url(/images/form-search-button.gif) !important;
+    width:25px; height:24px;
+    right: -24px;
+    top: 0;
+}
+
+
+/* ============ */
+/* ! Facebook   */
+/* ============ */
+
+
+/* Facebook like section */
+#content-header .facebook-like {
+    position: absolute;
+    /* 	Include borders if needed later */
+    /*
+        border-top:solid 1px #fff;
+        border-bottom: solid 1px #fff;
+    */
+    top: 35px; left:10px;
+    width:98%;
+    text-align:right;
+    padding-top:5px;
+    z-index:2;
+}
+
+
+
+/* ================= */
+/* ! Landing Pages   */
+/* ================= */
+
+.promo {
+    width: 29%;
+    padding: 0.9%;
+    float: left;
+    margin-right: 2%;
+    margin-bottom: 1.5em;
+    border: solid 1px #dadada;
+    -webkit-border-radius: .5em;
+    -moz-border-radius: .5em;
+    /*height: 10em;*/
+    border-radius: .5em;
+    background: #f6f6f6; /* old browsers */
+    background: -moz-linear-gradient(top, #FFFFFF 0%, #DADAD9 100%); /* firefox */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#FFFFFF), color-stop(100%,#dfdfdf)); /* webkit */
+    background: linear-gradient(#FFFFFF, #DFDFDF);
+    -pie-background: linear-gradient(#FFFFFF, #DFDFDF);
+    -webkit-box-shadow: 2px 2px 3px #666666;
+    -moz-box-shadow: 2px 2px 2px #666666;
+    box-shadow: 2px 2px 3px #666666;
+    /* behavior: url(/PIE.htc); */
+    position: relative;
+    /* 	height:10em; */
+}
+
+.promo.standalone {
+    background-color: transparent;
+    -pie-background: none;
+    background:none;
+    border:none;
+    box-shadow:none;
+    -moz-box-shadow: none;
+    -webkit-box-shadow: none;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    border-radius: 0;
+    padding:0;
+}
+
+.with-sidebar .promo.single {
+    width: 500px;
+}
+
+.two-promos .promo {
+    width:49%; margin-right:1em;
+}
+
+.linked-promo { cursor:pointer; }
+
+
+.promo h3.short-text {
+    padding-top:24px;
+}
+
+
+
+/*.promo ul { margin:0; padding:0; margin-bottom:1em;}
+.promo ul li { list-style:none; }
+.promo ul.bulleted li { list-style:auto; }
+.promo img.detail-image {position: absolute; top: -3em; left: -2.5em;}
+.promo a {color: #636363; text-decoration:none; }
+.promo p {width: 100%; font-size:12px;height: 5.5em;*/
+/*
+.promo h4 {padding-left: 9em; width: 36%; margin-top: .5em; height: 2em;}
+.promo a img{ margin-left: 20%; }
+.promo * { cursor:pointer; } */
+
+.with-sidebar .promo {
+    /* Pages with a sidebar need narrower promos */
+    width:43%;
+
+}
+
+.landing-page #main-content section .promo.last {
+    margin-right: 0px;
+}
+
+
+ul.list {
+    list-style-type: none;
+    padding-left: 0px;
+    margin-left: 0px;
+}
+
+ul.list li {
+    padding-bottom: 5px;
+}
+
+/* #content-header p {color: #e7e7e6;} */
+#content-header.light p { color:#000; }
+
+
+
+/* No flash fallback */
+.no-flash  {text-align: center; margin-top: 2em; display: none;}
+.no-flash h2 {}
+
+.flash-content h2, .flash-content h3, .flash-content p { text-indent: -999em;}
+
+/* Promo ads - example located here /learning-power/students/careers.asp (high school tab)*/
+.additional-detail-links {padding: 0.6em; width: 30%; float: left;}
+
+.additional-detail-links a {color: #636363; cursor: pointer;}
+
+.additional-detail-links .detail-image { float: left; padding-top: 1.1em; padding-right: 0.5em; padding-bottom: 0.5em;}
+
+.additional-detail-links h4 {float: left; width: 40%; height: 3.2em;}
+
+.additional-detail-links p {height: 16.8em;}
+
+.action-link {margin-left: 10%;}
+
+
+.incomplete { border:2px solid red !important; }
+
+.overlay-trigger-disabled { cursor:default;}
+
+aside.projects-preview {
+    float:right;
+    padding:0 1em 1em 1em;
+}
+
+.projects-preview a,.projects-preview a img {
+    display:block;
+    text-align:center;
+}
+
+/* Scrollables */
+
+/*
+root element for the scrollable.  when scrolling occurs this
+element stays still.
+*/
+
+.scrollable, .simple-scrollable {
+    /* required settings */
+    position:relative;
+    overflow:hidden;
+    width: 760px;
+    height:400px;
+    left:-21px;
+}
+a.prev, a.next {
+    background:url(/images/slider-browse-inset.png) no-repeat;
+    width:45px;
+    height:75px;
+    cursor: pointer;
+    position:absolute;
+    left:0;
+    top:0;
+    display:block;
+    z-index:3;
+}
+a.prev {background-position:0 -75px;left:-5px;top:120px;}
+
+a.prev.outset, a.next.outset {
+    background:url(/images/slider-browse.png) no-repeat;
+    height: 70px !important;
+    margin: 0 !important;
+    max-height: 70px;
+    padding: 0 !important;
+    position: absolute;
+    top: 175px;
+    width: 250px;
+    z-index: 5;
+}
+a.prev.outset {
+    height: 70px;
+    left: -22px;
+}
+
+a.next.outset {
+    background-position: 210px -70px;
+    left: 467px;
+    right: -1.2em;
+}
+
+
+.hidden{display:none;}
+/*
+root element for scrollable items. Must be absolutely positioned
+and it should have a extremely large width to accommodate scrollable
+items.  it's enough that you set width and height for the root element
+and not for this element.
+*/
+.scrollable .items,.testimonials .items, .simple-scrollable .items {
+    /* this cannot be too large */
+    width:20000em;
+    position:absolute;
+}
+
+/*
+a single item. must be floated in horizontal scrolling.  typically,
+this element is the one that *you* will style the most.
+*/
+.scrollable .items img, .simple-scrollable .items img {
+    float:left;
+}
+
+
+
+/* FAQ Styling */
+
+.faq-box {
+    padding: 15px 0px;
+    border-bottom: 1px #CCC solid;
+}
+
+.faq-box p {
+    vertical-align: top;
+    margin: 0px 0px 10px;
+    padding-top: 2px;
+}
+
+.faq-box .question {
+    background: url("../images/q.png") no-repeat scroll 0 0 transparent;
+    min-height: 41px;
+    padding-left: 57px;
+    padding-top: 3px;
+    margin-bottom: 10px;
+}
+
+.faq-box .question p {
+    font-weight: bold;
+}
+
+.faq-box .answer {
+    background: url("../images/a.png") no-repeat scroll 0 0 transparent;
+    min-height: 41px;
+    padding-left: 57px;
+}
+
+h1 { color:#000; }
+
+
+/* SIDEBAR */
+
+#sidebar { position:absolute; top:200px; left:780px; }
+.landing-page #sidebar { top:420px; left:690px; }
+.medium-graphic #sidebar { top:275px; }
+
+#sidebar aside {
+    clear:right;
+    width: 140px;
+    padding:20px;	/* total width of 180px */
+    margin-bottom: 1.5em;
+    float: right;
+    z-index:5;
+    font-size:0.875em;
+    background: #f6f6f6;
+    background: -moz-linear-gradient(top, #FFFFFF 0%, #DADAD9 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#FFFFFF), color-stop(100%,#dfdfdf));
+    background: linear-gradient(#FFFFFF, #DFDFDF);
+    -pie-background: linear-gradient(#FFFFFF, #DFDFDF);
+    border: solid #dadada 1px;
+    -webkit-border-radius: .5em;
+    -moz-border-radius: .5em;
+    border-radius: .5em;
+    -moz-box-shadow: 5px 5px 5px #888;
+    -webkit-box-shadow: 5px 5px 5px #888;
+    box-shadow: 5px 5px 5px #888;
+    /* behavior: url(/PIE.htc); */
+
+    position:relative;
+}
+
+#sidebar aside.standalone {
+    background-color: transparent;
+    -pie-background: none;
+    background:none;
+    border:none;
+    box-shadow:none;
+    -moz-box-shadow: none;
+    -webkit-box-shadow: none;
+    margin-right:0.7em; /* compensates for the lack of the border/drop shadow, so it lines up better with other asides */
+}
+
+#sidebar aside a.button, #sidebar aside a { text-decoration:none; }
+
+#sidebar aside a.button {display: block;}
+
+#sidebar aside h1 {color: #000; font-size: 1.5em;}
+
+a.pdf {
+    background:url(/images/pdf-small.png) no-repeat;
+    padding-left:30px;
+    background-size: 1.5em;
+    line-height:1.5em;
+}
+
+a.pdf.alternate {
+    background:url(/images/pdf-small.png) top right no-repeat;
+    padding:0 30px 0 0;
+    background-size: 1.5em;
+    line-height:1.5em;
+}
+
+
+ul.pdf-list {
+    list-style:none;
+
+}
+
+
+ul.pdf-list > li {
+    list-style-image:url(/images/pdf-small.png);
+    margin-bottom:1em;
+}
+ul.pdf-list ul li { list-style:circle;}
+
+dl {
+    font-size:14px;
+    font-weight:100;
+}
+
+dt {
+    font-weight:bold;
+    color:#000;
+}
+
+dd{
+    margin-left:0;
+    margin-bottom:20px;
+}
+
+ol.navigation-by-letter{
+    margin-bottom:30px;
+}
+
+ol.navigation-by-letter a{
+    font-weight:400;
+}
+.nobreak { white-space:nowrap; }
+
+section.mid-section {
+    background: #f6f6f6; /* old browsers */
+    background: -moz-linear-gradient(top, #FFFFFF 0%, #DADAD9 100%); /* firefox */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#FFFFFF), color-stop(100%,#dfdfdf)); /* webkit */
+    background: linear-gradient(#FFFFFF, #DFDFDF);
+    padding: 10px;
+    display: block;
+    min-height: 10em;
+}
+
+#main-content h2 {
+    font-family: 'UniversLTW01-67BoldCn','Arimo',sans-serif;
+    color: #000;
+    font-size:23px;
+    letter-spacing: -.01em;
+    margin:0 0 8px 0;
+}
+#main-content h3 {
+    color: #000;
+    letter-spacing: -.02em;
+}
+#content-header h2, #content-header h3 { color:inherit;  }
+
+/* Grey Line Seperator*/
+#content-container div.sep {
+    border-bottom: 1px #CCC solid;
+    margin-bottom: 10px;
+    padding-left: 10px 0;
+}
+
+.spot-image { float:left; margin:0 1em 1em 0;}
+.spot-image.alternate { float:right; margin:0 0 1em 1em;}
+.promo .spot-image { margin-bottom:0; }
+div.image-with-caption.alternate { float:right; margin:0 0 1em 1em;}
+div.image-with-caption { float:left; margin:0 2em 1em 0; }
+div.image-with-caption p { margin-top:0; font-size:0.75em; }
+
+
+@media print {
+    nav,
+    #log-in-now,
+    .navigation, footer .navigation,
+    #first-sidebar,
+    #search-form,
+    #shadow-strip,
+    .social-links,
+    .facebook-like
+    { display:none !important; }
+
+    #main-content {
+        margin-left:0;
+    }
+
+    .panes, .panes > div, .promo {
+        -pie-background:none !important;
+        -webkit-gradient:none !important;
+        background:none !important;
+        background-color:white !important;
+
+    }
+    footer { height:auto !important; }
+
+    #home main-promo { display:none; }
+
+}
+
+/* Scrolling Freeze - iPad Fix for Landscape mode*/
+@media only screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:landscape) {
+    /* For landscape layouts only */
+    html, body, #container{
+        overflow: visible !important;
+    }
+}
+
+.apl {
+    margin-bottom:0px;
+}

@@ -1,16 +1,67 @@
 function tenantctrl($scope, $http, adminservice){
     $scope.rootUrl = topUrl;
-    $scope.selTenant = adminservice.getTenant();
-    var date = new Date($scope.selTenant.startDate);
-    $scope.since = date.getMonth() + ' ' + date.getFullYear();
+    var sel = adminservice.getSelObj();
+    if (sel !== undefined ){
+        if (sel.tid != undefined){
+            delete sel.tid;
+            $scope.obj = sel;
+            adminservice.loadMeta('tenant', $http, function(meta){
+                $scope.propsEl = adminservice.buildForm(meta, null, $scope.obj);
+            });
+        }
+        else{
+            $scope.selTenant = sel;
+        }
 
-
-    if ($scope.selTenant.providers == undefined){
-        $scope.selTenant.providers = [];
-        $scope.myproviders = [];
     }
-    if ($scope.selTenant.sessionTimeout == undefined){
-        $scope.selTenant.sessionTimeout = 24;
+    else{
+        $scope.selTenant = adminservice.getTenant();
+    }
+
+    if ($scope.selTenant !== undefined){
+        if ($scope.selTenant.startDate !== undefined){
+            var date = new Date($scope.selTenant.startDate);
+            $scope.since = date.getMonth() + ' ' + date.getFullYear();
+        }
+
+
+        if ($scope.selTenant.providers == undefined){
+            $scope.selTenant.providers = [];
+            $scope.myproviders = [];
+        }
+        if ($scope.selTenant.sessionTimeout == undefined){
+            $scope.selTenant.sessionTimeout = 24;
+        }
+        var cTime = new Date(), month = cTime.getMonth()+1, year = cTime.getFullYear();
+        $scope.events = [
+            [
+                "5/"+month+"/"+year,
+                'Meet a friend',
+                '#',
+                '#fb6b5b',
+                'Contents here'
+            ],
+            [
+                "8/"+month+"/"+year,
+                'Kick off meeting!',
+                '#',
+                '#ffba4d',
+                'Have a kick off meeting with .inc company'
+            ],
+            [
+                "18/"+month+"/"+year,
+                'Milestone release',
+                '#',
+                '#ffba4d',
+                'Contents here'
+            ],
+            [
+                "19/"+month+"/"+year,
+                'A link',
+                'https://github.com/blog/category/drinkup',
+                '#cccccc'
+            ]
+        ];
     }
 
     function getDummyProv(){
@@ -107,6 +158,26 @@ function tenantctrl($scope, $http, adminservice){
         });
     }
 
+    $scope.saveNewObj = function(){
+
+        adminservice.saveObj($scope.selTenant, 'tenant', $http, function(saved){
+            var u = adminservice.getSelUser();
+            u.tenants.push(saved);
+            $scope.editTenant(saved);
+        });
+    }
+
+    $scope.openNew = function(){
+        var t = {};
+        t.tid = 0;
+        adminservice.setSelObj(t);
+        var obj = {};
+        obj.view = 'createTenant.html';
+        obj.title = "New Tenant";
+        obj.toolbar = "secTools.html";
+        $scope.$emit("EV_SWITCH_VIEW", obj);
+    }
+
     $scope.saveObj = function(){
         saveTenant();
     }
@@ -136,5 +207,118 @@ function tenantctrl($scope, $http, adminservice){
         });
     }
 
+    $scope.addLang = function(){
+        $scope.selTenant.languages.push($scope.newLang);
+        saveTenant(function(){
+            $scope.loadLanguages();
+        });
+    }
 
+    $scope.loadLanguages = function(){
+        $scope.newLang = {};
+        if ($scope.selTenant.languages == undefined){
+            $scope.selTenant.languages = [];
+        }
+    }
+
+    $scope.removeLang = function(l){
+        for(var i = $scope.selTenant.languages.length - 1; i >=0; i--){
+            if (l.name == $scope.selTenant.languages[i].name){
+                $scope.selTenant.languages.splice(i, 1);
+            }
+        }
+        saveTenant(function(){
+            $scope.loadLanguages();
+        });
+    }
+
+    $scope.onLangFlag = function(event, l){
+        var url = event.url.replace(topUrl, "");
+        l.imageUrl = url;
+        if (l.name !== undefined){
+            saveTenant();
+        }
+    }
+
+    $scope.loadCustomFields = function(){
+        var f = {};
+        f.tenant = $scope.selTenant.name;
+        f.custom = true;
+        f.order_by = {label:1};
+        adminservice.listObj('fields', f, $http, function(d){
+            $scope.customFields = d;
+        });
+    }
+
+
+    $scope.newField = function(){
+        var f = {};
+        f.tenant = $scope.selTenant.name;
+        f.custom = true;
+        adminservice.setSelObj(f, backToTenant);
+        var obj = {};
+        obj.view = 'fieldDetail.html';
+        obj.title = "New Custom Attribute";
+        $scope.$emit("EV_SWITCH_VIEW", obj);
+    }
+
+    $scope.removeField = function(f){
+        for(var i = $scope.customFields.length - 1; i >=0; i--){
+            if (f._id == $scope.customFields[i]._id){
+                $scope.customFields.splice(i, 1);
+            }
+        }
+        adminservice.deleteObj(f, 'fields', $http, function(){
+            $scope.loadCustomFields();
+            //need to remove block
+        });
+    }
+
+    function backToTenant(obj){
+
+    }
+
+//    $scope.newApp = function(){
+//        var f = {};
+//        f.tenant = $scope.selTenant.name;
+//        adminservice.setSelObj(f, backToTenant);
+//        var obj = {};
+//        obj.view = 'appDetail.html';
+//        obj.title = "New Application";
+//        $scope.$emit("EV_SWITCH_VIEW", obj);
+//    }
+//
+//    $scope.editApp = function(a){
+//        adminservice.setSelObj(a, backToTenant);
+//        var obj = {};
+//        obj.view = 'appDetail.html';
+//        obj.title = "Edit " + a.title;
+//        $scope.$emit("EV_SWITCH_VIEW", obj);
+//    }
+//
+//    $scope.removeApp = function(a){
+//        for(var i = $scope.selTenant.appObjects.length - 1; i >=0; i--){
+//            if (l.name == $scope.selTenant.appObjects[i].name){
+//                $scope.selTenant.appObjects.splice(i, 1);
+//            }
+//        }
+//        saveTenant(function(){
+//            $scope.loadLanguages();
+//        });
+//    }
+
+    $scope.updateApp = function(app){
+        adminservice.saveObj(app, 'apps', $http, function(){
+
+        });
+    }
+
+    $scope.newProvider = function(){
+        var f = {};
+        adminservice.setSelObj(f, backToTenant);
+        var obj = {};
+        obj.view = 'newProvider.html';
+        obj.title = "New Provider";
+        $scope.$emit("EV_SWITCH_VIEW", obj);
+    }
 }

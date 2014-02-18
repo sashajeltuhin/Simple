@@ -5,6 +5,10 @@ function userlistctrl($scope, $http, adminservice){
     function loadUsers(){
         adminservice.listObj('user', {tid: tenantID},  $http, function(data){
             $scope.userList = data;
+            $.each($scope.userList, function(i, u){
+                var date = new Date(u.startDate);
+                u.sinceFormatted = date.getDate() + '-' + date.getMonth() + '-' + date.getFullYear();
+            })
         });
     }
 

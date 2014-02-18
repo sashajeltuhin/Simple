@@ -77,6 +77,42 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
         }
     }
 
+    $scope.newUI = function(){
+        selected = '';
+        var f = {};
+        f.tenant = adminservice.getTenant().name;
+        adminservice.setSelObj(f, $scope.loadCartSteps);
+        var obj = {};
+        obj.view = 'appDetail.html';
+        obj.title = "New Application";
+        $scope.$emit("EV_SWITCH_VIEW", obj);
+    }
+
+    $scope.editApp = function(a){
+        selected = '';
+        adminservice.setSelObj(a, $scope.loadCartSteps);
+        var obj = {};
+        obj.view = 'appDetail.html';
+        obj.title = "Edit " + a.name;
+        $scope.$emit("EV_SWITCH_VIEW", obj);
+    }
+
+    $scope.updateApp = function(app){
+        adminservice.saveObj(app, 'apps', $http, function(){
+
+        });
+    }
+
+    $scope.removeApp = function(a){
+        adminservice.deleteObj(a, "apps", $http, function(){
+            for(var i = $scope.selTen.appObjects.length - 1; i >=0; i--){
+                if (a.appID == $scope.selTen.appObjects[i].appID){
+                    $scope.selTen.appObjects.splice(i, 1);
+                }
+            }
+        });
+    }
+
 
     $scope.cloneApp = function(app){
         var newApp = {};
@@ -147,7 +183,7 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
 
     $scope.deleteStep = function(s, siblings){
         adminservice.deleteObj(s, 'step', $http, function(){
-            for(var i = siblings - 1; i >=0; i--){
+            for(var i = siblings.length - 1; i >=0; i--){
                 if (s._id == siblings[i]._id){
                     siblings.splice(i, 1);
                 }
@@ -405,6 +441,18 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
         selected = 'apps';
         createObj('New Application');
     }
+
+    $scope.newApp = function(){
+        selected = 'apps';
+        var obj = {};
+        obj.title = "New Application";
+        obj.toolbar = 'widgetTools.html';
+        var def = {};
+        def.tenant = adminservice.getTenant();
+        obj.def = def;
+        newObj(obj.title, obj.def, null, obj.toolbar);
+    }
+
     $scope.createTenant = function(){
         selected = 'tenant';
         createObj('New Tenant');
@@ -465,7 +513,7 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
             if (tools !== undefined){
                 $scope.subTools = serverUrl + tools;
             }
-            if (wrap == undefined){
+            if (wrap == undefined || wrap == null){
                 $scope.wrapper = serverUrl + 'genericNew.html';
             }
             else{
@@ -634,6 +682,10 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
             adminservice.listObj(selected, {objname:f, 'order_by':{order:1}}, $http, function(d){
                 //$scope.colData = m;
                 //$scope.listData = d;
+                var filterData = {}
+                filterData.m = m;
+                filterData.f = $scope.selFilter;
+                adminservice.setFilterData(filterData);
                 $scope.wrapper = serverUrl + 'spread.html';
                 buildNGrid(m, d);
                 //refreshFilter(m, refreshData);
@@ -854,7 +906,8 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
         });
     }
 
-    $scope.editTenant = function(){
+    $scope.editTenant = function(t){
+        adminservice.setSelObj(t);
         $scope.viewTitle = "Tenant Configurations"
         $scope.subTools = serverUrl + 'secTools.html';
         $scope.wrapper = serverUrl + 'tenantDetail.html';
@@ -1164,7 +1217,12 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
         adminservice.addActiveApp(appField);
     }
 
-    $scope.loadCartSteps = function(){
+    $scope.loadCartSteps = function(a){
+        if (a !== undefined && $scope.selTen.apps.indexOf(a.appID) < 0){
+            $scope.selTen.apps.push(a.appID);
+            $scope.selTen.appObjects.push(a);
+        }
+
         selected = 'step';
         $scope.viewTitle = "User Flow";
         $scope.subTools = serverUrl + 'widgetTools.html';
@@ -1172,7 +1230,12 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
         var extra = {};
         extra.type = 'cart';
         extra.app = {};
-        addActiveApp(extra.app);
+        if (a !== undefined){
+            extra.app[a.appID] = true;
+        }
+        else{
+            addActiveApp(extra.app);
+        }
         buildDefFilter(extra);
         loadFancyList(serverUrl + 'steplisthor.html', function(d){
             //apps
@@ -1437,13 +1500,18 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
                 }
                 $scope.colData = m;
                 $scope.listData = d;
+                var filterData = {}
+                filterData.m = m;
+                filterData.f = $scope.selFilter;
+                adminservice.setFilterData(filterData);
                 $scope.wrapper = wrap;
                 $scope.sortableOptions = {
                     update: function(e, ui){
                         console.log(ui);
                     }
                 };
-                refreshFilter(m, refreshData);
+                $scope.$broadcast("EV_FILTER_REBUILD", m, $scope.selFilter);
+                //refreshFilter(m, refreshData);
             });
         });
     }
@@ -1519,6 +1587,10 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
             viewMode = 'grid';
             $scope.colData = m;
             $scope.listData = d;
+            var filterData = {}
+            filterData.m = m;
+            filterData.f = $scope.selFilter;
+            adminservice.setFilterData(filterData);
             $scope.wrapper = serverUrl + 'spread.html';
             buildNGrid(m, d);
             refreshFilter(m, refreshData);
@@ -1526,6 +1598,7 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
     }
 
     function buildNGrid(meta, data) {
+
         $scope.$broadcast("EV_FILTER_REBUILD", meta, $scope.selFilter);
         hideGrid();
         $scope.subTools = serverUrl + 'gridTools.html';

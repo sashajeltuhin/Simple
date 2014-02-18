@@ -1,0 +1,147 @@
+#residential-home #container {
+    background-image:url(../images/banner-residential.jpg);
+}
+
+#residential-home #content-header {
+    margin-bottom: 0px;
+}
+
+#residential-home .top-section {
+    /* white-space:nowrap;	margin-left:-15px;width:750px; */
+    min-height: 10em;
+}
+/* #residential-home .top-section .promo {width:26%; white-space:normal; margin-right:1%; padding:10px 1em 0 1em; height:108px;} */
+
+#residential-home .top-section .promo { height:119px;}
+
+#residential-home section h3 {  margin: 7px 0; letter-spacing:-1px;}
+
+
+#residential-home #paperless-promo h3 { margin-top:5px;}
+
+#residential-home #paperless-promo img {
+    float:right;
+    margin-left:0.25em;
+    position:relative;
+    right: -12px;
+    top: -6px;
+}
+
+
+#residential-home #heat-pump-promo { padding-left:90px; width:17%;}
+#residential-home #heat-pump-promo img {
+    position: absolute;
+    top:0px;left:0;
+
+}
+
+#residential-home p { margin:5px 0 0 0;}
+
+#residential-home #heat-pump-promo img {
+    position: absolute;
+    top:0px;left:0;
+}
+/* #residential-home #paperless-5-promo { width:32%; padding-bottom:0;} */
+/* #residential-home #paperless-5-promo .inner { padding-left:100px;} */
+
+#residential-home #paperless-5-promo h3, #residential-home #paperless-5-promo p {
+    margin-left: 100px;
+}
+
+#residential-home #paperless-5-promo img {
+    position:absolute; left:0; top:0;
+}
+
+#residential-home #audit-promo,
+#residential-home #moving-promo {
+    /* width:27%; */
+    margin-right:0;
+
+}
+#residential-home #audit-promo img { position:absolute; bottom:-1px; right:-1px;}
+#residential-home #audit-promo p { width:60%; }
+
+#residential-home .georgia-you {
+    width:50%;
+    float: left;
+    position: relative;
+}
+
+#residential-home .georgia-you img {
+    position: absolute;
+    top:0px;
+    left:10px;
+}
+
+#residential-home #fridge-promo,
+#residential-home #moving-promo,
+#residential-home #duct-seal-promo {padding-left:90px; width:18%;}
+
+#residential-home #fridge-promo img,
+#residential-home #moving-promo img,
+#residential-home #duct-seal-promo img {position: absolute;top:0px;left:0;}
+
+
+#residential-home #budget-bill-promo	{padding-right:90px;width:20%;}
+#residential-home #budget-bill-promo img {
+    position: absolute;
+    top:0px;right:5px;
+
+}
+#residential-home #budget-bill-promo p {margin-right:20px;}
+
+#residential-home .georgia-you h4 {
+    margin: 10px 0 10px 120px;
+}
+
+#residential-home .georgia-you p {
+    margin: 0 0 0 120px;
+    width: 60%;
+}
+
+section.bottom-section {
+    display: block;
+    min-height: 20em;
+}
+
+section.bottom-section h4 {
+    margin: 0px 0px 5px;
+}
+
+section.bottom-section .promo {
+    border-right: 1px #ccc solid;
+    padding-top: 0px;
+    margin-top: 10px;
+    min-height: 20em;
+    width: 170px;
+    margin-right: 12px;
+}
+
+section.bottom-section .promo.last {
+    margin-right: 0px;
+}
+
+section.bottom-section .promo a {
+    color: #636363;
+}
+
+section.bottom-section .promo a:hover {
+    color: #CC0000;
+}
+
+
+
+section.bottom-section .last {
+    border: 0;
+}
+
+#residential-home #content-header, #save-money-energy #content-header  {
+
+    min-height: 19.5em ;
+}
+#thank-you #content-header, #paperless-promo #content-header {background-image:url(../images/Paperless-Landing-Banner.jpg);}
+#thank-you #content-header h1, #paperless-promo #content-header h1 {width:400px;}
+
+#circlek #content-header {background-image:url(../images/banner-circlek.jpg);height:150px;}
+
+

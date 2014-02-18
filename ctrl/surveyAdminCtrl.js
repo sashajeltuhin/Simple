@@ -195,9 +195,11 @@ function surveyAdminCtrl($scope, $rootScope, $http, adminservice){
         $scope.queMap = [];
         for(var i = 0; i < $scope.queParents.length; i++){
             $scope.queMap.push($scope.queParents[i]);
-            for(var r = 0; r < $scope.queParents[i].responses.length; r++){
-                if ($scope.queParents[i].responses[r].link !== undefined){
-                    $scope.queMap.push($scope.queParents[i].responses[r].link);
+            if ($scope.queParents[i].responses !== undefined){
+                for(var r = 0; r < $scope.queParents[i].responses.length; r++){
+                    if ($scope.queParents[i].responses[r].link !== undefined){
+                        $scope.queMap.push($scope.queParents[i].responses[r].link);
+                    }
                 }
             }
         }

@@ -1,41 +1,47 @@
 function providerctrl($scope, $http, adminservice){
+    var OBJ = 'provider';
     $scope.rootUrl = topUrl;
     $scope.selProvider = adminservice.getSelObj();
-    $scope.tenant = adminservice.getTenant();
-    var date = new Date($scope.selProvider.startDate);
-    $scope.since = date.getMonth() + ' ' + date.getFullYear();
-    var cTime = new Date(), month = cTime.getMonth()+1, year = cTime.getFullYear();
-    $scope.events = [
-        [
-            "5/"+month+"/"+year,
-            'Meet a friend',
-            '#',
-            '#fb6b5b',
-            'Contents here'
-        ],
-        [
-            "8/"+month+"/"+year,
-            'Kick off meeting!',
-            '#',
-            '#ffba4d',
-            'Have a kick off meeting with .inc company'
-        ],
-        [
-            "18/"+month+"/"+year,
-            'Milestone release',
-            '#',
-            '#ffba4d',
-            'Contents here'
-        ],
-        [
-            "19/"+month+"/"+year,
-            'A link',
-            'https://github.com/blog/category/drinkup',
-            '#cccccc'
-        ]
-    ];
+    if ($scope.selProvider._id !== undefined){
+        $scope.tenant = adminservice.getTenant();
+        var date = new Date($scope.selProvider.startDate);
+        $scope.since = date.getMonth() + ' ' + date.getFullYear();
+        var cTime = new Date(), month = cTime.getMonth()+1, year = cTime.getFullYear();
+        $scope.events = [
+            [
+                "5/"+month+"/"+year,
+                'Meet a friend',
+                '#',
+                '#fb6b5b',
+                'Contents here'
+            ],
+            [
+                "8/"+month+"/"+year,
+                'Kick off meeting!',
+                '#',
+                '#ffba4d',
+                'Have a kick off meeting with .inc company'
+            ],
+            [
+                "18/"+month+"/"+year,
+                'Milestone release',
+                '#',
+                '#ffba4d',
+                'Contents here'
+            ],
+            [
+                "19/"+month+"/"+year,
+                'A link',
+                'https://github.com/blog/category/drinkup',
+                '#cccccc'
+            ]
+        ];
 
-    showCoverage();
+        showCoverage();
+    }
+    else{
+        init();
+    }
 
     $scope.showCoverage = function(){
         showCoverage();
@@ -63,7 +69,6 @@ function providerctrl($scope, $http, adminservice){
                     });
 
                 });
-
         });
     }
 
@@ -71,7 +76,9 @@ function providerctrl($scope, $http, adminservice){
     $scope.onProviderLogo = function(event){
         var url = event.url.replace(topUrl, "");
         $scope.selProvider.logo = url;
-        saveProvider();
+        if ($scope.selProvider._id !== undefined){
+            saveProvider();
+        }
     }
 
     function saveProvider(callback){
@@ -81,6 +88,33 @@ function providerctrl($scope, $http, adminservice){
             }
         });
     }
+
+    function init(){
+        $scope.obj = adminservice.getSelObj();
+        adminservice.loadMeta(OBJ, $http, function(meta){
+            $scope.fieldList = adminservice.bindObj(meta, $scope.obj, prepareField);
+        });
+    }
+
+    function prepareField(metafld){
+        var mf = metafld;
+        if (metafld.fldname !== 'name' && metafld.fldname !== "desc" || metafld.fldname == "active"){
+            mf = null;
+        }
+        return mf;
+    }
+
+    $scope.$on("EV_SAVE_CHANGES", function(event){
+        adminservice.bindObjData($scope.obj, $scope.fieldList);
+        $scope.obj.logo = $scope.selProvider.logo;
+        adminservice.saveObj($scope.obj, OBJ, $http, function(saved){
+            var callback = adminservice.getSelCallback();
+            if (callback !== undefined && callback !== null){
+                callback(saved);
+            }
+        });
+
+    });
 
 
 }

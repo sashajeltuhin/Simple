@@ -14,8 +14,25 @@
 </header>
 <section>
 <section class="hbox stretch">
-<aside class="col-lg-4 bg-light lter b-r">
-    <section class="vbox">
+<aside class="bg-white">
+<section class="hbox stretch">
+<section class="vbox">
+<header class="header bg-light bg-gradient">
+    <ul class="nav nav-tabs nav-white">
+        <li class="active"><a href="#main" data-toggle="tab">At a glance</a></li>
+        <li class=""><a href="#provs" ng-click="loadProviders()" data-toggle="tab">Providers</a></li>
+        <li class=""><a href="#apps" ng-click="loadApps()" data-toggle="tab">Applications</a></li>
+        <li class=""><a href="#depts" ng-click="loadDepts()" data-toggle="tab">Departments</a></li>
+        <li class=""><a href="#langs" ng-click="loadLanguages()" data-toggle="tab">Languages</a></li>
+        <li class=""><a href="#fields" ng-click="loadCustomFields()" data-toggle="tab">Custom Attributes</a></li>
+        <li class=""><a href="#configs" data-toggle="tab">Settings</a></li>
+    </ul>
+</header>
+<section class="vbox">
+<div class="tab-content">
+<div class="tab-pane active" id="main">
+    <section class="hbox stretch">
+        <aside class="bg-white">
         <section>
             <div class="wrapper bg-light lter">
                 <div class="clearfix m-b">
@@ -53,86 +70,145 @@
                         </div>
                     </div>
                 </div>
-                <div class="wrapper">
-                    <section class="panel panel-default">
-                        <form>
-                            <textarea class="form-control no-border" rows="3" placeholder="Quick message..."></textarea>
-                        </form>
-                        <footer class="panel-footer bg-light lter">
-                            <button class="btn btn-info pull-right btn-sm">POST</button>
-                            <ul class="nav nav-pills nav-sm">
-                                <li><a href="#"><i class="fa fa-camera text-muted"></i></a></li>
-                                <li><a href="#"><i class="fa fa-video-camera text-muted"></i></a></li>
-                            </ul>
-                        </footer>
-                    </section>
                 </div>
-                <!--<div class="btn-group btn-group-justified m-b">-->
-                    <!--<a class="btn btn-primary btn-rounded" data-toggle="button">-->
-                            <!--<span class="text">-->
-                              <!--<i class="fa fa-eye"></i> Follow-->
-                            <!--</span>-->
-                            <!--<span class="text-active">-->
-                              <!--<i class="fa fa-eye-slash"></i> Following-->
-                            <!--</span>-->
-                    <!--</a>-->
-                    <!--<a class="btn btn-dark btn-rounded" data-loading-text="Connecting">-->
-                        <!--<i class="fa fa-comment-o"></i> Chat-->
-                    <!--</a>-->
-                <!--</div>-->
-                <div>
-                    <small class="text-uc text-xs text-muted">About {{selTenant.name}}</small>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi id neque quam. Aliquam sollicitudin venenatis ipsum ac feugiat.</p>
-                    <div class="line"></div>
-                    <small class="text-uc text-xs text-muted">connection</small>
-                    <p class="m-t-sm">
-                        <a href="#" class="btn btn-rounded btn-twitter btn-icon"><i class="fa fa-twitter"></i></a>
-                        <a href="#" class="btn btn-rounded btn-facebook btn-icon"><i class="fa fa-facebook"></i></a>
-                        <a href="#" class="btn btn-rounded btn-gplus btn-icon"><i class="fa fa-google-plus"></i></a>
-                    </p>
-                </div>
+            <div>
+                <small class="text-uc text-xs text-muted">About {{selTenant.name}}</small>
+                <p>{{selTenant.desc}}</p>
+                <div class="line"></div>
+                <small class="text-uc text-xs text-muted">connection</small>
+                <p class="m-t-sm">
+                    <a href="#" class="btn btn-rounded btn-twitter btn-icon"><i class="fa fa-twitter"></i></a>
+                    <a href="#" class="btn btn-rounded btn-facebook btn-icon"><i class="fa fa-facebook"></i></a>
+                    <a href="#" class="btn btn-rounded btn-gplus btn-icon"><i class="fa fa-google-plus"></i></a>
+                </p>
             </div>
-        </section>
+            </section>
+        </aside>
+        <aside class="bg-white">
+            <div class="wrapper">
+                <section class="panel bg-primary b-light">
+                    <header class="panel-heading bg-primary dker no-border"><strong>Calendar of events</strong></header>
+                    <mk-calendar class="bg-primary m-l-n-xxs m-r-n-xxs" events="events"></mk-calendar>
+                    <div class="list-group">
+                        <a href="#" class="list-group-item text-ellipsis">
+                            <span class="badge bg-danger">7:30</span>
+                            Meet a friend
+                        </a>
+                        <a href="#" class="list-group-item text-ellipsis">
+                            <span class="badge bg-success">9:30</span>
+                            Have a kick off meeting with .inc company
+                        </a>
+                        <a href="#" class="list-group-item text-ellipsis">
+                            <span class="badge bg-light">19:30</span>
+                            Milestone release
+                        </a>
+                    </div>
+                </section>
+            </div>
+        </aside>
     </section>
-</aside>
-<aside class="bg-white">
-<section class="hbox stretch">
-<section class="vbox">
-<header class="header bg-light bg-gradient">
-    <ul class="nav nav-tabs nav-white">
-        <li class="active"><a href="#tenants" ng-click="loadProviders()" data-toggle="tab">Providers</a></li>
-        <li class=""><a href="#apps" ng-click="loadApps()" data-toggle="tab">Applications</a></li>
-        <li class=""><a href="#depts" ng-click="loadDepts()" data-toggle="tab">Departments</a></li>
-        <li class=""><a href="#langs" ng-click="loadLanguages()" data-toggle="tab">Languages</a></li>
-        <li class=""><a href="#configs" data-toggle="tab">Settings</a></li>
-    </ul>
-</header>
-<section class="vbox">
-<div class="tab-content">
-<div class="tab-pane active" id="tenants">
-<mk-nest class="dd" group="1" onchangefn="onAddProvider(list)">
-<ol class="dd-list list-group no-radius m-b-none m-t-n-xxs list-group-lg no-border">
-<li class="dd-item list-group-item" data-id="{{$index}}" ng-repeat="t in myproviders">
+</div>
+<div class="tab-pane" id="provs">
+    <section class="hbox stretch">
+
+    <aside class="col-lg-9 bg-light lter b-r aside-md">
+        <mk-nest class="dd" group="1" onchangefn="onAddProvider(list)">
+            <ol class="dd-list list-group no-radius m-b-none m-t-n-xxs list-group-lg no-border">
+                <li class="dd-item list-group-item" data-id="{{$index}}" ng-repeat="t in myproviders">
     <span class="pull-right">
         <a href="#" ng-click="manageProvider(t)"><i class="fa fa-pencil icon-muted fa-fw m-r-xs"></i></a>
         <a href="#" ng-click="removeProvider(t)"><i class="fa fa-times icon-muted fa-fw"></i></a>
      </span>
-    <div class="dd-handle">
-        <a href="#" class="thumb-sm pull-left m-r-sm">
-            <img ng-src="{{rootUrl}}{{t.logo}}" class="img-circle">
-        </a>
-        <a href="#" class="clear">
-            <strong class="block">{{t.name}}</strong>
-            <small>{{t.desc}}</small>
-        </a>
-    </div>
-</li>
-</ol>
-</mk-nest>
+
+                    <div class="dd-handle">
+                        <a href="#" class="thumb-sm pull-left m-r-sm">
+                            <img ng-src="{{rootUrl}}{{t.logo}}" class="img-circle">
+                        </a>
+                        <a href="#" class="clear">
+                            <strong class="block">{{t.name}}</strong>
+                            <small>{{t.desc}}</small>
+                        </a>
+                    </div>
+                </li>
+            </ol>
+        </mk-nest>
+    </aside>
+    <aside class="col-lg-3 bg-light lter b-r aside-md hidden-print nav-xs-right" id="accessnav">
+        <section class="vbox">
+            <header class="header bg-primary lter text-center clearfix">
+                <div class="row">
+                    <a href="#accessnav" data-toggle="class:nav-xs" class="pull-left btn btn-sm btn-default btn-icon">
+                        <i class="fa fa-angle-right text"></i>
+                        <i class="fa fa-angle-left text-active"></i>
+                    </a>
+                    <div class="btn-group">
+                        <div class="btn-group hidden-nav-xs">
+                            <button class="btn btn-success btn-sm" ng-click="newProvider()"><i class="fa fa-plus"></i>
+                            </button>
+                            <button type="button" class="btn btn-sm btn-primary dropdown-toggle" data-toggle="dropdown">
+                                Restricted
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </header>
+            <section class="w-f ">
+                <div class="slim-scroll" data-height="auto" data-disable-fade-out="true" data-distance="0" data-size="5px" data-color="#333333">
+
+                    <!-- nav -->
+                    <nav class="nav-primary hidden-xs">
+                        <ul class="nav">
+                            <li  class="active">
+                                <a href="#layout"   class="active">
+                                    <i class="fa fa-columns icon">
+                                        <b class="bg-warning"></b>
+                                    </i>
+                        <span class="pull-right">
+                          <i class="fa fa-angle-down text"></i>
+                          <i class="fa fa-angle-up text-active"></i>
+                        </span>
+                                    <span>{{availableSection}}</span>
+                                </a>
+                                <mk-nest class="dd" group="1">
+                                    <ol class="dd-list nav lt">
+                                        <li class="dd-item" data-id="{{$index}}" ng-repeat="i in existingList">
+                                            <div class="dd-handle dd3-handle">Drag</div>
+                                            <div class="dd3-content">
+                                                <a href="#" class="thumb-sm pull-left m-r-sm">
+                                                    <img ng-src="{{rootUrl}}{{i.imageUrl}}" class="img-circle">
+                                                </a>
+                                                <a href="#" >
+                                                    <span>{{i.name}}</span>
+                                                </a>
+                                            </div>
+                                        </li>
+                                    </ol>
+                                </mk-nest>
+                            </li>
+                        </ul>
+                    </nav>
+                    <!-- / nav -->
+                </div>
+            </section>
+        </section>
+    </aside>
+    </section>
 </div>
 <div class="tab-pane" id="apps">
-    <div class="text-center wrapper">
-        <section class="panel panel-default" ng-repeat="app in selTenant.appObjects"> <header class="panel-heading bg-danger lt no-border"> <div class="clearfix"> <a href="#" class="pull-left thumb avatar b-3x m-r"> <img src="images/avatar.jpg" class="img-circle"> </a> <div class="clear"> <div class="h3 m-t-xs m-b-xs text-white"> {{app.name}} <i class="fa fa-circle text-white pull-right text-xs m-t-sm"></i> </div> <small class="text-muted">{{app.appID}}</small> </div> </div> </header> <div class="list-group no-radius alt"> <a class="list-group-item" href="#"> <span class="badge bg-success">25</span> <i class="fa fa-comment icon-muted"></i> Messages </a> <a class="list-group-item" href="#"> <span class="badge bg-info">16</span> <i class="fa fa-envelope icon-muted"></i> Inbox </a> <a class="list-group-item" href="#"> <span class="badge bg-light">5</span> <i class="fa fa-eye icon-muted"></i> Profile visits </a> </div> </section>
+    <div class="col-lg-6  text-center wrapper">
+        <section class="panel panel-default" ng-repeat="app in selTenant.appObjects">
+            <header class="panel-heading bg-danger lt no-border">
+                <div class="clearfix"><a href="#" class="pull-left thumb avatar b-3x m-r" ng-click="loadCartSteps(app)">
+                                      <i class="fa fa-tablet"></i></a>
+
+                    <div class="clear">
+                        <div class="h3 m-t-xs m-b-xs text-white"> {{app.name}} <a href="#" ng-click="loadCartSteps(app)"><i class="fa fa-pencil text-white pull-right text-xs m-t-sm"></i></a>
+                            <a href="#" ng-click="removeApp(app)"><i class="fa fa-times text-white pull-right text-xs m-t-sm"></i></a></div>
+                        <small class="text"><label>Active <input type="checkbox" ng-model="app.active" ng-change="updateApp(app)"></label></small>
+                    </div>
+                </div>
+            </header>
+        </section>
     </div>
 </div>
 <div class="tab-pane" id="depts">
@@ -189,7 +265,7 @@
     <ul class="list-group no-radius m-b-none m-t-n-xxs list-group-lg no-border">
         <li class="dd-item list-group-item" ng-repeat="l in selTenant.languages">
     <span class="pull-right">
-        <a href="#" ng-click="removeProvider(t)"><i class="fa fa-times icon-muted fa-fw"></i></a>
+        <a href="#" ng-click="removeLang(l)"><i class="fa fa-times icon-muted fa-fw"></i></a>
      </span>
             <div class="dd-handle">
                 <a href="#" class="thumb-sm pull-left m-r-sm">
@@ -204,7 +280,35 @@
         </li>
     </ul>
 </div>
-
+<div class="tab-pane" id="fields">
+    <section>
+        <div class="line pull-in"></div>
+        <div class="btn-toolbar m-b-sm btn-editor">
+            <div class="btn-group">
+                <a class="btn btn-default btn-sm" ng-click="newField()"><i class="fa fa-undo"></i>New Attribute
+                </a>
+            </div>
+            <div class="btn-group">
+                <a class="btn btn-default btn-sm" ng-click="generateUIBlocks()"><i class="fa fa-undo"></i>UI Elements
+                </a>
+            </div>
+        </div>
+        <ul class="list-group no-radius m-b-none m-t-n-xxs list-group-alt list-group-lg">
+            <li class="list-group-item" ng-repeat="f in customFields">
+                <span class="pull-right">
+                     <a href="#" ng-click="removeField(f)"><i class="fa fa-times icon-muted fa-fw"></i></a>
+                 </span>
+                <a href="#" class="thumb-xs pull-left m-r-sm"  ng-click="editField(f)">
+                    <i class="fa fa-book"></i>
+                </a>
+                <a href="#" class="clear" ng-click="editField(f)">
+                    <span class="pull-right label label-sm bg-primary text-uc">{{f.fldtype}}</span>
+                    <strong>{{f.label}}</strong>
+                </a>
+            </li>
+        </ul>
+    </section>
+</div>
 <div class="tab-pane" id="configs">
     <section class="vbox">
         <section>
@@ -255,63 +359,6 @@
 </div>
 </section>
 </section>
-<aside class="bg-light lter b-r aside-md hidden-print nav-xs-right" id="accessnav">
-<section class="vbox">
-<header class="header bg-primary lter text-center clearfix">
-    <div class="row">
-        <a href="#accessnav" data-toggle="class:nav-xs" class="pull-left btn btn-sm btn-default btn-icon">
-            <i class="fa fa-angle-right text"></i>
-            <i class="fa fa-angle-left text-active"></i>
-        </a>
-        <div class="btn-group">
-            <div class="btn-group hidden-nav-xs">
-                <button type="button" class="btn btn-sm btn-primary dropdown-toggle" data-toggle="dropdown">
-                    Restricted
-                </button>
-            </div>
-        </div>
-    </div>
-</header>
-<section class="w-f ">
-<div class="slim-scroll" data-height="auto" data-disable-fade-out="true" data-distance="0" data-size="5px" data-color="#333333">
-
-<!-- nav -->
-<nav class="nav-primary hidden-xs">
-<ul class="nav">
-<li  class="active">
-    <a href="#layout"   class="active">
-        <i class="fa fa-columns icon">
-            <b class="bg-warning"></b>
-        </i>
-                        <span class="pull-right">
-                          <i class="fa fa-angle-down text"></i>
-                          <i class="fa fa-angle-up text-active"></i>
-                        </span>
-        <span>{{availableSection}}</span>
-    </a>
-    <mk-nest class="dd" group="1">
-        <ol class="dd-list nav lt">
-            <li class="dd-item" data-id="{{$index}}" ng-repeat="i in existingList">
-                <div class="dd-handle dd3-handle">Drag</div>
-                <div class="dd3-content">
-                    <a href="#" class="thumb-sm pull-left m-r-sm">
-                        <img ng-src="{{rootUrl}}{{i.imageUrl}}" class="img-circle">
-                    </a>
-                    <a href="#" >
-                        <span>{{i.name}}</span>
-                    </a>
-                </div>
-            </li>
-        </ol>
-    </mk-nest>
-</li>
-</ul>
-</nav>
-<!-- / nav -->
-</div>
-</section>
-</section>
-</aside>
 </section>
 </aside>
 <!--<aside class="col-lg-4 b-l">-->

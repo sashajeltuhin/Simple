@@ -49,7 +49,7 @@
 <section class="hbox stretch">
     <!-- .aside -->
     <div class="row">
-    <aside class="col-lg-4" ng-repeat="a in stepApps">
+    <aside class="col-lg-6" ng-repeat="a in stepApps">
         <section class="vbox">
             <!--<header class="header bg-white b-b b-light">-->
                 <!--<a href="#aside" data-toggle="class:show" class="btn btn-sm btn-default pull-right">Create</a>-->
@@ -67,8 +67,9 @@
                                         <span>{{a.name}}</span>
                                     </h3>
                                     <div class="m-t-sm timeline-action">
-                                        <span class="pull-left m-r-sm"><a>Active <input type="checkbox" ng-model="a.active"></a></span>
-                                        <button class="btn btn-sm btn-default btn-bg" ng-click="cloneApp(a)"><i class="fa fa-copy"></i> Copy</button>
+                                        <span class="pull-left m-r-sm"><a>Active <input type="checkbox" ng-model="a.active" ng-change="updateApp(a)"></a></span>
+                                        <button class="btn btn-sm btn-default btn-bg" ng-click="editApp(a)"><i class="fa fa-pencil"></i></button>
+                                        <button class="btn btn-sm btn-default btn-bg" ng-click="cloneApp(a)"><i class="fa fa-copy"></i></button>
                                         <button class="btn btn-sm btn-default btn-bg" ng-click="createStep(a, appElements[a.appID])"><i class="fa fa-check"></i> New Widget</button>
                                     </div>
                                 </div>
@@ -100,42 +101,66 @@
     </div>
     <!-- /.aside -->
     <!-- .aside -->
-    <aside class="aside-lg bg-white b-l hide" id="aside">
-        <div class="wrapper">
-            <h4 class="m-t-none">Timeline</h4>
-            <form>
-                <div class="form-group">
-                    <label>Name</label>
-                    <input type="text" placeholder="Event name" class="input-sm form-control">
-                </div>
-                <div class="form-group">
-                    <label>Date</label>
-                    <input type="text" placeholder="Event name" class="datepicker input-sm form-control">
-                </div>
-                <div class="form-group">
-                    <label>Time</label>
-                    <input type="text" placeholder="eg. 3:00 pm" class="input-sm form-control">
-                </div>
-                <div class="form-group">
-                    <label>Type</label>
-                    <div>
-                        <div class="btn-group">
-                            <button data-toggle="dropdown" class="btn btn-sm btn-default dropdown-toggle">
-                                <span class="dropdown-label">Choose a type</span>
-                                <span class="caret"></span>
+    <aside class="bg-light lter b-r aside-md hidden-print nav-xs-right" id="filternav" ng-controller="filterctrl">
+        <section class="vbox">
+            <header class="header bg-primary lter text-center clearfix">
+                <div class="row">
+                    <a href="#filternav" data-toggle="class:nav-xs" class="pull-left btn btn-sm btn-default btn-icon">
+                        <i class="fa fa-angle-right text"></i>
+                        <i class="fa fa-angle-left text-active"></i>
+                    </a>
+                    <div class="btn-group">
+                        <!--<button type="button" class="btn btn-sm btn-dark btn-icon"></button>-->
+                        <div class="btn-group hidden-nav-xs">
+                            <button type="button" class="btn btn-sm btn-primary" ng-click="load()">
+                                Apply
                             </button>
-                            <ul class="dropdown-menu dropdown-select">
-                                <li><a href="#"><input type="radio" name="d-s-r">Travel</a></li>
-                                <li class=""><a href="#"><input type="radio" name="d-s-r">Phone</a></li>
-                                <li class=""><a href="#"><input type="radio" name="d-s-r">Meeting</a></li>
-                                <li class=""><a href="#"><input type="radio" name="d-s-r">Appointment</a></li>
-                            </ul>
+                            <button type="button" class="btn btn-sm" ng-click="reset()">
+                                Reset
+                            </button>
                         </div>
                     </div>
                 </div>
-                <div class="m-t-lg"><button class="btn btn-sm btn-default">Add step</button></div>
-            </form>
-        </div>
+            </header>
+            <section class="w-f ">
+                <div class="slim-scroll" data-height="auto" data-disable-fade-out="true" data-distance="0" data-size="5px" data-color="#333333">
+
+                    <!-- nav -->
+                    <nav class="nav-primary hidden-xs">
+                        <ul class="nav">
+                            <li >
+                                <a href="index.html"  >
+                                    <i class="fa fa-dashboard icon">
+                                        <b class="bg-danger"></b>
+                                    </i>
+                                    <span>Quick Stats</span>
+                                </a>
+                            </li>
+                            <li  class="active">
+                                <a href="#layout"   class="active">
+                                    <i class="fa fa-filter icon">
+                                        <b class="bg-warning"></b>
+                                    </i>
+                        <span class="pull-right">
+                          <i class="fa fa-angle-down text"></i>
+                          <i class="fa fa-angle-up text-active"></i>
+                        </span>
+                                    <span>Filter</span>
+                                </a>
+                                <ul class="nav lt" style="display: block">
+                                    <li ng-repeat="fd in fieldList">
+                                        <section class="panel panel-default">
+                                            <div class="panel-body" ng-include="fd.template"></div>
+                                        </section>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </nav>
+                    <!-- / nav -->
+                </div>
+            </section>
+        </section>
     </aside>
     <!-- /.aside -->
 </section>
