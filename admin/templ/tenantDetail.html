@@ -103,6 +103,7 @@
         <li class="active"><a href="#tenants" ng-click="loadProviders()" data-toggle="tab">Providers</a></li>
         <li class=""><a href="#apps" ng-click="loadApps()" data-toggle="tab">Applications</a></li>
         <li class=""><a href="#depts" ng-click="loadDepts()" data-toggle="tab">Departments</a></li>
+        <li class=""><a href="#langs" ng-click="loadLanguages()" data-toggle="tab">Languages</a></li>
         <li class=""><a href="#configs" data-toggle="tab">Settings</a></li>
     </ul>
 </header>
@@ -131,7 +132,7 @@
 </div>
 <div class="tab-pane" id="apps">
     <div class="text-center wrapper">
-        <i class="fa fa-spinner fa fa-spin fa fa-large"></i>
+        <section class="panel panel-default" ng-repeat="app in selTenant.appObjects"> <header class="panel-heading bg-danger lt no-border"> <div class="clearfix"> <a href="#" class="pull-left thumb avatar b-3x m-r"> <img src="images/avatar.jpg" class="img-circle"> </a> <div class="clear"> <div class="h3 m-t-xs m-b-xs text-white"> {{app.name}} <i class="fa fa-circle text-white pull-right text-xs m-t-sm"></i> </div> <small class="text-muted">{{app.appID}}</small> </div> </div> </header> <div class="list-group no-radius alt"> <a class="list-group-item" href="#"> <span class="badge bg-success">25</span> <i class="fa fa-comment icon-muted"></i> Messages </a> <a class="list-group-item" href="#"> <span class="badge bg-info">16</span> <i class="fa fa-envelope icon-muted"></i> Inbox </a> <a class="list-group-item" href="#"> <span class="badge bg-light">5</span> <i class="fa fa-eye icon-muted"></i> Profile visits </a> </div> </section>
     </div>
 </div>
 <div class="tab-pane" id="depts">
@@ -164,6 +165,46 @@
         </li>
     </ul>
 </div>
+
+<div class="tab-pane" id="langs">
+    <section class="panel panel-default pos-rlt clearfix">
+        <header class="panel-heading">
+            <ul class="nav nav-pills pull-right">
+                <li>
+                    <a href="#" class="panel-toggle btn btn-default btn-sm m-b">
+                        <i class="fa fa-minus icon-muted text-active"></i>
+                        <i class="fa fa-plus icon-muted text"></i>Add</a>
+                </li>
+            </ul>Add Language
+        </header>
+        <div class="panel-body clearfix collapse">
+            <a href="#" class="pull-left thumb-sm m-r-sm">
+                <img ng-src="{{rootUrl}}{{newLang.imageUrl}}" class="img-circle">
+                <mk-upload label="Change" path="app/upload/image" fnc="onLangFlag($event, newLang)"></mk-upload>
+            </a>
+            <div class="form-group"><input type="text" ng-model="newLang.name" class="form-control" placeholder="Name"> </div>
+            <button class="btn btn-success" ng-click="addLang()">Save</button>
+        </div>
+    </section>
+    <ul class="list-group no-radius m-b-none m-t-n-xxs list-group-lg no-border">
+        <li class="dd-item list-group-item" ng-repeat="l in selTenant.languages">
+    <span class="pull-right">
+        <a href="#" ng-click="removeProvider(t)"><i class="fa fa-times icon-muted fa-fw"></i></a>
+     </span>
+            <div class="dd-handle">
+                <a href="#" class="thumb-sm pull-left m-r-sm">
+                    <img ng-src="{{rootUrl}}{{l.imageUrl}}" class="img-thumbnail">
+                    <mk-upload label="Change" path="app/upload/image" fnc="onLangFlag($event, l)"></mk-upload>
+                </a>
+                <a href="#" class="clear">
+                    <strong class="block">{{l.name}}</strong>
+                    <small>language</small>
+                </a>
+            </div>
+        </li>
+    </ul>
+</div>
+
 <div class="tab-pane" id="configs">
     <section class="vbox">
         <section>
@@ -186,10 +227,25 @@
                     <div class="form-group col-md-3">
                     <label>Session timeout</label>
                         <div class="input-group m-b"><span class="input-group-addon"><i class="fa fa-clock-o icon"></i></span>
-                            <input type="text" placeholder="Session timeout" ng-model="selTenant.sessionTimeout" class="form-control" style="text-align:right">
+                            <input type="text" placeholder="Session timeout" ng-model="selTenant.sessionTimeout" class="form-control">
                             <span class="input-group-addon">hr</span>
                         </div>
                     </div>
+                    </div>
+                </div>
+                <div class="clearfix m-b">
+                    <div class="row">
+                        <div class="form-group col-md-7">
+                            <label>Chrome Extension for Demos</label>
+                            <div class="input-group m-b"><span class="input-group-addon"><i class="fa fa-home icon"></i>http://</span>
+                                <input type="text" placeholder="Chrome Extention URL" ng-model="selTenant.demoUrl" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group col-md-5">
+                            <small class="text-uc text-xs text-muted">Demo. How to</small>
+                            <p mk-label="">Installation instructions</p>
+                            <div class="line"></div>
+                        </div>
                     </div>
                 </div>
             </div>
