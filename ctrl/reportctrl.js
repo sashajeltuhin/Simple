@@ -8,6 +8,7 @@ function reportctrl($scope, $http, $parse, adminservice){
         if ($scope.obj.filter == undefined){
             $scope.obj.filter = {};
         }
+        initSec();
         adminservice.loadMeta(OBJ, $http, function(meta){
             $scope.reportMeta = meta;
             $scope.fieldList = adminservice.bindObj(meta, $scope.obj, prepareField);
@@ -19,7 +20,7 @@ function reportctrl($scope, $http, $parse, adminservice){
         refreshFilter($scope.obj.targetobj);
     }
 
-    $scope.openSec = function(){
+    function initSec(){
         if ($scope.secFilter == undefined){
             $scope.secFilter = {};
         }
@@ -29,6 +30,10 @@ function reportctrl($scope, $http, $parse, adminservice){
             $scope.secFilter.allowedTenant[tenant] = true;
         }
         $scope.$broadcast("EV_FILTER_REBUILD", $scope.reportMeta, $scope.secFilter, 'Security');
+    }
+
+    $scope.openSec = function(){
+        initSec();
     }
 
     function prepareField(metafld){

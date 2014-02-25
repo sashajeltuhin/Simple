@@ -2,8 +2,8 @@
 <button href="#moreless" class="btn btn-sm btn-default" ng-click="createSingle()"><i class="fa fa-plus text"></i>
     <span class="text">Report...</span>
 </button>
-<section class="panel panel-default" ui-sortable="srsort" ng-model="sr">
-    <div class="row m-l-none m-r-none bg-light lter">
+<section class="panel panel-default">
+    <div class="row m-l-none m-r-none" ui-sortable="srsort" ng-model="sr">
         <div class="col-sm-6 col-md-3 padder-v b-r b-light" ng-include="r.template" ng-repeat="r in sr">
 
         </div>
