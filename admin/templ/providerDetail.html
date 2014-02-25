@@ -28,7 +28,9 @@
 <section class="vbox">
 <div class="tab-content">
     <div class="tab-pane active" id="main">
-         <div class="col-lg-4 wrapper bg-light lter">
+        <section class="hbox stretch">
+            <aside class="bg-white">
+                <div class=" wrapper bg-light lter">
                             <div class="clearfix m-b">
                                 <a href="#" class="pull-left thumb m-r">
                                     <img ng-src="{{rootUrl}}{{selProvider.logo}}" class="img-full">
@@ -60,26 +62,6 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="wrapper">
-                                <section class="panel bg-primary b-light">
-                                    <header class="panel-heading bg-primary dker no-border"><strong>Calendar of events</strong></header>
-                                    <mk-calendar class="bg-primary m-l-n-xxs m-r-n-xxs" events="events"></mk-calendar>
-                                    <div class="list-group">
-                                        <a href="#" class="list-group-item text-ellipsis">
-                                            <span class="badge bg-danger">7:30</span>
-                                            Meet a friend
-                                        </a>
-                                        <a href="#" class="list-group-item text-ellipsis">
-                                            <span class="badge bg-success">9:30</span>
-                                            Have a kick off meeting with .inc company
-                                        </a>
-                                        <a href="#" class="list-group-item text-ellipsis">
-                                            <span class="badge bg-light">19:30</span>
-                                            Milestone release
-                                        </a>
-                                    </div>
-                                </section>
-                            </div>
                             <!--<div class="btn-group btn-group-justified m-b">-->
                             <!--<a class="btn btn-primary btn-rounded" data-toggle="button">-->
                             <!--<span class="text">-->
@@ -107,6 +89,30 @@
                                 </p>
                             </div>
                         </div>
+            </aside>
+        <aside class="bg-white">
+            <div class="wrapper">
+                <section class="panel bg-primary b-light">
+                    <header class="panel-heading bg-primary dker no-border"><strong>Calendar of events</strong></header>
+                    <mk-calendar class="bg-primary m-l-n-xxs m-r-n-xxs" events="events"></mk-calendar>
+                    <div class="list-group">
+                        <a href="#" class="list-group-item text-ellipsis">
+                            <span class="badge bg-danger">7:30</span>
+                            v 45 API release
+                        </a>
+                        <a href="#" class="list-group-item text-ellipsis">
+                            <span class="badge bg-success">9:30</span>
+                            New merchandizing discussion
+                        </a>
+                        <a href="#" class="list-group-item text-ellipsis">
+                            <span class="badge bg-light">19:30</span>
+                            Embeddable UI. Tech talk
+                        </a>
+                    </div>
+                </section>
+            </div>
+        </aside>
+        </section>
     </div>
 <div class="tab-pane" id="map">
     <leaflet center="center" markers="markers" paths="paths" class="map-page"></leaflet>

@@ -1,67 +1,63 @@
-<div class="pull-left w600">
+<p ng-click="reloadProds()" style="cursor: pointer"><strong> Results </strong> for {{c.address1}}, {{c.city}} {{c.state}} {{c.zip}}</p>
 
-    <p ng-click="reloadProds()" style="cursor: pointer"><strong> Results </strong> for {{c.address1}}, {{c.city}} {{c.state}} {{c.zip}}</p>
-
-    <div class="row gradient-container">
-        <div class="gradient-item clearfix">
-            <div class="col-xs-4" style="padding-top:10px;">{{emailPrompt}}</div>
-            <div class="col-xs-5"><input type="text" class="form-control mb0" placeholder="enter email address" ng-model="c.email" ng-hide="emailed"></div>
-            <div class="col-xs-3"><button class="btn btn-style1 uppercase" ng-click="emailList()" ng-hide="emailed">Submit</button></div>
-        </div>
+<div class="row gradient-container">
+    <div class="gradient-item clearfix">
+        <div class="col-xs-4" style="padding-top:10px;">{{emailPrompt}}</div>
+        <div class="col-xs-5"><input type="text" class="form-control mb0" placeholder="enter email address" ng-model="c.email" ng-hide="emailed"></div>
+        <div class="col-xs-3"><button class="btn btn-style1 uppercase" ng-click="emailList()" ng-hide="emailed">Submit</button></div>
     </div>
-
-    <div class="clearer h20">&nbsp;</div>
-    <div class="clearer h20">&nbsp;</div>
-    <div class="row gradient-container" ng-repeat="p in products">
-        <div class="box-1 gradient-item clearfix">
-            <div class="col-xs-3"><div><span><img ng-src="{{topUrl}}{{p.brandimgUrl}}" width="100" height="100"></span></div></div>
-            <div class="col-xs-6">
-                <h3 class="fld" data-content="product.title">{{p.title}}</h3>
-                <ul class="bullet-1 deals-list-item">
-                    <li ng-repeat="h in p.highlights">{{h}}</li>
-                </ul>
-                <div><i class="icon-angle-right"></i> &nbsp; <a ng-click="showDetail(p)" class="deals-list-item">{{p.lblDetails}}</a></div>
-              </div><!-- .col -->
-            <div class="col-xs-3">
-                <div class="price text-center"><strong>${{p.priceNow}}</strong>/mo</div>
-                <div class="clearer h10">&nbsp;</div>
-                <a ng-click="addToCartandNext(p)" class="btn btn-primary btn-block uppercase">Select</a>
-            </div><!-- .col -->
-        </div><!-- /box-1 -->
-        <div class="pull-left w600" ng-show="p.openDetail">
-
-            <div class="clearer h20">&nbsp;</div>
-
-            <div class="row gradient-container">
-                <div class="box-1 gradient-item clearfix">
-                    <div class="col-xs-8">
-                        <p class="deals-list-item">{{p.promoText}}</p>
-                        <ul class="bullet-1 deals-list-item">
-                            <li ng-repeat="f in p.features">{{f}}</li>
-                        </ul>
-                    </div><!-- .col -->
-                </div><!-- /box-1 -->
-            </div><!-- /row -->
-
-
-
-            <table class="table table-bordered table-hover fontsize12">
-                <thead>
-                <tr>
-                    <th class="text-center">DOWNLOAD SPEEDS UP TO</th>
-                    <th class="text-center">UPLOAD SPEEDS UP TO</th>
-                    <th class="text-center">EXTRAS</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td class="text-center">{{p.speedDown}} Mbps</td>
-                    <td class="text-center">{{p.speedUp}} Mbps</td>
-                    <td class="text-center">{{p.extras}}</td>
-                </tr>
-                </tbody>
-            </table>
-        </div><!-- /left content -->
-
-    </div><!-- /row -->
 </div>
+
+
+<div class="clearer h20">&nbsp;</div>
+
+<div class="box-3" style="height:450px" ng-repeat="p in products">
+    <div class="inner clearfix">
+        <h4 style="height: 65px">{{p.title}}<br>&nbsp;</h4>
+        <h5><span class="i1">{{p.provider}}</span><span class="i2">$</span><span class="i3">{{p.priceNow}}</span><span class="i4"><span>95</span>/mo</span></h5>
+        <div class="logos1"><img width="90" height="45" ng-src="{{topUrl}}{{p.brandimgUrl}}"></div>
+        <div style="width:236px;height:250px;overflow-y: scroll" ng-show="p.openDetail">
+            <p class="deals-list-item">{{p.promoText}}</p>
+            <div class="clearer h10">&nbsp;</div>
+            <ul class="list1">
+                <li ng-repeat="f in p.features">{{f}}</li>
+            </ul>
+        </div>
+        <div style="position: relative;height:300px" ng-show="!p.openDetail">
+            <div class="clearer h20">&nbsp;</div>
+            <div style="position: relative;height:100px">
+                <ul class="list1">
+                    <li style="background:url(http://localhost/tenants/Amazon/assets/img/ico-internet1.gif) 0px 0px no-repeat"  ng-repeat="h in p.highlights">{{h}}<br></li>
+                    <!--<li class="tv last">Digital TV with up to 200 channels including up to 100 HD<br><a href="#">Channels Channel Lineup</a></li>-->
+                </ul>
+            </div>
+            <div class="clearer h10">&nbsp;</div>
+            <h6><img src="http://localhost/tenants/Amazon/assets/img/arrow2.png"> Get <strong>${{p.rebate}} OFF</strong> on your order with this bundle</h6>
+            <div class="clearer h10">&nbsp;</div>
+            <div class="btn3 w280" style="cursor: pointer"><a ng-click="addToCartandNext(p)"><span class="a-button-inner"><span class="a-button-text">Add to Cart</span></span></a></div>
+            <div class="clearer h10">&nbsp;</div>
+        </div>
+        <div class="details1"><a ng-click="showDetail(p)">{{p.lblDetails}}</a> &raquo;</div>
+    </div>
+</div>
+
+<!-- /box-1 -->
+
+
+
+<!--<table class="table table-bordered table-hover fontsize12">-->
+<!--<thead>-->
+<!--<tr>-->
+<!--<th class="text-center">DOWNLOAD SPEEDS UP TO</th>-->
+<!--<th class="text-center">UPLOAD SPEEDS UP TO</th>-->
+<!--<th class="text-center">EXTRAS</th>-->
+<!--</tr>-->
+<!--</thead>-->
+<!--<tbody>-->
+<!--<tr>-->
+<!--<td class="text-center">{{p.speedDown}} Mbps</td>-->
+<!--<td class="text-center">{{p.speedUp}} Mbps</td>-->
+<!--<td class="text-center">{{p.extras}}</td>-->
+<!--</tr>-->
+<!--</tbody>-->
+<!--</table>-->

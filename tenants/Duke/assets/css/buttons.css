@@ -1,0 +1,57 @@
+/* ---------------------------------------------------------------------------------------------------------------------------------------------- */ 
+.btn-align-center { margin:0px auto!important; float:none!important; }
+
+/*.btn-primary { 
+	transition: background .45s ease-in-out;
+   -moz-transition: background .45s ease-in-out;
+   -webkit-transition: background .45s ease-in-out;
+}*/
+/* ---------------------------------------------------------------------------------------------------------------------------------------------- */ 
+
+/* ---------------------------------------------------------------------------------------------------------------------------------------------- */ 
+.btn { font-family:Arial, Helvetica, sans-serif; }
+
+
+.btn-primary {
+	color:#fff;
+	background: rgb(235,80,52);
+	background: -moz-linear-gradient(top, rgba(235,80,52,1) 0%, rgba(222,67,47,1) 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(235,80,52,1)), color-stop(100%,rgba(222,67,47,1)));
+	background: -webkit-linear-gradient(top, rgba(235,80,52,1) 0%,rgba(222,67,47,1) 100%);
+	background: -o-linear-gradient(top, rgba(235,80,52,1) 0%,rgba(222,67,47,1) 100%);
+	background: -ms-linear-gradient(top, rgba(235,80,52,1) 0%,rgba(222,67,47,1) 100%);
+	background: linear-gradient(to bottom, rgba(235,80,52,1) 0%,rgba(222,67,47,1) 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eb5034', endColorstr='#de432f',GradientType=0 );
+  	border-color: #dd422e;
+}
+
+.btn-primary:hover,
+.btn-primary:active,
+.btn-primary.active {	
+	color:#fff;
+	background: #ec5132;
+	border-color: #dd422e;
+}
+
+
+.btn-style1 {
+	color:#fff;
+	background: rgb(235,80,52);
+	background: -moz-linear-gradient(top, rgba(235,80,52,1) 0%, rgba(222,67,47,1) 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(235,80,52,1)), color-stop(100%,rgba(222,67,47,1)));
+	background: -webkit-linear-gradient(top, rgba(235,80,52,1) 0%,rgba(222,67,47,1) 100%);
+	background: -o-linear-gradient(top, rgba(235,80,52,1) 0%,rgba(222,67,47,1) 100%);
+	background: -ms-linear-gradient(top, rgba(235,80,52,1) 0%,rgba(222,67,47,1) 100%);
+	background: linear-gradient(to bottom, rgba(235,80,52,1) 0%,rgba(222,67,47,1) 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eb5034', endColorstr='#de432f',GradientType=0 );
+  	border-color: #dd422e;
+}
+
+.btn-style1:hover,
+.btn-style1:active,
+.btn-style1.active {	
+	color:#fff;
+	background: #ec5132;
+	border-color: #dd422e;
+}
+/* ---------------------------------------------------------------------------------------------------------------------------------------------- */ 

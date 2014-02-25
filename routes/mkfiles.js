@@ -1,8 +1,10 @@
 var fs = require('fs');
 
 exports.saveFile = function(content, fpath, callback){
-    fs.writeFile(fpath, content, function(err) {
+    fs.writeFile(__dirname + fpath, content, function(err) {
     if(err) {
+        console.log("file: ", __dirname + fpath);
+        console.log("error: ", err);
         callback(err);
     } else {
         callback(null);
@@ -11,7 +13,7 @@ exports.saveFile = function(content, fpath, callback){
 }
 
 exports.readTextFile = function(content, fpath, callback){
-    fs.readFile(fpath, 'utf8', function(err, data) {
+    fs.readFile(__dirname + fpath, 'utf8', function(err, data) {
         if (err){
             callback(err, null);
         }

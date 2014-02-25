@@ -70,5 +70,20 @@ exports.save = function(req, res){
         }
 }
 
+exports.delete = function(req, res){
+    db.setDB('ShopDB');
+    var pids = req.param("_id");
+    var pid = new ObjectID(pids);
+    var filter = {_id : pid};
+    db.delete(colName, filter, function(err, ret){
+        if (err !== null){
+            handleError(res, "Cannot delete provider ", err);
+        }
+        else{
+            res.send(pid);
+        }
+    });
+}
+
 
 

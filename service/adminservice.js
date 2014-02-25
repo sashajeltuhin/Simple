@@ -18,6 +18,8 @@ angular.module('cart').factory('adminservice', function($q, $cookies) {
     var selCallBack = null;
     var ruleParams = null;
     var filterdata = {};
+    var views = [];
+    var currentView = {};
 
     service.setSelUser = function(u){
         selUser = u;
@@ -99,7 +101,10 @@ angular.module('cart').factory('adminservice', function($q, $cookies) {
 
     service.authenticate = function($http, callback){
         if (signedId._id !== undefined){
-            callback(signedId._id);
+            service.initViews($http, function(){
+                callback(signedId._id);
+            });
+
         }
         else{
             var sid = $cookies.mk_uid;
@@ -107,15 +112,35 @@ angular.module('cart').factory('adminservice', function($q, $cookies) {
                 var f = {_id : sid};
                 $http.post(serverUrl + '/auth/there', f).success(function (data) {
                         setsignedId(data);
+                        service.initViews($http, function(){
                         callback(signedId._id);
+                    });
                 }).error(function(data, status) {
                         callback(signedId._id);
                     });
             }
             else{
-                callback(signedId._id);
+                service.initViews($http, function(){
+                    callback(signedId._id);
+                });
             }
         }
+    }
+
+    service.initViews = function($http, callback){
+        var url = serverUrl + '/step/list';
+        var f = {app:'admin'};
+        $http.post(url, f).success(function(st){
+            views = st;
+            currentView = views[0];
+            if (callback !== undefined){
+                callback();
+            }
+        });
+    }
+
+    service.getCurrentView = function(){
+        return currentView;
     }
 
     service.signIn = function(u, p, $http, callback){
@@ -220,13 +245,14 @@ angular.module('cart').factory('adminservice', function($q, $cookies) {
         });
     };
 
-    service.publishTemplate = function(fld, obj, $http, callback){
-        delete fld.mk_rowsel;
-        $http.post(serverUrl + '/' + obj + '/publish', fld).success(function (data) {
+    service.publishTemplate = function(draft, widget, obj, $http, callback){
+        var f = {};
+        f.draft = draft;
+        f.widget = widget;
+        f.tenant = service.getTenant().name;
+        $http.post(serverUrl + '/' + obj + '/publish', f).success(function (data) {
             callback(data);
-            if (obj == 'fields'){
-                service.resetCacheObj(fld.objname);
-            }
+
         });
     };
 
@@ -240,6 +266,24 @@ angular.module('cart').factory('adminservice', function($q, $cookies) {
             }
         });
     };
+
+    service.export = function(filter, objname, $http, callback){
+        var obj = {};
+        obj.f = filter;
+        obj.cols = [];
+        for (var c = 0; c < filterdata.m.length; c++){
+            var fld = filterdata.m[c];
+            obj.cols.push(fld.fldname);
+        }
+        $http.post(serverUrl + '/' + objname + '/export', obj).success(function (data) {
+            if (data.success == true){
+                callback(data.recs);
+            }else{
+                console.log(data.err);
+            }
+        });
+
+    }
 
     service.getColumnMap = function(fileName, objname, $http, callback){
         var filter = {fn: fileName};
@@ -394,7 +438,7 @@ angular.module('cart').factory('adminservice', function($q, $cookies) {
                         var opt = {};
                         fd.options.push(opt);
 
-                        var optval = metafld.optfld !== undefined ? item[metafld.optfld]: item;
+                        var optval = metafld.optfld !== undefined && metafld.optfld !== "" ? item[metafld.optfld]: item;
                         opt.optvalue = optval;
                         opt.label = optval;
                     });
@@ -522,6 +566,28 @@ angular.module('cart').factory('adminservice', function($q, $cookies) {
 
     service.getFilterData = function(){
         return filterdata;
+    }
+
+    service.cleanFilter = function(selFilter){
+        var cleanFilter = {};
+        for(var key in selFilter){
+            if (key !== 'order_by' && angular.isObject(selFilter[key])){
+                var vals = [];
+                for (var k in selFilter[key]){
+                    if (selFilter[key][k] == true){
+                        vals.push(k);
+                    }
+                }
+                if (vals.length > 0){
+                    cleanFilter[key] = vals;
+                }
+            }
+            else{
+                if (selFilter[key] !== undefined && selFilter[key] != "")
+                    cleanFilter[key] = selFilter[key];
+            }
+        }
+        return cleanFilter;
     }
 
 

@@ -26,6 +26,8 @@ function cartadminctrl($scope, $rootScope, $http, $location, cartservice){
 
     $scope.previewStep = getURLParameter('step');
     $scope.previewMode = getURLParameter('preview');
+    $scope.tenant = getURLParameter('tenant');
+
     if ($scope.previewStep !== undefined){
         cartservice.setSingleTempl($scope.previewStep);
     }
@@ -35,6 +37,9 @@ function cartadminctrl($scope, $rootScope, $http, $location, cartservice){
     }
 
     $scope.start = function(z, cust, appType, extension, prod, exCart){
+        if ($scope.tenant !== undefined){
+            appType = $scope.tenant;
+        }
         $scope.wrapperUrl = serverUrl + 'adminTmpl.html';
         cust.zip = z;
         cartservice.setExCart(exCart);

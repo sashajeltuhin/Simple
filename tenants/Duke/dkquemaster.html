@@ -1,0 +1,25 @@
+<div class="container">
+    <div class="container-content style1 clearfix">
+        <h2 class="style1">{{step.prompt}}</h2>
+        <h3 class="style1">{{step.desc}}</h3>
+
+        <div class="clearer h20">&nbsp;</div>
+
+        <div class="steps1 clearfix">
+            <ul>
+                <li ng-repeat="c in quecats" ng-class="c.class" style="list-style-type: none">{{c.name}}</li>
+            </ul>
+        </div>
+
+        <div class="clearer h20">&nbsp;</div>
+
+        <div ng-include="queTemplate">
+
+        </div>
+        <div class="clearer h20">&nbsp;</div>
+
+        <div class="btn2 w200 uppercase floatRight"><a ng-click="nextque()"><span class="a-button-inner"><span class="a-button-text">next</span></span></a></div>
+
+        <div class="clearer h30">&nbsp;</div>
+    </div><!-- /// -->
+</div>

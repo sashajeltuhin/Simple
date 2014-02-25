@@ -5,6 +5,11 @@ function fieldctrl($scope, $http, adminservice){
 
     function init(){
         $scope.obj = adminservice.getSelObj();
+        if ($scope.obj.fldopts == undefined){
+            $scope.obj.fldopts = [];
+        }
+        $scope.fieldOptions = [];
+        $scope.newOpt = 'New option';
         adminservice.loadMeta(OBJ, $http, function(meta){
             $scope.fieldList = adminservice.bindObj(meta, $scope.obj, prepareField);
         });
@@ -22,6 +27,7 @@ function fieldctrl($scope, $http, adminservice){
         var ny = $scope.obj._id == undefined;
         adminservice.bindObjData($scope.obj, $scope.fieldList);
         $scope.obj.fldname = $scope.obj.label.replace(/ /g,"_").toLowerCase();
+        $scope.obj.fldopts = $scope.fieldOptions;
         adminservice.saveObj($scope.obj, OBJ, $http, function(saved){
 //            if (ny){
 //                createFieldBlock(saved);
@@ -69,14 +75,11 @@ function fieldctrl($scope, $http, adminservice){
 
 
     $scope.newOpt = function(){
-        if ($scope.obj.fldopts == undefined){
-            $scope.obj.fldopts = [];
-        }
-        $scope.obj.fldopts.push("New Option");
+        $scope.fieldOptions.push($scope.newOpt);
     }
 
     $scope.removeOpt = function(o){
-        var i = $scope.obj.fldopts.indexOf(o);
-        $scope.obj.fldopts.splice(i, 1);
+        var i = $scope.fieldOptions.indexOf(o);
+        $scope.fieldOptions.splice(i, 1);
     }
 }

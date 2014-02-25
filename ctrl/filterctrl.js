@@ -13,16 +13,17 @@ function filterctrl($scope, adminservice){
         reload(filterdata.m, $scope.filter);
     }
 
-    $scope.$on("EV_FILTER_REBUILD", function(event, meta, filter){
+    $scope.$on("EV_FILTER_REBUILD", function(event, meta, filter, title){
         origMeta = meta;
         origFilter = filter;
+        $scope.filterName = title;
         $scope.filter = filter;
         reload(meta, $scope.filter);
     });
 
     $scope.load = function(){
-        for (var i = 0; i < $scope.fieldList.length; i++){
-            var fd = $scope.fieldList[i];
+        for (var i = 0; i < $scope.filterList.length; i++){
+            var fd = $scope.filterList[i];
             if (fd.options !== undefined){
                 for(var o=0; o < fd.options.length; o++){
                     var opt = fd.options[o];
@@ -43,12 +44,12 @@ function filterctrl($scope, adminservice){
     }
 
     function reload(meta, filter){
-        $scope.fieldList = [];
+        $scope.filterList = [];
         for(var key in meta){
             var metafld = meta[key];
             if (metafld.reportable == true){
                 var fd = {};
-                $scope.fieldList.push(fd);
+                $scope.filterList.push(fd);
                 fd.label = metafld.label;
                 fd.fldname = metafld.fldname;
 
@@ -75,6 +76,9 @@ function filterctrl($scope, adminservice){
                                 break;
                             case 'bool':
                                 fd.template = templUrl + 'checkbox.html';
+                                break;
+                            default:
+                                fd.template = templUrl + 'text.html';
                                 break;
                         }
                         if (filter[metafld.fldname] == undefined){

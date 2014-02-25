@@ -162,7 +162,8 @@
                                         <li ng-repeat="v in versions">
                                             <a href="#/admin" ng-click="loadVersion(v)" >
                                                 <i class="fa fa-angle-right"></i>
-                                                <span>{{v.comment}} {{v.changedFormatted}}</span>
+                                                <span><strong>{{v.comment}}</strong></span>
+                                                <span>{{v.changedFormatted}}</span>
                                             </a>
                                         </li>
                                     </ul>
@@ -180,7 +181,7 @@
 
 </div>
 <div class="tab-pane" id="preview">
-    <iframe style="width: 100%; min-height: 600px" ng-src="{{masterTmpl}}?step={{obj._id}}"></iframe>
+    <iframe style="width: 100%; min-height: 600px" ng-src="{{masterTmpl}}?step={{obj._id}}&tenant={{tenant}}"></iframe>
 
 </div>
 <div class="tab-pane" id="int">

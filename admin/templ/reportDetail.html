@@ -1,0 +1,70 @@
+
+<section class="hbox stretch" ng-controller="reportctrl">
+    <div class="container aside-xxl"><a class="navbar-brand block" href="#">{{viewTitle}}</a>
+        <section class="panel panel-default m-t-lg bg-white">
+            <div class="btn-group">
+                <button class="btn btn-default" ng-click="openFilter()"> <i class="fa fa-filter text"></i></button>
+                <button class="btn btn-default" ng-click="openSec()"> <i class="fa fa-lock text"></i></button>
+            </div>
+            <form class="panel-body wrapper-lg">
+                <form role="form">
+                    <div class="panel-body" ng-include="fd.template" ng-repeat="fd in fieldList"></div>
+                    <!--<div dynamic="propsEl"></div>-->
+                </form>
+                <a href="#" ng-click="saveChanges()" class="btn btn-default btn-block">Save & Close</a></form>
+        </section>
+    </div>
+    <aside class="bg-light lter b-r aside-md hidden-print nav-xs-right" id="filternav" ng-controller="filterctrl">
+        <section class="vbox">
+            <header class="header bg-primary lter text-center clearfix">
+                <div class="row">
+                    <a href="#filternav" data-toggle="class:nav-xs" class="pull-left btn btn-sm btn-default btn-icon">
+                        <i class="fa fa-angle-right text"></i>
+                        <i class="fa fa-angle-left text-active"></i>
+                    </a>
+                    <div class="btn-group">
+                        <!--<button type="button" class="btn btn-sm btn-dark btn-icon"></button>-->
+                        <div class="btn-group hidden-nav-xs">
+                            <button type="button" class="btn btn-sm btn-primary" ng-click="load()">
+                                Apply
+                            </button>
+                            <button type="button" class="btn btn-sm" ng-click="reset()">
+                                Reset
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </header>
+            <section class="w-f ">
+                <div class="slim-scroll" data-height="auto" data-disable-fade-out="true" data-distance="0" data-size="5px" data-color="#333333">
+
+                    <!-- nav -->
+                    <nav class="nav-primary hidden-xs">
+                        <ul class="nav">
+                            <li  class="active">
+                                <a href="#layout"   class="active">
+                                    <i class="fa fa-filter icon">
+                                        <b class="bg-danger"></b>
+                                    </i>
+                        <span class="pull-right">
+                          <i class="fa fa-angle-down text"></i>
+                          <i class="fa fa-angle-up text-active"></i>
+                        </span>
+                                    <span>{{filterName}}</span>
+                                </a>
+                                <ul class="nav lt" style="display: block">
+                                    <li ng-repeat="fd in filterList">
+                                        <section class="panel panel-default">
+                                            <div class="panel-body" ng-include="fd.template"></div>
+                                        </section>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </nav>
+                    <!-- / nav -->
+                </div>
+            </section>
+        </section>
+    </aside>
+</section>

@@ -111,7 +111,7 @@ $(document).ready(function(){
     function launch(){
         console.log("launching cart app");
 
-        var d = $('<div ng-app="cart" ng-controller="cartctrl"><div cart-parms app-Type="Duke"></div><div id="bv_cart_cont" class="twoColumn twoColumnFull" style="max-height: 500px; overflow-y: scroll; display: none" ng-include src="' + "'" + 'http://localhost/templ/webmm.html' + "'" + '"></div></div>');
+        var d = $('<div ng-app="cart" ng-controller="cartctrl"><div cart-parms app-Type="Duke"></div><div id="bv_cart_cont" style="max-height: 500px; overflow-y: scroll; display: none" ng-include src="' + "'" + 'http://localhost/templ/webmm.html' + "'" + '"></div></div>');
         d.appendTo('body');
         angular.bootstrap(d, ['cart']);
 

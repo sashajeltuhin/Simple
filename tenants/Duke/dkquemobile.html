@@ -1,0 +1,23 @@
+
+<div>{{currentQue.label}}</div>
+
+<div class="clearer h20">&nbsp;</div>
+
+<div class="box-1 style2">
+    <div class="inner clearfix">
+        <div class="icons"><img width="100" height="80" ng-src="{{topUrl}}{{currentQue.responses[0].imageUrl}}"></div>
+        <h4>{{currentQue.responses[0].label}}</h4>
+        <div align="center"><input ng-change="answer(currentQue.responses[0])" ng-model="currentQue.chosen" value="Yes" type="radio"></div>
+    </div>
+</div>
+
+
+<h4 class="style1"><strong><span>or</span></strong></h4>
+
+<div class="box-1 style2 last">
+    <div class="inner clearfix">
+        <div class="icons"><img width="100" height="80" ng-src="{{topUrl}}{{currentQue.responses[1].imageUrl}}"></div>
+        <h4>{{currentQue.responses[1].label}}</h4>
+        <div align="center"><input ng-change="answer(currentQue.responses[1])" ng-model="currentQue.chosen" value="No" type="radio"></div>
+    </div>
+</div>

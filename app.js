@@ -37,6 +37,7 @@ var express = require('express')
   , draft = require('./routes/draft')
   , note = require('./routes/note')
   , action = require('./routes/action')
+  , report = require('./routes/report')
   , db = require('./db/dbaccess')
   , session = require('./routes/adminsession');
 
@@ -85,6 +86,11 @@ app.post('/app/session/delete', session.delete);
 app.post('/app/note/list', note.list);
 app.post('/app/note/update', note.save);
 app.post('/app/note/delete', note.delete);
+
+app.post('/app/report/list', report.list);
+app.post('/app/report/update', report.save);
+app.post('/app/report/delete', report.delete);
+
 
 app.post('/app/action/list', action.list);
 app.post('/app/action/update', action.save);
@@ -136,7 +142,7 @@ app.post('/app/person/update', person.save);
 app.post('/app/person/delete', person.delete);
 app.post('/app/consumer/list', consumer.list);
 app.post('/app/consumer/update', consumer.save);
-app.post('/app/product/export', consumer.export);
+app.post('/app/consumer/export', consumer.export);
 app.post('/app/consumer/bytype', consumer.peopleByType);
 app.post('/app/consumer/abandons', consumer.abandons)
 
@@ -171,6 +177,7 @@ app.post('/app/log/callTime', log.callTime);
 app.post('/app/log/totalRev', log.totalRev);
 app.post('/app/provider/list', provider.list);
 app.post('/app/provider/update', provider.save);
+app.post('/app/provider/delete', provider.delete);
 app.post('/app/fields/list', fields.list);
 app.post('/app/fields/delete', fields.delete);
 app.post('/app/fields/total', fields.total);

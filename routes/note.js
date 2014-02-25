@@ -47,6 +47,19 @@ exports.save = function(req, res){
     }
 }
 
+exports.notify = function(note, callback){
+    db.insert(colName, note, function(err, rec){
+        if (callback !== undefined){
+            if (err !== null){
+                callback(err, null);
+            }
+            else{
+                callback(null, rec);
+            }
+        }
+    })
+}
+
 
 
 function createNote(cons, res){

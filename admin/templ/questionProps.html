@@ -1,12 +1,12 @@
 <section class="hbox stretch">
     <aside class="col-lg-6 b-r">
         <section class="panel panel-default">
-            <header class="panel-heading font-bold">Save Answers to Custom Attribute</header>
+            <header class="panel-heading font-bold">Question</header>
             <div class="panel-body">
                 <div class="row">
                     <div class="col-md-4">
                         <img ng-src="{{selque.imageUrl}}" height="60" width="50">
-                        <mk-upload label="Change" path="image/upload" fnc="onQueImgUploaded($event)"></mk-upload>
+                        <mk-upload label="Change" path="app/upload/image" fnc="onQueImgUploaded($event)"></mk-upload>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
@@ -58,7 +58,7 @@
                         <div style="height: 100px; clear: both" ng-repeat="a in selque.responses"
                              ng-class-odd="'odd_row'" ng-class-even="'even_row'">
                             <div class="mkResponseField"><img width="30" height="50" ng-src="{{a.imageUrl}}">
-                                <mk-upload label="Change" path="image/upload"
+                                <mk-upload label="Change" path="app/upload/image"
                                            fnc="onAnswerImgUploaded($event, a)"></mk-upload>
                             </div>
                             <div class="mkResponseField">

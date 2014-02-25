@@ -13,8 +13,9 @@
     <!--</div>-->
 <!--</section>-->
 
-<section class="hbox stretch" ng-controller="fieldctrl">
-    <aside class="col-lg-6 b-r">
+
+<section class="m-t-lg wrapper-md animated fadeInDown" ng-controller="fieldctrl">
+     <div class="container aside-xxl"><a class="navbar-brand block" href="#">{{viewTitle}}</a>
         <section class="panel panel-default m-t-lg bg-white">
             <header class="panel-heading font-bold">Properties</header>
             <form class="panel-body wrapper-lg">
@@ -24,30 +25,39 @@
                 </form>
             </form>
         </section>
-    </aside>
-    <aside class="col-lg-6 b-r">
-        <section class="panel panel-default m-t-lg bg-white">
-            <header class="panel-heading font-bold">Options</header>
-            <div style="width:100%">
-                <button class="btn btn-success btn-sm" ng-click="newOpt()"><i class="fa fa-plus"></i>
-                    Option
-                </button>
-                <div ui-sortable="sortableOptions" ng-model="obj.fldopts">
-                    <div style="height: 100px; clear: both" ng-repeat="opt in obj.fldopts"
-                         ng-class-odd="'odd_row'" ng-class-even="'even_row'">
 
-                        <span class="pull-right">
-                            <a href="#" ng-click="removeOpt(opt)"><i class="fa fa-times icon-muted fa-fw"></i></a>
-                        </span>
-                        <a href="#" class="thumb-sm pull-left m-r-sm">
-                            <i class="fa fa-tablet"></i>
-                        </a>
-                        <a href="#" class="clear">
-                            <strong class="block">{{opt}}</strong>
-                        </a>
-                    </div>
+
+        <section class="panel panel-default m-t-lg bg-white">
+            <section class="panel panel-default pos-rlt clearfix">
+                <header class="panel-heading">
+                    <ul class="nav nav-pills pull-right">
+                        <li>
+                            <a href="#" class="panel-toggle btn btn-default btn-sm m-b">
+                                <i class="fa fa-minus icon-muted text-active"></i>
+                                <i class="fa fa-plus icon-muted text"></i>Add</a>
+                        </li>
+                    </ul>Options
+                </header>
+                <div class="panel-body clearfix collapse">
+                    <div class="form-group"><input type="text" ng-model="newopt" class="form-control" placeholder="Option"> </div>
+                    <button class="btn btn-success" ng-click="newOpt()">Save</button>
                 </div>
-            </div>
+            </section>
+            <ul class="list-group no-radius m-b-none m-t-n-xxs list-group-lg no-border">
+                <li class="list-group-item" ng-repeat="opt in fieldOptions">
+    <span class="pull-right">
+        <a href="#" ng-click="removeOpt(opt)"><i class="fa fa-times icon-muted fa-fw"></i></a>
+     </span>
+                    <a href="#" class="thumb-sm pull-left m-r-sm">
+                        <i class="fa fa-tablet"></i>
+                    </a>
+                    <a href="#" class="clear">
+                        <strong class="block">{{opt.value}}</strong>
+                    </a>
+                </li>
+            </ul>
+
+            <a href="#" ng-click="saveChanges()" class="btn btn-default btn-block">Save & Close</a></form>
         </section>
-    </aside>
+    </div>
 </section>

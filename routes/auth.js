@@ -25,8 +25,18 @@ module.exports = {
                     return next(err);
                 }
 
-                if(req.body.rememberme) req.session.cookie.maxAge = 1000 * 60 * 60 * 24 * 7;
-                res.json(200, user.session );
+                if(req.body.rememberme){
+                    req.session.cookie.maxAge = 1000 * 60 * 60 * 24 * 7;
+                    res.json(200, user.session );
+                } else{
+                    session.getTimeOut(user.session, function(time){
+                        var now = new Date();
+                        var milInHour = 60 * 60 * 1000;
+                        req.session.cookie.maxAge = time * milInHour;
+                        res.json(200, user.session );
+                    });
+                }
+
             });
         })(req, res, next);
     },

@@ -133,8 +133,9 @@
                 <li><a href="#/admin" ng-click="loadBlockList()">Template blocks</a></li>
                 <li><a href="#/admin" ng-click="loadUsers()">Users</a></li>
                 <li><a href="#/admin" ng-click="loadSessions()">Sessions</a></li>
-                <li><a href="#/admin" ng-click="loadNotes()">Notes</a></li>
-                <li><a href="#/admin" ng-click="loadSessions()">Messages</a></li>
+                <li><a href="#/admin" ng-click="loadMessageLst()">Messages</a></li>
+                <li><a href="#/admin" ng-click="loadDrafts()">Drafts</a></li>
+                <li><a href="#/admin" ng-click="loadReportLst()">Reports</a></li>
             </ul>
         </li>
         <li class="dropdown" ng-show="adminSession">
@@ -163,6 +164,7 @@
                 <li><a href="#/admin" ng-click="loadSessionFields()">Sessions</a></li>
                 <li><a href="#/admin" ng-click="loadNoteFields()">Messages</a></li>
                 <li><a href="#/admin" ng-click="loadActionFields()">Actions</a></li>
+                <li><a href="#/admin" ng-click="loadReportFields()">Reports</a></li>
             </ul>
         </li>
         <!--<li><a href="#">-->
@@ -230,12 +232,6 @@
                 </li>
                 <li>
                     <a href="#" ng-click="openMe()">Profile</a>
-                </li>
-                <li>
-                    <a href="#">
-                        <span class="badge bg-danger pull-right">3</span>
-                        Notifications
-                    </a>
                 </li>
                 <li>
                     <a href="docs.html">Help</a>
@@ -342,6 +338,12 @@
             <a href="#/admin" ng-click="viewFlow()" >
                 <i class="fa fa-angle-right"></i>
                 <span>Preview</span>
+            </a>
+        </li>
+        <li >
+            <a href="#/admin" ng-click="ordersReport()" >
+                <i class="fa fa-angle-right"></i>
+                <span>Performance</span>
             </a>
         </li>
     </ul>
@@ -540,12 +542,14 @@
 <script src="ctrl/templateCtrl.js" type="text/javascript"></script>
 <script src="ctrl/surveyAdminCtrl.js" type="text/javascript"></script>
 <script src="ctrl/optctrl.js" type="text/javascript"></script>
+<script src="ctrl/inboxctrl.js" type="text/javascript"></script>
 <script src="ctrl/messagectrl.js" type="text/javascript"></script>
 <script src="ctrl/dashctrl.js" type="text/javascript"></script>
 <script src="ctrl/adminctrl.js" type="text/javascript"></script>
 <script src="ctrl/exportctrl.js" type="text/javascript"></script>
 <script src="ctrl/ruledefctrl.js" type="text/javascript"></script>
 <script src="ctrl/blockctrl.js" type="text/javascript"></script>
+<script src="ctrl/reportctrl.js" type="text/javascript"></script>
 <script src="ctrl/fieldctrl.js" type="text/javascript"></script>
 <script src="ctrl/appctrl.js" type="text/javascript"></script>
 <script src="ctrl/rulectrl.js" type="text/javascript"></script>

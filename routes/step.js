@@ -43,7 +43,21 @@ exports.save = function(req, res){
             res.send(vid);
         }
     });
+}
 
+exports.update = function(widget, callback){
+    var filter = {};
+    if (widget._id !== null){
+        filter._id = new ObjectID(widget._id);
+    }
+    db.upsert(colName, widget, filter, function(err, newid){
+        if (err !== null){
+            callback(err, null);
+        }
+        else{
+            callback(null, widget);
+        }
+    });
 }
 
 exports.delete = function(req, res){

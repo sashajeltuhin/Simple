@@ -30,6 +30,14 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
         }
     }
 
+    $scope.export = function(){
+        cleanFilter();
+        adminservice.export($scope.cleanFilter, selected, $http, function(d){
+
+    });
+
+    }
+
 
     function refreshFilter(m, reloadFn){
         mkFilter.openFilterBar(
@@ -232,24 +240,7 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
 
 
     function cleanFilter(){
-        $scope.cleanFilter = {};
-        for(var key in $scope.selFilter){
-            if (key !== 'order_by' && angular.isObject($scope.selFilter[key])){
-                var vals = [];
-                for (var k in $scope.selFilter[key]){
-                    if ($scope.selFilter[key][k] == true){
-                        vals.push(k);
-                    }
-                }
-                if (vals.length > 0){
-                    $scope.cleanFilter[key] = vals;
-                }
-            }
-            else{
-            if ($scope.selFilter[key] !== undefined && $scope.selFilter[key] != "")
-                $scope.cleanFilter[key] = $scope.selFilter[key];
-            }
-        }
+        $scope.cleanFilter = adminservice.cleanFilter($scope.selFilter);
     }
 
     function clearFilter(){
@@ -415,7 +406,7 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
 
     $scope.createProduct = function(){
         selected = 'product';
-        createObj('New Product');
+        newObj('New Product');
     };
 
 //    $scope.createStep = function(){
@@ -465,7 +456,7 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
 
     $scope.createBlock = function(){
         selected = 'block';
-        createObj('New Template Block');
+        newObj('New Template Block');
     }
 
     $scope.createSegRule = function(){
@@ -674,6 +665,12 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
         loadMeta(f);
     }
 
+    $scope.loadReportFields = function(){
+        var f = 'report';
+        $scope.viewTitle = "Report attributes";
+        loadMeta(f);
+    }
+
     function loadMeta (f){
         selected = 'fields';
         viewMode = 'grid';
@@ -804,6 +801,7 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
         })
         $scope.chartData = cd;
         $scope.chartOpt = {};
+        $scope.viewTitle = 'Performance';
         $scope.wrapper = serverUrl + 'chartPage.html';
 
     }
@@ -1470,10 +1468,23 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
         buildDefFilter();
         loadObjNGrid();
     }
+    $scope.loadDrafts = function(){
+        selected = 'tmpldraft';
+        $scope.viewTitle = "Template Drafts";
+        buildDefFilter();
+        loadObjNGrid();
+    }
 
     $scope.loadActionLst = function(){
         selected = 'action';
         $scope.viewTitle = "Actions";
+        buildDefFilter();
+        loadObjNGrid();
+    }
+
+    $scope.loadReportLst = function(){
+        selected = 'report';
+        $scope.viewTitle = "Reports";
         buildDefFilter();
         loadObjNGrid();
     }
@@ -1764,7 +1775,7 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
           if (a.active == true && a.agent == 'consumer'){
               hideGrid();
               cartservice.setAppObj(a);
-              $scope.masterTmpl = $scope.rootUrl +'/'+ a.template + '?preview=1';
+              $scope.masterTmpl = $scope.rootUrl +'/'+ a.template + '?preview=1&tenant=' + $scope.selTen.name;
 
               $scope.filterOpen = false;
               $scope.wrapper = serverUrl + 'flow.html';

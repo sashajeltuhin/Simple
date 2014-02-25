@@ -3,9 +3,8 @@ function messagectrl($scope, $http, adminservice){
     $scope.rootUrl = topUrl;
     var tenObj = adminservice.getTenant();
     $scope.newtotal = 0;
-    loadNotes();
 
-    function loadNotes(){
+    setInterval(function loadNewNotes(){
         $scope.me = adminservice.getAdminSession();
         var filter = {};
         filter.status = 'new';
@@ -14,48 +13,20 @@ function messagectrl($scope, $http, adminservice){
             $scope.newtotal = d.length;
             $scope.newnotes = d;
         });
-    }
+    }, 10000);
 
-    $scope.newNote = function(){
-        $scope.selnote = {};
-        var obj = {};
-        obj.view = 'compose.html';
-        obj.title = "New Message";
-        $scope.$emit("EV_SWITCH_VIEW", obj);
-    }
+
+
+
 
     $scope.openNote = function(n){
-        $scope.selnote = n;
+        adminservice.setSelObj(n);
         var obj = {};
         obj.view = 'notedetail.html';
         obj.title = "Message";
         $scope.$emit("EV_SWITCH_VIEW", obj);
     }
 
-    $scope.sendNote = function(){
-        $scope.selnote.createdTime = new Date();
-        $scope.selnote.senderID = $scope.me.uid;
-        $scope.selnote.senderName = $scope.me.fname + ' ' + $scope.me.lname;
-        $scope.selnote.senderAvatar = $scope.me.imageUrl;
-    }
 
-    $scope.listUsers = function(q){
-        var f = {};
-        f.lname = q.term + '*';
-        adminservice.listObj('user', f, $http, function(data){
-            var d = {};
-            d.results = [];
-            $.each(data, function(i, item){
-                d.results.push({id: item._id, text: item.fname + ' ' + item.lname})
-            });
-            q.callback(d);
-        });
-    }
-
-    $scope.selectSender = function(selected){
-        $scope.selnote.toID = selected._id;
-        $scope.selnote.toName = selected.fname + ' ' + selected.lname;
-        $scope.selnote.toAvatar = selected.imageUrl;
-    }
 }
 

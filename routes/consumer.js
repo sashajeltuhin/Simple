@@ -1,5 +1,7 @@
 var db = require('../db/dbaccess');
 var mongo = require('mongodb');
+var csvtool = require('./csvtool');
+var note = require('./note');
 var ObjectID = mongo.ObjectID;
 var detect = require('./detect');
 var dbname = 'ShopDB';
@@ -116,6 +118,49 @@ var compute = function(filter, callback){
 }
 
 exports.export = function(req, res){
+    var filter = db.getFilter(req.body.f);
+    var cols = req.body.cols;
+    var user = req.user;
+    if (user == undefined){
+        res.send(400, {"err": msg});
+    }else{
+        db.load(colName, filter, function(err, recs){
+            if (err !== null){
+                handleError(res, "Cannot list consumer ", err);
+            }
+            else{
+                res.send({});
+                var fname = new ObjectID().toString();
+                var fullname = fname + '.csv';
+                csvtool.writeCSV('/../tmp/reports/' + fname + '.csv', recs, cols, function(error, count){
+                    if (error == null){
+                        notify(user._id.toString(), user.fname + ' ' + user.lname, "Export Complete", 'Exported ' + count + ' records. The file is available for download' +  ' <a href="/tmp/reports/"' + fullname + '">here</a>', 'info');
+                    }
+                    else{
+                        console.log(error);
+                        notify(user._id.toString(), user.fname + ' ' + user.lname, "Export Failure", 'Export of conusmer data failed with the following error ' + error, 'error');
+                    }
+                });
+            }
+        });
+    }
+}
+
+function notify(uid, uname, subject, msg, type){
+    var n = {};
+    n.toID = uid;
+    n.toName = uname;
+    n.status = 'new';
+    n.createdTime = new Date();
+    n.subject = subject;
+    n.message = msg;
+    n.type = type;
+    n.senderID = 1;
+    n.senderName = "FUSE";
+
+    note.notify(n, function(sent){
+
+    });
 
 }
 

@@ -48,7 +48,7 @@ exports.qual = function (req, res){
     var filter = {};
     filter.order_by = {priority:1};
 
-    db.load('rule', db.getFilter({app:customer.app, type:rule}), function(err, list){
+    db.load('rule', db.getFilter({app:customer.app, type:rule, order_by:{order:1}}), function(err, list){
         if (err !== null){
             handleError(res, "Cannot list products ", err);
         }

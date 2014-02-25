@@ -1,7 +1,8 @@
-function templateCtrl($scope, $rootScope, $http, adminservice){
+function templateCtrl($scope, $http, adminservice){
     var serverUrl = topUrl + adminURL + '/templ/';
     var STEP = 'step';
     var caretpos = 0;
+    $scope.tenant = adminservice.getTenant().name;
 
 
     adminservice.loadMeta(STEP, $http, function(meta){
@@ -21,8 +22,14 @@ function templateCtrl($scope, $rootScope, $http, adminservice){
     }
 
     function init(){
-        var stepID = $scope.obj._id;
+        $scope.obj.isSurvey = $scope.obj.name == "survey";
         initDraft();
+        loadVersions();
+
+    }
+
+    function loadVersions(){
+        var stepID = $scope.obj._id;
         adminservice.listObj('draft', {stepID:stepID}, $http, function(data){
             $scope.versions = data;
             $.each($scope.versions, function(i, v){
@@ -32,6 +39,7 @@ function templateCtrl($scope, $rootScope, $http, adminservice){
             })
         });
     }
+
     function initDraft(){
         $scope.draft = {};
         $scope.draft.stepID = $scope.obj._id;
@@ -85,8 +93,6 @@ function templateCtrl($scope, $rootScope, $http, adminservice){
     }
 
     $scope.showTemplate = function(){
-
-
         var appObj = currentApp();
         $scope.modalTemplPage = serverUrl + 'stepTmpl.html';
         $scope.masterTmpl = appObj.template;
@@ -117,6 +123,7 @@ function templateCtrl($scope, $rootScope, $http, adminservice){
         adminservice.saveObj($scope.draft, 'draft', $http, function(saved){
             $scope.saveObj();
             initDraft();
+            loadVersions();
         });
     }
 
@@ -139,10 +146,10 @@ function templateCtrl($scope, $rootScope, $http, adminservice){
         $scope.draft.changed = new Date();
         $scope.draft.published = new Date();
         $scope.draft.version = $scope.obj.rawhtml;
-        adminservice.publishTemplate($scope.draft, 'draft', $http, function(filename){
-            $scope.obj.template = filename;
-            $scope.saveObj();
+        adminservice.publishTemplate($scope.draft, $scope.obj, 'draft', $http, function(saved){
+            $scope.obj = saved;
             initDraft();
+            loadVersions();
         });
     }
 

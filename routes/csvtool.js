@@ -37,14 +37,48 @@ exports.readCSV = function(fileName, colMap, onRowCallback, completeCallback){
         });
 }
 
-exports.writeCSV = function(fileName, data, callback){
-    var stream = fs.createWriteStream(__dirname + fileName);
-    stream.on('error', function (error) {
-        if (completeCallback !== null){
+exports.writeCSV = function(fileName, data, cols, completeCallback){
+    var d = [];
+    for(var i = 0; i < data.length; i++){
+        var obj = data[i];
+        if (i == 0){
+            var header = [];
+            for(var key in cols){
+                if (cols[key] !== '_id'){
+                    header.push(cols[key]);
+                }
+
+            }
+            d.push(header);
+        }
+        var row = [];
+        for (var c = 0 ; c < cols.length; c++){
+            var col = cols[c];
+            if (col !== '_id'){
+                var val = obj[col]
+                if (Array.isArray(val)){
+                    val = val.join(" ");
+                }
+                else if (val == undefined){
+                  val = "";
+                }
+                row.push(val);
+            }
+        }
+        d.push(row);
+    }
+
+    csv().from(d).to.path(__dirname + fileName).on('close', function(count){
+        console.log(count);
+        if (completeCallback !== undefined){
+            completeCallback(null, count);
+        }
+    }).on('error', function(error){
+        console.log(error.message);
+        if (completeCallback !== undefined){
             completeCallback(error, null);
         }
     });
-    csv().from(data).to.stream(stream);
 }
 
 exports.readColumns = function(fileName, onRowCallback, completeCallback){

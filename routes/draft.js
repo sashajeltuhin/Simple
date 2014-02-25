@@ -3,6 +3,7 @@ var mongo = require('mongodb');
 var ObjectID = mongo.ObjectID;
 var dbname = 'ShopDB';
 var mkio =require('./mkfiles');
+var step =require('./step');
 
 var colName = 'tmpldraft';
 
@@ -27,22 +28,41 @@ exports.list = function (req, res){
 
 exports.publish = function (req, res){
     db.setDB('ShopDB');
-    var filter = db.getFilter(req.body);
-    db.load(colName, filter, function(err, recs){
+    var f = req.body;
+    var draft = f.draft;
+    var w = f.widget;
+    var tname = f.tenant;
+    draft.changed = new Date();
+    draft.published = true;
+
+    var filter = {};
+    if (draft._id !== null){
+        filter._id = new ObjectID(draft._id);
+        draft._id = filter._id;
+    }
+    db.upsert(colName, draft, filter, function(err, newid){
         if (err !== null){
-            handleError(res, "Cannot list versions ", err);
+            handleError(res, "Cannot add versions ", err);
         }
         else{
-            var v = recs[0];
-            mkio.saveFile(v.version, '../tmp/' + v._id, function(e){
-                if (e == null){
-                    res.send(v);
+            var fid = new ObjectID();
+            var fn = '/tenants/' + tname + '/' + fid + '.html';
+            mkio.saveFile(draft.version, '/..' +  fn, function(err){
+                if (err !== null){
+                    handleError(res, "Cannot publish template ", err);
                 }
                 else{
-                    handleError(res, "Cannot list versions ", e);
+                    w.template = fn;
+                    step.update(w, function(err, s){
+                        if (err !== null){
+                            handleError(res, "Cannot list versions ", err);
+                        }
+                        else{
+                            res.send(s);
+                        }
+                    });
                 }
-            })
-
+            });
         }
     });
 }

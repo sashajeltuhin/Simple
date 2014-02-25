@@ -6,7 +6,7 @@ function ruledefctrl($scope, $rootScope, $http, adminservice, mkPopup){
 
     function init(){
         $scope.obj = adminservice.getSelObj();
-        adminservice.listObj("fields", {objname:"product", order_by:{"title":1}}, $http, function(meta){
+        adminservice.listObj("fields", {objname:$scope.obj.obj, order_by:{"title":1}}, $http, function(meta){
             prodMeta = meta;
             adminservice.loadMeta(SEG, $http, function(meta){
                 //$scope.propsEl = adminservice.buildForm(meta, updateProdFieldList, $scope.obj);
