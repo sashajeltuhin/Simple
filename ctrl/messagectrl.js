@@ -4,7 +4,9 @@ function messagectrl($scope, $http, adminservice){
     var tenObj = adminservice.getTenant();
     $scope.newtotal = 0;
 
-    setInterval(function loadNewNotes(){
+    loadNewNotes();
+
+    function loadNewNotes(){
         $scope.me = adminservice.getAdminSession();
         var filter = {};
         filter.status = 'new';
@@ -13,11 +15,7 @@ function messagectrl($scope, $http, adminservice){
             $scope.newtotal = d.length;
             $scope.newnotes = d;
         });
-    }, 10000);
-
-
-
-
+    }
 
     $scope.openNote = function(n){
         adminservice.setSelObj(n);
