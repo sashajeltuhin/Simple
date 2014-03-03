@@ -77,6 +77,9 @@ function reportctrl($scope, $http, $parse, adminservice){
             $scope.obj.allowedTenant = $scope.secFilter.allowedTenant;
         }
         adminservice.saveObj($scope.obj, OBJ, $http, function(saved){
+            //$scope.onDash();
+            var fn = $scope[adminservice.getCurrentView().controller];
+            fn();
 //            var callback = adminservice.getSelCallback();
 //            if (callback !== undefined && callback !== null){
 //                callback(saved);

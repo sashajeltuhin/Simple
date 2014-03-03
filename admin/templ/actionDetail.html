@@ -1,0 +1,13 @@
+
+<section class="m-t-lg wrapper-md animated fadeInDown" ng-controller="actionctrl">
+    <div class="container aside-xxl"><a class="navbar-brand block" href="#">{{viewTitle}}</a>
+        <section class="panel panel-default m-t-lg bg-white">
+            <form class="panel-body wrapper-lg">
+                <form role="form">
+                    <div class="panel-body" ng-include="fd.template" ng-repeat="fd in fieldList"></div>
+                    <!--<div dynamic="propsEl"></div>-->
+                </form>
+                <a href="#" ng-click="saveChanges()" class="btn btn-default btn-block">Save & Close</a></form>
+        </section>
+    </div>
+</section>

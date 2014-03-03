@@ -6,7 +6,7 @@ function inboxctrl($scope, $http, adminservice){
     $scope.me = adminservice.getAdminSession();
     $scope.selnote = adminservice.getSelObj();
     if ($scope.selnote.senderID == undefined){
-        adminservice.listObj(NOTE, {status:"read"}, $http, function(rn){
+        adminservice.listObj(NOTE, {status:"read", order_by:{createdTime:-1}}, $http, function(rn){
            $scope.readNotes = rn;
             $.each($scope.readNotes, function(i, note){
                note.shortened = note.subject.substring(0, 20) + '...';

@@ -35,7 +35,8 @@ function templateCtrl($scope, $http, adminservice){
             $.each($scope.versions, function(i, v){
                 var date = new Date(v.changed);
                 var time = date.toTimeString().replace(/.*(\d{2}:\d{2}:\d{2}).*/, "$1");
-                v.changedFormatted = date.getDate() + '-' + date.getMonth() + '-' + date.getFullYear() + ' ' + time;
+                var month = date.getMonth() + 1;
+                v.changedFormatted = date.getDate() + '-' +  month + '-' + date.getFullYear() + ' ' + time;
             })
         });
     }

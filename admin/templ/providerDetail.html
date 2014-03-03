@@ -21,7 +21,8 @@
     <ul class="nav nav-tabs nav-white">
         <li class="active"><a href="#main" data-toggle="tab">At a glance</a></li>
         <li class=""><a href="#map" ng-click="showCoverage()" data-toggle="tab">Coverage</a></li>
-        <li class=""><a href="#prods" ng-click="loadApps()" data-toggle="tab">Product</a></li>
+        <li class=""><a href="#offers" ng-click="loadOffers()" data-toggle="tab">Offers</a></li>
+        <li class=""><a href="#prods" ng-click="loadProds()" data-toggle="tab">Product</a></li>
         <li class=""><a href="#rules" ng-click="loadActions()" data-toggle="tab">Rules</a></li>
     </ul>
 </header>
@@ -117,10 +118,11 @@
 <div class="tab-pane" id="map">
     <leaflet center="center" markers="markers" paths="paths" class="map-page"></leaflet>
 </div>
-<div class="tab-pane" id="prods">
-    <div class="text-center wrapper">
-        <i class="fa fa-spinner fa fa-spin fa fa-large"></i>
+    <div class="tab-pane" id="offers">
+
     </div>
+<div class="tab-pane" id="prods" ng-include="prodTemplate">
+
 </div>
 <div class="tab-pane" id="rules">
     <div class="text-center wrapper">

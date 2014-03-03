@@ -21,11 +21,13 @@
     <ul class="nav nav-tabs nav-white">
         <li class="active"><a href="#main" data-toggle="tab">At a glance</a></li>
         <li class=""><a href="#provs" ng-click="loadProviders()" data-toggle="tab">Providers</a></li>
+        <li class=""><a href="#acts" ng-click="loadActions()" data-toggle="tab">Actions</a></li>
         <li class=""><a href="#apps" ng-click="loadApps()" data-toggle="tab">Applications</a></li>
         <li class=""><a href="#depts" ng-click="loadDepts()" data-toggle="tab">Departments</a></li>
         <li class=""><a href="#langs" ng-click="loadLanguages()" data-toggle="tab">Languages</a></li>
         <li class=""><a href="#fields" ng-click="loadCustomFields()" data-toggle="tab">Custom Attributes</a></li>
         <li class=""><a href="#configs" data-toggle="tab">Settings</a></li>
+        <li class=""><a href="#integration" data-toggle="tab">Integrations</a></li>
     </ul>
 </header>
 <section class="vbox">
@@ -194,6 +196,92 @@
     </aside>
     </section>
 </div>
+<div class="tab-pane" id="acts">
+    <section class="hbox stretch">
+
+        <aside class="col-lg-9 bg-light lter b-r aside-md">
+            <mk-nest class="dd" group="1" onchangefn="onAddAction(list)">
+                <ol class="dd-list list-group no-radius m-b-none m-t-n-xxs list-group-lg no-border">
+                    <li class="dd-item list-group-item" data-id="{{$index}}" ng-repeat="a in myactions">
+    <span class="pull-right">
+        <a href="#" ng-click="manageAction(a)"><i class="fa fa-pencil icon-muted fa-fw m-r-xs"></i></a>
+        <a href="#" ng-click="removeAction(a)"><i class="fa fa-times icon-muted fa-fw"></i></a>
+     </span>
+
+                        <div class="dd-handle">
+                            <a href="#" class="thumb-sm pull-left m-r-sm">
+                                <img ng-src="{{rootUrl}}{{a.imageUrl}}" class="img-circle">
+                            </a>
+                            <a href="#" class="clear">
+                                <strong class="block">{{a.label}}</strong>
+                                <small>{{a.name}}</small>
+                            </a>
+                        </div>
+                    </li>
+                </ol>
+            </mk-nest>
+        </aside>
+        <aside class="col-lg-3 bg-light lter b-r aside-md hidden-print nav-xs-right" id="actnav">
+            <section class="vbox">
+                <header class="header bg-primary lter text-center clearfix">
+                    <div class="row">
+                        <a href="#actnav" data-toggle="class:nav-xs" class="pull-left btn btn-sm btn-default btn-icon">
+                            <i class="fa fa-angle-right text"></i>
+                            <i class="fa fa-angle-left text-active"></i>
+                        </a>
+                        <div class="btn-group">
+                            <div class="btn-group hidden-nav-xs">
+                                <button class="btn btn-success btn-sm"><i class="fa fa-plus"></i>
+                                </button>
+                                <button type="button" class="btn btn-sm btn-primary dropdown-toggle" data-toggle="dropdown">
+                                    Restricted
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </header>
+                <section class="w-f ">
+                    <div class="slim-scroll" data-height="auto" data-disable-fade-out="true" data-distance="0" data-size="5px" data-color="#333333">
+
+                        <!-- nav -->
+                        <nav class="nav-primary hidden-xs">
+                            <ul class="nav">
+                                <li  class="active">
+                                    <a href="#layout"   class="active">
+                                        <i class="fa fa-columns icon">
+                                            <b class="bg-warning"></b>
+                                        </i>
+                        <span class="pull-right">
+                          <i class="fa fa-angle-down text"></i>
+                          <i class="fa fa-angle-up text-active"></i>
+                        </span>
+                                        <span>{{availableSection}}</span>
+                                    </a>
+                                    <mk-nest class="dd" group="1">
+                                        <ol class="dd-list nav lt">
+                                            <li class="dd-item" data-id="{{$index}}" ng-repeat="a in existingActs">
+                                                <div class="dd-handle dd3-handle">Drag</div>
+                                                <div class="dd3-content">
+                                                    <a href="#" class="thumb-sm pull-left m-r-sm">
+                                                        <img ng-src="{{rootUrl}}{{a.imageUrl}}" class="img-circle">
+                                                    </a>
+                                                    <a href="#" >
+                                                        <span>{{a.name}}</span>
+                                                    </a>
+                                                </div>
+                                            </li>
+                                        </ol>
+                                    </mk-nest>
+                                </li>
+                            </ul>
+                        </nav>
+                        <!-- / nav -->
+                    </div>
+                </section>
+            </section>
+        </aside>
+    </section>
+</div>
 <div class="tab-pane" id="apps">
     <div class="col-lg-6  text-center wrapper">
         <section class="panel panel-default" ng-repeat="app in selTenant.appObjects">
@@ -355,6 +443,8 @@
             </div>
         </section>
     </section>
+</div>
+<div class="tab-pane" id="integrations">
 </div>
 </div>
 </section>

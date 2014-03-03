@@ -427,13 +427,19 @@ angular.module('cart').factory('adminservice', function($q, $cookies) {
             metafld = fieldCallback(metafld)
             if (metafld !== null && metafld.editable == true){
                 var fd = {};
+                if (metafld.template !== undefined){
+                    fd.template = metafld.template;
+                    delete metafld.template;
+                }
                 fieldList.push(fd);
                 fd.label = metafld.label;
                 fd.fldname = metafld.fldname;
 
                 if (metafld.opts !== undefined){
                     fd.options = [];
-                    fd.template = templUrl + 'dropdown.html';
+                    if (fd.template == undefined){
+                        fd.template = templUrl + 'dropdown.html';
+                    }
                     $.each(metafld.opts, function(i, item){
                         var opt = {};
                         fd.options.push(opt);
@@ -445,20 +451,22 @@ angular.module('cart').factory('adminservice', function($q, $cookies) {
                     fd.fldvalue = obj[metafld.fldname];
                 }
                 else {
-                    switch (metafld.fldtype){
-                        case 'text':
-                            fd.template = templUrl + 'text.html';
-                            break;
-                        case 'bool':
-                            fd.template = templUrl + 'checkbox.html';
-                            break;
-                        case 'longtext':
-                            fd.template = templUrl + 'textarea.html';
-                            break;
-                        default:
-                            fd.template = templUrl + 'text.html';
-                            break;
+                    if (fd.template == undefined){
+                        switch (metafld.fldtype){
+                            case 'text':
+                                fd.template = templUrl + 'text.html';
+                                break;
+                            case 'bool':
+                                fd.template = templUrl + 'checkbox.html';
+                                break;
+                            case 'longtext':
+                                fd.template = templUrl + 'textarea.html';
+                                break;
+                            default:
+                                fd.template = templUrl + 'text.html';
+                                break;
 
+                        }
                     }
                     if (obj[metafld.fldname] == undefined){
                         obj[metafld.fldname] = "";
@@ -588,6 +596,16 @@ angular.module('cart').factory('adminservice', function($q, $cookies) {
             }
         }
         return cleanFilter;
+    }
+
+    service.cloneObj = function(obj){
+        var clone = {};
+        for(var key in obj){
+            if (key !== '_id'){
+                clone[key] = obj[key];
+            }
+        }
+        return clone;
     }
 
 

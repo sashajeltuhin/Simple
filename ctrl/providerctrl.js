@@ -1,5 +1,6 @@
 function providerctrl($scope, $http, adminservice){
     var OBJ = 'provider';
+    var serverUrl = topUrl + adminURL + '/templ/';
     $scope.rootUrl = topUrl;
     $scope.selProvider = adminservice.getSelObj();
     if ($scope.selProvider._id !== undefined){
@@ -45,6 +46,19 @@ function providerctrl($scope, $http, adminservice){
 
     $scope.showCoverage = function(){
         showCoverage();
+    }
+
+    $scope.loadProds = function(){
+        var filterData = {}
+        filterData.objname = 'product';
+        filterData.f = {provider: $scope.selProvider.name};
+        filterData.customfields = false;
+        adminservice.setFilterData(filterData);
+        $scope.prodTemplate = serverUrl + 'griddefault.html';
+    }
+
+    $scope.loadOffers = function(){
+        $scope.$broadcast("EV_GRID_INIT", 'product', true);
     }
 
     function showCoverage(){

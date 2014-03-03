@@ -29,6 +29,7 @@ function tenantctrl($scope, $http, adminservice){
             $scope.selTenant.providers = [];
             $scope.myproviders = [];
         }
+
         if ($scope.selTenant.sessionTimeout == undefined){
             $scope.selTenant.sessionTimeout = 24;
         }
@@ -67,8 +68,8 @@ function tenantctrl($scope, $http, adminservice){
     function getDummyProv(){
         var dummy = {};
         dummy._id = 0;
-        dummy.name = 'Drag providers from the available list on the right';
-        return dummy
+        dummy.name = 'Drag from the available list on the right';
+        return dummy;
     }
 
 
@@ -113,6 +114,83 @@ function tenantctrl($scope, $http, adminservice){
                 $scope.existingList.push(item);
             });
 
+        });
+    }
+
+    $scope.loadActions = function(){
+        loadActions();
+    }
+
+    function loadActions(){
+        $scope.existingMap = {};
+        $scope.existingActs = [];
+        $scope.myactions = [];
+
+        $scope.availableSection = 'Actions';
+
+        adminservice.listObj('action', {tid: $scope.selTenant._id}, $http, function(data){
+            $scope.myactions = data;
+            if ($scope.myactions.length == 0){
+                $scope.myactions.push(getDummyProv());
+            }
+
+            var ids = [];
+            $.each($scope.myactions, function(i, a){
+                ids.push(a.name);
+            });
+            var f = {};
+            f.tid = "0";
+
+            if (ids.length > 0){
+                var fv = {};
+                fv.oper = '<>';
+                fv.val = ids;
+                f.name = fv;
+            }
+
+            adminservice.listObj('action', f, $http, function(data){
+                $.each(data, function(i, t){
+                    $scope.existingMap[t._id] = t;
+                    var item = {};
+                    item._id = t._id;
+                    item.name = t.label;
+                    item.imageUrl = t.imageUrl;
+                    $scope.existingActs.push(item);
+                });
+            });
+        });
+    }
+
+    $scope.onAddAction = function(list){
+        console.log("action list", list);
+        $.each(list, function(i, item){
+            if (item['$scope'].a !== undefined && item['$scope'].a._id !== 0){
+                var action = $scope.existingMap[item['$scope'].a._id];
+                if (action !== undefined){
+                    var clone = adminservice.cloneObj(action);
+                    clone.tid = $scope.selTenant._id;
+                    console.log("saving clone", clone);
+                    adminservice.saveObj(clone, 'action', $http, function(){
+                        if (i + 1 == list.length){
+                            loadActions();
+                        }
+                    });
+                }
+            }
+        });
+    }
+
+    $scope.manageAction = function(a){
+        adminservice.setSelObj(a);
+        var obj = {};
+        obj.view = 'actionDetail.html';
+        obj.title = "Action properties";
+        $scope.$emit("EV_SWITCH_VIEW", obj);
+    }
+
+    $scope.removeAction = function(a){
+        adminservice.deleteObj(a, 'action', $http, function(){
+            loadActions();
         });
     }
 

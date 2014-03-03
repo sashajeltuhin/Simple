@@ -470,15 +470,28 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
     }
 
     $scope.createNote = function(){
-        selected = "user";
+        selected = "note";
         createObj('New Message');
     }
 
     $scope.createAction = function(){
-        selected = "user";
-        createObj('New Action');
+        selected = "action";
+        newObj('New Action');
     }
 
+    $scope.createObject = function(){
+        selected = "object";
+        newObj('New Object');
+    }
+
+    $scope.createIcon = function(){
+        selected = "icon";
+        newObj('New Icon');
+    }
+    $scope.createStyle = function(){
+        selected = "style";
+        newObj('New Style');
+    }
     function createObj(heading, def){
         adminservice.loadMeta(selected, $http, function(meta){
             $scope.obj = buildobj(meta, def);
@@ -668,6 +681,22 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
     $scope.loadReportFields = function(){
         var f = 'report';
         $scope.viewTitle = "Report attributes";
+        loadMeta(f);
+    }
+
+    $scope.loadObjectFields = function(){
+        var f = 'object';
+        $scope.viewTitle = "Object attributes";
+        loadMeta(f);
+    }
+    $scope.loadIconFields = function(){
+        var f = 'icon';
+        $scope.viewTitle = "Icon attributes";
+        loadMeta(f);
+    }
+    $scope.loadStyleFields = function(){
+        var f = 'style';
+        $scope.viewTitle = "Style attributes";
         loadMeta(f);
     }
 
@@ -1489,6 +1518,30 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
         loadObjNGrid();
     }
 
+    $scope.loadActionLst = function(){
+        selected = 'action';
+        $scope.viewTitle = "Actions";
+        buildDefFilter();
+        loadObjNGrid();
+    }
+    $scope.loadObjectLst = function(){
+        selected = 'object';
+        $scope.viewTitle = "Objects";
+        buildDefFilter();
+        loadObjNGrid();
+    }
+    $scope.loadIconsLst = function(){
+        selected = 'icon';
+        $scope.viewTitle = "Icons";
+        buildDefFilter();
+        loadObjNGrid();
+    }
+    $scope.loadStyleLst = function(){
+        selected = 'style';
+        $scope.viewTitle = "Styles";
+        buildDefFilter();
+        loadObjNGrid();
+    }
     $scope.loadConsumerLst = function(){
         selected = 'consumer';
         $scope.viewTitle = "Consumers";
@@ -1604,7 +1657,6 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
             adminservice.setFilterData(filterData);
             $scope.wrapper = serverUrl + 'spread.html';
             buildNGrid(m, d);
-            refreshFilter(m, refreshData);
         });
     }
 

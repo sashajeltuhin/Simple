@@ -37,6 +37,9 @@ var express = require('express')
   , draft = require('./routes/draft')
   , note = require('./routes/note')
   , action = require('./routes/action')
+  , object = require('./routes/object')
+  , icon = require('./routes/icon')
+  , style = require('./routes/style')
   , report = require('./routes/report')
   , db = require('./db/dbaccess')
   , session = require('./routes/adminsession');
@@ -95,6 +98,20 @@ app.post('/app/report/delete', report.delete);
 app.post('/app/action/list', action.list);
 app.post('/app/action/update', action.save);
 app.post('/app/action/delete', action.delete);
+
+app.post('/app/object/list', object.list);
+app.post('/app/object/update', object.save);
+app.post('/app/object/delete', object.delete);
+
+
+app.post('/app/icon/list', icon.list);
+app.post('/app/icon/update', icon.save);
+app.post('/app/icon/delete', icon.delete);
+
+
+app.post('/app/style/list', style.list);
+app.post('/app/style/update', style.save);
+app.post('/app/style/delete', style.delete);
 
 
 app.post('/app/report/total', db.total);
