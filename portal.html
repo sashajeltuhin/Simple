@@ -66,6 +66,7 @@
                 <li><a href="#/admin" ng-click="createObject()">Object</a></li>
                 <li><a href="#/admin" ng-click="createIcon()">Icon</a></li>
                 <li><a href="#/admin" ng-click="createStyle()">Style</a></li>
+                <li><a href="#/admin" ng-click="createCat()">Category</a></li>
             </ul>
             <!--<section class="dropdown-menu aside-xl on animated fadeInLeft no-borders lt">-->
                 <!--<div class="wrapper lter m-t-n-xs">-->
@@ -143,6 +144,7 @@
                 <li><a href="#/admin" ng-click="loadObjectLst()">Objects</a></li>
                 <li><a href="#/admin" ng-click="loadIconsLst()">Icon</a></li>
                 <li><a href="#/admin" ng-click="loadStyleLst()">Styles</a></li>
+                <li><a href="#/admin" ng-click="loadCatLst()">Categories</a></li>
             </ul>
         </li>
         <li class="dropdown" ng-show="adminSession">
@@ -175,6 +177,7 @@
                 <li><a href="#/admin" ng-click="loadObjectFields()">Objects</a></li>
                 <li><a href="#/admin" ng-click="loadIconFields()">Icons</a></li>
                 <li><a href="#/admin" ng-click="loadStyleFields()">Styles</a></li>
+                <li><a href="#/admin" ng-click="loadCatFields()">Categories</a></li>
             </ul>
         </li>
         <!--<li><a href="#">-->
@@ -341,13 +344,13 @@
         <li >
             <a href="#/admin" ng-click="loadCartSteps()" >
                 <i class="fa fa-angle-right"></i>
-                <span>Flow Management</span>
+                <span>User Flow</span>
             </a>
         </li>
         <li >
-            <a href="#/admin" ng-click="viewFlow()" >
+            <a href="#/admin" ng-click="loadAppWidgets()" >
                 <i class="fa fa-angle-right"></i>
-                <span>Preview</span>
+                <span>Application Components</span>
             </a>
         </li>
         <li >
@@ -395,6 +398,12 @@
             <a href="#/admin" ng-click="openCallCenter()" >
                 <i class="fa fa-angle-right"></i>
                 <span>Agent's portal</span>
+            </a>
+        </li>
+        <li >
+            <a href="#/admin" ng-click="openDisposition()" >
+                <i class="fa fa-angle-right"></i>
+                <span>Agent's disposition</span>
             </a>
         </li>
     </ul>

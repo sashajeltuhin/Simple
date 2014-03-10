@@ -1,4 +1,3 @@
-
 <section class="panel panel-default">
     <div class="row m-l-none m-r-none">
         <div class="col-lg-6">
@@ -6,68 +5,34 @@
         </div>
         <div class="col-lg-6">
             <div class="doc-buttons pull-right">
-                <button class="btn btn-success btn-sm" ng-click="newUI()"><i class="fa fa-plus"></i> New</button>
-                <button class="btn btn-success btn-sm" ng-click="loadCartSteps()"><i class="fa fa-list-ol"></i> Flow</button>
+                <button class="btn btn-success btn-sm" ng-click="loadAppWidgets()"><i class="fa fa-list-ol"></i> Flow</button>
                 <button class="btn btn-success btn-sm" ng-click="saveObj()"><i class="fa fa-save"></i> Save</button>
             </div>
         </div>
     </div>
 </section>
-
 <section class="hbox stretch">
     <!-- .aside -->
-    <div class="row">
-    <aside class="col-lg-6" ng-repeat="a in stepApps">
         <section class="vbox">
-            <!--<header class="header bg-white b-b b-light">-->
-                <!--<a href="#aside" data-toggle="class:show" class="btn btn-sm btn-default pull-right">Create</a>-->
-                <!--<p>{{a.name}}</p>-->
-            <!--</header>-->
-            <section class="wrapper">
-                <div class="timeline">
-                    <article class="timeline-item active">
-                        <div class="timeline-caption">
-                            <div class="panel bg-primary lter no-borders">
-                                <div class="panel-body">
-                                    <span class="timeline-icon"><i class="fa fa-th-large time-icon bg-primary"></i></span>
-                                    <span class="h3 timeline-date">UX flow ({{a.agent}})</span>
-                                    <h3>
-                                        <span>{{a.name}}</span>
-                                    </h3>
-                                    <div class="m-t-sm timeline-action">
-                                        <span class="pull-left m-r-sm"><a>Active <input type="checkbox" ng-model="a.active" ng-change="updateApp(a)"></a></span>
-                                        <button class="btn btn-sm btn-default btn-bg" ng-click="viewFlow(a)"><i class="fa fa-play"></i></button>
-                                        <button class="btn btn-sm btn-default btn-bg" ng-click="editApp(a)"><i class="fa fa-pencil"></i></button>
-                                        <button class="btn btn-sm btn-default btn-bg" ng-click="cloneApp(a)"><i class="fa fa-copy"></i></button>
-                                        <button class="btn btn-sm btn-default btn-bg" ng-click="createStep(a, appElements[a.appID],'cart')"><i class="fa fa-plus"></i>Widget</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </article>
-                    <div ui-sortable="sortableOptions" ng-model="appElements[a.appID]">
-                    <article class="timeline-item" ng-repeat="p in appElements[a.appID]">
-                        <div class="timeline-caption">
-                            <div class="panel panel-default">
-                                <div class="panel-body">
-                                    <a href="#" ng-click="deleteStep(p, appElements[a.appID])" class="pull-right"><i class="fa fa-times"></i></a>
-                                    <span class="arrow left"></span>
-                                    <span class="timeline-icon"><a href="#" ng-click="openWidgetDetail(p)"><i class="fa fa-file time-icon bg-primary"></i></a></span>
-                                    <span class="timeline-date"><a href="#" ng-class="{'btn btn-sm btn-default btn-rounded': p.visible,'btn btn-sm btn-default btn-rounded disabled': !p.visible}" ng-click="openWidgetDetail(p)"><h5>{{p.title}}</h5></a></span>
-                                    <p>
-                                        {{p.desc}}
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </article>
-                    <div class="timeline-footer"><a href="#" ng-click="createStep(a, appElements[a.appID], 'cart')"><i class="fa fa-plus time-icon inline-block bg-dark"></i></a></div>
-                    </div>
+            <div class="row" ng-repeat="a in stepApps">
+                <div>
+                    <a href="#" ng-click="createStep(a, appElements[a.appID], 'app')"> <i class="fa fa-plus time-icon inline-block bg-dark"></i>New Widget</a>
                 </div>
-            </section>
+                <div class="col-lg-3" ng-repeat="w in appElements[a.appID]">
+                    <section class="panel panel-default">
+                        <header class="panel-heading font-bold">
+                            <span class="pull-right">
+                                <a href="#" ng-click="openWidgetDetail(w)"><i class="fa fa-pencil icon-muted fa-fw m-r-xs"></i></a>
+                                <a href="#" ng-click="deleteStep(w, appElements[a.appID])"><i class="fa fa-times icon-muted fa-fw"></i></a>
+                             </span>{{w.title}}
+                        </header>
+                        <div class="panel-body">
+                            {{w.desc}}
+                        </div>
+                    </section>
+                </div>
+            </div>
         </section>
-    </aside>
-    </div>
     <!-- /.aside -->
     <!-- .aside -->
     <aside class="bg-light lter b-r aside-md hidden-print nav-xs-right" id="filternav" ng-controller="filterctrl">

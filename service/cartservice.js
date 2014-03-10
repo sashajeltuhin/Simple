@@ -21,6 +21,8 @@ angular.module('cart').factory('cartservice', function($http) {
     var appObj = {};
     var singleTempl = null;
     var teaserProd = null;
+    var agentID = null;
+    var appID = null;
 
     service.getSocket = function(){
         return service.socket;
@@ -45,6 +47,41 @@ angular.module('cart').factory('cartservice', function($http) {
 
     service.getAppObj = function(){
         return appObj;
+    }
+
+    service.setAgentID = function(a){
+        agentID = a;
+    }
+
+    service.getAgentID = function(){
+        return agentID;
+    }
+
+    service.setAppID = function(aid){
+        appID = aid;
+    }
+
+    service.getAppID = function(){
+        return appID;
+    }
+
+    service.validateAgent = function(sid, tenant, callback){
+        var url = serverUrl + '/auth/there';
+        var f = {_id : sid};
+        $http.post(url, f).success(function(session){
+            if (session.uid !== undefined){
+                $http.post(serverUrl + '/user/list', {_id: session.uid}).success(function(u){
+                    if (u.length > 0){
+                        var user = u[0];
+                        service.setAgentID(user._id);
+                        service.logAction('agent_signin', 0);
+                        if(callback !== undefined){
+                            callback(user, session);
+                        }
+                    }
+                });
+            }
+        });
     }
 
     service.getTemplateURL = function(){
@@ -123,14 +160,13 @@ angular.module('cart').factory('cartservice', function($http) {
         return curstep;
     }
 
-    service.stepByName = function(name){
+    service.setCurrentStep = function(id){
         var index = -1;
         $.each(steps, function (i, s){
-            if (s.name == name){
-                index = i;
+            if (s._id == id){
+                curstep = steps[i];
             }
         });
-        return index > -1 && index < steps.length ? steps[index] : null;
     }
 
     service.nextStep = function(now){
@@ -144,15 +180,11 @@ angular.module('cart').factory('cartservice', function($http) {
         if (index == steps.length - 1){
             cart.complete = true;
             service.customer.type = "client";
-            console.log("nextStep() service. Step " + curstep.name);
-            console.log(service.customer);
             service.updateCustomer();
             service.endSession();
         }
         else{
             cart.complete = false;
-            console.log("nextStep() service. Step " + curstep.name);
-            console.log(service.customer);
             service.updateCustomer();
         }
 
@@ -218,12 +250,25 @@ angular.module('cart').factory('cartservice', function($http) {
             appType = appObj.appID;
         }
         console.log(appType);
-        $http.post(serverUrl + '/apps/list', {tenant:appType, agent:filter.agent}).success(function(applics){
-            for(var a = 0; a < applics.length; a++){
-                if (applics[a].active == true){
-                    appType = applics[a].appID;
-                    appObj = applics[a];
-                    tenant = appObj.tenant;
+        var appFilter = {tenant:appType, agent:filter.agent};
+        var singlePreview = false;
+        if (appID !== null && appID !== undefined){
+            singlePreview = true;
+            appFilter = {tenant:appType, _id: appID};
+        }
+        $http.post(serverUrl + '/apps/list', appFilter).success(function(applics){
+            if (singlePreview == true && applics.length > 0){
+                appType = applics[0].appID;
+                appObj = applics[0];
+                tenant = appObj.tenant;
+            }
+            else{
+                for(var a = 0; a < applics.length; a++){
+                    if (applics[a].active == true){
+                        appType = applics[a].appID;
+                        appObj = applics[a];
+                        tenant = appObj.tenant;
+                    }
                 }
             }
 
@@ -430,6 +475,10 @@ angular.module('cart').factory('cartservice', function($http) {
         a.duration = duration;
         a.data = d;
         a.test = admin;
+        a.consumer = service.customer;
+        if (service.getAgentID() !== undefined && service.getAgentID() !== null){
+            a.agent = service.getAgentID();
+        }
         if (d !== undefined){
             a.zip = d.zip;
             a.rev = d.rev !== undefined ? Number(d.rev) : 0;

@@ -37,11 +37,23 @@ function providerctrl($scope, $http, adminservice){
                 '#cccccc'
             ]
         ];
-
+        loadWidgets();
         showCoverage();
     }
     else{
         init();
+    }
+
+    function loadWidgets(){
+        adminservice.listObj('step', {app:'admin', type:'app', parentid:'provider'}, $http, function(data){
+            $.each(data, function(i, w){
+                if (w.integration !== undefined && w.integration !== ''){
+                    eval(w.integration);
+                }else{
+                    $scope[w.name + '_widget'] = $scope.rootUrl +  w.template;
+                }
+            });
+        });
     }
 
     $scope.showCoverage = function(){
@@ -49,16 +61,19 @@ function providerctrl($scope, $http, adminservice){
     }
 
     $scope.loadProds = function(){
-        var filterData = {}
+        $scope.tenant = adminservice.getTenant();
+        var filterData = {};
         filterData.objname = 'product';
-        filterData.f = {provider: $scope.selProvider.name};
+        filterData.f = {provider: $scope.selProvider.name, tenant:$scope.tenant.name};
         filterData.customfields = false;
         adminservice.setFilterData(filterData);
         $scope.prodTemplate = serverUrl + 'griddefault.html';
     }
 
     $scope.loadOffers = function(){
-        $scope.$broadcast("EV_GRID_INIT", 'product', true);
+        adminservice.listObj('product', {provider:$scope.selProvider.name, cat:'offer'}, $http, function(d){
+            $scope.products = d;
+        });
     }
 
     function showCoverage(){

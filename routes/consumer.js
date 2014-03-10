@@ -132,13 +132,16 @@ exports.export = function(req, res){
                 res.send({});
                 var fname = new ObjectID().toString();
                 var fullname = fname + '.csv';
+                var sender = {};
+                sender.id = 1;
+                sender.name = "FUSE";
                 csvtool.writeCSV('/../tmp/reports/' + fname + '.csv', recs, cols, function(error, count){
                     if (error == null){
-                        notify(user._id.toString(), user.fname + ' ' + user.lname, "Export Complete", 'Exported ' + count + ' records. The file is available for download' +  ' <a href="/tmp/reports/"' + fullname + '">here</a>', 'info');
+                        note.sendInfo(user, "Export Complete", 'Exported ' + count + ' records. The file is available for download',  '/tmp/reports/' + fullname, sender);
                     }
                     else{
                         console.log(error);
-                        notify(user._id.toString(), user.fname + ' ' + user.lname, "Export Failure", 'Export of conusmer data failed with the following error ' + error, 'error');
+                        note.sendError(user, "Export Failure", 'Export of conusmer data failed with the following error ' + error);
                     }
                 });
             }
@@ -146,23 +149,6 @@ exports.export = function(req, res){
     }
 }
 
-function notify(uid, uname, subject, msg, type){
-    var n = {};
-    n.toID = uid;
-    n.toName = uname;
-    n.status = 'new';
-    n.createdTime = new Date();
-    n.subject = subject;
-    n.message = msg;
-    n.type = type;
-    n.senderID = 1;
-    n.senderName = "FUSE";
-
-    note.notify(n, function(sent){
-
-    });
-
-}
 
 
 

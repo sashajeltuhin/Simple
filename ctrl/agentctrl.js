@@ -1,9 +1,7 @@
 function agentctrl($scope, $rootScope, $http, $location, cartservice){
     var serverUrl = topUrl + '/templ/';
     $scope.topUrl = topUrl;
-    $scope.title = "Cart";
-    $scope.login = "Sign In";
-    $scope.head = "Bundles by Bridgevine";
+
     $scope.isAdmin = cartservice.isIn();
     $scope.scriptlabel = "Get Help...";
     $scope.scriptopen = false;
@@ -25,7 +23,13 @@ function agentctrl($scope, $rootScope, $http, $location, cartservice){
     console.log($scope.c);
 
     $scope.tenant = getURLParameter('tenant');
-    $scope.agent = getURLParameter('agent');
+    var sid = getURLParameter('session');
+    console.log("session", sid);
+
+    cartservice.validateAgent(sid, $scope.tenant, function(a, s){
+        $scope.agent = a;
+        $scope.session = s
+    });
 
     cartservice.listObj('fields', {objname:'consumer'}, $http, function(meta){
         $scope.propsEl = buildForm(meta);

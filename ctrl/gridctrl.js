@@ -4,7 +4,6 @@ function gridctrl($scope, $http, adminservice){
     var serverUrl = topUrl + adminURL + '/templ/';
     var selected = '';
     $scope.rootUrl = topUrl;
-    $scope.cleanFilter = {};
     $scope.defFilter = {};
     $scope.gridData = [];
     $scope.gridcolumns = [];
@@ -34,8 +33,8 @@ function gridctrl($scope, $http, adminservice){
     });
 
     $scope.export = function(){
-        cleanFilter();
-        adminservice.export($scope.cleanFilter, selected, $http, function(d){
+        var f = cleanFilter();
+        adminservice.export(f, selected, $http, function(d){
 
         });
 
@@ -51,8 +50,8 @@ function gridctrl($scope, $http, adminservice){
     });
 
     function refreshData(){
-        cleanFilter();
-        adminservice.listObj(selected, $scope.cleanFilter, $http, function(d){
+        var f = cleanFilter();
+        adminservice.listObj(selected, f, $http, function(d){
             $scope.gridData = d;
 
         });
@@ -60,7 +59,7 @@ function gridctrl($scope, $http, adminservice){
     }
 
     function cleanFilter(){
-        $scope.cleanFilter = adminservice.cleanFilter($scope.selFilter);
+        return adminservice.cleanFilter($scope.selFilter);
     }
 
     function clearFilter(){
@@ -129,7 +128,7 @@ function gridctrl($scope, $http, adminservice){
         var rowSelector = {};
         rowSelector.field = "mk_rowsel";
         rowSelector.displayName = " ";
-        rowSelector.editableCellTemplate = '<div><input ng-model="row.entity.mk_rowsel" type="checkbox" ng-change="gridValChange(row.entity, col )"></input></div>'
+        rowSelector.editableCellTemplate = '<div><input ng-model="row.entity.mk_rowsel" type="checkbox" ng-change="gridValChange(row.entity, col )"></div>';
         rowSelector.width = 50;
         rowSelector.enableCellEdit = true;
         $scope.gridcolumns.push(rowSelector);

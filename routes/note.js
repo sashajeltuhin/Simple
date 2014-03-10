@@ -47,17 +47,14 @@ exports.save = function(req, res){
     }
 }
 
-exports.notify = function(note, callback){
-    db.insert(colName, note, function(err, rec){
-        if (callback !== undefined){
-            if (err !== null){
-                callback(err, null);
-            }
-            else{
-                callback(null, rec);
-            }
-        }
-    })
+exports.sendError = function(user, subject, text, attach, sender, callback){
+    var note = buildNote(user, subject, text, attach, sender, 'info');
+    notify(note, callback);
+}
+
+exports.sendInfo = function(user, subject, text, attach, sender, callback){
+    var note = buildNote(user, subject, text, attach, sender, 'error');
+    notify(note, callback);
 }
 
 
@@ -86,6 +83,37 @@ exports.delete = function(req, res){
             res.send(pid);
         }
     });
+}
+
+function buildNote (user, subject, text, attach, sender, type){
+    var n = {};
+    n.toID = user.uid;
+    n.toName = user.fname + ' ' + user.lname;
+    n.status = 'new';
+    n.createdTime = new Date();
+    n.subject = subject;
+    n.message = text;
+    n.type = type;
+    n.fileLink = attach;
+    if (attach !== undefined){
+        n.template = 'linkmsg.html';
+    }
+    n.senderID = sender.id;
+    n.senderName = sender.name;
+}
+
+function notify(note, callback){
+    db.insert(colName, note, function(err, rec){
+        if (callback !== undefined){
+            if (err !== null){
+                callback(err, null);
+            }
+            else{
+                callback(null, rec);
+            }
+        }
+    })
+
 }
 
 

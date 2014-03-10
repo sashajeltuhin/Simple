@@ -22,8 +22,10 @@ function surveyAdminCtrl($scope, $rootScope, $http, adminservice){
     }
 
     function loadCustAtts(){
+        var filterData = adminservice.getFilterData().f;
+        $scope.exposure = filterData.exposure;
         var tenObj = adminservice.getTenant();
-        adminservice.listObj('fields', {custom:true, tenant: tenObj.name}, $http, function(cust){
+        adminservice.listObj('fields', {custom:true, tenant: tenObj.name, cat:$scope.exposure}, $http, function(cust){
             $scope.customAtts = cust;
         });
     }
@@ -36,7 +38,7 @@ function surveyAdminCtrl($scope, $rootScope, $http, adminservice){
         $scope.queTitle = parent !== undefined && parent !== null ? parent.label + ' --> ' + $scope.selque.label : $scope.selque.label;
         var tenObj = adminservice.getTenant();
         $scope.selque = que;
-        adminservice.listObj('fields', {fldname: que.value, custom:true, tenant: tenObj.name}, $http, function(cust){
+        adminservice.listObj('fields', {fldname: que.value, custom:true, tenant: tenObj.name, cat:$scope.exposure}, $http, function(cust){
             $scope.ca = cust[0];
             if ($scope.ca.fldtype.replace(/\W/g, '') == 'bool'){
                 $scope.ca.fldopts = [];
@@ -71,6 +73,7 @@ function surveyAdminCtrl($scope, $rootScope, $http, adminservice){
         var def = {};
         def.label = "New question";
         def.app = appObj.appID;
+        def.exposure = $scope.exposure;
         $scope.ca = {};
 
         adminservice.loadMeta(QUE, $http, function(meta){
@@ -112,6 +115,7 @@ function surveyAdminCtrl($scope, $rootScope, $http, adminservice){
             $scope.ca.fldtype = "longtext";
             $scope.ca.objname = "consumer";
             $scope.ca.reportable = true;
+            $scope.ca.cat = $scope.exposure;
             $scope.ca.editable = true;
             $scope.ca.visible = true;
             $scope.ca.custom = true;
@@ -181,9 +185,12 @@ function surveyAdminCtrl($scope, $rootScope, $http, adminservice){
     function openqueMap(){
         $scope.linkedAnswer = null;
         $scope.parent = null;
-
         var appObj = adminservice.getAppObj(appObj);
-        adminservice.listObj(QUE, {app:appObj.appID, order_by:{order:1}}, $http, function(d){
+        var filterData = adminservice.getFilterData().f;
+        $scope.exposure = filterData.exposure;
+        filterData.app = appObj.appID;
+        filterData.order_by = {order:1};
+        adminservice.listObj(QUE, filterData, $http, function(d){
             $scope.queMap = [];
             $scope.queParents = d;
             refreshqueMap();
@@ -227,7 +234,7 @@ function surveyAdminCtrl($scope, $rootScope, $http, adminservice){
     $scope.onFieldChange = function(){
         var tenObj = adminservice.getTenant();
         $scope.selque.responses = [];
-        adminservice.listObj('fields', {fldname: $scope.selque.value, tenant: tenObj.name}, $http, function(cust){
+        adminservice.listObj('fields', {fldname: $scope.selque.value, tenant: tenObj.name, cat:$scope.exposure}, $http, function(cust){
             $scope.ca = cust[0];
             if ($scope.ca.fldtype.replace(/\W/g, '') == 'bool'){
                 $scope.ca.fldopts = [];

@@ -1,9 +1,6 @@
-function cartadminctrl($scope, $rootScope, $http, $location, cartservice){
+function cartadminctrl($scope, $routeParams, $http, $location, cartservice){
     var serverUrl = topUrl + '/templ/';
     $scope.topUrl = topUrl;
-    $scope.title = "Cart";
-    $scope.login = "Sign In";
-    $scope.head = "Bundles by Bridgevine";
     $scope.isAdmin = cartservice.isIn();
     $scope.scriptlabel = "Get Help...";
     $scope.scriptopen = false;
@@ -19,14 +16,16 @@ function cartadminctrl($scope, $rootScope, $http, $location, cartservice){
     $scope.step = cartservice.currentstep();
     cartservice.setAdmin(true);
 
-    console.log("Controller init. step: " + $scope.step.name);
-
-    console.log("Controller init. Customer:");
-    console.log($scope.c);
-
     $scope.previewStep = getURLParameter('step');
     $scope.previewMode = getURLParameter('preview');
     $scope.tenant = getURLParameter('tenant');
+
+    var appID = getURLParameter('app');
+    if (appID !== undefined){
+        cartservice.setAppID(appID);
+    }
+
+    console.log("route params:", $routeParams);
 
     if ($scope.previewStep !== undefined){
         cartservice.setSingleTempl($scope.previewStep);
@@ -70,10 +69,16 @@ function cartadminctrl($scope, $rootScope, $http, $location, cartservice){
         var f = {zip:z, agent:'consumer'};
         $scope.ex = prod;
         $scope.existprod = $scope.ex!= null && $scope.ex != undefined;
-        cartservice.initsteps(f, cust, appType, {type:'cart', visible:true, order_by:{order:1}}, $http, function(steps){
+        var stepFilter = {visible:true, order_by:{order:1}};
+        if ($scope.previewStep == undefined){
+            stepFilter.type = 'cart';
+        }
+        console.log("stepFilter", stepFilter);
+        cartservice.initsteps(f, cust, appType, stepFilter, $http, function(steps){
             $scope.steps = steps;
             $scope.step = cartservice.currentstep();
             $scope.c = cartservice.getCustomer();
+            $scope.appcss = cartservice.getAppObj().cssurl;
 
             $scope.changeView($scope.step);
 
@@ -90,6 +95,23 @@ function cartadminctrl($scope, $rootScope, $http, $location, cartservice){
     function getURLParameter(name) {
         return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search)||[,""])[1].replace(/\+/g, '%20'))||null
     }
+    $scope.isActiveStep = function(s){
+        var active = false;
+        if (s !== undefined && $scope.step !== undefined && s._id == $scope.step._id){
+            active = true;
+        }
+        return active;
+    }
+
+    $scope.restart = function(){
+        $scope.start($scope.c.zip, $scope.c, $scope.tenant, false);
+    }
+
+    $scope.pickStep = function(w){
+        cartservice.setCurrentStep(w._id);
+        $scope.step = cartservice.currentstep();
+        $scope.changeView($scope.step);
+    }
 
     $scope.back = function(){
 
@@ -98,28 +120,19 @@ function cartadminctrl($scope, $rootScope, $http, $location, cartservice){
     }
 
     $scope.next = function(){
-        console.log("Controller next(). Customer:");
-        console.log($scope.c);
         $scope.step = cartservice.nextStep($scope.step._id);
         $scope.changeView($scope.step);
     }
 
-    $scope.updateCrumbs = function(s){
-        if($scope.step.name == s.name){
-            return "activeStep";
-        }
-        return "";
-    }
-
 
     $scope.changeView = function (step){
-        $location.path('/' + step.name);
+        $location.path('/' + step._id);
 //        var fn = window[step.controller];
 //        $scope.viewCtrl = fn;
 //        if ($scope.wrapperUrl == undefined){
 //         $scope.wrapperUrl = serverUrl + 'adminTmpl.html';
 //        }
-//        $scope.templateUrl = cartservice.getTemplateURL();
+        $scope.templateUrl = cartservice.getTemplateURL();
         onStep(step, $scope.c);
     }
 
@@ -247,4 +260,9 @@ function cartadminctrl($scope, $rootScope, $http, $location, cartservice){
 
 function onStep(step){
 
+}
+
+function getPerson(){
+
+    return {};
 }

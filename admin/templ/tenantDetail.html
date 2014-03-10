@@ -40,7 +40,7 @@
                 <div class="clearfix m-b">
                     <a href="#" class="pull-left thumb m-r">
                         <img ng-src="{{rootUrl}}{{selTenant.logo}}" class="img-circle">
-                        <mk-upload label="Change" path="app/upload/image" fnc="onTenantLogo($event)"></mk-upload>
+                        <mk-upload label="Change" path="app/upload/image" fnc="onChangeImage($event)"></mk-upload>
                     </a>
                     <div class="clear">
                         <div class="h3 m-t-xs m-b-xs">{{selTenant.name}}</div>
@@ -124,7 +124,7 @@
 
                     <div class="dd-handle">
                         <a href="#" class="thumb-sm pull-left m-r-sm">
-                            <img ng-src="{{rootUrl}}{{t.logo}}" class="img-circle">
+                            <img ng-src="{{rootUrl}}{{t.logo}}" class="img-thumbnail">
                         </a>
                         <a href="#" class="clear">
                             <strong class="block">{{t.name}}</strong>
@@ -177,7 +177,7 @@
                                             <div class="dd-handle dd3-handle">Drag</div>
                                             <div class="dd3-content">
                                                 <a href="#" class="thumb-sm pull-left m-r-sm">
-                                                    <img ng-src="{{rootUrl}}{{i.imageUrl}}" class="img-circle">
+                                                    <img ng-src="{{rootUrl}}{{i.imageUrl}}" class="img-thumbnail">
                                                 </a>
                                                 <a href="#" >
                                                     <span>{{i.name}}</span>
@@ -199,7 +199,7 @@
 <div class="tab-pane" id="acts">
     <section class="hbox stretch">
 
-        <aside class="col-lg-9 bg-light lter b-r aside-md">
+        <aside class="bg-light lter b-r aside-md">
             <mk-nest class="dd" group="1" onchangefn="onAddAction(list)">
                 <ol class="dd-list list-group no-radius m-b-none m-t-n-xxs list-group-lg no-border">
                     <li class="dd-item list-group-item" data-id="{{$index}}" ng-repeat="a in myactions">
@@ -210,7 +210,7 @@
 
                         <div class="dd-handle">
                             <a href="#" class="thumb-sm pull-left m-r-sm">
-                                <img ng-src="{{rootUrl}}{{a.imageUrl}}" class="img-circle">
+                                <img ng-src="{{rootUrl}}{{a.imageUrl}}" class="img-thumbnail">
                             </a>
                             <a href="#" class="clear">
                                 <strong class="block">{{a.label}}</strong>
@@ -221,7 +221,7 @@
                 </ol>
             </mk-nest>
         </aside>
-        <aside class="col-lg-3 bg-light lter b-r aside-md hidden-print nav-xs-right" id="actnav">
+        <aside class="bg-light lter b-r aside-md hidden-print nav-xs-right" id="actnav">
             <section class="vbox">
                 <header class="header bg-primary lter text-center clearfix">
                     <div class="row">
@@ -263,7 +263,7 @@
                                                 <div class="dd-handle dd3-handle">Drag</div>
                                                 <div class="dd3-content">
                                                     <a href="#" class="thumb-sm pull-left m-r-sm">
-                                                        <img ng-src="{{rootUrl}}{{a.imageUrl}}" class="img-circle">
+                                                        <img ng-src="{{rootUrl}}{{a.imageUrl}}" class="img-thumbnail">
                                                     </a>
                                                     <a href="#" >
                                                         <span>{{a.name}}</span>

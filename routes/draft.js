@@ -5,7 +5,7 @@ var dbname = 'ShopDB';
 var mkio =require('./mkfiles');
 var step =require('./step');
 
-var colName = 'tmpldraft';
+var colName = 'draft';
 
 
 

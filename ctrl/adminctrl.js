@@ -16,8 +16,6 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
     $scope.adminPage = serverUrl + "admin.html";
     $scope.tenantPicked = false;
 
-
-
     start();
 
 
@@ -210,7 +208,7 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
         $scope.$emit("EV_SWITCH_VIEW", obj);
     }
 
-    $scope.createStep = function(app, siblings){
+    $scope.createStep = function(app, siblings, type){
         var obj = {};
         obj.view = 'stepDetail.html';
         obj.title = "New Flow Element";
@@ -218,7 +216,7 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
         var def = {};
         def.app = app.appID;
         def.order = siblings.length + 1;
-        def.type = 'cart';
+        def.type = type;
         def.rawhtml = "";
         obj.def = def;
         newObj(obj.title, obj.def, obj.view, obj.toolbar);
@@ -492,6 +490,12 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
         selected = "style";
         newObj('New Style');
     }
+
+    $scope.createCat = function(){
+        selected = "cats";
+        newObj('New Category');
+    }
+
     function createObj(heading, def){
         adminservice.loadMeta(selected, $http, function(meta){
             $scope.obj = buildobj(meta, def);
@@ -649,7 +653,7 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
     }
 
     $scope.loadDraftFields = function(){
-        var f = 'tmpldraft';
+        var f = 'draft';
         $scope.viewTitle = "Template draft attributes";
         loadMeta(f);
     }
@@ -697,6 +701,12 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
     $scope.loadStyleFields = function(){
         var f = 'style';
         $scope.viewTitle = "Style attributes";
+        loadMeta(f);
+    }
+
+    $scope.loadCatFields = function(){
+        var f = 'cats';
+        $scope.viewTitle = "Category attributes";
         loadMeta(f);
     }
 
@@ -1244,18 +1254,17 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
         adminservice.addActiveApp(appField);
     }
 
-    $scope.loadCartSteps = function(a){
+    function loadWidgets(a, type, template, title){
         if (a !== undefined && $scope.selTen.apps.indexOf(a.appID) < 0){
             $scope.selTen.apps.push(a.appID);
             $scope.selTen.appObjects.push(a);
         }
 
         selected = 'step';
-        $scope.viewTitle = "User Flow";
-        $scope.subTools = serverUrl + 'widgetTools.html';
+        $scope.viewTitle = title;
         $scope.stepApps = [];
         var extra = {};
-        extra.type = 'cart';
+        extra.type = type;
         extra.app = {};
         if (a !== undefined){
             extra.app[a.appID] = true;
@@ -1264,15 +1273,24 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
             addActiveApp(extra.app);
         }
         buildDefFilter(extra);
-        loadFancyList(serverUrl + 'steplisthor.html', function(d){
+        loadFancyList(serverUrl + template, function(d){
             //apps
             refreshSteps(d);
         });
     }
 
+    $scope.loadAppWidgets = function(a){
+        loadWidgets(a, 'app', 'appwidgets.html', 'Application Components');
+    }
+
+
+
+    $scope.loadCartSteps = function(a){
+        loadWidgets(a, 'cart', 'steplisthor.html', 'User Flow');
+    }
+
     function refreshSteps(d){
         $scope.appElements = [];
-        $scope.appWidgets = [];
         $scope.stepApps = [];
         var apps = $scope.cleanFilter.app;
         for(var ii=0; ii< $scope.selTen.appObjects.length;ii++){
@@ -1282,15 +1300,9 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
         }
         $.each(apps, function(i){
             $scope.appElements[apps[i]] = [];
-            $scope.appWidgets[apps[i]] = [];
             $.each(d, function(x, s){
                 if (s.app == apps[i]){
-                    if (s.type == 'cart'){
-                        $scope.appElements[apps[i]].push(s);
-                    }
-                    else{
-                        $scope.appWidgets[apps[i]].push(s);
-                    }
+                    $scope.appElements[apps[i]].push(s);
                 }
             });
         });
@@ -1383,17 +1395,24 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
 
 
     $scope.loadSurvey = function(){
-//        selected = 'survey';
-//        $scope.viewTitle = "Surveys";
-//        buildDefFilter();
-//        loadFancyList(serverUrl + 'survey.html');
+        loadSurvey('consumer', "Survey Map");
+    }
+
+    $scope.openDisposition = function(){
+        loadSurvey('agent', 'Call Disposition');
+    }
+
+    function loadSurvey(exposureType, title){
+        var filterData = {}
+        filterData.f = {exposure:exposureType};
+        adminservice.setFilterData(filterData);
         selected = '';
         var appObj = getAppObj();
         adminservice.setAppObj(appObj);
         hideGrid();
         $scope.subTools = serverUrl + 'queTools.html';
         $scope.wrapper = serverUrl + "surveyTools.html";
-        $scope.viewTitle = "Survey Map";
+        $scope.viewTitle = title;
     }
 
     $scope.loadProvidersLst = function(){
@@ -1498,7 +1517,7 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
         loadObjNGrid();
     }
     $scope.loadDrafts = function(){
-        selected = 'tmpldraft';
+        selected = 'draft';
         $scope.viewTitle = "Template Drafts";
         buildDefFilter();
         loadObjNGrid();
@@ -1542,6 +1561,14 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
         buildDefFilter();
         loadObjNGrid();
     }
+
+    $scope.loadCatLst = function(){
+        selected = 'cats';
+        $scope.viewTitle = "Categories";
+        buildDefFilter();
+        loadObjNGrid();
+    }
+
     $scope.loadConsumerLst = function(){
         selected = 'consumer';
         $scope.viewTitle = "Consumers";
@@ -1683,6 +1710,7 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
             var checkTmpl = '<div><input ng-model="row.entity.' + fm.fldname + '" type="checkbox" ng-change="gridValChange(row.entity, col )"></input></div>';
             var textTmpl = '<div><input ng-model="row.entity.' + fm.fldname + '" type="text" ng-change="gridValChange(row.entity, col )"></input></div>';
             var textareaTmpl = '<div><textarea ng-model="row.entity.' + fm.fldname + '" ng-change="gridValChange(row.entity, col )"></textarea></div>';
+            var multiselectTmpl = '<input mk-select listfn="listUsers(q)" loadfn="selectSender(id)" multiple="1" style="width:260px" type="hidden" placeholder="' + fm.label + '...">'
             switch (fm.fldtype){
                 case "text":
                     col.width =  100;
@@ -1821,27 +1849,19 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
         }
     }
 
-    $scope.viewFlow = function(){
+    $scope.viewFlow = function(app){
         $scope.viewTitle = "Preview";
-        $.each($scope.selTen.appObjects, function(i, a){
-          if (a.active == true && a.agent == 'consumer'){
-              hideGrid();
-              cartservice.setAppObj(a);
-              $scope.masterTmpl = $scope.rootUrl +'/'+ a.template + '?preview=1&tenant=' + $scope.selTen.name;
-
-              $scope.filterOpen = false;
-              $scope.wrapper = serverUrl + 'flow.html';
-              return;
-          }
-        });
+        $scope.masterTmpl = $scope.rootUrl +'/' + app.template + '?preview=1&tenant=' + $scope.selTen.name + '&app=' + app._id;
+        $scope.wrapper = serverUrl + 'flow.html';
 
     }
     $scope.openCallCenter = function(){
         $scope.viewTitle = "Call Center";
 
         hideGrid();
-
-        $scope.masterTmpl = $scope.rootUrl +'/'+ "cctmpl.html?tenant=" + $scope.selTen.name + '&agent=Sasha';
+        var session = adminservice.getAdminSession();
+        console.log(session);
+        $scope.masterTmpl = $scope.rootUrl +'/'+ "cctmpl.html?tenant=" + $scope.selTen.name + '&session=' + session._id;
 
         $scope.filterOpen = false;
         $scope.wrapper = serverUrl + 'flow.html';

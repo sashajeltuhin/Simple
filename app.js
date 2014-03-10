@@ -35,6 +35,7 @@ var express = require('express')
   , rule = require('./routes/rule')
   , csvtool = require('./routes/csvtool')
   , draft = require('./routes/draft')
+  , event = require('./routes/event')
   , note = require('./routes/note')
   , action = require('./routes/action')
   , object = require('./routes/object')
@@ -98,6 +99,11 @@ app.post('/app/report/delete', report.delete);
 app.post('/app/action/list', action.list);
 app.post('/app/action/update', action.save);
 app.post('/app/action/delete', action.delete);
+
+app.post('/app/event/list', event.list);
+app.post('/app/event/update', event.save);
+app.post('/app/event/delete', event.delete);
+
 
 app.post('/app/object/list', object.list);
 app.post('/app/object/update', object.save);

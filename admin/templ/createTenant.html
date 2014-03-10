@@ -1,46 +1,21 @@
-<div  ng-controller="tenantctrl">
-<section class="panel panel-default">
-    <div class="row m-l-none m-r-none">
-        <div class="col-lg-6">
-            <h3 class="m-b-none">{{viewTitle}}</h3>
-        </div>
-        <div class="col-lg-6" ng-include="subTools">
-        </div>
+<section class="m-t-lg wrapper-md animated fadeInDown" ng-controller="tenantctrl">
+    <div class="container aside-xxl"><a class="navbar-brand block" href="#">{{viewTitle}}</a>
+        <section class="panel panel-default m-t-lg bg-white">
+            <form class="panel-body wrapper-lg">
+                <form role="form">
+                    <!--<div class="clearfix">-->
+                        <!--<a href="#" class="pull-left thumb m-r">-->
+                            <!--<img ng-src="{{rootUrl}}{{selProvider.logo}}" class="img-full">-->
+                            <!--<mk-upload label="Change" path="app/upload/image" fnc="onChangeImage($event)"></mk-upload>-->
+                        <!--</a>-->
+                        <!--<div class="clear">-->
+                            <!--<label>Logo</label>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <div class="panel-body" ng-include="fd.template" ng-repeat="fd in fieldList"></div>
+                    <!--<div dynamic="propsEl"></div>-->
+                </form>
+                <a href="#" ng-click="saveChanges()" class="btn btn-default btn-block">Save & Close</a></form>
+        </section>
     </div>
 </section>
-
-<section class="hbox stretch">
-<div class="row">
-<aside class="col-lg-4 bg-light lter b-r">
-    <section class="vbox">
-        <section>
-            <div class="wrapper bg-light lter">
-                <div class="clearfix m-b">
-                    <a href="#" class="pull-left thumb m-r">
-                        <img ng-src="{{rootUrl}}{{selTenant.logo}}" class="img-circle">
-                        <mk-upload label="Change" path="app/upload/image" fnc="onTenantLogo($event)"></mk-upload>
-                    </a>
-                </div>
-                <section class="panel panel-default">
-                    <header class="panel-heading font-bold">Tenant information</header>
-                    <div class="panel-body">
-                        <div class="row">
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <input type="text" class="form-control" ng-model="selTenant.name" placeholder="Company name">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-                <button type="submit" class="btn btn-sm btn-default btn-primary" ng-click="saveNewObj()">Create</button>
-            </div>
-        </section>
-
-    </section>
-</aside>
-</div>
-</section>
-</section>
-</section>
-</div>

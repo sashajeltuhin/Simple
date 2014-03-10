@@ -278,9 +278,13 @@ exports.upsert = function (colname, rawobj, filter, callback) {
 
 exports.compute = function(req, res){
     setDBName(dbname);
+    var  f = [{ $match: {app:  { $in: filter.app }, complete:true, action:'call_end'}}, {$group : {_id: '$app', result:{$sum : 1} } }, {$sort:{result:-1}}];
     var colName = req.body.obj;
     var filter = req.body.filter;
-    var group = req.body.group;
+    var groupBy = req.body.groupBy;
+    var func = req.body.function;
+    var funcField = req.body.funcField;
+    var order_by = req.body.order_by;
     var  f = [{ $match: filter}, {$group : group }];
     computeData(colName, filter, function(err, recs){
         if (err !== null){

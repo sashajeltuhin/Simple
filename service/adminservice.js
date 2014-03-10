@@ -445,8 +445,9 @@ angular.module('cart').factory('adminservice', function($q, $cookies) {
                         fd.options.push(opt);
 
                         var optval = metafld.optfld !== undefined && metafld.optfld !== "" ? item[metafld.optfld]: item;
+                        var optdesc = metafld.optlabel !== undefined && metafld.optlabel !== "" ? item[metafld.optlabel]: optval;
                         opt.optvalue = optval;
-                        opt.label = optval;
+                        opt.label = optdesc;
                     });
                     fd.fldvalue = obj[metafld.fldname];
                 }
@@ -461,6 +462,9 @@ angular.module('cart').factory('adminservice', function($q, $cookies) {
                                 break;
                             case 'longtext':
                                 fd.template = templUrl + 'textarea.html';
+                                break;
+                            case 'image':
+                                fd.template = templUrl + 'graphics.html';
                                 break;
                             default:
                                 fd.template = templUrl + 'text.html';

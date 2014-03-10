@@ -4,13 +4,15 @@ function templateCtrl($scope, $http, adminservice){
     var caretpos = 0;
     $scope.tenant = adminservice.getTenant().name;
 
-
-    adminservice.loadMeta(STEP, $http, function(meta){
-        //$scope.propsEl = adminservice.buildForm(meta, null, $scope.obj);
-        $scope.fieldList = adminservice.bindObj(meta, $scope.obj, prepareField);
-    });
-
+    refreshDetail();
     init();
+
+    function refreshDetail(){
+        adminservice.loadMeta(STEP, $http, function(meta){
+            //$scope.propsEl = adminservice.buildForm(meta, null, $scope.obj);
+            $scope.fieldList = adminservice.bindObj(meta, $scope.obj, prepareField);
+        });
+    }
 //    //showHtml();
 
     function prepareField(metafld){
@@ -95,8 +97,10 @@ function templateCtrl($scope, $http, adminservice){
 
     $scope.showTemplate = function(){
         var appObj = currentApp();
-        $scope.modalTemplPage = serverUrl + 'stepTmpl.html';
-        $scope.masterTmpl = appObj.template;
+        if (appObj.template !== undefined && $scope.obj.template !== undefined){
+            $scope.modalTemplPage = serverUrl + 'stepTmpl.html';
+            $scope.masterTmpl = appObj.template;
+        }
     }
 
     function currentApp(){
@@ -113,19 +117,6 @@ function templateCtrl($scope, $http, adminservice){
     $scope.onTmplUploaded = function(fi){
         console.log(fi);
 
-    }
-
-    $scope.saveDraft = function(){
-        if ($scope.draft.time == undefined){
-            $scope.draft.time = new Date();
-        }
-        $scope.draft.changed = new Date();
-        $scope.draft.version = $scope.obj.rawhtml;
-        adminservice.saveObj($scope.draft, 'draft', $http, function(saved){
-            $scope.saveObj();
-            initDraft();
-            loadVersions();
-        });
     }
 
     $scope.saveObj = function(){
@@ -149,6 +140,8 @@ function templateCtrl($scope, $http, adminservice){
         $scope.draft.version = $scope.obj.rawhtml;
         adminservice.publishTemplate($scope.draft, $scope.obj, 'draft', $http, function(saved){
             $scope.obj = saved;
+            console.log('published and saved:', $scope.obj);
+            refreshDetail();
             initDraft();
             loadVersions();
         });
@@ -159,22 +152,30 @@ function templateCtrl($scope, $http, adminservice){
         $scope.obj.rawhtml = v.version;
     }
 
+    $scope.removeVersion = function(v){
+        adminservice.deleteObj(v, 'draft', $http, function(){
+            loadVersions();
+        });
+    }
+
     $scope.showIntscript = function(){
         $scope.modalTemplPage = serverUrl + 'intScript.html';
     }
 
     $scope.newBlock = function(){
         var block = {};
-        adminservice.setSelObj(block, backToEdit);
+        adminservice.setSelObj(block);
         var obj = {};
         obj.view = 'blockDetail.html';
         obj.title = "New UI Element";
         $scope.$emit("EV_SWITCH_VIEW", obj);
     }
 
-    function backToEdit(b){
+   $scope.showTrackTags = function(){
 
-    }
+   }
+
+
 
 
 }

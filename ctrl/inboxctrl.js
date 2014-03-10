@@ -42,7 +42,7 @@ function inboxctrl($scope, $http, adminservice){
     $scope.openNote = function(n){
         adminservice.setSelObj(n);
         var obj = {};
-        obj.view = 'notedetail.html';
+        obj.view = n.template == undefined || n.template == ''? 'notedetail.html' : n.template;
         obj.title = "Message";
         $scope.$emit("EV_SWITCH_VIEW", obj);
     }

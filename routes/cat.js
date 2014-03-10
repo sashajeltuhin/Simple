@@ -8,7 +8,7 @@
 var db = require('../db/dbaccess');
 var mongo = require('mongodb');
 var ObjectID = mongo.ObjectID;
-var dbname = 'meyekidDB';
+var dbname = 'ShopDB';
 
 var colName = 'cats';
 

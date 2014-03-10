@@ -1,21 +1,23 @@
 function tenantctrl($scope, $http, adminservice){
     $scope.rootUrl = topUrl;
+    var OBJ = 'tenant';
     var sel = adminservice.getSelObj();
     if (sel !== undefined ){
-        if (sel.tid != undefined){
-            delete sel.tid;
+        if (sel._id == undefined){
             $scope.obj = sel;
-            adminservice.loadMeta('tenant', $http, function(meta){
-                $scope.propsEl = adminservice.buildForm(meta, null, $scope.obj);
+            adminservice.loadMeta(OBJ, $http, function(meta){
+                $scope.fieldList = adminservice.bindObj(meta, $scope.obj, prepareField);
             });
         }
         else{
             $scope.selTenant = sel;
+            loadProviders();
         }
 
     }
     else{
         $scope.selTenant = adminservice.getTenant();
+        loadProviders();
     }
 
     if ($scope.selTenant !== undefined){
@@ -25,9 +27,8 @@ function tenantctrl($scope, $http, adminservice){
         }
 
 
-        if ($scope.selTenant.providers == undefined){
-            $scope.selTenant.providers = [];
-            $scope.myproviders = [];
+        if ($scope.selTenant.providers !== undefined){
+            delete $scope.selTenant.providers;
         }
 
         if ($scope.selTenant.sessionTimeout == undefined){
@@ -65,6 +66,30 @@ function tenantctrl($scope, $http, adminservice){
         ];
     }
 
+    function prepareField(metafld){
+        var mf = metafld;
+        if (metafld.fldname !== 'name' && metafld.fldname !== 'parentID' && metafld.fldname !== 'logo'){
+            mf = null;
+        }
+//        if (metafld.fldname == "parentID"){
+//            mf.opts = parentTenants;
+//        }
+        return mf;
+    }
+
+    $scope.$on("EV_SAVE_CHANGES", function(event){
+        adminservice.bindObjData($scope.obj, $scope.fieldList);
+        $scope.obj.logo = $scope.selTenant.logo;
+        adminservice.saveObj($scope.obj, OBJ, $http, function(saved){
+            var callback = adminservice.getSelCallback();
+            if (callback !== undefined && callback !== null){
+                callback(saved);
+            }
+        });
+
+    });
+
+
     function getDummyProv(){
         var dummy = {};
         dummy._id = 0;
@@ -73,19 +98,12 @@ function tenantctrl($scope, $http, adminservice){
     }
 
 
-    loadProviders();
-
-    $scope.onTenantLogo = function(event){
+    $scope.onChangeImage = function(event){
         var url = event.url.replace(topUrl, "");
         $scope.selTenant.logo = url;
         saveTenant();
     }
 
-    $scope.onUserAvatar = function(event){
-        var url = event.url.replace(topUrl, "");
-        $scope.selTenant.userImageUrl = url;
-        saveTenant();
-    }
 
     $scope.loadProviders = function(){
         loadProviders();
@@ -93,27 +111,46 @@ function tenantctrl($scope, $http, adminservice){
 
     function loadProviders(){
         $scope.availableSection = 'Providers';
+        $scope.myMap = {};
+        $scope.providerMap = {};
+        $scope.existingList = [];
+        $scope.myproviders = [];
 
-        adminservice.listObj('provider', {_id: $scope.selTenant.providers}, $http, function(data){
+        adminservice.listObj('provider', {tid: $scope.selTenant._id, order_by:{order:1}}, $http, function(data){
             $scope.myproviders = data;
             if ($scope.myproviders.length == 0){
                 $scope.myproviders.push(getDummyProv());
             }
-        });
+            else{
+                $.each($scope.myproviders, function(i, prov){
+                    $scope.myMap[prov._id] = prov;
+                });
+            }
 
-        var fv = {};
-        fv.oper = '<>';
-        fv.val = $scope.selTenant.providers;
-        $scope.existingList = [];
-        adminservice.listObj('provider', {_id: fv}, $http, function(data){
-            $.each(data, function(i, t){
-                var item = {};
-                item._id = t._id;
-                item.name = t.name;
-                item.imageUrl = t.logo;
-                $scope.existingList.push(item);
+            var ids = [];
+            $.each($scope.myproviders, function(i, p){
+                ids.push(p.name);
             });
+            var f = {};
+            f.tid = "0";
 
+            if (ids.length > 0){
+                var fv = {};
+                fv.oper = '<>';
+                fv.val = ids;
+                f.name = fv;
+            }
+
+            adminservice.listObj('provider', f, $http, function(data){
+                $.each(data, function(i, t){
+                    $scope.providerMap[t._id] = t;
+                    var item = {};
+                    item._id = t._id;
+                    item.name = t.label;
+                    item.imageUrl = t.logo;
+                    $scope.existingList.push(item);
+                });
+            });
         });
     }
 
@@ -162,14 +199,12 @@ function tenantctrl($scope, $http, adminservice){
     }
 
     $scope.onAddAction = function(list){
-        console.log("action list", list);
         $.each(list, function(i, item){
             if (item['$scope'].a !== undefined && item['$scope'].a._id !== 0){
                 var action = $scope.existingMap[item['$scope'].a._id];
                 if (action !== undefined){
                     var clone = adminservice.cloneObj(action);
                     clone.tid = $scope.selTenant._id;
-                    console.log("saving clone", clone);
                     adminservice.saveObj(clone, 'action', $http, function(){
                         if (i + 1 == list.length){
                             loadActions();
@@ -194,29 +229,47 @@ function tenantctrl($scope, $http, adminservice){
         });
     }
 
+    function reorderProvs(i, p){
+        var prov = $scope.myMap[p._id];
+
+        prov.order = i+1;
+        adminservice.saveObj(prov, 'provider', $http, function(){
+            var f = {priority:prov.order};
+            adminservice.saveMassObj(f, 'product', {provider:prov.name}, $http, function(ps){
+
+            });
+        });
+    }
+
     $scope.onAddProvider = function(list){
-        var c = 0;
+        console.log("adding list", list);
         $.each(list, function(i, item){
-            if (item['$scope'].i !== undefined){
-                $scope.selTenant.providers.push(item['$scope'].i._id);
-                c++;
+            var prov = item['$scope'].t;
+            if (prov !== undefined){
+                reorderProvs(i, prov);
+            }
+            else{
+                var obj = item['$scope'].i;
+                if (obj !== undefined && obj._id !== 0){
+                    var provider = $scope.providerMap[obj._id];
+                    if (provider !== undefined){
+                        var clone = adminservice.cloneObj(provider);
+                        clone.tid = $scope.selTenant._id;
+                    }
+                    adminservice.saveObj(clone, 'provider', $http, function(){
+                        if (i + 1 == list.length){
+                            loadProviders();
+
+                        }
+                    });
+               }
             }
         });
-        if (c > 0){
-            saveTenant(function(){
-                loadProviders();
-            });
-        }
     }
 
     $scope.removeProvider = function(t){
-        var ind = $scope.selTenant.providers.indexOf(t._id);
-        $scope.selTenant.providers.splice(ind, 1);
-        saveTenant(function(){
+        adminservice.deleteObj(t, 'provider', $http, function(){
             loadProviders();
-            if ($scope.myproviders.length == 0){
-                $scope.myproviders.push(getDummyProv());
-            }
         });
     }
 
@@ -247,7 +300,6 @@ function tenantctrl($scope, $http, adminservice){
 
     $scope.openNew = function(){
         var t = {};
-        t.tid = 0;
         adminservice.setSelObj(t);
         var obj = {};
         obj.view = 'createTenant.html';
