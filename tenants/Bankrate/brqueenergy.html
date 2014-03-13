@@ -1,0 +1,37 @@
+<div class="container-content style1 clearfix">
+    <h3 class="style1">{{currentQue.desc}}</h3>
+
+    <div class="clearer h20">&nbsp;</div>
+
+    <div class="steps1 clearfix">
+        <ul>
+            <li ng-repeat="c in quecats" ng-class="c.class" style="list-style-type: none">{{c.name}}</li>
+        </ul>
+    </div>
+
+    <div class="clearer h20">&nbsp;</div>
+
+    <div style="position: relative; clear: both">
+
+
+        <div>{{currentQue.label}}</div>
+
+        <div class="clearer h20">&nbsp;</div>
+
+        <div class="box-1 style1" style="width: 150px; height: 154px" ng-repeat="r in currentQue.responses">
+            <div class="inner clearfix">
+                <div class="icons"><img src="{{topUrl}}{{r.imageUrl}}"></div>
+                <h4>{{r.label}}</h4>
+                <div align="center"><input ng-click="answer(r)" ng-model="r.selected" type="checkbox"></div>
+            </div>
+        </div>
+
+    </div>
+
+    </div>
+    <div class="clearer h20">&nbsp;</div>
+
+    <div class="btn1 uppercase floatRight"><a ng-click="nextque()"><span class="a-button-inner"><span class="a-button-text">next</span></span></a></div>
+
+    <div class="clearer h30">&nbsp;</div>
+</div><!-- /// -->

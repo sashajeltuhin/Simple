@@ -1,5 +1,6 @@
 var db = require('../db/dbaccess');
 var mongo = require('mongodb');
+var rule = require('./rule');
 var ObjectID = mongo.ObjectID;
 var dbname = 'ShopDB';
 
@@ -20,6 +21,42 @@ exports.list = function (req, res){
         }
         else{
             res.send(recs);
+        }
+    });
+}
+
+exports.target = function (req, res){
+    db.setDB('ShopDB');
+    var customer = req.body.customer;
+    var filter = {};
+    filter.order_by = {priority:1};
+    filter.active = true;
+    filter.app = customer.app;
+
+    db.load('rule', db.getFilter({app:customer.app, type:'survey', order_by:{order:1}}), function(err, list){
+        if (err !== null){
+            handleError(res, "Cannot list products ", err);
+        }
+        else{
+            var hit = false;
+            for (var i = 0; i < list.length;i++){
+                var seg = list[i];
+
+                if(hit == false && seg.active == true && rule.fitsSegment(customer, seg)){
+                    rule.buildProdFilter(filter, seg);
+                    hit = true;
+                }
+            }
+
+            filter = db.getFilter(filter);
+            db.load(colName, filter, function(err, recs){
+                if (err !== null){
+                    handleError(res, "Cannot list questions ", err);
+                }
+                else{
+                    res.send(recs);
+                }
+            });
         }
     });
 }

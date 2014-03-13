@@ -191,6 +191,7 @@ app.post('/app/rule/delete', rule.delete);
 app.post('/app/survey/list', survey.list);
 app.post('/app/survey/update', survey.save);
 app.post('/app/survey/delete', survey.delete);
+app.post('/app/survey/target', survey.target);
 app.post('/app/log/list', log.list);
 app.post('/app/log/update', log.save);
 app.post('/app/log/totalOrders', log.totalOrders);

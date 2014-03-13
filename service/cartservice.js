@@ -416,10 +416,18 @@ angular.module('cart').factory('cartservice', function($http) {
 
     service.loadsurvey = function($http, callback){
         var url = serverUrl + '/survey/list';
-        var f = {};
-        f.customer = $scope.c;
-        f.rule = "survey";
+
         $http.post(url, {app: this.getApp(), active:true, order_by:{order:1}}).success(function(result){
+            callback(result);
+        });
+
+    };
+
+    service.targetsurvey = function($http, callback){
+        var url = serverUrl + '/survey/target';
+        var f = {};
+        f.customer = service.customer;
+        $http.post(url, f).success(function(result){
 
             callback(result);
         });

@@ -49,6 +49,7 @@ function rulectrl($scope, $rootScope, $http, adminservice, mkPopup){
         $scope.ruletypeUrl = '/images/targetad.jpg';
 
         $scope.adRule = true;
+        $scope.surveyRule = false;
         var extra = {};
         var appObj = adminservice.getAppObj();
         extra.app = appObj.appID;
@@ -63,10 +64,26 @@ function rulectrl($scope, $rootScope, $http, adminservice, mkPopup){
         $scope.viewTitle = "Rules for Targeted Offers";
         $scope.ruletypeUrl = '/images/targetlist.gif';
         $scope.adRule = false;
+        $scope.surveyRule = false;
         var extra = {};
         var appObj = adminservice.getAppObj();
         extra.app = appObj.appID;
         extra.type = 'qual';
+        extra.order_by = {order:1};
+        adminservice.listObj(RULE, extra, $http, function(meta){
+            $scope.ruleData = meta;
+        });
+    }
+
+    function loadSurveyRules(){
+        $scope.viewTitle = "Rules for Targeted Dialogs";
+        $scope.ruletypeUrl = '/images/targetlist.gif';
+        $scope.adRule = false;
+        $scope.surveyRule = true;
+        var extra = {};
+        var appObj = adminservice.getAppObj();
+        extra.app = appObj.appID;
+        extra.type = 'survey';
         extra.order_by = {order:1};
         adminservice.listObj(RULE, extra, $http, function(meta){
             $scope.ruleData = meta;
@@ -90,6 +107,10 @@ function rulectrl($scope, $rootScope, $http, adminservice, mkPopup){
 
     $scope.loadQualRules = function(){
         loadQualRules();
+    }
+
+    $scope.loadSurveyRules = function(){
+        loadSurveyRules();
     }
 
     $scope.deleteRule = function(rule){
@@ -139,6 +160,9 @@ function rulectrl($scope, $rootScope, $http, adminservice, mkPopup){
         var rule = {};
         rule.app = appObj.appID;
         rule.type = $scope.adRule == true ? 'teas' : 'qual';
+        if ($scope.surveyRule == true){
+            rule.type = "survey";
+        }
         rule.limit = 2;
         rule.name = "New Rule";
         $scope.ruleData.push(rule);
@@ -170,7 +194,7 @@ function rulectrl($scope, $rootScope, $http, adminservice, mkPopup){
         $scope.selrule = rule;
         var cond = {};
         cond.app = rule.app;
-        cond.obj = 'product';
+        cond.obj = $scope.surveyRule == true? 'survey':'product';
         adminservice.setSelObj(cond, addProdGroup);
         var obj = {};
         obj.view = 'ruleDetail.html';

@@ -9,7 +9,7 @@ function surveyctrl($scope, $rootScope, $http, $location, cartservice){
     $scope.queindex = 0;
     $scope.quepath = [];
     function loadQuestions(){
-        cartservice.loadsurvey($http, function(data){
+        cartservice.targetsurvey($http, function(data){
             $scope.listData = data;
             //set current que
             if ($scope.listData.length > 0){

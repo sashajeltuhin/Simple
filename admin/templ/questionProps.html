@@ -13,6 +13,7 @@
                             <div class="radio"><label> <input class="form-control" type="checkbox"
                                                               ng-model="selque.active">Published</label></div>
                             <textarea class="form-control" ng-model="selque.label"></textarea>
+                            <textarea class="form-control" ng-model="selque.desc"></textarea>
                         </div>
                     </div>
                 </div>
@@ -21,8 +22,12 @@
                     <input class="form-control" type="text" ng-model="selque.templateUrl">
                 </div>
                 <div class="form-group">
-                    <label>Category</label>
+                    <label>UI Category</label>
                     <input class="form-control" type="text" ng-model="selque.cat">
+                </div>
+                <div class="form-group">
+                    <label>Category for Rules</label>
+                    <input class="form-control" type="text" ng-model="selque.rulecat">
                 </div>
             </div>
         </section>
