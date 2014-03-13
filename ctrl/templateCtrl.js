@@ -3,13 +3,13 @@ function templateCtrl($scope, $http, adminservice){
     var STEP = 'step';
     var caretpos = 0;
     $scope.tenant = adminservice.getTenant().name;
+    $scope.appObj = adminservice.getAppObj();
 
     refreshDetail();
     init();
 
     function refreshDetail(){
         adminservice.loadMeta(STEP, $http, function(meta){
-            //$scope.propsEl = adminservice.buildForm(meta, null, $scope.obj);
             $scope.fieldList = adminservice.bindObj(meta, $scope.obj, prepareField);
         });
     }
@@ -32,15 +32,17 @@ function templateCtrl($scope, $http, adminservice){
 
     function loadVersions(){
         var stepID = $scope.obj._id;
-        adminservice.listObj('draft', {stepID:stepID}, $http, function(data){
-            $scope.versions = data;
-            $.each($scope.versions, function(i, v){
-                var date = new Date(v.changed);
-                var time = date.toTimeString().replace(/.*(\d{2}:\d{2}:\d{2}).*/, "$1");
-                var month = date.getMonth() + 1;
-                v.changedFormatted = date.getDate() + '-' +  month + '-' + date.getFullYear() + ' ' + time;
-            })
-        });
+        if (stepID !== undefined){
+            adminservice.listObj('draft', {stepID:stepID}, $http, function(data){
+                $scope.versions = data;
+                $.each($scope.versions, function(i, v){
+                    var date = new Date(v.changed);
+                    var time = date.toTimeString().replace(/.*(\d{2}:\d{2}:\d{2}).*/, "$1");
+                    var month = date.getMonth() + 1;
+                    v.changedFormatted = date.getDate() + '-' +  month + '-' + date.getFullYear() + ' ' + time;
+                })
+            });
+        }
     }
 
     function initDraft(){
@@ -123,6 +125,7 @@ function templateCtrl($scope, $http, adminservice){
         var n = $scope.obj._id == undefined;
         adminservice.bindObjData($scope.obj, $scope.fieldList);
         adminservice.saveObj($scope.obj, STEP, $http, function(s){
+            console.log("saved step:", s);
             $scope.obj = s;
             if (n == true){
                 var appObj = currentApp();
@@ -139,6 +142,7 @@ function templateCtrl($scope, $http, adminservice){
         $scope.draft.published = new Date();
         $scope.draft.version = $scope.obj.rawhtml;
         adminservice.publishTemplate($scope.draft, $scope.obj, 'draft', $http, function(saved){
+            console.log("published step:", saved);
             $scope.obj = saved;
             console.log('published and saved:', $scope.obj);
             refreshDetail();

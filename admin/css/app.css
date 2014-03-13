@@ -636,6 +636,9 @@ a:hover .caret-white {
   .aside-xxl {
     width: 450px;
   }
+  .aside-xxxl {
+        width: 700px;
+    }
   .scrollable {
     -webkit-overflow-scrolling: touch;
   }

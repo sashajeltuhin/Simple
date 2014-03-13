@@ -120,7 +120,7 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
     }
 
 
-    $scope.cloneApp = function(app){
+    $scope.cloneApp = function(app, steps){
         var newApp = {};
         for(var key in app){
             if (key !== '_id'){
@@ -128,19 +128,8 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
             }
         }
         newApp.appID = app.appID + 'copy';
-        $scope.origApp = app.appID;
-        adminservice.loadMeta('apps', $http, function(meta){
-            $scope.obj = newApp;
-            var templ = buildForm(meta);
-            mkPopup(
-                {
-                    template: templ,
-                    title: "Clone application",
-                    scope: $scope,
-                    backdrop: false,
-                    success: {label: 'Ok', fn: saveClonedApp}
-                });
-        });
+        newApp.steps = steps;
+        $scope.editApp(newApp);
     }
     function saveClonedApp(){
         adminservice.saveObj($scope.obj, 'apps', $http, function(a){
@@ -297,12 +286,30 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
         }
     }
 
+    $scope.cloneRec = function(){
+        if (viewMode == 'grid'){
+            var c = 0;
+            $.each(changedlist, function(i, item){
+                if (item.mk_rowsel == true)
+                {
+                    adminservice.saveClone(item, selected, $http, function(){
+                        c++;
+                    });
+                }
+            });
+            if (c > 0){
+                refreshData();
+            }
+        }
+    }
+
     $scope.saveObj = function(){
         $scope.saveChanges();
     }
 
 
     $scope.saveChanges = function() {
+        console.log("selected when calling saveChanges:", selected);
         if (selected == ''){
             $scope.$broadcast("EV_SAVE_CHANGES");
             return;
@@ -914,6 +921,7 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
     }
 
     $scope.onDash = function(){
+        selected = '';
         openDash();
     }
 
@@ -944,6 +952,7 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
     }
 
     $scope.editTenant = function(t){
+        selected = '';
         adminservice.setSelObj(t);
         $scope.viewTitle = "Tenant Configurations"
         $scope.subTools = serverUrl + 'secTools.html';
@@ -1376,7 +1385,11 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
         $scope.modalTabPage = serverUrl + 'templateTools.html';
     }
 
-    $scope.editSurvey = function(){
+    $scope.editSurvey = function(appObj){
+        var filterData = {};
+        filterData.f = {exposure:appObj.agent};
+        filterData.app = appObj.appID;
+        adminservice.setFilterData(filterData);
         $scope.modalTabPage = serverUrl + 'surveyTools.html';
     }
 
@@ -1733,9 +1746,13 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
             if (fm.opts !== undefined){
 
                     var options = '';
+                    if (fm.defval !== undefined && fm.defval !== ""){
+                        options += '<option value="' + fm.deflabel + '"></option>';
+                    }
                     $.each(fm.opts, function(i, o){
                         var optval = fm.optfld !== undefined ? o[fm.optfld] : o;
-                        options += '<option value="' + optval + '">'+ optval +'</option>';
+                        var optlabel = fm.optlabel !== undefined && fm.optlabel !== "" ? o[fm.optlabel] : optval;
+                        options += '<option value="' + optval + '">'+ optlabel +'</option>';
                     });
 
                 col.editableCellTemplate = '<div><select ng-model="row.entity.' + fm.fldname + '">' + options + '</select></div>';

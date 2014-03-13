@@ -52,7 +52,6 @@ function filterctrl($scope, adminservice){
                 $scope.filterList.push(fd);
                 fd.label = metafld.label;
                 fd.fldname = metafld.fldname;
-
                 if (metafld.opts !== undefined){
                     if (filter[metafld.fldname] == undefined){
                         filter[metafld.fldname] = {};
@@ -64,9 +63,10 @@ function filterctrl($scope, adminservice){
                         fd.options.push(opt);
 
                         var optval = metafld.optfld !== undefined ? item[metafld.optfld]: item;
+                        var optdesc = metafld.optlabel !== undefined && metafld.optlabel !== "" ? item[metafld.optlabel]: optval;
                         filter[metafld.fldname][optval] = filter[metafld.fldname][optval] !== undefined && filter[metafld.fldname][optval] == true;
                         opt.optvalue = filter[metafld.fldname][optval];
-                        opt.label = optval;
+                        opt.label = optdesc;
                     });
                 }
                 else {

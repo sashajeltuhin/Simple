@@ -8,7 +8,7 @@ function reportctrl($scope, $http, $parse, adminservice){
         if ($scope.obj.filter == undefined){
             $scope.obj.filter = {};
         }
-        initSec();
+        //initSec();
         adminservice.loadMeta(OBJ, $http, function(meta){
             $scope.reportMeta = meta;
             $scope.fieldList = adminservice.bindObj(meta, $scope.obj, prepareField);
@@ -54,7 +54,7 @@ function reportctrl($scope, $http, $parse, adminservice){
     }
 
     function refreshFilter(objname){
-        adminservice.listObj('fields', {objname: objname}, $http, function(meta){
+        adminservice.loadMeta(objname, $http, function(meta){
             if ($scope.obj.filter.tenant == undefined){
                 var tenant = adminservice.getTenant().name;
                 $scope.obj.filter.tenant = tenant;

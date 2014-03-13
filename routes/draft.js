@@ -35,12 +35,8 @@ exports.publish = function (req, res){
     draft.changed = new Date();
     draft.published = true;
 
-    var filter = {};
-    if (draft._id !== null){
-        filter._id = new ObjectID(draft._id);
-        draft._id = filter._id;
-    }
-    db.upsert(colName, draft, filter, function(err, newid){
+
+    db.insert(colName, draft, function(err, rec){
         if (err !== null){
             handleError(res, "Cannot add versions ", err);
         }

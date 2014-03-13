@@ -1,26 +1,18 @@
 function tenantctrl($scope, $http, adminservice){
     $scope.rootUrl = topUrl;
     var OBJ = 'tenant';
-    var sel = adminservice.getSelObj();
-    if (sel !== undefined ){
-        if (sel._id == undefined){
-            $scope.obj = sel;
-            adminservice.loadMeta(OBJ, $http, function(meta){
-                $scope.fieldList = adminservice.bindObj(meta, $scope.obj, prepareField);
-            });
-        }
-        else{
-            $scope.selTenant = sel;
-            loadProviders();
-        }
+    $scope.selTenant = adminservice.getSelObj();
 
+    if ($scope.selTenant._id == undefined){
+        $scope.selTenant.parentID = "0";
+        $scope.obj = $scope.selTenant;
+        adminservice.loadMeta(OBJ, $http, function(meta){
+            $scope.fieldList = adminservice.bindObj(meta, $scope.obj, prepareField);
+        });
     }
     else{
-        $scope.selTenant = adminservice.getTenant();
         loadProviders();
-    }
 
-    if ($scope.selTenant !== undefined){
         if ($scope.selTenant.startDate !== undefined){
             var date = new Date($scope.selTenant.startDate);
             $scope.since = date.getMonth() + ' ' + date.getFullYear();
@@ -80,12 +72,14 @@ function tenantctrl($scope, $http, adminservice){
     $scope.$on("EV_SAVE_CHANGES", function(event){
         adminservice.bindObjData($scope.obj, $scope.fieldList);
         $scope.obj.logo = $scope.selTenant.logo;
-        adminservice.saveObj($scope.obj, OBJ, $http, function(saved){
-            var callback = adminservice.getSelCallback();
-            if (callback !== undefined && callback !== null){
-                callback(saved);
-            }
+        //count siblings and increment order
+        adminservice.total(OBJ, {parentID:$scope.obj.parentID}, $http, function(count){
+            $scope.obj.order = count.data + 1;
+            adminservice.saveObj($scope.obj, OBJ, $http, function(saved){
+                $scope.editTenant(saved);
+            });
         });
+
 
     });
 
@@ -232,13 +226,15 @@ function tenantctrl($scope, $http, adminservice){
     function reorderProvs(i, p){
         var prov = $scope.myMap[p._id];
 
-        prov.order = i+1;
-        adminservice.saveObj(prov, 'provider', $http, function(){
-            var f = {priority:prov.order};
-            adminservice.saveMassObj(f, 'product', {provider:prov.name}, $http, function(ps){
+        if (prov !== undefined){
+            prov.order = i+1;
+            adminservice.saveObj(prov, 'provider', $http, function(){
+                var f = {priority:prov.order};
+                adminservice.saveMassObj(f, 'product', {provider:prov.name}, $http, function(ps){
 
+                });
             });
-        });
+        }
     }
 
     $scope.onAddProvider = function(list){
@@ -304,7 +300,6 @@ function tenantctrl($scope, $http, adminservice){
         var obj = {};
         obj.view = 'createTenant.html';
         obj.title = "New Tenant";
-        obj.toolbar = "secTools.html";
         $scope.$emit("EV_SWITCH_VIEW", obj);
     }
 

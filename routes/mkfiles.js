@@ -1,4 +1,5 @@
 var fs = require('fs');
+var mkdirp = require('mkdirp');
 
 exports.saveFile = function(content, fpath, callback){
     fs.writeFile(__dirname + fpath, content, function(err) {
@@ -9,6 +10,17 @@ exports.saveFile = function(content, fpath, callback){
     } else {
         callback(null);
     }
+    });
+}
+
+exports.createDirs = function(fpath, callback){
+    mkdirp(__dirname + fpath, function (err) {
+        if (err){
+            callback(err);
+        }
+        else {
+            callback(null);
+        }
     });
 }
 

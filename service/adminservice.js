@@ -424,7 +424,7 @@ angular.module('cart').factory('adminservice', function($q, $cookies) {
         var fieldList = [];
         for(var key in meta){
             var metafld = meta[key];
-            metafld = fieldCallback(metafld)
+            metafld = fieldCallback(metafld);
             if (metafld !== null && metafld.editable == true){
                 var fd = {};
                 if (metafld.template !== undefined){
@@ -434,11 +434,15 @@ angular.module('cart').factory('adminservice', function($q, $cookies) {
                 fieldList.push(fd);
                 fd.label = metafld.label;
                 fd.fldname = metafld.fldname;
+                fd.fldtype = metafld.fldtype;
 
                 if (metafld.opts !== undefined){
                     fd.options = [];
                     if (fd.template == undefined){
                         fd.template = templUrl + 'dropdown.html';
+                    }
+                    if (metafld.defval !== undefined && metafld.defval !== ""){
+                        fd.options.push({optvalue:metafld.defval,label: metafld.deflabel});
                     }
                     $.each(metafld.opts, function(i, item){
                         var opt = {};
@@ -610,6 +614,11 @@ angular.module('cart').factory('adminservice', function($q, $cookies) {
             }
         }
         return clone;
+    }
+
+    service.saveClone = function(obj, objname, $http, callback){
+        var clone = service.cloneObj(obj);
+        service.saveObj(clone, objname, $http, callback);
     }
 
 

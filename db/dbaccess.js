@@ -67,6 +67,7 @@ exports.setDB = function(name){
 }
 
 var prepFilter = function(f){
+    console.log("prep filter:", f);
     var filter = {};
     filter.query = {};
     filter.order_by = {};

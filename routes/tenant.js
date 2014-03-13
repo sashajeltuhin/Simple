@@ -3,6 +3,7 @@ var mongo = require('mongodb');
 var auth = require('./auth');
 var ObjectID = mongo.ObjectID;
 var dbname = 'ShopDB';
+var io = require('./mkfiles');
 
 var colName = 'tenant';
 
@@ -46,25 +47,58 @@ exports.save = function(req, res){
     db.setDB(dbname);
     var vid = req.body;
     var filter = {};
-    if (vid._id !== null){
+    if (vid._id !== undefined && vid._id !== null){
         filter._id = new ObjectID(vid._id);
         vid._id = filter._id;
+        db.upsert(colName, vid, filter, function(err, newid){
+            if (err !== null){
+                handleError(res, "Cannot add tenant ", err);
+            }
+            else{
+                if (newid !== null){
+                    vid._id = newid;
+                }
+                res.send(vid);
+            }
+        });
     }
     else{
         vid.startDate = new Date();
+        db.insert(colName, vid, function(err, rec){
+            if (err !== null){
+                handleError(res, "Cannot add provider ", err);
+            }
+            else{
+                io.createDirs('/../tenants/'+ vid.name+ '/assets/css', function(err){
+                    console.log('css dir error:', err);
+                });
+                io.createDirs('/../tenants/'+ vid.name+ '/assets/img', function(err){
+                    console.log('img dir error:', err);
+                });
+                io.createDirs('/../tenants/'+ vid.name+ '/assets/js', function(err){
+                    console.log('js dir error:', err);
+                });
+                res.send(rec);
+            }
+        });
     }
-    db.upsert(colName, vid, filter, function(err, newid){
+
+}
+
+
+exports.delete = function(req, res){
+    db.setDB(dbname);
+    var vid = req.body;
+    var pid = new ObjectID(vid._id);
+    var filter = {_id : pid};
+    db.delete(colName, filter, function(err, ret){
         if (err !== null){
-            handleError(res, "Cannot add tenant ", err);
+            handleError(res, "Cannot delete object ", err);
         }
         else{
-            if (newid !== null){
-                vid._id = newid;
-            }
-            res.send(vid);
+            res.send(pid);
         }
     });
-
 }
 
 

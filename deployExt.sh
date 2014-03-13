@@ -28,5 +28,5 @@ cp -rfv simple/tenants/$1 $2/templ
 #sed -i '' "s/localhost/$4/g" *.html
 
 
-#usage: deployExt Amazon amazonExt amazinjector.js
+#usage: bash deployExt.sh Bankrate bankExt brinjector.js
 

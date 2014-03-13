@@ -26,28 +26,53 @@ exports.list = function (req, res){
 
 exports.save = function(req, res){
     db.setDB(dbname);
-    var vid = req.body;
-    var filter = {};
-    if (vid._id !== null){
-        filter._id = new ObjectID(vid._id);
-        vid._id = filter._id;
+    var v = req.body;
+    var vid = v.obj;
+    var filter = v.filter;
+
+    if (vid == undefined){
+        vid = v;
     }
-    db.upsert(colName, vid, filter, function(err, newid){
-        if (err !== null){
-            handleError(res, "Cannot add steps ", err);
+    if (filter !== undefined){
+        filter = db.getFilter(filter).query;
+    }
+
+
+    if (filter !== undefined || (vid._id !== null && vid._id !== undefined)){
+        if (filter == undefined){
+            filter = {};
+            filter._id = new ObjectID(vid._id);
+            vid._id = filter._id;
         }
-        else{
-            if (newid !== null){
-                vid._id = newid;
+
+
+        db.upsert(colName, vid, filter, function(err, newid){
+            if (err !== null){
+                handleError(res, "Cannot update step ", err);
             }
-            res.send(vid);
-        }
-    });
+            else{
+                res.send(vid);
+            }
+
+        });
+    }
+    else
+    {
+        db.insert(colName, vid, function(err, rec){
+            if (err !== null){
+                handleError(res, "Cannot add step ", err);
+            }
+            else{
+                console.log("new step", rec);
+                res.send(rec);
+            }
+        });
+    }
 }
 
 exports.update = function(widget, callback){
     var filter = {};
-    if (widget._id !== null){
+    if (widget._id !== undefined){
         filter._id = new ObjectID(widget._id);
     }
     db.upsert(colName, widget, filter, function(err, newid){

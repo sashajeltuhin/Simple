@@ -17,7 +17,7 @@ function fieldctrl($scope, $http, adminservice){
 
     function prepareField(metafld){
         var mf = metafld;
-        if (metafld.fldname !== 'label' && metafld.fldname !== "fldtype" || metafld.fldname == "defval"){
+        if (metafld.fldname !== 'label' && metafld.fldname !== "fldtype" && metafld.fldname !== "defval" && metafld.fldname !== "objname"){
             mf = null;
         }
         return mf;

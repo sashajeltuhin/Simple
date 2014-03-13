@@ -38,11 +38,21 @@ function teaserctrl($scope, $rootScope, $http, $location, cartservice){
 
     $scope.launch = function(obj){
         $scope.c = cartservice.getCustomer();
+        if ($scope.c.selectedCat == undefined){
+            $scope.c.selectedCat = [];
+        }
+        if (obj.type !== undefined && $scope.c.selectedCat.indexOf(obj.type)){
+            $scope.c.selectedCat.push(obj.type);
+            cartservice.updateCustomer();
+        }
         if ($scope.c.zip == undefined || $scope.c.zip == ""){
             $('#bv_popup_trigger').click();
             //anonymous
             obj.teaser = true;
             $scope.teaserProd = obj;
+            if (cartservice.isIn()){
+                $scope.$emit("EV_ADD_PROD_NEXT", obj, $scope.c);
+            }
         }
         else{
             $scope.$emit("EV_ADD_PROD_NEXT", obj, $scope.c);

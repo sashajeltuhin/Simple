@@ -92,10 +92,22 @@ function fitsSegment(customer, seg){
      for (var i = 0; i < seg.dems.length; i++){
         var f = seg.dems[i];
         if(customer[f.field] !== undefined){
-            var arr = f.val.split(',');
+            var arr = getVals(f);
             switch(f.oper){
                 case "=":
-                    fits = customer[f.field] == arr[0];
+                case "in":
+                    if (Array.isArray(customer[f.field])){
+                        for (var v = 0; v < customer[f.field].length; v++){
+                            var cval = customer[f.field][v];
+                            if (arr.indexOf(cval) > -1){
+                                fits = true;
+                                break;
+                            }
+                        }
+                    }
+                    else{
+                        fits = customer[f.field] == arr[0];
+                    }
                     break;
                 case ">":
                     fits = customer[f.field] > arr[0];
@@ -116,6 +128,21 @@ function fitsSegment(customer, seg){
 
     }
     return fits;
+}
+
+function getVals(cond){
+    var vals = cond.val.split(',');
+    var arr = [];
+    if (vals !== undefined && cond.fldtype == 'number'){
+        for(var i = 0; i < vals.length;i++){
+            var v = vals[i];
+            arr.push(Number(v));
+        }
+    }
+    else{
+        arr = vals;
+    }
+    return arr;
 }
 
 function buildProdFilter(filter, seg){

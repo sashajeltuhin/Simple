@@ -162,11 +162,15 @@ function gridctrl($scope, $http, adminservice){
             }
             if (fm.opts !== undefined){
 
-                    var options = '';
-                    $.each(fm.opts, function(i, o){
-                        var optval = fm.optfld !== undefined ? o[fm.optfld] : o;
-                        options += '<option value="' + optval + '">'+ optval +'</option>';
-                    });
+                var options = '';
+                if (fm.defval !== undefined && fm.defval !== ""){
+                    options += '<option value="' + fm.deflabel + '"></option>';
+                }
+                $.each(fm.opts, function(i, o){
+                    var optval = fm.optfld !== undefined ? o[fm.optfld] : o;
+                    var optlabel = fm.optlabel !== undefined && fm.optlabel !== "" ? o[fm.optlabel] : optval;
+                    options += '<option value="' + optval + '">'+ optlabel +'</option>';
+                });
 
                 col.editableCellTemplate = '<div><select ng-model="row.entity.' + fm.fldname + '">' + options + '</select></div>';
             }

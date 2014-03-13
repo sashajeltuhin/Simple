@@ -185,10 +185,12 @@ function surveyAdminCtrl($scope, $rootScope, $http, adminservice){
     function openqueMap(){
         $scope.linkedAnswer = null;
         $scope.parent = null;
-        var appObj = adminservice.getAppObj(appObj);
+        var appObj = adminservice.getAppObj();
         var filterData = adminservice.getFilterData().f;
         $scope.exposure = filterData.exposure;
-        filterData.app = appObj.appID;
+        if (filterData.app == undefined){
+            filterData.app = appObj.appID;
+        }
         filterData.order_by = {order:1};
         adminservice.listObj(QUE, filterData, $http, function(d){
             $scope.queMap = [];

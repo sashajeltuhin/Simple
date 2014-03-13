@@ -18,10 +18,12 @@
     <ul class="nav nav-tabs nav-white">
         <li class="active"><a href="#main" data-toggle="tab">Properties</a></li>
         <li class=""><a href="#edit" ng-click="showRaw()" data-toggle="tab">Editor</a></li>
-        <li class=""><a href="#ques" ng-click="editSurvey()" data-toggle="tab" ng-show="obj.isSurvey">Questions</a></li>
+        <li class=""><a href="#ques" ng-click="editSurvey(appObj)" data-toggle="tab" ng-show="obj.isSurvey">Questions</a></li>
         <li class=""><a href="#preview" ng-click="showTemplate()" data-toggle="tab">Preview</a></li>
         <li class=""><a href="#track" ng-click="showTrackTags()" data-toggle="tab">Tracking</a></li>
         <li class=""><a href="#int" ng-click="showIntscript()" data-toggle="tab">Integration</a></li>
+        <li class=""><a href="#val" ng-click="showIntscript()" data-toggle="tab">Validation</a></li>
+        <li class=""><a href="#rules" ng-click="showIntscript()" data-toggle="tab">Rules</a></li>
     </ul>
 </header>
 <section class="vbox">
@@ -131,7 +133,7 @@
 
                                 <li  class="active">
                                     <a href="#layout"   class="active">
-                                        <i class="fa fa-filter icon">
+                                        <i class="fa fa-archive icon">
                                             <b class="bg-danger"></b>
                                         </i>
                             <span class="pull-right">
@@ -177,6 +179,17 @@
 
     </div>
 <div class="tab-pane" id="int">
+    <div class="line pull-in"></div>
+    <textarea class="form-control no-border" rows="30" placeholder="Integration script..." ng-model="obj.integration"></textarea>
+
+</div>
+
+<div class="tab-pane" id="val">
+    <div class="line pull-in"></div>
+    <textarea class="form-control no-border" rows="30" placeholder="Integration script..." ng-model="obj.integration"></textarea>
+
+</div>
+<div class="tab-pane" id="rules">
     <div class="line pull-in"></div>
     <textarea class="form-control no-border" rows="30" placeholder="Integration script..." ng-model="obj.integration"></textarea>
 

@@ -1,0 +1,258 @@
+/*mortgage*/
+.rate-table .tbody > li, .rate-table .theader > li {padding-left: 11px;}
+.mortgage .rate 					{min-width: 65px; white-space: normal;}
+.mortgage .tbody .rate 				{min-width: 0; width:66px;}
+.mortgage .toll 					{min-width: 115px;}
+.mortgage .tbody .toll 				{min-width: 116px;}
+.mortgage .more 					{min-width: 88px;}
+.mortgage .tbody .more 				{min-width: 76px;}
+.tbody .icon-container 				{padding-top:4px;}
+ul.summary-list 					{width: 100%; clear: left;}
+div.rate-table.mortgage 			{border-top: none;}
+ul#deskHeaders.theader.mobile-hide				{border-top: 1px solid rgb(212, 212, 212);}
+.nolisting							{border-top:0;}
+.nolisting p 						{font-size:12px;}
+.norates {font-size: 14px!important; }
+.noproducts a {text-decoration:underline;}
+#divFico select, #divFicoPlaceHolder 			{font-size: 11px;margin-top: 5px;}
+#divFicoPlaceHolder.ltmenu .arrow 				{top: 0px;}
+.search-container .fields .loan-amount .col3 	{margin-left: 0px;}
+.search-container .fields .loan-amount input  	{padding: 2px;}
+.rate-table.mortgage ul.tbody 		{padding-top: 15px; padding-bottom: 15px;}
+.ui-slider						{width:65px;}
+/*---- start glossary ----*/
+
+#glossaryTermsLightBox .br_lb_container div {width:49.9%;}
+#icon_legend 								{background: none repeat scroll 0 0 #EFEFEF;border-radius: 10px 10px 10px 10px;float: right;margin: 0 10px 10px 5px;padding: 9px;width: 42% !important;}
+#icon_legend td 							{font-size: 12px;}
+#glossaryTermsLightBox span.br-icon 		{font-size: 28px;}
+.mortgage span.br-icon 						{font-size:20px;display:inline-block;margin-right:2px;}
+.legend_title 								{font-size: 14px;color: #042342;font-weight: bold;}
+.search-lside h5 							{margin: 0px;float: left;}
+.search-lside .overVisible .arrow 			{float: left;margin: 5px 0px 0px 5px;}
+.ltmenu h5, .ltmenu .arrow 					{float: left; font-size: 12px;}
+.ltmenu .arrow 								{position: relative;top: 5px;left: 5px;}
+
+
+.search-container .fields .loan-amount .col2		{padding-right: 7px;}
+.search-container .loan-amount input[pattern]   	{box-shadow:none}
+.bottom-row + a + h3 						{border-left:1px solid #D4D4D4;border-right:1px solid #D4D4D4;padding-top:10px;}
+.tbody .lender > span, .tbody .lender a 					{width:140px;display:block;}
+/*---- end glossary ----*/
+
+.paid.ParticipatingCostPerCall 					{
+    background: rgb(255,255,255);
+    background: -moz-linear-gradient(top,  rgba(255,255,255,1) 0%, rgba(220,238,250,1) 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,255,255,1)), color-stop(100%,rgba(220,238,250,1)));
+    background: -webkit-linear-gradient(top,  rgba(255,255,255,1) 0%,rgba(220,238,250,1) 100%);
+    background: -o-linear-gradient(top,  rgba(255,255,255,1) 0%,rgba(220,238,250,1) 100%);
+    background: -ms-linear-gradient(top,  rgba(255,255,255,1) 0%,rgba(220,238,250,1) 100%);
+    background: linear-gradient(top,  rgba(255,255,255,1) 0%,rgba(220,238,250,1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#dceefa',GradientType=0 );
+}
+
+.ParticipatingCostPerCall .lender img {
+    -webkit-box-shadow: 0px 3px 3px 1px rgba(158, 168, 173, .5);
+    -moz-box-shadow: 0px 3px 3px 1px rgba(158, 168, 173, .5);
+    box-shadow: 0px 3px 3px 1px rgba(158, 168, 173, .5);
+    border:1px solid #4275ac;
+}
+
+.NoneParticipatingCostPerCall .lender img {
+    border: 1px solid #999999;
+}
+
+.br_lb_next, .br_lb_next:visited	{color:#fff!important;}
+.br_lb_container 					{height: 365px;overflow: auto;}
+#icons_group span 					{color: #5583BF !important;display: block;float: left; font-size: 20px;}
+
+ul.searchprods 						{padding: 0px 0px 2px 0px!important;}
+/*---- start sliders ----*/
+
+h3.rates-subtitle 					{padding-top:10px!important;}
+h3.rates-subtitle a 				{padding-right: 5px;color:#DEB302;font-weight:bold;font-size:12px;}
+
+.slider-sortby span,
+.slider-cs span,
+.slider-pd span  					{display: block;}
+
+.overVisible div.left.fs12  		{float: left;padding: 10px 0px;}
+.overVisible div.hint 				{margin-top: 10px; padding-right: 5px;}
+.slider-pmt,
+.slider-cs 							{float: left; height: 45px; border-right: 1px solid #B6D0DF; padding-right: 10px; margin-right: 10px;}
+
+.slider-sortby,
+.slider-cs,
+.slider-pd 							{padding-top: 4px;}
+.slider-cs select,
+.slider-pd select 					{font-size:11px;}
+.theader .first 					{border-left: none;padding-left: 11px!important;}
+
+/*---- start sliders ----*/
+
+.m-content .rates					{background-color: #f0f5fb;}
+
+.greenbutton 						{padding: 4px 16px 4px 16px;}
+.statelic 							{font-size: 9px; margin-bottom: 8px;}
+h3.rates-subtitle, .rates h3		{margin: 0px;font-size: 13px; color: #004276; }
+.rates-subtitle span ~ span			{font-weight: normal;}
+
+.apr .label, .apr .ratenum			{font-size: 18px;}
+.apr .label 						{font-weight:bold;}
+table.rate-prod-tbl					{border-right: 1px solid #D4D4D4; border-left: 1px solid #D4D4D4;border-bottom: 1px solid#D4D4D4;}
+.rate-prod-tbl .contact 					{display: none;}
+.br_lb_statment 						{padding-left:0!important;}
+
+.theader				{border-top:1px solid #D4D4D4;}
+
+.rates p,
+.rates h3 							{padding:0 8px 8px 8px;}
+span.price 							{font-size: 13px;}
+.noproducts							{background-color:#fff;}
+.toll.mvcall > img                   {display:none;}
+
+@media only screen and (max-width: 640px) {
+    .lock 							{clear:both;}
+    .apr > .label 					{clear: both; }
+    .rate > .label.mobile-show 		{display: inline; float: left;}
+    .rate > .ratenum 				{margin-right: 4px;}
+    .rate-table.mortgage ul.tbody 		{padding-top: 0; padding-bottom: 0}
+
+    .greenbutton 					{padding: 4px 9px 4px 13px; margin-right: 4px;}
+    .rate-table .theader 			{margin-bottom: 0;}
+
+    div.rate-table					{border-top: none;}
+    .m-content .rates				{border-left:none;border-right: none;}
+
+    .mortgage .tbody .fee 			{text-align: left; min-width:0; white-space: normal;}
+    .mortgage .tbody .toll 			{min-width: 0;}
+
+    .tbody .toll.mvcall             {}
+    .toll.mvcall > a                {/*position:relative;top:90px;left:-320px;*/}
+    .lender .greenbutton            {background:url("/system/img/call-us-btn-green.png") no-repeat scroll 0 0;width:77px;height:24px;text-indent: -99999px;}
+    .lender .bluebutton             {background:url(/system/img/call-us-btn-blue.png) no-repeat scroll 0 0;width:77px;height:24px;text-indent: -99999px;}
+    .toll.mvcall > img              {position:relative;top:0;display:block;}
+    .toll.mvcall > img[src*=next-btn-arrow-lg] {top:-15px;}
+    .comments.lgnext                {padding-right:50px;}
+
+    .mortgage .moredetails  		{display:block; padding-left:5px;}
+    .tbody .icon-container 		    { padding-top:4px;}
+    .tbody .icon-container span     {margin-right:2px;}
+    ul.tbody						{width: 100%;}
+    .tbody li 						{float: left!important; padding-left: 0px!important; padding-top: 0px; min-height: 0;}
+    .loan-amount .col1				{width:80px!important;padding-right:10px;}
+    .loan-amount .col2				{padding-right:10px!important;}
+    .search-container .titlebar .title {width:80%!important;}
+    .search-container .titlebar .closebutton	{width:20%!important;}
+    .clear.overVisible > .left.fs12 {margin-top:5px;}
+    .clear.overVisible > .hint {margin-top:15px;}
+
+    .caps span 	{padding-right: 3px;}
+
+    #dvPercentDownPlaceHolder, #dvPointsPlaceHolder, #divFicoPlaceHolder   {display: none;}
+    #divPercentDown, #divPointsDropDownList, #divFico 			{display: block!important;}
+
+    li.apr,
+    li.lender,
+    li.toll 						{padding-top: 10px;}
+    .tbody .comments 				{padding-left: 8px!important; padding-top: 10px; font-size: 11px;}
+
+
+    .apr .label,
+    .rate .label 					{padding-right: 5px;}
+    .tbody .lender 					{width:40%; padding-left: 8px!important; min-height: 130px;}
+    .tbody .apr						{width: 40%; float: left; clear: right!important; min-height: 44px; padding-left: 0px!important;}
+
+    .tbody .rate,
+    .tbody .fee						{float: left; display: block;width: 35%; min-height: 0; padding-right: 4%;}
+    .tbody .feeapr 					{float: left!important; clear: left!important;padding-right: 3px;}
+
+    .rate .ratecopy	 				{float: left; padding-right: 5px; }
+
+
+    .lenderinfo,
+    .lenderinfo,
+    a.moredetails,
+    .fee .label,
+    a.summary-link,
+    .mortgage-sliders,
+    .rates-subtitle a,
+    .rates-subtitle img,
+    h3.rates-subtitle span 			{display: none!important;}
+
+    h3.rates-subtitle span:after  	{content:"";}
+    .rates h3  							{color: #fff;padding: 5px 5px 5px 5px;font-size: 13px;font-weight: bold;background: #5583BF;margin:0;border: 1px solid #D4D4D4;border-width:0 1px;}
+
+
+    .fee .label-b 					{float: left; padding-right: 5px;}
+    .fee .price  					{float: left;clear: right;}
+
+    .tbody .ratenum 				{display: block;/*float:left;*/}
+
+    .change-search					{padding-right: 10px;}
+    div#ibads						{display: none;}
+    .tipText .plus 					{background-image:url(/system/img/plus-big.jpg); height:19px; width:18px;}
+    .tipText .minus     			{background-image:url(/system/img/minus-big.jpg); height:19px; width:18px; background-position: 0 0; }
+    .tipText + .tipText 			{line-height:23px;}
+    .tipText a 						{line-height:23px;}
+}
+
+/*---- start search summary ----*/
+
+.rates .sliders {margin: 10px 0 0 0;}
+ul.head-cat		{width: 100%;}
+.summary-title 	{margin-bottom: -14px}
+ul.head-cat		{padding: 0px;margin:0 0 0 0;min-height: 35px;}
+.y-search		{width:32%;}
+.r-range		{min-height:1px; width:28%;}
+.n-average		{width:18%;}
+.s-average		{width:18%;}
+
+ul#summary-head li.mobile-show, ul#s-list li.mobile-show {display: none;}
+
+.l-amount		{width:18%;}
+.c-score		{width:18%;}
+.a-points		{width:18%;}
+.a-down			{width:17%;}
+
+@media only screen and (max-width: 640px) {
+    .rate-table .tbody > li, .rate-table .theader > li {padding-left: 0;}
+    .rate-table .tbody, .rate-table .theader {font-size: 12px;}
+    .mortgage .tbody .rate {width:auto;}
+    .theader .first {padding-left: 0 !important;}
+    ul#s-list li.mobile-show {display: block;}
+    ul#s-list li.mobile-hide {display: none;}
+    .summary-title 		{margin-bottom: 0px}
+    ul.head-cat			{display: none;}
+    .text-links,
+    .summary-location,
+    .br-icon 			{display: none;}
+
+    ul.summary-list ~ ul				{display:none;}
+    .rate-table ~ .rate-table .theader 	{display:none;}
+
+    ul.summary-list 	{padding-bottom: 0;}
+    .summary-title		{padding: 5px 0 0 9px;}
+    .ssummary 			{min-height: 50px;}
+    #search-summary ul.summary-list li.y-search			{display: none;}
+    .l-amount			{width:50%;}
+    .a-points			{width:42%;}
+    .c-score			{width:50%;}
+    .a-down				{width:42%;}
+    .icon:after 		{content: none;}
+
+    .c-score span 	{padding-right: 3px;}
+
+    #glossaryTermsLightBox .br_lb_container div {width: 100%;}
+    #glossaryTermsLightBox .br_lb_container {height: inherit;}
+
+    #deskHeaders 			{display:none;}
+
+}
+
+/*Ipad fix*/
+.tabcontainer, .col1,.col2,.col3 ,.tabcontainer input, .tabcontainer select		{-webkit-backface-visibility: hidden; -webkit-perspective: 1000-webkit-transform:none;}
+
+/*---- end search summary ----*/
+
+

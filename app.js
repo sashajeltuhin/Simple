@@ -177,6 +177,7 @@ app.post('/app/apps/update', apps.save);
 app.post('/app/apps/delete', apps.delete);
 app.post('/app/tenant/list', tenant.list);
 app.post('/app/tenant/update', tenant.save);
+app.post('/app/tenant/delete', tenant.delete);
 
 app.post('/app/segment/list', segment.list);
 app.post('/app/segment/update', segment.save);

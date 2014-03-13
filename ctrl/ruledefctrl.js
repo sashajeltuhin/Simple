@@ -1,16 +1,15 @@
 function ruledefctrl($scope, $rootScope, $http, adminservice, mkPopup){
     var SEG = "segment";
-    var prodMeta = [];
+    var fieldMeta = [];
     init();
 
 
     function init(){
         $scope.obj = adminservice.getSelObj();
-        adminservice.listObj("fields", {objname:$scope.obj.obj, order_by:{"title":1}}, $http, function(meta){
-            prodMeta = meta;
-            adminservice.loadMeta(SEG, $http, function(meta){
-                //$scope.propsEl = adminservice.buildForm(meta, updateProdFieldList, $scope.obj);
-                $scope.fieldList = adminservice.bindObj(meta, $scope.obj, prepareField);
+        adminservice.loadMeta($scope.obj.obj, $http, function(meta){
+            fieldMeta = meta;
+            adminservice.loadMeta(SEG, $http, function(m){
+                $scope.fieldList = adminservice.bindObj(m, $scope.obj, prepareField);
             });
         });
     }
@@ -18,8 +17,8 @@ function ruledefctrl($scope, $rootScope, $http, adminservice, mkPopup){
     function prepareField(metafld){
         var mf = metafld;
 
-        if ($scope.obj.obj == "product" && metafld.fldname == "field"){
-            mf.opts = prodMeta;
+        if (metafld.fldname == "field"){
+            mf.opts = fieldMeta;
         }
         else if (metafld.fldname == 'app' || metafld.fldname == "obj" || metafld.fldname == "order"){
             mf = null;
@@ -28,12 +27,13 @@ function ruledefctrl($scope, $rootScope, $http, adminservice, mkPopup){
         return mf;
     }
 
-    function updateProdFieldList(metafld, exp){
-
-        if (exp.obj == "product" && metafld.fldname == "field"){
-            return prodMeta;
+    $scope.onfldChange = function(fd){
+        console.log("field changed", fd);
+        if (fd.fldname == 'field'){
+            var selectedFld = adminservice.getFM($scope.obj.obj, fd.fldvalue);
+            console.log("selected field", selectedFld);
+            $scope.obj.fldtype = selectedFld.fldtype;
         }
-        return null;
     }
 
     $scope.$on("EV_SAVE_CHANGES", function(event){

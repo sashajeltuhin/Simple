@@ -242,6 +242,7 @@ angular.module('cart').factory('cartservice', function($http) {
         }
         service.customer = {};
         service.customer = cust;
+        service.customer.sessionstart = new Date();
         service.customer.type = "prospect";
         cart = {};
         cart.prods = [];
@@ -338,11 +339,13 @@ angular.module('cart').factory('cartservice', function($http) {
             //var ipURL = 'http://www.codehelper.io/api/ips/';
             $.getJSON(ipURL, function(response) {
                 service.customer.IP = response.IP;
-                service.customer.city = response.CityName;
-                service.customer.state = response.RegionName;
-                service.customer.lat = response.CityLatitude;
-                service.customer.lon = response.CityLongitude;
                 service.customer.country = response.Country;
+                if (service.customer.zipguess == true){
+                    service.customer.city = response.CityName;
+                    service.customer.state = response.RegionName;
+                    service.customer.lat = response.CityLatitude;
+                    service.customer.lon = response.CityLongitude;
+                }
                 service.updateCustomer(function(c){
                     console.log("Obtained IP and updated customer");
                     if (callback !== undefined){
@@ -413,6 +416,9 @@ angular.module('cart').factory('cartservice', function($http) {
 
     service.loadsurvey = function($http, callback){
         var url = serverUrl + '/survey/list';
+        var f = {};
+        f.customer = $scope.c;
+        f.rule = "survey";
         $http.post(url, {app: this.getApp(), active:true, order_by:{order:1}}).success(function(result){
 
             callback(result);
@@ -505,7 +511,7 @@ angular.module('cart').factory('cartservice', function($http) {
             }
             return;
         }
-        if (service.customer.zipguess=true && service.customer.zip !== undefined && service.customer.zip !== ""){
+        if (service.customer.zipguess==true && service.customer.zip !== undefined && service.customer.zip !== ""){
             $http.post(serverUrl + '/zip/list', {zip:service.customer.zip}).success(function(geos){
                 if (geos.length > 0){
                     var geo = geos[0];

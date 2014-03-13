@@ -38,7 +38,7 @@
                                         <span class="pull-left m-r-sm"><a>Active <input type="checkbox" ng-model="a.active" ng-change="updateApp(a)"></a></span>
                                         <button class="btn btn-sm btn-default btn-bg" ng-click="viewFlow(a)"><i class="fa fa-play"></i></button>
                                         <button class="btn btn-sm btn-default btn-bg" ng-click="editApp(a)"><i class="fa fa-pencil"></i></button>
-                                        <button class="btn btn-sm btn-default btn-bg" ng-click="cloneApp(a)"><i class="fa fa-copy"></i></button>
+                                        <button class="btn btn-sm btn-default btn-bg" ng-click="cloneApp(a, appElements[a.appID])"><i class="fa fa-copy"></i></button>
                                         <button class="btn btn-sm btn-default btn-bg" ng-click="createStep(a, appElements[a.appID],'cart')"><i class="fa fa-plus"></i>Widget</button>
                                     </div>
                                 </div>
