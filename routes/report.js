@@ -25,40 +25,11 @@ exports.list = function (req, res){
 }
 
 exports.save = function(req, res){
-    db.setDB(dbname);
-    var vid = req.body;
-    var filter = {};
-    if (vid._id !== null){
-        filter._id = new ObjectID(vid._id);
-        vid._id = filter._id;
-    }
-    db.upsert(colName, vid, filter, function(err, newid){
-        if (err !== null){
-            handleError(res, "Cannot add rule ", err);
-        }
-        else{
-            if (newid !== null){
-                vid._id = newid;
-            }
-            res.send(vid);
-        }
-    });
-
+    db.saveData(dbname, colName, req, res);
 }
 
 exports.delete = function(req, res){
-    db.setDB(dbname);
-    var vid = req.body;
-    var pid = new ObjectID(vid._id);
-    var filter = {_id : pid};
-    db.delete(colName, filter, function(err, ret){
-        if (err !== null){
-            handleError(res, "Cannot delete report ", err);
-        }
-        else{
-            res.send(pid);
-        }
-    });
+    db.deleteData(dbname, colName, req, res);
 }
 
 

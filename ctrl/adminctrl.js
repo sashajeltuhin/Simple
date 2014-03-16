@@ -303,6 +303,22 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
         }
     }
 
+    $scope.editRec = function(){
+        if (viewMode == 'grid' && changedlist.length > 0){
+            var item = changedlist[0];
+
+            if (item.mk_rowsel == true)
+            {
+                adminservice.setSelObj(item);
+                adminservice.setSelected(selected);
+                var obj = {};
+                obj.view = 'genericEdit.html';
+                obj.title = "Edit";
+                $scope.$emit("EV_SWITCH_VIEW", obj);
+            }
+        }
+    }
+
     $scope.saveObj = function(){
         $scope.saveChanges();
     }
@@ -921,7 +937,7 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
     }
 
     $scope.onDash = function(){
-        selected = '';
+
         openDash();
     }
 
@@ -1152,6 +1168,7 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
     }
 
     function openDash(){
+        selected = '';
         hideGrid();
         $scope.filterOpen = false;
             $scope.viewTitle = "Dashboard";

@@ -5,14 +5,14 @@ function reportctrl($scope, $http, $parse, adminservice){
 
     function init(){
         $scope.obj = adminservice.getSelObj();
-        if ($scope.obj.filter == undefined){
-            $scope.obj.filter = {};
+        if ($scope.obj.f == undefined){
+            $scope.obj.f = {};
         }
-        //initSec();
+        initSec();
         adminservice.loadMeta(OBJ, $http, function(meta){
             $scope.reportMeta = meta;
             $scope.fieldList = adminservice.bindObj(meta, $scope.obj, prepareField);
-            refreshFilter($scope.obj.targetobj);
+            //refreshFilter($scope.obj.targetobj, true);
         });
     }
 
@@ -29,7 +29,7 @@ function reportctrl($scope, $http, $parse, adminservice){
             $scope.secFilter.allowedTenant = {};
             $scope.secFilter.allowedTenant[tenant] = true;
         }
-        $scope.$broadcast("EV_FILTER_REBUILD", $scope.reportMeta, $scope.secFilter, 'Security');
+        //$scope.$broadcast("EV_FILTER_REBUILD", $scope.reportMeta, $scope.secFilter, 'Security');
     }
 
     $scope.openSec = function(){
@@ -38,7 +38,7 @@ function reportctrl($scope, $http, $parse, adminservice){
 
     function prepareField(metafld){
         var mf = metafld;
-        if (metafld.fldname == 'filter' || metafld.fldname == 'created' || metafld.fldname == 'createdBy'
+        if (metafld.fldname == 'f' || metafld.fldname == 'created' || metafld.fldname == 'createdBy'
             || metafld.fldname == 'view' || metafld.fldname == 'uitype' || metafld.fldname == 'allowedTenant'){
             mf = null;
         }
@@ -54,24 +54,25 @@ function reportctrl($scope, $http, $parse, adminservice){
     }
 
     function refreshFilter(objname){
-        adminservice.loadMeta(objname, $http, function(meta){
-            if ($scope.obj.filter.tenant == undefined){
+        adminservice.loadMetaCustom(objname, $http, function(meta){
+            if ($scope.obj.f.tenant == undefined){
                 var tenant = adminservice.getTenant().name;
-                $scope.obj.filter.tenant = tenant;
+                $scope.obj.f.tenant = tenant;
             }
-            $scope.$broadcast("EV_FILTER_REBUILD", meta, $scope.obj.filter, 'Filter');
+
+            $scope.$broadcast("EV_FILTER_REBUILD", meta, $scope.obj.f, 'Filter');
         });
     }
 
-    $scope.$on('EV_FILTER_APPLY', function(event, obj){
-        $scope.obj.filter = obj;
+    $scope.$on('EV_FILTER_CHANGED', function(event, obj){
+        $scope.obj.f = obj;
     });
 
     $scope.$on("EV_SAVE_CHANGES", function(event){
         adminservice.bindObjData($scope.obj, $scope.fieldList);
         $scope.obj.created = new Date();
         $scope.obj.createdBy = adminservice.getAdminSession().uid;
-        $scope.obj.filter = adminservice.cleanFilter($scope.obj.filter);
+        $scope.obj.f = adminservice.cleanFilter($scope.obj.f);
         $scope.secFilter = adminservice.cleanFilter($scope.secFilter);
         if ($scope.secFilter.allowedTenant !== undefined){
             $scope.obj.allowedTenant = $scope.secFilter.allowedTenant;
@@ -80,15 +81,7 @@ function reportctrl($scope, $http, $parse, adminservice){
             //$scope.onDash();
             var fn = $scope[adminservice.getCurrentView().controller];
             fn();
-//            var callback = adminservice.getSelCallback();
-//            if (callback !== undefined && callback !== null){
-//                callback(saved);
-//            }
-//            var fn= adminservice.getCurrentView().controller;
-//            var fnc = $parse(fn);
-//            $scope.$apply(function() {
-//                fnc($scope, {});
-//            });
+
         });
 
     });

@@ -5,7 +5,10 @@ function dashctrl($scope, $http, adminservice){
     var map = {};
     $scope.srsort = {
         update: function(e, ui){
+            $scope.$apply();
+            console.log("sortable", ui);
             $.each($scope.sr, function(i, r){
+                console.log("updating", r);
                 r.order = i+1;
                 adminservice.saveObj(r, OBJ, $http, function(){
 
@@ -26,7 +29,7 @@ function dashctrl($scope, $http, adminservice){
             map['single'] = sr;
             $.each($scope.sr, function(i, r){
                 r.template = serverUrl + 'singlepointreport.html';
-               loadreport(r.targetobj, r.filter, function(data){
+               loadreport(r.targetobj, r.f, function(data){
                    r.data = data;
                });
             });
@@ -37,18 +40,6 @@ function dashctrl($scope, $http, adminservice){
             map['multi'] = mr;
         });
 
-//        var tenObj = adminservice.getTenant();
-//        $scope.providers = tenObj.providers == undefined? 0 : tenObj.providers.length;
-//
-//        loadreport('consumer', {tenant:tenObj.name}, function(data){
-//            $scope.total = data;
-//        });
-//        loadreport('consumer', {tenant:tenObj.name, type:'client'}, function(data){
-//            $scope.orders = data;
-//        });
-//        loadreport('user', {tenant:tenObj.name}, function(data){
-//            $scope.admins = data;
-//        });
     }
 
     function loadreport(obj, filter, callback){
@@ -68,23 +59,38 @@ function dashctrl($scope, $http, adminservice){
 
     function createReport (uitype){
         var report = {};
+        report.f = {};
         report.view = adminservice.getCurrentView().name;
         report.targetobj = 'consumer';
-        report.uitype = uitype;
-        report.order = map[uitype].length + 1;
-        adminservice.setSelObj(report);
-        var obj = {};
-        obj.view = 'reportDetail.html';
-        obj.title = "New report";
-        $scope.$emit("EV_SWITCH_VIEW", obj);
+        adminservice.loadMetaCustom(report.targetobj, $http, function(meta){
+            var tenant = adminservice.getTenant().name;
+            report.f.tenant = tenant;
+            var filterdata = {};
+            filterdata.f = report.f;
+            filterdata.m = meta;
+            adminservice.setFilterData(filterdata);
+            report.uitype = uitype;
+            report.order = map[uitype].length + 1;
+            adminservice.setSelObj(report);
+            var obj = {};
+            obj.view = 'reportDetail.html';
+            obj.title = "New report";
+            $scope.$emit("EV_SWITCH_VIEW", obj);
+        });
     }
 
     $scope.editReport = function(r){
         adminservice.setSelObj(r);
-        var obj = {};
-        obj.view = 'reportDetail.html';
-        obj.title = "Edit report " + r.title;
-        $scope.$emit("EV_SWITCH_VIEW", obj);
+        adminservice.loadMetaCustom(r.targetobj, $http, function(meta){
+            var filterdata = {};
+            filterdata.f = r.f;
+            filterdata.m = meta;
+            adminservice.setFilterData(filterdata);
+            var obj = {};
+            obj.view = 'reportDetail.html';
+            obj.title = "Edit report " + r.title;
+            $scope.$emit("EV_SWITCH_VIEW", obj);
+        });
     }
 
     $scope.deleteReport = function(r){

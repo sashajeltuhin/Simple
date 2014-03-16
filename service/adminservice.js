@@ -235,6 +235,27 @@ angular.module('cart').factory('adminservice', function($q, $cookies) {
         });
     }
 
+    service.loadMetaCustom = function(objname, $http, callback){
+        var metafilter = {};
+        var fv = {};
+        fv.oper = '<>';
+        fv.val = true;
+        metafilter.custom = fv;
+        service.loadMeta(objname, $http, function(m){
+            var custfilter = {};
+            custfilter.custom = true;
+            custfilter.tenant = selTen.name;
+            service.loadMeta(objname, $http, function(c){
+                if (c !== undefined){
+                    $.each(c, function(i, cf){
+                        m.push(cf);
+                    });
+                }
+                callback(m);
+            }, custfilter);
+        }, metafilter);
+    }
+
     service.saveObj = function(fld, obj, $http, callback){
         delete fld.mk_rowsel;
         $http.post(serverUrl + '/' + obj + '/update', fld).success(function (data) {
@@ -416,7 +437,18 @@ angular.module('cart').factory('adminservice', function($q, $cookies) {
     service.bindObjData = function(obj, fields){
         for (var i = 0; i < fields.length; i++){
             var fd = fields[i];
-            obj[fd.fldname] = fd.fldvalue;
+            if (fd.options !== undefined && fd.fldtype == 'array'){
+                obj[fd.fldname] = []
+;                for(var o=0; o < fd.options.length; o++){
+                    var opt = fd.options[o];
+                    if (opt.optvalue == true){
+                        obj[fd.fldname].push(opt.fldvalue);
+                    }
+                }
+            }
+            else{
+                obj[fd.fldname] = fd.fldvalue;
+            }
         }
     }
 
@@ -439,7 +471,11 @@ angular.module('cart').factory('adminservice', function($q, $cookies) {
                 if (metafld.opts !== undefined){
                     fd.options = [];
                     if (fd.template == undefined){
-                        fd.template = templUrl + 'dropdown.html';
+                        if (fd.fldtype == 'array'){
+                            fd.template = templUrl + 'checklist.html';
+                        }else{
+                            fd.template = templUrl + 'dropdown.html';
+                        }
                     }
                     if (metafld.defval !== undefined && metafld.defval !== ""){
                         fd.options.push({optvalue:metafld.defval,label: metafld.deflabel});
@@ -450,7 +486,12 @@ angular.module('cart').factory('adminservice', function($q, $cookies) {
 
                         var optval = metafld.optfld !== undefined && metafld.optfld !== "" ? item[metafld.optfld]: item;
                         var optdesc = metafld.optlabel !== undefined && metafld.optlabel !== "" ? item[metafld.optlabel]: optval;
-                        opt.optvalue = optval;
+                        if (fd.fldtype == 'array'){
+                            opt.optvalue = obj[metafld.fldname].indexOf(optval) >= 0;
+                            opt.fldvalue = optval;
+                        }else{
+                            opt.optvalue = optval;
+                        }
                         opt.label = optdesc;
                     });
                     fd.fldvalue = obj[metafld.fldname];
@@ -584,7 +625,7 @@ angular.module('cart').factory('adminservice', function($q, $cookies) {
         return filterdata;
     }
 
-    service.cleanFilter = function(selFilter){
+    service.cleanFilter = function(selFilter, skipArray){
         var cleanFilter = {};
         for(var key in selFilter){
             if (key !== 'order_by' && angular.isObject(selFilter[key])){

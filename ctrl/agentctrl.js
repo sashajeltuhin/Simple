@@ -31,9 +31,18 @@ function agentctrl($scope, $rootScope, $http, $location, cartservice){
         $scope.session = s
     });
 
-    cartservice.listObj('fields', {objname:'consumer'}, $http, function(meta){
-        $scope.propsEl = buildForm(meta);
-    });
+    function loadWidgets(){
+        adminservice.listObj('step', {app:'admin', type:'app', parentid:'agentnav'}, $http, function(data){
+            $.each(data, function(i, w){
+                if (w.integration !== undefined && w.integration !== ''){
+                    eval(w.integration);
+                }else{
+                    $scope[w.name + '_widget'] = $scope.rootUrl +  w.template;
+                }
+            });
+        });
+    }
+
 
     $scope.start = function(z, cust, appType, extension, prod, exCart){
         $scope.wrapperUrl = serverUrl + 'adminTmpl.html';
@@ -126,41 +135,6 @@ function agentctrl($scope, $rootScope, $http, $location, cartservice){
             obj[key.fldname] = def!==undefined && def[key.fldname] !== undefined ? def[key.fldname] : key.defval;
         });
         return obj;
-    }
-
-    function buildForm(meta){
-        var top = $('<div></div>');
-        for(var key in meta){
-            var metafld = meta[key];
-            if (metafld.editable == true){
-                var block = $('<div class="control-group"><label class="control-label">' + metafld.label + '</label></div>').appendTo(top);
-                var w =  $('<div class="controls"></div>').appendTo(block);
-                var inputtype = 'text';
-                switch (metafld.fldtype){
-                    case 'bool':
-                        inputtype = 'checkbox';
-                        break;
-                    case 'longtext':
-                        inputtype = 'textarea';
-                        break;
-                }
-                var cls = 'mk_fld';
-                var atts = '';
-
-                if(metafld.opts !== undefined && metafld.opts.length > 0){
-                    var sel = $('<select ng-model="obj.' + metafld.fldname + '"></select>').appendTo(w);
-                    $.each(metafld.opts, function(i, o){
-                        var optval = metafld.optfld !== undefined ? o[metafld.optfld] : o;
-                        sel.append('<option value="' + optval + '">'+ optval +'</option>');
-                    });
-                }
-                else{
-                    var ed = inputtype == 'textarea' ? '<textarea ng-model="obj.' + metafld.fldname + '" ></textarea>': '<input type="' + inputtype + '" ng-model="obj.' + metafld.fldname + '" class="' + cls + '" ' + atts + '>';
-                    var ctrl = $(ed).appendTo(w);
-                }
-            }
-        }
-        return top.html();
     }
 
 

@@ -87,32 +87,11 @@
                         <!-- nav -->
                         <nav class="nav-primary hidden-xs">
                             <ul class="nav">
-                                <li >
-                                    <a href="index.html"  >
-                                        <i class="fa fa-dashboard icon">
-                                            <b class="bg-danger"></b>
-                                        </i>
-                                        <span>Scorecard</span>
-                                    </a>
+                                <li class="active" ng-include="scorecard_widget">
+
                                 </li>
-                                <li  class="active">
-                                    <a href="#layout"   class="active">
-                                        <i class="fa fa-filter icon">
-                                            <b class="bg-warning"></b>
-                                        </i>
-                        <span class="pull-right">
-                          <i class="fa fa-angle-down text"></i>
-                          <i class="fa fa-angle-up text-active"></i>
-                        </span>
-                                        <span>Customer Lookup</span>
-                                    </a>
-                                    <ul class="nav lt" style="display: block">
-                                        <li ng-repeat="fd in filterList">
-                                            <section class="panel panel-default">
-                                                <div class="panel-body" ng-include="fd.template"></div>
-                                            </section>
-                                        </li>
-                                    </ul>
+                                <li  class="active" ng-include="pers_widget">
+
                                 </li>
                             </ul>
                         </nav>
@@ -122,26 +101,6 @@
             </section>
         </aside>
     </section>
-
-    <!--<nav class="navbar navbar-default" role="navigation">-->
-        <!--&lt;!&ndash; Brand and toggle get grouped for better mobile display &ndash;&gt;-->
-        <!--<div class="navbar-header">-->
-            <!--<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">-->
-                <!--<span class="sr-only">Toggle navigation</span>-->
-                <!--<span class="icon-bar"></span>-->
-                <!--<span class="icon-bar"></span>-->
-                <!--<span class="icon-bar"></span>-->
-            <!--</button>-->
-            <!--<a class="navbar-brand" href="#">Kiosk</a>-->
-        <!--</div>-->
-        <!--<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">-->
-            <!--<ul class="nav navbar-nav">-->
-                <!--<li><a ng-click="startCall()">New Call</a></li>-->
-                <!--<li><a ng-click="startChat()">Chat</a></li>-->
-               <!---->
-            <!--</ul>-->
-         <!--</div>-->
-    <!--</nav>-->
 
 </body>
 </html>

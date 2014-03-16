@@ -36,6 +36,10 @@ var handleError = function(msg, err, callback, db){
     }
 }
 
+var handleAppError = function(res, msg, err){
+    res.send({Error : {text:msg, det:err}});
+}
+
 var loadData = function(db, col, filter, callback){
     if(filter.distinct !== undefined){
         col.distinct(filter.distinct, filter.query, function(err, items) {
@@ -61,9 +65,12 @@ var loadData = function(db, col, filter, callback){
     }
 }
 
+function setDB(name){
+    dbname = name;
+}
 
 exports.setDB = function(name){
-    dbname = name;
+    setDB(name);
 }
 
 var prepFilter = function(f){
@@ -98,18 +105,23 @@ var prepFilter = function(f){
             }
             filter.query[key] =  { $in: v };
         }
-        else if (v.oper !== undefined && v.val !== undefined && Array.isArray(v.val)){
-            if (key == '_id'){
-                v.val = convertIDs(v.val);
+        else if (v.oper !== undefined && v.val !== undefined){
+            if ( Array.isArray(v.val) ){
+                if (key == '_id'){
+                    v.val = convertIDs(v.val);
+                }
+                if (v.oper == 'in'){
+                    filter.query[key] =  { $in:v.val };
+                }
+                else if (v.oper == 'all'){
+                    filter.query[key] =  { $all:v.val };
+                }
+                else if (v.oper == '<>'){
+                    filter.query[key] =  { $nin:v.val };
+                }
             }
-            if (v.oper == 'in'){
-                filter.query[key] =  { $in:v.val };
-            }
-            else if (v.oper == 'all'){
-                filter.query[key] =  { $all:v.val };
-            }
-            else if (v.oper == '<>'){
-                filter.query[key] =  { $nin:v.val };
+            else{
+                filter.query[key] =  { $ne:v.val };
             }
         }
         else if (String(key) == "_id" || String (key) == 'uid'){
@@ -157,8 +169,53 @@ exports.getFilter = function(f){
     return prepFilter(f);
 }
 
+exports.saveData = function(dbname, colName, req, res){
+    setDB(dbname);
+    var v = req.body;
+    var vid = v.obj;
+    var filter = v.filter;
 
-exports.load = function (colname, filter, callback) {
+    if (vid == undefined){
+        vid = v;
+    }
+    if (filter !== undefined){
+        filter = prepFilter(filter).query;
+    }
+
+
+    if (filter !== undefined || (vid._id !== null && vid._id !== undefined)){
+        if (filter == undefined){
+            filter = {};
+            filter._id = new ObjectID(vid._id);
+            vid._id = filter._id;
+        }
+
+
+        upsertData(colName, vid, filter, function(err, newid){
+            if (err !== null){
+                handleAppError(res, "Cannot update " + colName, err);
+            }
+            else{
+                res.send(vid);
+            }
+
+        });
+    }
+    else
+    {
+        insertData(colName, vid, function(err, rec){
+            if (err !== null){
+                handleAppError(res, "Cannot add " + colName, err);
+            }
+            else{
+                console.log("new step", rec);
+                res.send(rec);
+            }
+        });
+    }
+}
+
+function load(colname, filter, callback){
     getDB(callback, function (err, db) {
 
         db.collection(colname, function (err, collection) {
@@ -171,6 +228,10 @@ exports.load = function (colname, filter, callback) {
             }
         });
     });
+}
+
+exports.load = function (colname, filter, callback) {
+    load(colname, filter, callback);
 };
 
 exports.aggregate = function(colname, filter, callback){
@@ -199,7 +260,22 @@ var computeData = function(colname, filter, callback){
     });
 }
 
-exports.delete = function (colname, filter, callback) {
+exports.deleteData = function(dbname, colName, req, res){
+    setDB(dbname);
+    var vid = req.body;
+    var pid = new ObjectID(vid._id);
+    var filter = {_id : pid};
+    deleteRec(colName, filter, function(err, ret){
+        if (err !== null){
+            handleError(res, "Cannot delete " + colName, err);
+        }
+        else{
+            res.send(pid);
+        }
+    });
+}
+
+function deleteRec(colname, filter, callback){
     getDB(callback, function (err, db) {
 
         db.collection(colname, function (err, collection) {
@@ -219,9 +295,13 @@ exports.delete = function (colname, filter, callback) {
             }
         });
     });
+}
+
+exports.delete = function (colname, filter, callback) {
+    deleteRec(colname, filter, callback);
 };
 
-exports.insert = function(colname, obj, callback){
+function insertData (colname, obj, callback){
     getDB(callback, function (err, db) {
         db.collection(colname, function (err, collection) {
             if (err !== null) {
@@ -244,8 +324,12 @@ exports.insert = function(colname, obj, callback){
     });
 }
 
-exports.upsert = function (colname, rawobj, filter, callback) {
-    this.checktypes(rawobj, colname, function(obj){
+exports.insert = function(colname, obj, callback){
+    insertData(colname, obj, callback);
+}
+
+function upsertData(colname, rawobj, filter, callback){
+    checktypes(rawobj, colname, function(obj){
         getDB(callback, function (err, db) {
             db.collection(colname, function (err, collection) {
                 if (err !== null) {
@@ -275,6 +359,10 @@ exports.upsert = function (colname, rawobj, filter, callback) {
         });
     });
 
+}
+
+exports.upsert = function (colname, rawobj, filter, callback) {
+    upsertData(colname, rawobj, filter, callback);
 }
 
 exports.compute = function(req, res){
@@ -339,14 +427,14 @@ exports.count = function(colname, filter, callback){
     count(colname, filter, callback);
 }
 
-exports.buildMetaCache = function(dbname, name, callback){
+function buildMetaCache (dbname, name, callback){
     if(metacache[name] !== undefined && metacache[name].length == 0){
         callback(true);
     }
     else
     {
-    this.setDB(dbname);
-    this.load('fields', {objname:name}, function(err, recs){
+    setDB(dbname);
+    load('fields', {objname:name}, function(err, recs){
         if (err !== null){
             handleError(res, "Cannot list products ", err);
         }
@@ -363,20 +451,24 @@ exports.buildMetaCache = function(dbname, name, callback){
     }
 }
 
-exports.checktypes = function(obj, objname, callback){
-    this.buildMetaCache(dbname, objname, function(success){
-            if (success){
-                for(var k in obj){
-                    var key = objname + '.' +  k;
-                    var f = metacache[key];
-                    if(f !== undefined){
-                        var ft = f.fldtype.replace(/\W/g, '');
-                        if(ft == 'currency'|| ft == 'number'){
-                            obj[k] = Number(obj[k]);
-                        }
+function checktypes(obj, objname, callback){
+    buildMetaCache(dbname, objname, function(success){
+        if (success){
+            for(var k in obj){
+                var key = objname + '.' +  k;
+                var f = metacache[key];
+                if(f !== undefined){
+                    var ft = f.fldtype.replace(/\W/g, '');
+                    if(ft == 'currency'|| ft == 'number'){
+                        obj[k] = Number(obj[k]);
                     }
                 }
-                callback(obj);
             }
+            callback(obj);
+        }
     });
+}
+
+exports.checktypes = function(obj, objname, callback){
+    checktypes(obj, objname, callback);
 }

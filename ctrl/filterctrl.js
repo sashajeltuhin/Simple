@@ -22,6 +22,11 @@ function filterctrl($scope, adminservice){
     });
 
     $scope.load = function(){
+        prepFilter();
+        $scope.$emit("EV_FILTER_APPLY", $scope.filter);
+    }
+
+    function prepFilter(){
         for (var i = 0; i < $scope.filterList.length; i++){
             var fd = $scope.filterList[i];
             if (fd.options !== undefined){
@@ -33,14 +38,17 @@ function filterctrl($scope, adminservice){
             else{
                 $scope.filter[fd.fldname] = fd.fldvalue;
             }
-
         }
-        $scope.$emit("EV_FILTER_APPLY", $scope.filter);
     }
 
     $scope.reset = function(){
         $scope.$emit("EV_FILTER_RESET");
         reload(origMeta, origFilter);
+    }
+
+    $scope.onfldChange = function(fd){
+        prepFilter();
+        $scope.$emit("EV_FILTER_CHANGED", $scope.filter);
     }
 
     function reload(meta, filter){
@@ -64,8 +72,8 @@ function filterctrl($scope, adminservice){
 
                         var optval = metafld.optfld !== undefined ? item[metafld.optfld]: item;
                         var optdesc = metafld.optlabel !== undefined && metafld.optlabel !== "" ? item[metafld.optlabel]: optval;
-                        filter[metafld.fldname][optval] = filter[metafld.fldname][optval] !== undefined && filter[metafld.fldname][optval] == true;
-                        opt.optvalue = filter[metafld.fldname][optval];
+                        //filter[metafld.fldname][optval] = filter[metafld.fldname][optval] !== undefined && filter[metafld.fldname] == optval;
+                        opt.optvalue = filter[metafld.fldname] == optval;
                         opt.label = optdesc;
                     });
                 }

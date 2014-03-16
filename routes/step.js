@@ -25,49 +25,12 @@ exports.list = function (req, res){
 }
 
 exports.save = function(req, res){
-    db.setDB(dbname);
-    var v = req.body;
-    var vid = v.obj;
-    var filter = v.filter;
-
-    if (vid == undefined){
-        vid = v;
-    }
-    if (filter !== undefined){
-        filter = db.getFilter(filter).query;
-    }
+    db.saveData(dbname, colName, req, res);
+}
 
 
-    if (filter !== undefined || (vid._id !== null && vid._id !== undefined)){
-        if (filter == undefined){
-            filter = {};
-            filter._id = new ObjectID(vid._id);
-            vid._id = filter._id;
-        }
-
-
-        db.upsert(colName, vid, filter, function(err, newid){
-            if (err !== null){
-                handleError(res, "Cannot update step ", err);
-            }
-            else{
-                res.send(vid);
-            }
-
-        });
-    }
-    else
-    {
-        db.insert(colName, vid, function(err, rec){
-            if (err !== null){
-                handleError(res, "Cannot add step ", err);
-            }
-            else{
-                console.log("new step", rec);
-                res.send(rec);
-            }
-        });
-    }
+exports.delete = function(req, res){
+    db.deleteData(dbname, colName, req, res);
 }
 
 exports.update = function(widget, callback){
@@ -85,20 +48,7 @@ exports.update = function(widget, callback){
     });
 }
 
-exports.delete = function(req, res){
-    db.setDB(dbname);
-    var vid = req.body;
-    var pid = new ObjectID(vid._id);
-    var filter = {_id : pid};
-    db.delete(colName, filter, function(err, ret){
-        if (err !== null){
-            handleError(res, "Cannot delete step ", err);
-        }
-        else{
-            res.send(pid);
-        }
-    });
-}
+
 
 
 

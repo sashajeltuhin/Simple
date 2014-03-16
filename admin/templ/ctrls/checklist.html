@@ -2,6 +2,6 @@
     <label>{{fd.label}}</label>
 <div class="checkbox" ng-repeat="opt in fd.options">
     <label>
-        <input type="checkbox" ng-model="opt.optvalue"> {{opt.label}}</label>
+        <input type="checkbox" ng-model="opt.optvalue" ng-change="onfldChange(fd)"> {{opt.label}}</label>
 </div>
 </div>
