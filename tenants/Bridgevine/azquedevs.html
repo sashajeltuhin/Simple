@@ -1,0 +1,12 @@
+<div>{{currentQue.label}}</div>
+
+<div class="clearer h20">&nbsp;</div>
+
+<div class="box-1 style3" ng-repeat="r in currentQue.responses">
+    <div class="inner clearfix">
+        <div class="icons"><img src="{{topUrl}}{{r.imageUrl}}"></div>
+        <h4>{{r.label}}<br>&nbsp;</h4>
+        <div align="center"><input ng-click="answer(r)" ng-model="r.selected" type="checkbox"></div>
+    </div>
+</div>
+

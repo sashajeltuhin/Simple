@@ -1,0 +1,993 @@
+/*------------------------------------------------------------------
+[Color Pallet]
+*Main colors
+    Bankrate blue       #5583BF
+    Dark blue           #2E3A50
+    Dark grey           #444444
+    Grey                #999999
+    Light grey          #E5E5E5
+
+*Text colors
+    Body text           #666666
+    Title text          #505050
+    Input text          #333333
+    Footnote            #999999
+    Link text           #5583BF
+    Green text          #1E894E
+    Red text            #D7434D
+    Grey (No change)    #888888
+
+[Table of contents]
+* Icon Fonts
+* Body
+    - Content
+        + General typography
+        - Header
+            - new header overide
+        - well
+            - section
+            - section_menu
+            - article / story modules
+            - no borders
+            - combo boxes
+            -shade colors
+            -buttons
+            -libor
+            -blog
+            -overnight average
+            - rate search widget
+        - right rails
+            - grey_title
+            - form
+            -overides
+            -connect with us
+            -fancy dropdown select boxes
+            -rate average box
+            -simple list
+            -overnight averages
+            -dl
+        - Calculator
+------------------------------------------------------------------*/
+/* icomoon
+@font-face {
+  font-family: 'icomoon';
+  src:url('/system/fonts/icomoon.eot');
+  src:url('/system/fonts/icomoon.eot?#iefix') format('embedded-opentype'),
+    url('/system/fonts/icomoon.svg#icomoon') format('svg'),
+    url('/system/fonts/icomoon.woff') format('woff'),
+    url('/system/fonts/icomoon.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* Use the following CSS code if you want to use data attributes for inserting your icons
+[data-icon]:before {font-family: 'icomoon';content: attr(data-icon);speak: none;font-weight: normal;-webkit-font-smoothing: antialiased;}
+
+.icon-VA:before {content: "\23";}
+.icon-FHA:before {content: "\3d";}
+.icon-Better-Business-Bureau:before {content: "\25";}
+.icon-Low-fees:before { content: "\26";}
+.icon-Lock-rate:before {content: "\27";}
+.icon-Round-the-clock-support:before {content: "\28";}
+.icon-Local-lender:before { content: "\29";}
+.icon-5-Year-Bankrate-affiliate:before {content: "\35";}
+.icon-3-Year-Bankrate-affiliate:before {content: "\33";}
+.icon-National-lender:before {content: "\2c";}
+.icon-10-Year-Bankrate-affiliate:before {content: "\30";}
+.icon-Government-loans:before {content: "\21";}
+.icon-HARP:before {content: "\22";}
+.icon-twitter:before {content: "\2e";}
+.icon-gplus:before {content: "\67";}
+.icon-plus:before {content: "\2b";}
+.icon-arrow-up:before {content: "\75";}
+.icon-arrow-down:before {content: "\64";}
+.icon-rss:before {content: "\32";}
+.icon-facebook:before { content: "\66";}
+.icon-email:before {content: "\34";}
+.icon-calculator:before {content: "\2a";}
+.icon-bookmark:before {content: "\36";}
+.icon-at:before {content: "\40";}
+.icon-rate:before {content: "\38";}
+.icon-linkedin:before {content: "\39";}
+.icon-house:before {content: "\3a";}
+.icon-fever_line:before {content: "\3b";}
+.icon-same:before {content: "\73";}
+
+/*---Body---*/
+body {background:rgb(255,255,255) !important;}
+
+/*---New header overide---*/
+#brheader6 {margin-bottom: 15px !important;}
+
+/*---Content---*/
+.pageHolder {color: #666;font-size: 12px;width:981px;}
+.pageHolder a {color:#5583BF;}
+.pageHolder a:visited {color:#959595!important;}
+.pageHolder h1 {margin:0px 0 19px 0;}
+.pageHolder h1, .pageHolder h1 a {color: #666666;font-size: 22px;font-weight: normal;text-transform: uppercase;text-decoration: none; font-family:trebuchet ms, Arial, Helvetica, sans-serif;}
+.pageHolder h1.smaller, .pageHolder h1.smaller a {color: #666666;font-size: 20px;font-weight: normal;text-transform: uppercase;text-decoration: none; font-family:trebuchet ms, Arial, Helvetica, sans-serif;}
+.pageHolder h2, .pageHolder h2 a {color:#666666; font-size:17px; font-weight:bold; text-decoration:none;font-family:Arial; margin:14px 0;}
+.pageHolder h3, .pageHolder h3 a {color:#666666; font-size:13px; font-weight:normal; text-transform:uppercase; text-decoration:none;font-family:Arial;}
+
+.well, .rightRail {display:inline-block; vertical-align:top;}
+.well {width:635px; margin-right:29px;padding:0px 0px 20px 0px; margin-bottom:20px;;border: 1px solid #E0E0E0;border-width: 0px 0px 1px 0px; }
+
+
+
+
+.section {display:inline-block;zoom: 1;*display: inline;vertical-align:top;}
+.section.halves {width:48%; margin-left:3%;}
+
+.section_menu {clear:both;}
+.section_menu a {display: inline-block;margin:3px 0px 3px 5px;padding: 10px 8px;text-align: left; width: 29%;zoom: 1;*display: inline;}
+.section_menu a small {display: block;padding-left: 5px;}
+
+.article {border:1px solid #e0e0e0; border-width:1px 0px 0px 0px; padding:10px 0px; overflow:hidden;clear:both;}
+.article h2, .article3 h2 {margin-bottom:3px;}
+.article h3, .article3 h2 {margin-top:0px;color: #666;font-size: 13px;font-weight: normal;text-transform: uppercase;text-decoration: none; font-family:trebuchet ms, Arial, Helvetica, sans-serif;}
+.article p, .article3 p {line-height:16px; margin-top:0px;margin-bottom:6px;}
+.article ul, .article3 ul {float:left; list-style-type:none; padding:0px; margin-top:0px;}
+.article  ul li, .article3 ul li, .TSList li {margin-bottom:6px;}
+.story_image {margin:0px 18px 8px 0px; float:left;border:1px solid #E5E5E5; padding:4px;}
+.time {font-size:11px; font-weight:bold; padding-bottom:8px; padding-top:2px; display:block;}
+
+.article .br_box_sponsor {margin-top: 0px!important;}
+
+.article .time, .boxSingle .time {display: none;}
+
+.article2 {border:1px solid #e0e0e0; border-width:1px 0px 0px 0px; padding:10px 0px; overflow:hidden;clear:both;}
+.article2 h2 {margin-bottom:3px;}
+.article2 h3 {margin-top:0px;color: #666;font-size: 13px;font-weight: normal;text-transform: uppercase;text-decoration: none; font-family:trebuchet ms, Arial, Helvetica, sans-serif;}
+.article2 p {line-height:16px; margin-bottom: 15px!important;}
+
+.article3 {border: 0px; padding:10px 0px; overflow:hidden;clear:both;}
+.q_question:before, .a_answer:before { margin: 0 6px 5px 0; padding: 0 0 10px 0;}
+
+
+.bythenumberstbl {border-collapse:collapse;border-spacing:1px;border:0px;margin: 25px 0;}
+.bythenumberstbl td {font-size:14px;padding:15px;color:#666;background-color:#fff;text-align:left;vertical-align: top;}
+.bythenumberstbl td:first-child {color:#284D72; font-size: 48px; font-family: Trebuchet MS;border: dotted #AABDD4; border-width:0px 1px 0px 0px; text-align: right;}
+.bythenumberstbl tr {border: dotted #AABDD4; border-width:0px 0px 1px 0px;}
+.bythenumberstbl tr.last {border-bottom: none;}
+
+.bythenumberstbl th {background-color:#3D5E86;font-weight:bold;color:#fff;padding:8px;border:solid #AABDD4;border-width:1px 1px 1px 0;}
+.bythenumberstbl h3 {font-family: Arial; font-size: 17px; font-weight: normal; color: #ffffff;text-align: left;text-transform: none;}
+.bythenumberstbl th > p {float: left;line-height: 14px; margin: 5px 0;}
+
+.no_borders, .no_borders .article {border:0}
+
+.combo.thirds > div {width: 30%;display: inline-block;overflow: hidden;vertical-align: top;margin-left: 4%;zoom: 1;*display: inline;}
+.combo.thirds > div:first-child {margin-left:0;}
+.combo h2 {padding-bottom:10px;}
+.combo img {margin-bottom:5px;}
+.frame_image {border: 1px solid #E5E5E5;padding: 4px;}
+.simple_bullet {list-style-type:disc !important; padding-left:15px !important; margin-bottom: 10px !important; overflow: hidden;}
+.first {margin-left:0px !important;}
+.combo h3 ~ div h2 {margin-top:0px;}
+.combo.halves, .two_thirds {padding: 20px 0 !important;}
+.combo.halves.left {float:left;clear:none !important; width:48% !important;margin-left:20px;}
+.combo.halves > div, .combo.halves h3 {width:47%; margin-left:5%;display: inline-block;overflow: hidden;vertical-align: top;zoom: 1;*display: inline;}
+.combo.halves h2, .combo.two_thirds h2 {padding-bottom:0px;}
+
+.combo.two_thirds > div, .combo.two_thirds h3 {width:34%; margin-left:5%;display: inline-block;overflow: hidden;vertical-align: top;zoom: 1;*display: inline;}
+.combo.two_thirds > div.first, .combo.two_thirds h3.first {width:55%;}
+.combo.two_thirds .line {border-right: 1px solid #E0E0E0;padding-right: 32px;}
+.combo.two_thirds h3.line {border-right:0;padding-right: 33px;}
+
+.combo .frame_image {width:180px !important; height:96px !important;}
+.combo h2, .combo h2 a {font-size:13px !important;}
+.combo.smalltext {font-size:11px;}
+.shade_grey {background-color:#E5E5E5;padding:5px;}
+.button_white {
+    border: 1px solid #CCCCCC;
+    background: #EEEEEE;
+    background: -webkit-gradient(linear, left top, left bottom, from(#FFFFFF), to(#EEEEEE));
+    background: -webkit-linear-gradient(top, #FFFFFF, #EEEEEE);
+    background: -moz-linear-gradient(top, #FFFFFF, #EEEEEE);
+    background: -ms-linear-gradient(top, #FFFFFF, #EEEEEE);
+    background: -o-linear-gradient(top, #FFFFFF, #EEEEEE);
+    background-image: -ms-linear-gradient(top, #FFFFFF 0%, #EEEEEE 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#eeeeee',GradientType=0 );
+    padding: 8px 16px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    -webkit-box-shadow: rgba(255,255,255,0.4) 0 0px 0, inset rgba(255,255,255,0.4) 0 1px 0;
+    -moz-box-shadow: rgba(255,255,255,0.4) 0 0px 0, inset rgba(255,255,255,0.4) 0 1px 0;
+    box-shadow: rgba(255,255,255,0.4) 0 0px 0, inset rgba(255,255,255,0.4) 0 1px 0;
+    text-shadow: #FFFFFF 0 1px 0;
+    color: #333333;
+    font-size: 12px;
+    font-family: Arial, Helvetica, Serif;
+    font-weight: bold;
+    text-decoration: none;
+    vertical-align: middle;
+}
+.button_white:hover {
+    border: 1px solid #CCCCCC;
+    text-shadow: #FFFFFF 0 1px 0;
+    background: #EEEEEE;
+    background: -webkit-gradient(linear, left top, left bottom, from(#FFFFFF), to(#EEEEEE));
+    background: -webkit-linear-gradient(top, #FFFFFF, #EEEEEE);
+    background: -moz-linear-gradient(top, #FFFFFF, #EEEEEE);
+    background: -ms-linear-gradient(top, #FFFFFF, #EEEEEE);
+    background: -o-linear-gradient(top, #FFFFFF, #EEEEEE);
+    background-image: -ms-linear-gradient(top, #FFFFFF 0%, #EEEEEE 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#eeeeee',GradientType=0 );
+    color: #333333;
+    text-decoration: none;
+}
+.button_white:active {
+    text-shadow: #FFFFFF 0 1px 0;
+    border: 1px solid #CCCCCC;
+    background: #FFFFFF;
+    background: -webkit-gradient(linear, left top, left bottom, from(#EEEEEE), to(#EEEEEE));
+    background: -webkit-linear-gradient(top, #EEEEEE, #FFFFFF);
+    background: -moz-linear-gradient(top, #EEEEEE, #FFFFFF);
+    background: -ms-linear-gradient(top, #EEEEEE, #FFFFFF);
+    background: -o-linear-gradient(top, #EEEEEE, #FFFFFF);
+    background-image: -ms-linear-gradient(top, #EEEEEE 0%, #FFFFFF 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', endColorstr='#ffffff',GradientType=0 );
+    color: #333333;
+}
+
+
+a.submit-button {
+    background: none repeat scroll 0 0 #4F81BD;
+    border: 0 none;
+    border-radius: 2px 2px 2px 2px;
+    color: #FFFFFF;
+    float: right;
+    font-weight: bold;
+    padding: 4px 5px;
+    position: relative;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-size: 12px;
+}
+
+a.submit-button:before {
+    background: none repeat scroll 0 0 #63AAFF;
+    content: " ";
+    display: block;
+    height: 1px;
+    margin-left: -5px;
+    position: absolute;
+    top: 1px;
+    width: 100%;
+}
+
+/* SUBMIT-BASELINE-LINK (Use this class when adding a line of text aligned to the bottom left of a blue button ie safesound)   */
+.submit-baseline-link {display: block; margin-top: 22px;}
+
+.libor {border-bottom: 1px solid #E7E7E7;border-top: 1px solid #E7E7E7;padding-bottom: 4px;}
+.libor td {background: none repeat scroll 0% 0% #F5F5F5;border-top: 4px solid #FFFFFF;padding: 4px;}
+.libor .row_odd td {background: none repeat scroll 0% 0% #E7E7E7;}
+.libor .rate {color: #000000;font-weight: bold;}
+.libor .rate_change_up .rate {color: #1E894E;}
+.libor .rate_change_down .rate {color:#000;}
+.blog .story_image {margin-bottom:11px;clear:left;}
+.blog ul {padding-left: 96px;float:none !important;}
+.blog ul.simple_list {padding-left:0px;}
+.blog h2 ~ h2 {margin-top:0px;}
+
+.rate_averages_mod article h3 {margin-top: 0;}
+.rate_averages_mod h3, .rate_averages_mod h3 a {color: #666666;font-size: 13px;font-weight: normal;text-decoration: none;text-transform: uppercase;}
+.mod_note {float: right;font-size: 10px;text-transform: uppercase;}
+.rate_averages_mod a.mod_note:link, .rate_averages_mod a.mod_note:visited {color: #999999;}
+.rate_averages_mod a.mod_note:hover {color: #74A6DB;}
+.rate_averages {color: #505050;font-family: "Trebuchet MS",sans-serif;font-size: 15px;margin-bottom: 0px;margin-top: 1px;}
+.rate_averages a, .rate_averages a:visited {color: #505050;}
+.rate_averages tr td {border-right: 0;padding: 2px;vertical-align: middle;}
+.rate_averages tr td:first-child ~ td {line-height: 19px; text-align:center; border-right:0; }
+.rate_averages tr td.rate_graph {padding: 0;width: 222px;}
+.rate_averages tr td.rate {font-size: 17px;line-height: 27px; width:18%; vertical-align:middle;}
+.rate_averages tbody tr:nth-child(1) td,
+.rate_averages tbody tr:nth-child(3) td,
+.rate_averages tbody tr:nth-child(5) td {background-color: #f5f5f5; border:1px solid #ddd; border-width:1px 0;}
+.rate_averages tr.rate_change_up td.rate_change, .rate_averages tr.rate_change_up td.rate_change a {color: #1E894E;}
+.rate_averages tr.rate_change_down td.rate_change, .rate_averages tr.rate_change_down td.rate_change a {color: #D7434D;}
+.rate_averages tr.rate_change_same td.rate_change, .rate_averages tr.rate_change_same td.rate_change a {color: #888888;}
+.rate_change {padding: 0 !important;}
+.rate_change_same .rate_change span {margin: 0 2px 0 5px;}
+.rate_averages tr td.product_name {border-right: 0 none;font-size: 11px;font-weight: bold;line-height: 8px;padding-top: 10px;padding-bottom: 3px;text-transform: uppercase;vertical-align: bottom;}
+.rate_averages td.rate_action {vertical-align:middle !important;}
+.rate_averages td.rate_action, .rate_averages td.rate_graph {border-right: 0 none;font-size: 11px;}
+.rate_averages td.rate_action a, .rate_averages td.rate_action a:visited {display: block;font-size: 11px;line-height: 11px; color:#5583BF;}
+.rate_averages td.rate_action a:first-child {font-weight: bold;   line-height: 12px;text-transform: uppercase;text-align: center;}
+.rate_action a.button {background:#4F81BD;color:#fff !important;text-transform:uppercase;text-decoration:none;padding:4px 5px;border-radius:2px;font-weight:bold;position:relative;float:left;border:0;}
+.rate_action a.button:before {content: " ";height: 1px;width: 100%;background: #63aaff;position: absolute;top: 1px;display: block;margin-left:-5px;}
+.rate_averages em {color: #989898;display: block;font-size: 10px;font-style: normal;font-weight: bold;line-height: 10px;text-transform: uppercase;}
+.rate_averages .up_arrow {border-bottom: 7px solid #D7434D;border-left: 7px solid transparent;border-right: 7px solid transparent;display: inline-block;height: 0;line-height: 0;margin-bottom: 7px;vertical-align: middle; margin-right: 3px;width: 0;}
+.rate_averages .up_arrow:before {background: none repeat scroll 0 0 #D7434D;border-left: 1px solid #D7434D;content: " ";height: 5px;margin: 5px 0 0 -3px;position: absolute;width: 5px;}
+.rate_averages .down_arrow {border-left: 7px solid transparent;border-right: 7px solid transparent;border-top: 7px solid #1E894E;display: inline-block;height: 0;line-height: 0;vertical-align: middle; margin-right: 3px;width: 0;}
+.rate_averages .down_arrow:before {background: none repeat scroll 0 0 #1E894E;border-right: 1px solid #1E894E;  content: " ";height: 5px;margin: -10px 0 0 -3px;position: absolute;width: 5px;}
+.rightRail .rate_averages {margin-bottom:30px;}
+.rate_averages .rate_action,
+.rate_averages .rate_change {white-space: nowrap;}
+.rate_averages tr td:first-child {padding-left:3px;}
+.rate_averages .space td {border:0;line-height:0px;}
+.rate_averages .product { font-size: 13px; white-space: nowrap;}
+.rate_averages .rate_change {min-width: 50px;}
+.rate_averages .rate_change {font-size: 12px;}
+
+.rate_averages .rate_change_up .up_arrow:before {background-color:#1E894E;border-color:#1E894E;}
+.rate_averages .rate_change_up .up_arrow {border-bottom-color:#1E894E;}
+
+.rate_averages_mod tfoot td {border:0; background:#ddd; padding: 5px !important;}
+.rate_averages_mod tfoot input {width:78px;padding:4px;margin:0px;}
+.rate_averages_mod tfoot span {font-size: 10px; font-weight: bold; text-transform: uppercase;}
+.rate_averages_mod tfoot .submit {background: #4F81BD; border: 0; border-radius: 2px; color: #ffffff!important; font-weight: bold; padding: 4px 5px; position: relative; text-transform: uppercase; text-decoration: none; font-size: 12px;}
+.rate_averages_mod tfoot .submit:before {content: " "; height: 1px; width: 100%; background: #63aaff; position: absolute; top: 1px; left:0; display: block; }
+
+.rate_averages.cd .down_arrow:before {background-color:#D7434D;border-color:#D7434D;}
+.rate_averages.cd .down_arrow {border-top-color:#D7434D;}
+
+
+.oaTabs .tab a {background:#999; display: block; color:#fff; padding: 5px; font-size: 10px; white-space: nowrap; font-family:'Trebuchet MS'; text-align: center; }
+.oaTabs .tab a:hover {text-decoration: none; }
+.oaTabs .selected a {background:#5583BF;}
+.oaTabs .tab {padding-left: 4px; }
+.oaTabs .tab:first-child {padding-left: 0px; }
+.rate_averages thead td {border: 0; font-size: 11px; color:#666; padding-top: 0; vertical-align: middle; white-space: nowrap; }
+
+.cc .fancy_drop {width:230px;float:left;margin-right:6px;}
+.rate_last_week {border-right:0 !important;}
+/* end oa rate averages with tabs */
+
+.rate_graph img{width:250px;}
+.rate_graph img.frame_image {width:214px;}
+.teaser strong a {color:#666 !important;}
+
+.gearbox .tabs {list-style-type:none;height:39px;width:100%;}
+.gearbox .tabs li {border:1px solid #fff; border-width:1px 1px 0px 1px;display:block; float:left;height:38px;line-height:35px;font-size:12px;color:#fff;font-weight:bold;}
+.gearbox .tabs li.selected {border:1px solid #A7A9AC; border-width:1px 1px 0px 1px;border-radius:10px 10px 0px 0px;}
+.gearbox .tabs li.selected a {background:#fff;border-radius:10px 10px 0px 0px;border:3px solid #fff; border-width:3px 3px 0px 3px;padding:0px 4px 4px 4px;}
+.gearbox .tabs a {text-decoration:none;display:block;padding:3px 7px 2px 7px;cursor:pointer;}
+.gearbox .tabs a label {background:#5681b8;color:#fff;padding:5px 18px;border-top:2px solid #90a7cf;cursor:pointer;}
+.gearbox .tabs li.selected label {background:#203a70;}
+.gearset .tabs li {border:1px solid #eef2f8; border-width:1px 1px 0px 1px;}
+.gearset .tabs {float:left; height:36px;}
+.gearset .tabs li {line-height:normal;height:35px;}
+.gearset label {float:left; height:29px; line-height:29px;min-width:101px; text-align:right;color:#213A70;}
+.gearset a.submit:before {margin-left: -5px !important;}
+.gearset a.submit {margin-right:6px !important;}
+.gearset small {display:block; padding-bottom:4px;}
+.gearset small a {text-decoration:underline;}
+
+.gearbox .faux_drop
+{
+    background: #ffffff;
+    background: -moz-linear-gradient(top, #ffffff 0%, #d9d8d9 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#d9d8d9));
+    background: -webkit-linear-gradient(top, #ffffff 0%,#d9d8d9 100%);
+    background: -o-linear-gradient(top, #ffffff 0%,#d9d8d9 100%);
+    background: -ms-linear-gradient(top, #ffffff 0%,#d9d8d9 100%);
+    background: linear-gradient(to bottom, #ffffff 0%,#d9d8d9 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#d9d8d9',GradientType=0 );
+    float:left;
+    border:1px solid #B8BABC;
+    margin-right:5px;
+    overflow:hidden;
+    position:relative;
+}
+
+.gearbox .faux_drop select
+{
+    font-size:13px;
+    font-family:Arial;
+    font-weight:bold;
+    color:#213A70;
+    border:0;
+    background:transparent;
+    -webkit-appearance: none;
+    height:27px;
+    padding:5px 0px 5px 5px;
+    margin:0px -20px 0px 0px;
+    position:relative;
+    z-index:1;
+}
+
+.gearbox .faux_drop select option
+{
+    font-size:16px;
+}
+
+.gearbox .faux_drop:after
+{
+    content: " ";
+    width:0;
+    height:0;
+    border:4px solid #333;
+    border-color:#333 transparent transparent ;
+    position:absolute;
+    right:4px;
+    top:13px;
+    z-index:0;
+}
+
+.gearbox input[type=text] {float:left;font-size:13px;font-family:Arial;font-weight:bold;color:#213A70;border:1px solid #B8BABC;margin:0px 5px 0px 0px; height:25px;line-height:25px;padding-left:5px;  }
+
+.small_drop { width:140px;}
+.med_drop { width:177px;}
+.large_drop {width:240px;}
+
+.gearset {overflow:auto;padding:3px 5px 3px 8px;background:#fff;border-radius:5px; margin:3px 3px 3px 3px;}
+.gearbox .br-tab-content
+{
+    padding:0px;
+    background:#fff;
+    position:static;
+    border:1px solid #a7a9ac;
+    border-radius:0px 5px 5px 5px;
+    clear:both;
+}
+
+#mortgage-search #market {width: 213px !important;}
+#mortgage-search .gearset .faux_drop + .faux_drop, .loan_type {margin-right:0px !important}
+
+.rightRail {width:310px;margin-left:0;overflow:hidden;padding-top:0px;}
+.grey_title {background: #444;color: white;min-height: 23px;text-transform: uppercase;padding: 4px 9px;font-weight: bold;line-height: 23px;border-radius: 2px;position:relative;margin-bottom:10px;border-bottom:0px !important;}
+.grey_title:before {content: " ";height: 1px;width: 100%;background: dimGray;position: absolute;top: 1px;display: block;margin-left: -9px;}
+.grey_title a, .grey_title a:visited {color:#fff!important;}
+ol.form {padding-left:20px;text-align:right;font-family: "Trebuchet MS",sans-serif;}
+ul.form {padding-left:0px;text-align:right;font-family: "Trebuchet MS",sans-serif;margin-bottom:5px;}
+ul#compare_mortgage_rates {padding:0px !important;}
+.form li {margin-bottom:7px;min-height:17px; list-style-type:none;}
+.form .submit, .form .error {list-style-type:none;}
+.form input[type="text"] {border: 1px solid #999;padding: 4px 5px;border-radius: 2px;color:#666;font-size:12px;}
+.get_form {margin-bottom:0px;}
+.get_form a.submit, .form .submit a  {background:#4F81BD; border:0; border-radius:2px; color:#fff!important; float:right; font-weight:bold; padding:4px 5px; position:relative; text-transform:uppercase; text-decoration:none;}
+/*  .get_form a.submit:before, .form .submit a:before {content: " ";height: 1px;width: 100%;background: #63aaff;position: absolute;top: 1px;display: block;margin-left:0;}*/
+.form .error {color:red; margin-bottom:0px;text-align:left;}
+.form span.error, .get_form .error {display:none;}
+.br_form_error {color:#D7434D !important;}
+/*.br_form_error {border:1px solid #D7434D !important;-webkit-box-shadow: 0px 0px 3px 1px #D7434D;box-shadow: 0px 0px 3px 1px #D7434D;}*/
+
+.boxContainerRightRail {background-color: white;margin: 0 0 30px 0;font-size: 11px;text-align: center; padding:0px; width: 300px;}
+.rightRail .bgAdBlue.pad9 {background:none; padding:0;}
+.rightRail .fs9.fcAdGrey.ad {padding-right:11px;}
+
+.br_connect {font-size: 12px;text-transform: uppercase;font-weight: bold;padding:0px 3px 10px 0px !important; overflow:hidden;}
+.br_connect span {margin-right: 15px;float: left;margin-top: 6px;}
+.br_connect a {font-family: icomoon;font-size: 24px;text-transform: none;color: #999;text-decoration: none;float:right;margin-left:5px;}
+.br_connect.sprite a {font-family:Arial !important; width:26px; height:26px; overflow:hidden;margin-left:3px;}
+.br_connect.sprite .sp_facebook {background: url('/system/img/connect_with_us.png') no-repeat -2px -2px}
+.br_connect.sprite .sp_twitter {background: url('/system/img/connect_with_us.png') no-repeat -29px -2px;}
+.br_connect.sprite .sp_google {background: url('/system/img/connect_with_us.png') no-repeat -56px -2px;}
+.br_connect.sprite .sp_rss {background: url('/system/img/connect_with_us.png') no-repeat -83px -2px;}
+.br_connect.sprite .sp_email {background: url('/system/img/connect_with_us.png') no-repeat -110px -2px;}
+.br_connect.sprite .sp_bookmark {background: url('/system/img/connect_with_us.png') no-repeat -137px -2px}
+
+div.fancy_drop {
+    background: #ffffff;
+    background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNlZGVkZWQiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+    background: -moz-linear-gradient(top,  #ffffff 0%, #ededed 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#ededed));
+    background: -webkit-linear-gradient(top,  #ffffff 0%,#ededed 100%);
+    background: -o-linear-gradient(top,  #ffffff 0%,#ededed 100%);
+    background: -ms-linear-gradient(top,  #ffffff 0%,#ededed 100%);
+    background: linear-gradient(to bottom,  #ffffff 0%,#ededed 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ededed',GradientType=0 );
+    border:1px solid #fff;
+    outline:1px solid #ababab;
+    height:22px;
+    overflow:hidden;
+    display:inline-block;
+    width:133px;
+    cursor:pointer;
+    position:relative;
+    border-radius:3px;
+    zoom: 1;*display: inline;
+}
+div.fancy_drop .fancy_arrow {content: " "; width:0px;height:0px; border-left:5px solid transparent; border-top:5px solid #aaa;  border-right:5px solid transparent; position:absolute; top:10px; right:5px;}
+div.fancy_drop select {border:0; margin:0; background:transparent;  -webkit-appearance: none; min-width:280px; color:#666666; font-size:12px; padding:2px 5px;position:relative;z-index:1;}
+.rightRail div.fancy_drop {margin:0px 3px 0px 2px;vertical-align:middle;}
+.rightRail div.fancy_drop select {min-width:200px;}
+.fancy_arrow_container {
+    background: #ffffff;
+    background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNlZGVkZWQiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+    background: -moz-linear-gradient(top,  #ffffff 0%, #ededed 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#ededed));
+    background: -webkit-linear-gradient(top,  #ffffff 0%,#ededed 100%);
+    background: -o-linear-gradient(top,  #ffffff 0%,#ededed 100%);
+    background: -ms-linear-gradient(top,  #ffffff 0%,#ededed 100%);
+    background: linear-gradient(to bottom,  #ffffff 0%,#ededed 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ededed',GradientType=0 );padding: 20px 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 19px;
+    z-index: 99;
+}
+
+.rate-avg {text-align: center; float:right;margin-bottom:4px;height:68px; /*overflow:hidden;*/}
+.rate-avg dl {border: 1px solid #E5E5E5;margin: 0px;padding: 5px;}
+.rate-avg dt {color: #4F81BD;font-size: 30px;}
+.rate-avg dd {font-weight: bold;margin: 0px; /*padding: 3px 0px;*/ text-transform: uppercase;font-size:11px;}
+.rate-avg .mod_note {color: #999999;display: block;float: none;padding: 6px 0px;text-align: center;}
+
+#compare_mortgage_rates input[type=text] {width:125px;}
+#compare_mortgage_rates input[name=loan] {width:99px !important;}
+
+.simple_list {margin:0px;padding-left:30px;}
+.simple_list li {margin-bottom:4px;}
+.simple_list.tall_space li {margin-bottom:10px !important;}
+.simple_list.halves {margin-left:10%;}
+.rightRail .simple_list {margin-bottom:15px; padding-left: 30px;}
+
+.rightRail .rate_averages_mod tr:first-child .product_name {padding-top:0px;}
+
+dl dt {margin-bottom: 5px;}
+dl dt strong {color:#5583BF;}
+dl dd {margin-bottom: 15px;margin-left:20px}
+
+
+
+.bottom_module {border-top: 1px solid #E5E5E5; padding-top: 15px;}
+.boxSingle h2, .boxSingle h2 a {color: #505050; font-family: Arial; font-size: 16px; font-weight: bold; margin: 10px 0 0 0; padding: 0px; text-decoration: none;}
+.boxSingle h3, .boxSingle h3 a, .boxSingle h4, .boxSingle h4 a,.boxSingle h3 a:visited, .boxSingle h4 a:visited {color: #666;font-size: 13px; font-weight: normal; text-transform: uppercase;text-decoration: none;margin: 0px; padding: 0px; font-family:trebuchet ms, Arial, Helvetica, sans-serif;}
+.boxSingle h4, .boxSingle h4 a {font-weight: bold;}
+.boxSingle p {line-height:16px; margin-top:3px;}
+.boxSingle .br_box_sponsor {float: right; margin: -3px 0 0;}
+.well .boxSingle,
+#mobileWell .boxSingle {float: left; background-color: #ffffff; padding-bottom: 10px; overflow: hidden; position: relative; width: 49.9%;}
+.well .boxSingle .first,
+#mobileWell .boxSingle .first {padding: 0 25px 0 0; border-right: 1px solid #E0E0E0; overflow: hidden;}
+.well .boxSingle .second,
+#mobileWell .boxSingle .second {padding: 0 0 0 17px!important;}
+.boxSingle .story_image {margin:0px 10px 10px 0px; float:left;border:1px solid #E5E5E5; padding:4px;}
+#mobileWell {padding-top:8px;}
+/*home page slider change*/
+#mobileWell .slide-container h2 {margin-bottom: 3px;margin-top: 5px;}
+#mobileWell #br-slider {padding-bottom:15px;}
+#mobileWell #Top5Calculators {padding-top:8px}
+#mobileWell .slide-container h2 , #mobileWell .slide-container h2 a {font-size:18px !important;}
+
+.rightRail .boxSingle {border-top: 1px solid #E5E5E5; border-bottom: 1px solid #E5E5E5; padding: 9px 0px;}
+.rightRail .boxSingle,.rightRail .boxSingleNoBorders {overflow: auto; margin-bottom: 30px;}
+
+.rightRail .boxSingleBottomBorder {border-bottom: 1px solid #E5E5E5; padding: 9px 0px; margin-bottom: 20px; overflow: hidden;}
+
+.TSList {list-style-type: disc !important; margin: 10px 0px 0px 14px !important; max-width: 305px;}
+
+.boxSingle .content {padding: 0 10px 0 10px;}
+.boxSingle .rate-avg {margin-bottom: 16px;}
+.boxSingle ul.form {text-align: left; margin-bottom: 5px; padding: 3px 0 0 0;}
+.boxSingle .form li {list-style-type: none;   margin: 0px 0px 15px 0px;   min-height: 15px;}
+.boxSingle .form li.last {margin: 10px 0 6px !important}
+.boxSingle div.fancy_drop {width: 177px; margin-top: 1px;}
+.well .li-break {clear: both; display: block; margin-bottom: 10px; min-height: 15px;}
+.well .boxSingle .form input[type="text"], #mobileWell .boxSingle .form input[type="text"] {float: left; margin: 7px 0px 0px 0px; width: 65%;}
+
+.input-option {margin: 0px 10px 0px 5px;}
+
+.emphasized_list, .HRList {margin:0px; padding:9px 0px 0px 0px; list-style-type:none; font-family:Arial; font-size:14px;}
+.emphasized_list li, .HRList li {background:url(http://www.bankrate.com/system/img/blbut.gif) no-repeat left 50%; padding:7px 5px 5px 15px; border-bottom:1px dotted #7d7f8c;}
+.emphasized_list li:last-child, .HRList li:last-child {border-bottom: 0px;}
+.HRList li{background: none; padding-left: 0px;}
+
+.rightRail .emphasized_list { padding: 0px 10px; margin: 0px;}
+
+.box_top {margin-bottom: 0px; border-bottom: 0px; border-top: 1px;}
+
+
+/* Specific Styles for form fields  */
+
+#MortgageProductsPurchase div.fancy_drop, #MortgageProductsRefinance div.fancy_drop, #homeEquityProducts div.fancy_drop, #homeEquityCreditProducts div.fancy_drop {width: 160px;}
+#find529ProductsLocation div.fancy_drop, #sellDeviceSelection div.fancy_drop {margin-left:5px; width:145px;}
+#CDICityState div.fieldDesc_select {width:35px;}
+#CDIZIP input, #stInput {margin:0 0 0 5px !important; width:104px;}
+#CDIProductsCompare .left, #nationalCD .left, #localCD .left {width:75px;}
+#MortgageProductsLocation div.fancy_drop, #MortgageProductsLoanAmount input, #borrowerTypeDiv {width:120px;}
+#CDICityState div.fancy_drop, #cdInvestmentsProductsPurchase div.fancy_drop, #checkingProductsInternet div.fancy_drop, #checkingProductsLocal div.fancy_drop, #MMAProductsPurchase div.fancy_drop {width:195px;}
+#cdInvestmentsProductsPurchase div.fancy_drop {margin-right: 18px;}
+#find_cd_investments_rate > .last {float:none; clear: both;}
+#find_cd_investments_rate > .last + .left {margin:0;}
+#sortCreditScore div.fancy_drop, #sortCreditIssuer div.fancy_drop {width:225px;}
+#sortCreditCardType div.fancy_drop, #sortCreditScore div.fancy_drop , #sortCreditIssuer div.fancy_drop {width:206px;}
+#homeEquityScore div.fancy_drop, #homeEquityCreditScore div.fancy_drop {width:130px;}
+/* JUSTIN WERNISCH ADDED 7/22/2013 */
+
+.at {display:block; font-weight:bold; margin: 3px 5px 0 5px;}
+.clear {clear:both;}
+.clearheight {height:auto !important;}
+.fancy_drop {margin-right:1px;}
+.fancy_drop select {
+    font-size:11px !important;
+    min-width:262px !important;
+    padding:4px 2px !important;
+}
+.nofloat {float:none !important;}
+
+.form input[type="text"] {border-color:#ababab; border-radius:0;}
+.form_field_padded {padding:0 0 8px 0;}
+.fieldDesc, .fieldDesc_select {padding:5px 0 0 0;}
+.greybox {background-color:#ededed; border:1px solid #ffffff; margin:5px 10px; outline:1px solid #ABABAB; overflow:auto; padding:8px;}
+.margin0 {margin:0px !important;}
+.margin10 {margin:10px;}
+.marginTop10 {margin:10px 0 0 0;}
+.paddingRight0 {padding-right:0px !important;}
+.paddingRight0 .submit {margin-right:10px;}
+.radioButtonHolder {margin:0 0 0 10px;}
+
+/* .rightRail fixes */
+.rightRail .content {padding:0 10px}
+.rightRail ul.form {text-align: left; margin-bottom: 5px; padding: 3px 0 0 0;}
+.rightRail .form li {list-style-type: none; margin: 0 0 15px; min-height: 15px;}
+.rightRail .form li.last {margin: 3px 0 20px !important;}
+.rightRail .li-break {clear: both; display: block; margin-bottom: 10px; min-height: 15px;}
+#auto_insurance_quote input[type="text"] {float: left; margin: 7px 0 0; width: 65%;}
+
+/* cd.aspx SPECIFIC */
+#jumbo_cd_list {border-left: 1px solid #e0e0e0; padding-left:2.5%; width:57%;}
+#standard_cd_list {width:40%;}
+#jumbo_cd_list li, #standard_cd_list li {float: left; width: 33%;}
+#jumbo_cd_list h2, #standard_cd_list h2, #student_loans_list h2, #student_529_list h2 {margin:0 0 10px 0;}
+.halves_no_margin {margin-left:0px !important; display:block !important; width:97% !important;}
+#CDIProductsCompare input {margin-bottom:5px;}
+
+/* student-loans SPECIFIC */
+#student_loans_list {width:35%;}
+#student_529_list {width:60%; border-left: 1px solid #e0e0e0; padding-left:2.5%;}
+#student_loans_list li {float: none;}
+#student_529_list li {width: 25%; float: left;}
+
+/* CALCULATORS */
+.borderBottomMargin {border-bottom:1px solid #8c8c8c; margin:0 0 15px 0 !important;}
+.propStatement, .propStatement a, a.propStatement {height:auto;}
+.secondMargin {margin-left:17px; overflow:hidden; padding:0px;}
+#MtgRates li, #HiYieldRates li, #OtherRates li {float:left; font-size:11px; margin:8px 0 0 0; width:95px;}
+#calcDescription.boxSingle {border-right:1px solid #E0E0E0; margin-bottom:10px; padding:0 10px 0 0; width:48%;}
+#calcDescription li {float:left; margin:8px 0 0 0; width:140px;}
+#calcDescription ul li:nth-child(2n+1), #MtgRates ul li:nth-child(2n+1), #HiYieldRates ul li:nth-child(2n+1), #OtherRates ul li:nth-child(2n+1) {clear:left;}
+#CompareRatesList, #CompareCDRatesList {border-width:0; padding:0px !important; margin: 10px 0px 20px 0px;}
+#CompareCCRatesList {padding-top: 10px;}
+#HiYieldRates, #OtherRates {border-left: 1px solid #e0e0e0; padding-left:2.5%;}
+#MainCalcList {margin-bottom:20px; border-width:0 0 1px 0; padding: 0px;}
+#mortgageamount, #mortgageterm, #mortgagerate {width:120px;}
+#MtgPaymentCalc h3 {margin:0px; width:auto !important;}
+#MtgRates h2, #HiYieldRates h2, #OtherRates h2 {font-size:13px !important; margin:0px; padding:0px;}
+#MtgRates, #HiYieldRates, #OtherRates {margin:0px 0px 0px 10px;}
+#MtgPaymentCalc ul.form {width:100%; margin-top:10px;}
+#MtgCalcMore a, #AutoCalcMore a, #CCardCalcMore a, #HomeEQCalcMore a, #InvCalcMore a, #RetCalcMore a, #SaveCalcMore a, #ColCalcMore a {color:#666666; font-size:11px;}
+#MtgCalcList .first, #CCardCalcList .first, #InvCalcList .first, #SaveCalcList .first {border-right:none;}
+
+
+/* COMPARE RATES LIST MODULE */
+#CompareRatesList .top {border-bottom: 1px solid #dcdcdc; overflow: hidden; padding-left: 9px;}
+#CompareRatesList .middle {border-bottom: 1px solid #dcdcdc; overflow: hidden; padding-left: 9px; margin-top: 10px;}
+#CompareRatesList .bottom {margin-top: 10px; padding-left: 9px;}
+#CompareRatesList h2, #CompareCCRatesList h2  {margin-top: 0px; font-size: 13px;}
+.three-rows ul, .four-rows ul, .five-rows ul {width: 100%; padding: 5px 0px 5px 5px;}
+.three-rows ul li {width: 33%; float: left;}
+.four-rows ul li {width: 25%; float: left;}
+.five-rows ul li {width: 20%; float: left;}
+
+#CardTypeRates, #CreditTypeRates, #CreditIssuerRates {float: left;}
+#CardTypeRates {width: 50%;}
+#CreditTypeRates {width: 40%; padding-left: 15px; border-left: 1px solid #dcdcdc;}
+#CreditIssuerRates {width: 42%; padding: 10px 0px 0px 15px; border-left: 1px solid #dcdcdc; border-top: 1px solid #dcdcdc;}
+#CardTypeRates li, #CreditIssuerRates li, #CreditTypeRates li  {float: left; width: 50%;}
+#MMAProductsNational .fancy_drop, #MMAProductsLocal .fancy_drop {width: 205px;}
+#cdInvestmentsProducts .input-option {margin: 0px 2px 0px 4px;}
+
+
+/* Credit Card HP Modules */
+.feat-container {width: 29%; border: 1px solid #dcdcdc; float: left; padding: 10px; margin: 0px 0px 20px 4px;}
+.feat-container a {color: #505050; font-weight: bold; margin-bottom: 0px; display: block; margin-bottom: 10px;}
+.featured-card {display: block; margin-bottom: 10px;}
+.cc-table {background: #ababab; margin-top: 10px; font-size: 11px;}
+.cc-table th {background: #f5f5f5; font-size: 10px;}
+.cc-table td {background: #ffffff;}
+#mostPopularCards .blue-submit-button:before {background: none repeat scroll 0 0 #63AAFF; content: " "; display: block; height: 1px; position: absolute; top: 1px; width: 100%; margin-left: -5px;}
+#mostPopularCards .blue-submit-button {cursor: pointer; width: 85px; background: none repeat scroll 0 0 #4F81BD; border: 0 none; border-radius: 2px 2px 2px 2px; color: #FFFFFF!important; font-weight: bold; padding: 4px 5px; position: relative; text-decoration: none; text-transform: uppercase;}
+.blue-submit-button a {color: #ffffff!important;}
+.cc_disclosure_bottom {bottom: 0;float: right;font-size: 11px;margin-right: 9px;padding-right: 9px;position: relative;z-index: 300;bottom: 0px;}
+#creditCardProductsSort input {margin-left: 10px; margin-right: 6px; height: 14px;}
+
+/* Compare Rates Homepage */
+.CRboxSingle {font-family: "Trebuchet MS", arial, helvetica, sans-serif; background: #f3f8fe; border-top: 2px solid #454545; border-bottom: 2px solid #454545; padding: 10px; overflow: hidden; position: relative;}
+.CRboxSingle .first, .CRboxSingle .second {float: left; width: 48%; position: relative; min-width: 280px; min-height: 135px;}
+.CRboxSingle .first {border-right: 1px solid #dcdcdc; padding-right: 10px;}
+.CRboxSingle .second {padding-left: 10px;}
+.CRboxSingle ul.form {text-align: left;}
+.CRboxSingle .get_form a.submit, .CRboxSingle .form .submit a {position: absolute; bottom: 0px; right: 20px;}
+a.CRmod-title {font-size: 16px; font-weight: bold; color: #666666; margin-bottom: 5px; display: block;}
+#cdInvestmentsProducts {float: left; border-right: 1px solid #dcdcdc; padding-right: 10px;}
+#cdInvestmentsProductsType {padding-left: 10px;}
+#find_cd_investments_rate li {float: left; margin: 10px 0px 7px; line-height: 15px;}
+/* #find_cd_investments_rate .tracking +li {margin: 3px 0px 16px !important;} */
+#find_cd_investments_rate .left + li {margin:0 0  10px  !important;}
+#find_cd_investments_rate .submit {padding-top: 7px; padding-bottom:5px;}
+
+
+
+/* Top Story Carousel */
+.TSListC {overflow: hidden; list-style-type: none; padding: 0px; margin: 0px; float: none !important;}
+.TSListC li {border-bottom: 1px solid #dcdcdc; padding: 7px 0px 0px 20px; margin: 0px !important;}
+.TSListC h2, .TSListC h2 a {margin: 0px; font-size: 16px !important;}
+.TSListC li:last-child {border: none;}
+.TSListC li:hover, .TSListC li.active {background: url(/images/carousel-arrow.png) 5px 22px no-repeat #f6f9fb; border-bottom: 2px solid #5385be;}
+#TSCarousel {padding-bottom: 20px;}
+#TSCarousel .ad {padding: 4px 2px 3px 4px; border: 1px solid #E5E5E5; float: left; margin: 0 18px 8px 0;}
+.TSListC p {color: #666;}
+.TSListC a {text-decoration: none;}
+.TSListC .readmore {color: #5583BF;}
+
+.carousel-container-video {padding: 0px 0px 10px 0px; width: 100%;}
+.jcarousel-container-horizontal-video .jcarousel-skin {background: url("/images/carousel/car-slider-bg-blue.png") no-repeat scroll 0 0 / 100% 145px transparent;margin-top: 15px;}
+.carousel-container-video .jcarousel-list li {margin-right: 15px; margin-left: 0px;}
+.carousel-container-video .jcarousel-skin .jcarousel-container-horizontal {width: 89%;}
+.carousel-container-video .jcarousel-skin .jcarousel-container-horizontal {padding: 10px 34px 20px;}
+.carousel-container-video .jcarousel-skin .jcarousel-item img {border: 1px solid #444444;margin-bottom: 5px;}
+.carousel-container-video .jcarousel-skin {margin: 0px;}
+.carousel-container-video .jcarousel-skin .jcarousel-item a {width: 130px;}
+
+/* Homepage SubNav */
+.br-sub-nav {border:1px solid #ccc;border-width:1px 0;font-size:11px;margin-bottom:10px;overflow:hidden;padding:8px 0;text-transform:uppercase;}
+.br-sub-nav a {border-left:1px solid #ccc;color:#999!important;display:block;float:left;margin:0;padding:0 4px;white-space:nowrap;}
+.br-sub-nav a:first-child {border:0; padding-left: 0px;}
+
+input[pattern]    {box-shadow:none}
+
+
+.find_student_loan_rate {overflow: visible !important;}
+#schoolFS               {float:left;}
+/*swipe*/
+.slide-container {display:none;margin-top: 10px;}
+.swipe {
+    overflow: hidden;
+    visibility: hidden;
+    position: relative;
+    -webkit-backface-visibility: hidden;
+}
+.swipe-wrap {
+    overflow: hidden;
+    position: relative;
+}
+.swipe-wrap div {
+    float:left;
+    width:100%;
+    position: relative;
+    -webkit-backface-visibility: hidden;
+
+}
+
+.swipe-wrap img {width: 100% !important; height: auto !important; -webkit-backface-visibility: hidden; }
+
+
+.slideArrow {font-family: 'mobilemenu'; background: rgba(149, 158, 175,0.5); margin-top:-130px; padding: 15px 10px; display: block; position: absolute; border:1px solid rgb(255,255,255); border-radius: 5px; color:rgb(255,255,255); text-decoration: none; cursor: pointer;}
+.slideArrow:link,.slideArrow:active,.slideArrow:visited {color:rgb(255,255,255);}
+.slideArrow.prev {left:-5px; }
+.slideArrow.prev span {display:block;-webkit-transform: rotate(-180deg); -moz-transform: rotate(-180deg);-ms-transform: rotate(-180deg);-o-transform: rotate(-180deg);filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);}
+.slideArrow.next {right:-5px;}
+.slideDots {position: absolute; right: 10px; bottom: 0px;}
+.slideDots .dot {display: inline-block; background: rgb(190, 190, 190); border-radius: 10px; height: 5px; width: 5px; overflow: hidden; margin-left: 5px;}
+.slideDots .dot.active{background: rgb(87, 143, 240);}
+/*.slide-container {position: relative;}*/
+
+/*fix for first last box*/
+/*.well .boxSingle:nth-child(2n+1) > div:first-child {border-right:1px solid #E0E0E0; padding:0 25px 0 0 !important;}*/
+/*.well .boxSingle:nth-child(2n+0)  > div:first-child {padding-left:17px !important;}*/
+
+
+
+@media only screen and (max-width:640px) {
+    .well {width: auto !important; }
+
+    .well .information, #cdtable, #mrtgResize, #CompareCCRatesList, #CompareCDRatesList, .adps, #calcDescription .simple_bullet, #calcDescription p:nth-child(2), #MtgPaymentCalc, #CompareRatesList, #BRMAd-Page-x03-x03 {display:none;}
+    .pageHolder h1 {margin-bottom:0!important;}
+    .well h1 span,
+    #mobileWell h1 span {display:none;}
+    .well .boxSingle,
+    #mobileWell .boxSingle {float:none;width:100%;}
+    .well .boxSingle .first,
+    .well .boxSingle .second,
+    #mobileWell .boxSingle .first,
+    #mobileWell .boxSingle .second
+    {padding-right:0px;}
+
+    .boxSingle .second {padding-left:0!important;}
+    .combo.thirds > .first {display:block;width:100%;margin-top:10px;margin-left:0;}
+
+    /*.combo.thirds > div {display:block;width:100%;margin-top:10px;margin-left:0;}
+    .combo.thirds > div .simple_bullet li:nth-child(2n)  {float:left;width:45%;}
+    .combo.thirds > div .simple_bullet li:nth-child(2n+1) {float:left;width:45%;padding-right: 20px;}*/
+
+    .combo h2, .simple_bullet {padding-bottom:0!important;}
+
+    .combo.thirds > .hpvideo, .combo.thirds > .hpvideo + div {width:45%;display:block;margin-top:10px;float:left;}
+    .combo.thirds > .hpvideo {margin-left:0;margin-right:20px;}
+    .combo.thirds > .hpvideo + div {margin-left:0;}
+    .combo .frame_image {padding:0;}
+    .hpvideo div > a {font-size:14px;}
+    .hpvideo div> a:nth-child(2){width:60%;}
+    .hpvideo div> a:nth-child(3){width:35%;}
+    .hpvideo div > a img {margin-rigth:20px;}
+
+    .TSList li {margin-bottom: 0!important;}
+
+    .br_connect span {margin-left:15px;margin-right:0;}
+    .article ul li {padding-top:0;padding-bottom:0;}
+
+    .rightRail {width:97%;padding-left:5px;padding-right:5px;}
+    #MainCalcList {border-bottom:0;margin-bottom:0;}
+    #calcDescription.boxSingle {width:auto;}
+    #calcDescription p {font-size:14px;}
+
+    .refiCalc {border-top:1px solid #E0E0E0;padding-top:10px;}
+    #MtgRates, #HiYieldRates, #OtherRates {margin-left:0;border-left:0;padding-left:0;}
+    #MtgRates ul, #HiYieldRates ul, #OtherRates ul {list-style-type:disc;float:none;margin:0 0 0 20px;}
+    #MtgRates li, #HiYieldRates li, #OtherRates li {font-size:12px!important;width:48%;}
+    #calcDescription ul li:nth-child(2n+1), #MtgRates ul li:nth-child(2n+1), #HiYieldRates ul li:nth-child(2n+1), #OtherRates ul li:nth-child(2n+1) {clear:none;}
+    .three-rows ul {list-style-type:disc;margin:0 10px;}
+    .three-rows ul li:nth-child(2n) {width:49%;}
+    .three-rows ul li:nth-child(2n+1) {width:45%;padding-right:20px;}
+    .secondMargin { margin-left: 0;margin-right: 10px;}
+
+    .ccSearch {border-top:0!important;border-bottom:0!important;padding-top:10px;}
+    .chkSearch .form li, .mmaSearch .form li {margin-bottom:5px;}
+    .ccSearch .form li {margin-bottom:0;}
+    .heSearch2 {padding-bottom:5px!important;}
+    .ccSearch {padding-bottom:7px!important;}
+    .insavg {margin-right:10px;margin-top:10px;}
+    .insavg .form, .insavg .form li {margin-bottom:0;}
+    .insavg .form .submit {margin-left:10px;}
+    .insavg .rate_action > a {float:right;margin-right:8px;}
+
+    .mtgBlog, .cdrSearch, .bankBlog {padding-bottom:0!important;}
+    .mtgBlog .story_image {margin-bottom:0!important;}
+
+    /*oas*/
+    .heavg .grey_title, .refiavg .grey_title, .chkavg .grey_title, .mtgavg .grey_title, .autoavg .grey_title {display:none;}
+    .feat-container {width:auto;float:none;margin-left:0;}
+    .cc_disclosure, .cc_disclosure_bottom {display:none;}
+
+    /*topstory special*/
+    .topstory .story_image, .special .story_image {width:100px;height:53px;margin-right:10px;}
+    .topstory > a, .topstory p, /*.special > a,*/ .special p {float:left;}
+    .topstory p, .special p               {width:59%;clear:none;font-size:12px;}
+    .topstory h2, .topstory h2 a, .special h2, .special h2 a {margin:0;}
+    .topstory h3,.topstory h2, .special h3,.special h2   {margin-bottom:5px;}
+    h1 + .topstory {border-top:0;padding-top:10px;}
+    .dmCalc .grey_title {line-height:auto;min-height:auto;background:transparent;color: #666;font-size: 13px; font-weight: normal; text-transform: uppercase;text-decoration: none;margin: 0px; padding: 15px 0 0; font-family:trebuchet ms, Arial, Helvetica, sans-serif;}
+    .dmCalc .grey_title:before {background:#E0E0E0;}
+
+    .c_debt.p_home .topstory h3, .c_retirement.p_home .topstory h3 {display:none;}
+
+    .TSList {margin-top:0!important;clear:both;margin-left:10px;}
+    .TSList li{padding:0;}
+    .emphasized_list {padding-top:0;}
+
+    /*home pages */
+    .mostread {display:none;}
+    .carousel-container {display: none;}
+    .ccavg .rate_change, .ccavg .rate_last_week, .ccavg .rate_action {padding: 0 0 0 2px;}
+    .well .boxSingle .second {padding-right: 0 !important;}
+    ul.form {text-align: left;}
+    .p_home .cdBlog h3 {display: none;}
+    #CDIProductsCompare .left {margin-right: 3%;}
+    /*#CDIProductsCompare div.left:nth-child(even) {margin-right: 5%;}*/
+    #find_CDI_rate {padding-bottom: 0 !important;}
+    .cdinvSearch {border-bottom: 1px solid #e0e0e0;}
+
+    .well .brokerage-container {width:auto !important;}
+    .rate-table-container {padding: 0; width: auto !important;}
+    .well .brokerage-container iframe {width:100% !important;}
+    .well .brokerage-container iframe:nth-child(1),
+    .well .brokerage-container iframe:nth-child(2),
+    .well .brokerage-container iframe:nth-child(3),
+    .well .brokerage-container iframe:nth-child(4),
+    .well .brokerage-container iframe:nth-child(5),
+    .well .brokerage-container iframe:nth-child(6),
+    .well .brokerage-container iframe:nth-child(7),
+    .well .brokerage-container iframe:nth-child(8),
+    .well .brokerage-container iframe:nth-child(9) {display: none;}
+
+    #schoolFS {float:left;}
+
+    .brokerage-container {height: 520px !important;}
+    .rate-table-container .grey_title {margin-bottom: 0px;}
+
+    /*auto*/
+    .p_home .jqcarousel-out-container {display: none;}
+    #mobileWell .bottom_module  {clear:both;}
+    #FindAutoInsQuotes {overflow: hidden; padding-bottom: 10px;}
+    /*cheacking*/
+    .c_checking.p_home.ad_savings .topstory img {width: 100px;height: 53px;margin-right: 10px; float:left;}
+    .c_checking.p_home.ad_savings .topstory p {clear:none  !important;}
+    .c_checking.p_home.ad_savings .topstory h2 {margin-top: -22px;}
+    .c_checking.p_home.ad_savings .topstory h3 {margin-top: -31px; padding-bottom: 27px;}
+    .c_checking.p_home.ad_savings .topstory {padding-top: 40px;}
+
+    /*credit card*/
+    .ccavg .rate_action a{font-size:11px !important;}
+
+    /*insurance home page*/
+    .loc_Insurance .insavg {margin: 0;}
+    .insavg input[name="zip"] {width: 55px;}
+
+    /*homepage*/
+    #find_cd_investments_rate li                {display: block;}
+    .CRboxSingle .first                         {border-right: 0;}
+    .CRboxSingle .second                        {margin-top: 24px; width: auto !important;}
+    .combo .frame_image                         {width: 100% !important; height: auto !important; border: 0;}
+    #TSCarousel                                 {display: none !important;}
+    .CRboxSingle .first                         {border-bottom: 1px solid #ccc;}
+    .CRboxSingle .first, .CRboxSingle .second   {width:auto !important; float:none !important;}
+    .CRboxSingle .get_form a.submit             {bottom: 7px;}
+
+    #MortgageProductsPurchase div.fancy_drop     {width: 145px;}
+    .CRboxSingle .second                        {padding-left: 0;}
+    .well a[href*="https://plus.google.com/+bankrate"],
+    #mobileWell a[href*="https://plus.google.com/+bankrate"]  {display: none;}
+    .rightRail .partnerCenter                   {display: none;}
+    .well .boxSingle .second,
+    #mobileWell .boxSingle .second  {padding: 0 !important;}
+    .article.combo.thirds.trends + .jqcarousel-out-container {display:none;}
+    .heavg .grey_title,
+    .refiavg .grey_title,
+    .chkavg .grey_title,
+    .insavg .grey_title,
+    .ccavg .grey_title,
+    .mtgavg .grey_title,
+    .autoavg .grey_title,
+    .eduavg .grey_title,
+    .loc_Home #OAmultiModule .grey_title,
+    #mobileWell > h1#BRrateHeader {display: none;}
+
+    /*swipe */
+    .slide-container                            {display: block;}
+    .pageHolder .slide-container a       {font-size: 13px !important;}
+    #br-slider h2 {margin-top:0;}
+
+    /*investing home page*/
+    h1 + .article img {width: 100px;height: 53px;margin-right: 10px; float:left;}
+    h1 + .article p {clear:none  !important;}
+    h1 + .article h2 {margin-top: -25px;}
+    h1 + .article h3 {display: none;}
+    h1 + .article {padding-top: 40px; border-top: 0 !important;}
+    .well .brokerage-container iframe,
+    #mobileWell .brokerage-container iframe {width:100% !important; height:245px !important;}
+    iframe[id*="x21"],
+    iframe[id*="x22"],
+    iframe[id*="x23"],
+    iframe[id*="x24"],
+    iframe[id*="x25"],
+    iframe[id*="x26"],
+    iframe[id*="x27"],
+    iframe[id*="x28"],
+    iframe[id*="x29"] {display:none;}
+    .loc_Investment .well .brokerage-container,
+    .loc_Investment #mobileWell .brokerage-container {height: auto !important; }
+    .seemoreoffers {width: auto !important;}
+    .brokerage-container iframe[width="1"][height="1"],
+    .brokerage-container iframe[width="2"][height="1"]    {display: none;}
+
+    /*tax*/
+    .br-sub-nav {margin-bottom:0;}
+    .br-sub-nav + .article3 {padding-top:0;}
+
+    /*cd */
+    .iemobile10 #CDIProductsCompare .left {width: 47.5% !important;}
+
+    /*closing costs */
+    td.rate_graph {display:none;}
+    div.article.combo.halves h3:nth-of-type(2) {display:none;}
+    div.article.combo.halves div:nth-of-type(2) {display:none;}
+    div.article.combo.halves h3:nth-of-type(1) {width:auto;}
+    div.article.combo.halves div:nth-of-type(1) {width:auto;}
+    .combo.halves > div, .combo.halves h3  {width: 100%;}
+    body.c_mortgage.p_home h1 + .article {padding-top:5px}
+    body.c_advisor.p_topic h1 + .article {padding-top:5px}
+    body.c_insurance.p_home h1 + .article {padding-top:5px}
+    body.c_insurance .rate_averages tr.rate_change_same td.rate_change {display: none;}
+
+
+
+    .fieldDesc, #MtgCalcList a, #AutoCalcList a, #CCardCalcList a, #HomeEQCalcList a, #InvCalcList a, #RetCalcList a, #SaveCalcList a, #CollegeCalcList a {font-size:14px;}}
+
+#mobileWell .cdinvSearch .li-break {clear: both; float: left; display: block; width: 100%; padding-bottom: 10px;}
+.c_insurance.p_home .insavg {margin-bottom: 27px;}
+.c_insurance.p_home .insavg+.boxContainerRightRail {margin-bottom: 10px;}

@@ -22,8 +22,8 @@
         <li class=""><a href="#preview" ng-click="showTemplate()" data-toggle="tab">Preview</a></li>
         <li class=""><a href="#track" ng-click="showTrackTags()" data-toggle="tab">Tracking</a></li>
         <li class=""><a href="#int" ng-click="showIntscript()" data-toggle="tab">Integration</a></li>
-        <li class=""><a href="#val" ng-click="showIntscript()" data-toggle="tab">Validation</a></li>
-        <li class=""><a href="#rules" ng-click="showIntscript()" data-toggle="tab">Rules</a></li>
+        <li class=""><a href="#rules" ng-click="openRules()" data-toggle="tab">Rules</a></li>
+        <li class=""><a href="#fields" ng-click="loadFields()" data-toggle="tab">Fields</a></li>
     </ul>
 </header>
 <section class="vbox">
@@ -184,15 +184,109 @@
 
 </div>
 
-<div class="tab-pane" id="val">
-    <div class="line pull-in"></div>
-    <textarea class="form-control no-border" rows="30" placeholder="Integration script..." ng-model="obj.integration"></textarea>
+<div class="tab-pane" id="rules">
+    <header class="header bg-light bg-gradient">
+        <ul class="nav nav-tabs nav-white">
+            <li class="active"><a href="#ruleTab" ng-click="openRules()" data-toggle="tab">Behavior</a></li>
+            <li class=""><a href="#valrules" ng-click="openValidation()" data-toggle="tab">Validation</a></li>
+            <li class=""><a href="#nextrules" ng-click="openNextRules()" data-toggle="tab">Next step</a></li>
+        </ul>
+    </header>
+    <section class="vbox">
+        <div class="tab-content">
+            <div class="tab-pane" id="ruleTab" ng-include="stepRuleTemplate">
+
+            </div>
+            <div class="tab-pane" id="valrules" ng-include="stepRuleTemplate">
+
+            </div>
+            <div class="tab-pane" id="nextrules" ng-include="stepRuleTemplate">
+
+            </div>
+        </div>
+    </section>
 
 </div>
-<div class="tab-pane" id="rules">
-    <div class="line pull-in"></div>
-    <textarea class="form-control no-border" rows="30" placeholder="Integration script..." ng-model="obj.integration"></textarea>
+<div class="tab-pane" id="fields">
+    <section class="hbox stretch">
 
+        <aside class="bg-light lter b-r aside-md">
+            <mk-nest class="dd" group="1" onchangefn="onAddField(list)">
+                <ol class="dd-list list-group no-radius m-b-none m-t-n-xxs list-group-lg no-border">
+                    <li class="dd-item list-group-item" data-id="{{$index}}" ng-repeat="f in myfields">
+    <span class="pull-right">
+        <a href="#" ng-click="removeField(f)"><i class="fa fa-times icon-muted fa-fw"></i></a>
+     </span>
+
+                        <div class="dd-handle">
+                            <a href="#" class="clear">
+                                <strong class="block">{{f.label}}</strong>
+                                <small>{{f.fldname}}</small>
+                            </a>
+                        </div>
+                    </li>
+                </ol>
+            </mk-nest>
+        </aside>
+        <aside class="bg-light lter b-r aside-md hidden-print nav-xs-right nav-xs" id="actnav">
+            <section class="vbox">
+                <header class="header bg-primary lter text-center clearfix">
+                    <div class="row">
+                        <a href="#actnav" data-toggle="class:nav-xs" class="pull-left btn btn-sm btn-default btn-icon">
+                            <i class="fa fa-angle-right text"></i>
+                            <i class="fa fa-angle-left text-active"></i>
+                        </a>
+                        <div class="btn-group">
+                            <div class="btn-group hidden-nav-xs">
+                                <button class="btn btn-success btn-sm"><i class="fa fa-plus"></i>
+                                </button>
+                                <button type="button" class="btn btn-sm btn-primary dropdown-toggle" data-toggle="dropdown">
+                                    Available fields
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </header>
+                <section class="w-f ">
+                    <div class="slim-scroll" data-height="auto" data-disable-fade-out="true" data-distance="0" data-size="5px" data-color="#333333">
+
+                        <!-- nav -->
+                        <nav class="nav-primary hidden-xs">
+                            <ul class="nav">
+                                <li  class="active">
+                                    <a href="#layout"   class="active">
+                                        <i class="fa fa-columns icon">
+                                            <b class="bg-warning"></b>
+                                        </i>
+                        <span class="pull-right">
+                          <i class="fa fa-angle-down text"></i>
+                          <i class="fa fa-angle-up text-active"></i>
+                        </span>
+                                        <span>Consumer</span>
+                                    </a>
+                                    <mk-nest class="dd" group="1">
+                                        <ol class="dd-list nav lt">
+                                            <li class="dd-item" data-id="{{$index}}" ng-repeat="a in existingFields">
+                                                <div class="dd-handle dd3-handle">Drag</div>
+                                                <div class="dd3-content">
+
+                                                    <a href="#" >
+                                                        <strong class="block">{{a.name}}</strong>
+                                                        <small>{{a.fldname}}</small>
+                                                    </a>
+                                                </div>
+                                            </li>
+                                        </ol>
+                                    </mk-nest>
+                                </li>
+                            </ul>
+                        </nav>
+                        <!-- / nav -->
+                    </div>
+                </section>
+            </section>
+        </aside>
+    </section>
 </div>
 </div>
 </section>

@@ -311,10 +311,12 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
             {
                 adminservice.setSelObj(item);
                 adminservice.setSelected(selected);
+
                 var obj = {};
                 obj.view = 'genericEdit.html';
                 obj.title = "Edit";
                 $scope.$emit("EV_SWITCH_VIEW", obj);
+                selected = '';
             }
         }
     }
@@ -517,6 +519,11 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
     $scope.createCat = function(){
         selected = "cats";
         newObj('New Category');
+    }
+
+    $scope.createTFN = function(){
+        selected = "ccnumber";
+        newObj('New TFN');
     }
 
     function createObj(heading, def){
@@ -730,6 +737,12 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
     $scope.loadCatFields = function(){
         var f = 'cats';
         $scope.viewTitle = "Category attributes";
+        loadMeta(f);
+    }
+
+    $scope.loadCCNumFields = function(){
+        var f = 'ccnumber';
+        $scope.viewTitle = "Call Center TFNs";
         loadMeta(f);
     }
 
@@ -1599,6 +1612,13 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
         loadObjNGrid();
     }
 
+    $scope.loadTFNLst = function(){
+        selected = 'ccnumber';
+        $scope.viewTitle = "TFN";
+        buildDefFilter();
+        loadObjNGrid();
+    }
+
     $scope.loadConsumerLst = function(){
         selected = 'consumer';
         $scope.viewTitle = "Consumers";
@@ -1703,6 +1723,7 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
     }
 
     function loadListBindNGGrid(m){
+        changedlist = [];
         var f = $scope.cleanFilter;
         adminservice.listObj(selected, f, $http, function(d){
             viewMode = 'grid';

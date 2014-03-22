@@ -1,41 +1,38 @@
 var topUrl = 'http://localhost';
-var myapp = angular.module("cart", ['ui.sortable','ui.date','ngGrid'], function($routeProvider, $locationProvider){
+var myapp = angular.module("cart", ['ui.sortable','ui.date','ngGrid','ngCookies'], function($routeProvider, $locationProvider){
     //$locationProvider.html5Mode(true);//.hashPrefix('!');
     $routeProvider.when('/offer', {
         template: '<div ng-include="templateUrl">Loading...</div>',
         controller: agentprodctrl
-    }).when('/survey', {
+    }).when('/call', {
+            template: '<div ng-include="templateUrl">Loading...</div>',
+            controller: salesctrl
+        }).when('/survey', {
             template: '<div ng-include="templateUrl">Loading...</div>',
             controller: surveyctrl
         }).when('/cust', {
         template: '<div ng-include="templateUrl">Loading...</div>',
-        controller: agentctrl
+        controller: orderctrl
     }).when('/qual', {
             template: '<div ng-include="templateUrl">Loading...</div>',
-            controller: agentctrl
+            controller: orderctrl
         }).when('/teaser', {
             template: '<div ng-include="templateUrl">Loading...</div>',
             controller: teaserctrl
         }).when('/order', {
             template: '<div ng-include="templateUrl">Loading...</div>',
-            controller: agentctrl
+            controller: orderctrl
         }).when('/inst', {
             template: '<div ng-include="templateUrl">Loading...</div>',
-            controller: agentctrl
+            controller: orderctrl
         }).when('/credit', {
             template: '<div ng-include="templateUrl">Loading...</div>',
-            controller: agentctrl
+            controller: orderctrl
         }).when('/conf', {
             template: '<div ng-include="templateUrl">Loading...</div>',
-            controller: agentctrl
+            controller: orderctrl
         })
-        $routeProvider.when('/', {
-            templateUrl: 'templ/admin.html',
-            controller: adminctrl
-        }).when('/admin', {
-            templateUrl: 'templ/admin.html',
-            controller: adminctrl
-        }).otherwise({redirectTo: '/'});
+        .otherwise({redirectTo: '/'});
 
 });
 

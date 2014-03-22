@@ -1,0 +1,25 @@
+<a href="#layout"   class="active">
+    <i class="fa fa-filter icon">
+        <b class="bg-warning"></b>
+    </i>
+                                    <span class="pull-right">
+                                      <i class="fa fa-angle-down text"></i>
+                                      <i class="fa fa-angle-up text-active"></i>
+                                    </span>
+    <span>{{w.title}}</span>
+</a>
+<div class="form-group wrapper m-b-none">
+    <div class="input-group">
+        <input type="text" class="form-control" placeholder="Look up attributes" ng-model="metafind">
+                                                            <span class="input-group-btn">
+                                                              <button ng-click="searchMeta()" class="btn btn-info btn-icon"><i class="fa fa-search"></i></button>
+                                                            </span>
+    </div>
+</div>
+<ul class="nav lt" style="display: block">
+    <li ng-repeat="fd in filterList">
+        <section class="panel panel-default">
+            <div class="panel-body" ng-include="fd.template"></div>
+        </section>
+    </li>
+</ul>

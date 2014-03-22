@@ -9,7 +9,13 @@
     <link rel="stylesheet" href="admin/js/select2/select2.css" type="text/css" />
     <link rel="stylesheet" href="admin/js/nestable/nestable.css" type="text/css">
     <link rel="stylesheet" href="admin/css/app.css" type="text/css" />
+    <link rel="stylesheet" href="tenants/Bridgevine/assets/css/base.css" type="text/css" />
+    <link rel="stylesheet" href="tenants/Bridgevine/assets/css/base-responsive.css" type="text/css" />
+
     <link rel="stylesheet" href="admin/js/calendar/bootstrap_calendar.css" type="text/css" />
+    <script>
+        var adminURL = '/admin';
+    </script>
 
     <script src="assets/js/jquery-1.10.2.min.js"></script>
     <script src="assets/js/bootstrap.min.js"></script>
@@ -18,6 +24,7 @@
     <script src="js/mask.js" type="text/javascript"></script>
     <script src="assets/js/base.js"></script>
     <script src="js/angular.min.js" type="text/javascript"></script>
+    <script src="js/angular-cookies.min.js" type="text/javascript"></script>
     <script src="js/sortable.js" type="text/javascript"></script>
     <script src="js/date.js" type="text/javascript"></script>
     <script src="js/select2.js" type="text/javascript"></script>
@@ -32,7 +39,10 @@
     <script src="dir/cartparms.js" type="text/javascript"></script>
     <script src="ctrl/agentctrl.js" type="text/javascript"></script>
     <script src="ctrl/agentprodctrl.js" type="text/javascript"></script>
+    <script src="ctrl/consumerctrl.js" type="text/javascript"></script>
     <script src="ctrl/teaserctrl.js" type="text/javascript"></script>
+    <script src="ctrl/salesctrl.js" type="text/javascript"></script>
+    <script src="ctrl/orderctrl.js" type="text/javascript"></script>
     <script src="ctrl/surveyctrl.js" type="text/javascript"></script>
     <script src="ctrl/optctrl.js" type="text/javascript"></script>
     <script src="ctrl/adminctrl.js" type="text/javascript"></script>
@@ -48,38 +58,56 @@
     <script src="dir/chartDir.js" type="text/javascript"></script>
     <script src="ctrl/adminHelper.js" type="text/javascript"></script>
 </head>
-<body ng-app="cart">
-<div class="wizard clearfix" ng-show="previewMode">
+<body ng-app="cart" ng-controller="agentctrl">
+<div class="wizard clearfix" ng-show="onair">
     <ul class="steps">
-        <li class="active" ng-repeat="w in steps" ng-click="pickStep(w)"><span ng-class="{'badge  badge-success': isActiveStep(w),'badge badge-info': !isActiveStep(w)}">{{w.order}}</span>{{w.title}}</li>
+        <li class="active" ng-repeat="w in steps"><span ng-class="{'badge  badge-success': isActiveStep(w),'badge badge-info': !isActiveStep(w)}">{{w.order}}</span>{{w.title}}</li>
     </ul>
-    <div class="actions">
-        <button type="button" class="btn btn-default btn-xs btn-prev" ng-click="restart()">Start</button>
-        <button type="button" class="btn btn-default btn-xs btn-prev" ng-click="back()" >Prev</button>
-        <button type="button" class="btn btn-default btn-xs btn-next" ng-click="next()" >Next</button>
-    </div>
 </div>
-    <section class="hbox stretch" ng-controller="agentctrl" ng-show="agent">
+    <section class="hbox stretch" ng-show="agent">
         <div id="bv_cart_cont" ng-include="wrapperUrl"></div>
-        <aside class="bg-light lter b-r aside-md hidden-print nav-xs-right" id="agentnav">
+        <aside class="bg-light lter b-r aside-xl hidden-print nav-xs-right" id="agenttools">
+            <section class="w-f ">
+                <div class="slim-scroll" data-height="auto" data-disable-fade-out="true" data-distance="0" data-size="5px" data-color="#333333">
+                    <!-- nav -->
+                    <nav class="nav-primary hidden-xs">
+                        <ul class="nav">
+                            <li ng-repeat="w in agentTools" ng-include="w.view" ng-show="w.show">
+                            </li>
+                        </ul>
+                    </nav>
+                    <!-- / nav -->
+                </div>
+            </section>
+        </aside>
+        <aside class="bg-light lter b-r aside-xl hidden-print nav-xs-right" id="agentnav">
             <section class="vbox">
+                <div class="row">
+                    <div class="form-group col-sm-2" ng-repeat="w in allwidgets">
+                        <i class="fa " ng-class="w.image"></i>
+                        <input type="checkbox" class="form-control" ng-model="w.show">
+                    </div>
+                </div>
                 <header class="header bg-primary lter text-center clearfix">
                     <div class="row">
-                        <a href="#agentnav" data-toggle="class:nav-xs" class="pull-left btn btn-sm btn-default btn-icon">
-                            <i class="fa fa-angle-right text"></i>
-                            <i class="fa fa-angle-left text-active"></i>
-                        </a>
+                        <!--<a href="#agentnav" data-toggle="class:nav-xs" class="pull-left btn btn-sm btn-default btn-icon">-->
+                            <!--<i class="fa fa-angle-right text"></i>-->
+                            <!--<i class="fa fa-angle-left text-active"></i>-->
+                        <!--</a>-->
                         <div class="btn-group">
-                            <!--<button type="button" class="btn btn-sm btn-dark btn-icon"></button>-->
-                            <div class="btn-group hidden-nav-xs">
-                                <button type="button" class="btn btn-sm btn-primary" ng-click="startCall()">
-                                    New Call
-                                </button>
-                                <button type="button" class="btn btn-sm" ng-click="startChat()">
-                                    Chat
-                                </button>
-                            </div>
+                            <button type="button" class="btn btn-sm btn-primary dropdown-toggle" data-toggle="dropdown">
+                                Application
+                                <span> {{selApp.appID}}</span>
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu text-left">
+                                <li ng-repeat="a in selTen.appObjects"><a href="#" ng-click="switchApp(a)">{{a.appID}}</a></li>
+                            </ul>
+                            <button type="button" title="Chats" class="btn btn-icon btn-sm btn-dark" ng-click="startChat()"><i class="fa fa-comment-o"></i></button>
+                            <button type="button" title="Restart" class="btn btn-icon btn-sm btn-dark" ng-click="restart()"><i class="fa fa-repeat"></i></button>
                         </div>
+                    </div>
+                    <div class="row">
                     </div>
                 </header>
                 <section class="w-f ">
@@ -87,11 +115,7 @@
                         <!-- nav -->
                         <nav class="nav-primary hidden-xs">
                             <ul class="nav">
-                                <li class="active" ng-include="scorecard_widget">
-
-                                </li>
-                                <li  class="active" ng-include="pers_widget">
-
+                                <li ng-repeat="w in agentWidgets" ng-include="w.view" ng-show="w.show">
                                 </li>
                             </ul>
                         </nav>

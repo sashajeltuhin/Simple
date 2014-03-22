@@ -42,6 +42,7 @@ var express = require('express')
   , icon = require('./routes/icon')
   , style = require('./routes/style')
   , report = require('./routes/report')
+  , ccnum = require('./routes/ccnumber')
   , db = require('./db/dbaccess')
   , session = require('./routes/adminsession');
 
@@ -94,6 +95,10 @@ app.post('/app/note/delete', note.delete);
 app.post('/app/report/list', report.list);
 app.post('/app/report/update', report.save);
 app.post('/app/report/delete', report.delete);
+
+app.post('/app/ccnumber/list', ccnum.list);
+app.post('/app/ccnumber/update', ccnum.save);
+app.post('/app/ccnumber/delete', ccnum.delete);
 
 
 app.post('/app/action/list', action.list);

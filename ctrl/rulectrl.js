@@ -8,6 +8,7 @@ function rulectrl($scope, $rootScope, $http, adminservice, mkPopup){
     if (params !== undefined && params !== null){
         $scope.adRule = params.adRule;
         $scope.selRule = params.selRule;
+        $scope.stepID = params.stepID;
     }
     init();
     refreshRules();
@@ -90,13 +91,35 @@ function rulectrl($scope, $rootScope, $http, adminservice, mkPopup){
         });
     }
 
+    function loadStepRules(){
+        $scope.viewTitle = "Rules for Flow Step";
+        $scope.ruletypeUrl = '/images/targetlist.gif';
+        $scope.adRule = false;
+        $scope.surveyRule = false;
+        var extra = {};
+        var appObj = adminservice.getAppObj();
+        extra.app = appObj.appID;
+        extra.type = 'step';
+        extra.stepID = $scope.stepID;
+        extra.order_by = {order:1};
+        adminservice.listObj(RULE, extra, $http, function(meta){
+            $scope.ruleData = meta;
+        });
+    }
+
     function refreshRules(){
-        if ($scope.adRule){
-            loadRules();
+        if ($scope.stepID !== undefined){
+            loadStepRules();
         }
         else{
-            loadQualRules();
+            if ($scope.adRule){
+                loadRules();
+            }
+            else{
+                loadQualRules();
+            }
         }
+
 
         adminservice.setRuleParams(null);
     }

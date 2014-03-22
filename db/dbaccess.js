@@ -367,20 +367,35 @@ exports.upsert = function (colname, rawobj, filter, callback) {
 
 exports.compute = function(req, res){
     setDBName(dbname);
-    var  f = [{ $match: {app:  { $in: filter.app }, complete:true, action:'call_end'}}, {$group : {_id: '$app', result:{$sum : 1} } }, {$sort:{result:-1}}];
+//    var  f = [{ $match: {app:  { $in: filter.app }, complete:true, action:'call_end'}}, {$group : {_id: '$app', result:{$sum : 1} } }, {$sort:{result:-1}}];
     var colName = req.body.obj;
-    var filter = req.body.filter;
+    var filter = prepFilter(req.body.filter);
+    var order_by = filter.order_by;
     var groupBy = req.body.groupBy;
-    var func = req.body.function;
-    var funcField = req.body.funcField;
-    var order_by = req.body.order_by;
-    var  f = [{ $match: filter}, {$group : group }];
-    computeData(colName, filter, function(err, recs){
+    var groupObj = {};
+    for(var i = 0; i < groupBy.length; i++){
+        var gf = groupBy[i];
+        if (gf.fnc !== undefined){
+            var fncobj = {};
+            fncobj["$" +gf.fnc] = gf.fldname == "_id" ? 1 : "$" + gf.fldname;
+                groupObj[gf.fldid] = fncobj;
+        }else{
+            groupObj[gf.fldid] = "$" + gf.fldname;
+        }
+    }
+
+    var  f = [{ $match: filter.query}, {$group : groupObj }];
+    if (order_by !== undefined && order_by.length > 0){
+        f.push({$sort:order_by});
+    }
+    console.log('compute request', groupObj);
+    console.log('group obj', f);
+    computeData(colName, f, function(err, recs){
         if (err !== null){
-            callback(err, recs);
+            res.send({Error : {text:"Cannot compute data ", det:err}});
         }
         else{
-            callback (null, recs);
+            res.send(recs);
         }
     });
 }

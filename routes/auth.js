@@ -50,6 +50,9 @@ module.exports = {
     },
     checkSession: function(req, res){
         var f = req.body;
+        if (f == undefined || f.length <= 0){
+            res.send(400, {"err": "Invalid session"});
+        }
         session.loadSessionbyID(f, function(err, data){
            if (err !== null){
                res.send(400, {"err": msg});

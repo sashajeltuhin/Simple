@@ -121,7 +121,7 @@ function templateCtrl($scope, $http, adminservice){
 
     }
 
-    $scope.saveObj = function(){
+    $scope.saveObj = function(callback){
         var n = $scope.obj._id == undefined;
         adminservice.bindObjData($scope.obj, $scope.fieldList);
         adminservice.saveObj($scope.obj, STEP, $http, function(s){
@@ -131,29 +131,103 @@ function templateCtrl($scope, $http, adminservice){
                 var appObj = currentApp();
                 $scope.loadCartSteps(appObj);
             }
+            if (callback !== undefined){
+                callback();
+            }
         });
     }
 
     $scope.publish = function(){
-        if ($scope.draft.time == undefined){
-            $scope.draft.time = new Date();
+        if ($scope.draft.comment !== undefined && $scope.draft.comment !== ''){
+            if ($scope.draft.time == undefined){
+                $scope.draft.time = new Date();
+            }
+            $scope.draft.changed = new Date();
+            $scope.draft.published = new Date();
+            $scope.draft.version = $scope.obj.rawhtml;
+            adminservice.publishTemplate($scope.draft, $scope.obj, 'draft', $http, function(saved){
+                console.log("published step:", saved);
+                $scope.obj = saved;
+                console.log('published and saved:', $scope.obj);
+                refreshDetail();
+                initDraft();
+                loadVersions();
+            });
         }
-        $scope.draft.changed = new Date();
-        $scope.draft.published = new Date();
-        $scope.draft.version = $scope.obj.rawhtml;
-        adminservice.publishTemplate($scope.draft, $scope.obj, 'draft', $http, function(saved){
-            console.log("published step:", saved);
-            $scope.obj = saved;
-            console.log('published and saved:', $scope.obj);
-            refreshDetail();
-            initDraft();
-            loadVersions();
-        });
     }
 
     $scope.loadVersion = function(v){
         $scope.draft.version = v.version;
         $scope.obj.rawhtml = v.version;
+    }
+
+    function getDummyProv(){
+        var dummy = {};
+        dummy._id = 0;
+        dummy.label = 'Drag from the list on the right';
+        return dummy;
+    }
+
+    $scope.loadFields = function(){
+        $scope.existingFields = [];
+        if ($scope.obj.fields== undefined){
+            $scope.obj.fields = [];
+            $scope.myfields = [];
+            $scope.myfields.push(getDummyProv());
+        }
+        else{
+            var filter = {};
+            var flds = {};
+            flds.oper = 'in';
+            flds.val = $scope.obj.fields;
+            filter._id = flds;
+
+            adminservice.listObj('fields', filter, $http, function(data){
+                $scope.myfields = data;
+                if ($scope.myfields.length == 0){
+                    $scope.myfields.push(getDummyProv());
+                }
+            });
+        }
+        var f = {};
+        if ($scope.obj.fields.length > 0){
+            var fv = {};
+            fv.oper = '<>';
+            fv.val = $scope.obj.fields;
+            f._id = fv;
+        }
+        adminservice.loadMetaCustom('consumer', $http, function(data){
+            $.each(data, function(i, t){
+                var item = {};
+                item._id = t._id;
+                item.name = t.fldname;
+                item.desc = t.label;
+                $scope.existingFields.push(item);
+            });
+        }, f);
+    }
+
+    $scope.onAddField = function(list){
+        $.each(list, function(i, item){
+            if (item['$scope'].a !== undefined && item['$scope'].a._id !== 0){
+                var fid = item['$scope'].a._id;
+                if (fid !== undefined){
+                    $scope.obj.fields.push(fid);
+                    $scope.saveObj(function(){
+                        $scope.loadFields();
+                    });
+                }
+            }
+        });
+    }
+
+    $scope.removeField = function(f){
+        var ind = $scope.obj.fields.indexOf(f._id);
+        $scope.obj.fields.splice(ind, 1);
+        $scope.saveObj(function(){
+            $scope.loadFields();
+        });
+
     }
 
     $scope.removeVersion = function(v){
@@ -179,7 +253,19 @@ function templateCtrl($scope, $http, adminservice){
 
    }
 
+    $scope.openRules = function(){
+        var p = {};
+        p.adRule = $scope.adRule;
+        p.selRule = $scope.selrule;
+        adminservice.setRuleParams(p);
+        $scope.stepRuleTemplate = serverUrl + "templsegrules.html"
+    }
 
+    $scope.openValidation = function(){
+        $scope.stepRuleTemplate = serverUrl + "templvalrules.html"
+    }
 
-
+    $scope.openNextRules = function(){
+        $scope.stepRuleTemplate = serverUrl + "templnextrules.html"
+    }
 }

@@ -20,6 +20,7 @@ angular.module('cart').factory('adminservice', function($q, $cookies) {
     var filterdata = {};
     var views = [];
     var currentView = {};
+    var widgets =
 
     service.setSelUser = function(u){
         selUser = u;
@@ -97,6 +98,20 @@ angular.module('cart').factory('adminservice', function($q, $cookies) {
     service.resetCache = function(){
         cache = [];
         fieldCache = {};
+    }
+
+    service.cacheWidget = function(w){
+        if (w.controller !== undefined){
+            widgets[w.controller] = w;
+        }
+    }
+
+    service.giveMeWidget = function(controller){
+        var w = null;
+        if (controller in widgets){
+            w = widgets[controller];
+        }
+        return w;
     }
 
     service.authenticate = function($http, callback){
@@ -218,7 +233,7 @@ angular.module('cart').factory('adminservice', function($q, $cookies) {
             f = metafld.optfilter;
         }
         console.log(selTen);
-        if(metafld.optobj == 'apps' && selTen !== undefined && selTen.apps.length > 0){
+        if(metafld.optobj == 'apps' && selTen !== undefined && selTen.apps !== undefined && selTen.apps.length > 0){
             f.appID = selTen.apps;
         }
         var prom = service.listObjProm(metafld.optobj, f,  $q, $http);
@@ -235,16 +250,26 @@ angular.module('cart').factory('adminservice', function($q, $cookies) {
         });
     }
 
-    service.loadMetaCustom = function(objname, $http, callback){
+    service.loadMetaCustom = function(objname, $http, callback, filter){
         var metafilter = {};
         var fv = {};
         fv.oper = '<>';
         fv.val = true;
         metafilter.custom = fv;
+        if (filter !== undefined){
+            for(var el in filter){
+                metafilter[el] = filter[el];
+            }
+        }
         service.loadMeta(objname, $http, function(m){
             var custfilter = {};
             custfilter.custom = true;
             custfilter.tenant = selTen.name;
+            if (filter !== undefined){
+                for(var el in filter){
+                    custfilter[el] = filter[el];
+                }
+            }
             service.loadMeta(objname, $http, function(c){
                 if (c !== undefined){
                     $.each(c, function(i, cf){
@@ -378,6 +403,17 @@ angular.module('cart').factory('adminservice', function($q, $cookies) {
         });
     }
 
+    service.compute = function(obj, f, groups, $http, callback){
+        var url = serverUrl + '/report/calc';
+        var request = {};
+        request.obj = obj;
+        request.filter = f;
+        request.groupBy = groups;
+        $http.post(url, request).success(function(result){
+            callback(result);
+        });
+    }
+
     service.peopleStats = function(f, $http, callback){
         var url = serverUrl + '/consumer/bytype';
         $http.post(url, f).success(function(result){
@@ -438,8 +474,8 @@ angular.module('cart').factory('adminservice', function($q, $cookies) {
         for (var i = 0; i < fields.length; i++){
             var fd = fields[i];
             if (fd.options !== undefined && fd.fldtype == 'array'){
-                obj[fd.fldname] = []
-;                for(var o=0; o < fd.options.length; o++){
+                obj[fd.fldname] = [];
+                for(var o=0; o < fd.options.length; o++){
                     var opt = fd.options[o];
                     if (opt.optvalue == true){
                         obj[fd.fldname].push(opt.fldvalue);

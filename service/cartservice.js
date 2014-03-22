@@ -81,7 +81,12 @@ angular.module('cart').factory('cartservice', function($http) {
                     }
                 });
             }
-        });
+            else{
+                callback(null);
+            }
+        }).error(function(data, status) {
+                callback(null);
+            });
     }
 
     service.getTemplateURL = function(){
@@ -247,90 +252,97 @@ angular.module('cart').factory('cartservice', function($http) {
         cart = {};
         cart.prods = [];
         appType = appT;
-        if (appType == undefined && appObj.appID !== undefined){
+        if (appObj.appID !== undefined){
             appType = appObj.appID;
+            tenant = appObj.tenant;
+            initApp(filter, f, callback);
         }
-        console.log(appType);
-        var appFilter = {tenant:appType, agent:filter.agent};
-        var singlePreview = false;
-        if (appID !== null && appID !== undefined){
-            singlePreview = true;
-            appFilter = {tenant:appType, _id: appID};
-        }
-        $http.post(serverUrl + '/apps/list', appFilter).success(function(applics){
-            if (singlePreview == true && applics.length > 0){
-                appType = applics[0].appID;
-                appObj = applics[0];
-                tenant = appObj.tenant;
+        else{
+            console.log(appType);
+            var appFilter = {tenant:appType, agent:filter.agent};
+            var singlePreview = false;
+            if (appID !== null && appID !== undefined){
+                singlePreview = true;
+                appFilter = {tenant:appType, _id: appID};
             }
-            else{
-                for(var a = 0; a < applics.length; a++){
-                    if (applics[a].active == true){
-                        appType = applics[a].appID;
-                        appObj = applics[a];
-                        tenant = appObj.tenant;
+            $http.post(serverUrl + '/apps/list', appFilter).success(function(applics){
+                if (singlePreview == true && applics.length > 0){
+                    appType = applics[0].appID;
+                    appObj = applics[0];
+                    tenant = appObj.tenant;
+                }
+                else{
+                    for(var a = 0; a < applics.length; a++){
+                        if (applics[a].active == true){
+                            appType = applics[a].appID;
+                            appObj = applics[a];
+                            tenant = appObj.tenant;
+                        }
                     }
                 }
-            }
 
-            cart.start = new Date().getTime() / 1000;
-            cart.complete = false;
-            request = filter;
-            f.app = service.getApp();
-            f.visible = true;
-
-            var url = serverUrl + '/step/list';
-            $http.post(url, f).success(function(st){
-                    $.each(st, function(i, s){
-                        if (admin == true && singleTempl !== null && singleTempl.length > 0){
-                            if (singleTempl === s._id){
-                                steps[0] = s;
-                                stepNames[s._id] = 0;
-                            }
-                        }
-                        else{
-                            steps[i] = s;
-                            stepNames[s._id] = i;
-                        }
-                    });
-                    singleTempl = "";
-                    curstep = steps[0];
-                    if (appObj.agent !== "agent"){
-                        service.customer.OS = BrowserDetect.OS;
-                        service.customer.browser = BrowserDetect.browser;
-                        service.customer.speed = SpeedDetect.speedMbps;
-                    }
-                    if (filter.zip !== undefined){
-                        $http.post(serverUrl + '/zip/list', {zip:filter.zip}).success(function(geos){
-                            if (geos.length > 0){
-                                var geo = geos[0];
-                                service.customer.state = geo.state;
-                                service.customer.city = geo.city;
-                                service.customer.lat = geo.lat;
-                                service.customer.lon = geo.lon;
-                            }
-                            service.updateCustomer(function(c){
-                                service.customer = c;
-                                service.logAction("call_start", 0, true);
-                                callback(steps);
-                                service.getIPinfo();
-                            });
-                        });
-                    }
-                    else{
-                        service.customer.zipguess=true;
-                        service.updateCustomer(function(c){
-                            service.customer = c;
-                            service.logAction("call_start", 0, true);
-                            callback(steps);
-                            service.getIPinfo();
-                        });
-                    }
+               initApp(filter, f, callback);
 
             });
-
-        });
+        }
     };
+
+    function initApp(filter, f, callback){
+        cart.start = new Date().getTime() / 1000;
+        cart.complete = false;
+        request = filter;
+        f.app = service.getApp();
+        f.visible = true;
+
+        var url = serverUrl + '/step/list';
+        $http.post(url, f).success(function(st){
+            $.each(st, function(i, s){
+                if (admin == true && singleTempl !== null && singleTempl.length > 0){
+                    if (singleTempl === s._id){
+                        steps[0] = s;
+                        stepNames[s._id] = 0;
+                    }
+                }
+                else{
+                    steps[i] = s;
+                    stepNames[s._id] = i;
+                }
+            });
+            singleTempl = "";
+            curstep = steps[0];
+            if (appObj.agent !== "agent"){
+                service.customer.OS = BrowserDetect.OS;
+                service.customer.browser = BrowserDetect.browser;
+                service.customer.speed = SpeedDetect.speedMbps;
+            }
+            if (filter.zip !== undefined){
+                $http.post(serverUrl + '/zip/list', {zip:filter.zip}).success(function(geos){
+                    if (geos.length > 0){
+                        var geo = geos[0];
+                        service.customer.state = geo.state;
+                        service.customer.city = geo.city;
+                        service.customer.lat = geo.lat;
+                        service.customer.lon = geo.lon;
+                    }
+                    service.updateCustomer(function(c){
+                        service.customer = c;
+                        service.logAction("call_start", 0, true);
+                        callback(steps);
+                        service.getIPinfo();
+                    });
+                });
+            }
+            else{
+                service.customer.zipguess=true;
+                service.updateCustomer(function(c){
+                    service.customer = c;
+                    service.logAction("call_start", 0, true);
+                    callback(steps);
+                    service.getIPinfo();
+                });
+            }
+        });
+    }
 
     service.getIPinfo = function(callback){
         if (appObj.agent !== "agent"){
@@ -487,9 +499,13 @@ angular.module('cart').factory('cartservice', function($http) {
         a.app = appType;
         a.complete = complete;
         a.duration = duration;
+        if (a.duration == 0 && cart !== undefined && cart !== null){
+            a.duration = new Date().getTime() / 1000 - cart.start;
+        }
         a.data = d;
         a.test = admin;
-        a.consumer = service.customer;
+        a.consumer = service.customer._id;
+        a.tfn = service.customer.tfn;
         if (service.getAgentID() !== undefined && service.getAgentID() !== null){
             a.agent = service.getAgentID();
         }
@@ -498,6 +514,7 @@ angular.module('cart').factory('cartservice', function($http) {
             a.rev = d.rev !== undefined ? Number(d.rev) : 0;
             a.prov = d.prov;
         }
+
         var url = serverUrl + '/log/update';
         if (admin == false){
             $http.post(url, a).success(function(a){

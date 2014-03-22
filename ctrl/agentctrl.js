@@ -1,4 +1,4 @@
-function agentctrl($scope, $rootScope, $http, $location, cartservice){
+function agentctrl($scope, $rootScope, $http, $location, cartservice, adminservice){
     var serverUrl = topUrl + '/templ/';
     $scope.topUrl = topUrl;
 
@@ -9,6 +9,7 @@ function agentctrl($scope, $rootScope, $http, $location, cartservice){
     $scope.c = cartservice.getCustomer();
 
     $scope.stats = {};
+    $scope.allwidgets = [];
     $scope.hasproducts = false;
     $scope.existprod = false;
     $scope.showCart = false;
@@ -27,20 +28,87 @@ function agentctrl($scope, $rootScope, $http, $location, cartservice){
     console.log("session", sid);
 
     cartservice.validateAgent(sid, $scope.tenant, function(a, s){
-        $scope.agent = a;
-        $scope.session = s
-    });
+        if (a == null){
+            //login
+        }else{
+            $scope.agent = a;
+            $scope.session = s;
+            adminservice.listObj('tenant', {name:$scope.tenant}, $http, function(t){
+                if (t.length > 0){
+                    $scope.selTen = t[0];
+                    adminservice.setTenant(t[0]);
+                    adminservice.listObj('apps', {tenant:$scope.selTen.name}, $http, function(apps){
+                        $scope.selTen.appObjects = apps;
+                        $scope.switchApp(apps[0]);
+                        loadWidgets();
+                        loadStats();
+                    });
 
-    function loadWidgets(){
-        adminservice.listObj('step', {app:'admin', type:'app', parentid:'agentnav'}, $http, function(data){
-            $.each(data, function(i, w){
-                if (w.integration !== undefined && w.integration !== ''){
-                    eval(w.integration);
-                }else{
-                    $scope[w.name + '_widget'] = $scope.rootUrl +  w.template;
                 }
             });
+        }
+    });
+
+    function loadStats(){
+        var filter = {agent: $scope.agent._id, complete:true, action:'call_end'};
+        var groups = [];
+        groups.push({fldid:"_id", fldname:"agent"});
+        groups.push({fldid:"result", fldname: "duration", fnc:"avg"});
+        adminservice.compute('log', filter, groups,$http, function(data){
+            console.log("duration report", data[0].result);
         });
+    }
+
+    $scope.switchApp = function(a){
+        $scope.selApp = a;
+        $scope.selApp.agent = "agent"; //any flow can be used in call center
+        cartservice.setAppObj(a);
+    }
+
+    function prepareField(metafld){
+        var mf = metafld;
+
+        return mf;
+    }
+
+    function loadWidgets(){
+        adminservice.listObj('step', {app:'admin', type:'app', parentid:'agentnav', visible:true, order_by:{order:1}}, $http, function(data){
+            $scope.agentWidgets = data;
+            $.each(data, function(i, w){
+                initWidget(w);
+            });
+            $scope.restart();
+        });
+        adminservice.listObj('step', {app:'admin', type:'app', parentid:'agenttools', visible:true, order_by:{order:1}}, $http, function(data){
+            $scope.agentTools = data;
+            $.each(data, function(i, w){
+                initWidget(w);
+            });
+        });
+    }
+
+    function initWidget(w){
+        adminservice.cacheWidget(w);
+        $scope.allwidgets.push(w);
+        w.view = $scope.topUrl +  w.template;
+        w.show = true;
+        if (w.integration !== undefined && w.integration !== ''){
+            eval(w.integration);
+        }
+    }
+
+    $scope.isActiveStep = function(s){
+        var active = false;
+        if (s !== undefined && $scope.step !== undefined && s._id == $scope.step._id){
+            active = true;
+        }
+        return active;
+    }
+
+    $scope.restart = function(){
+        $scope.c = {};
+        $scope.c.agentID = $scope.agent._id;
+        $scope.start($scope.c.zip, $scope.c, $scope.tenant, false);
     }
 
 
@@ -49,29 +117,13 @@ function agentctrl($scope, $rootScope, $http, $location, cartservice){
         cust.zip = z;
         cartservice.setExCart(exCart);
         cartservice.setExtension(extension);
-//        if (cartservice.exCartExists() == false){
-//            $('#bv_cart_panel').show();
-//        }
-//        else
-//        {
-//            $('#bv_cart_panel').hide();
-//        }
-        cartservice.initCartPanel({name:'cart', app:appType}, $http, function(c){
-            $scope.showCart = c.visible;
 
-        });
         $scope.stats.orders = 0;
         $scope.stats.calltime = 0;
         $scope.stats.rev = 0;
         $scope.stats.conv = 0.0;
         $scope.stats.ladder = {};
-        cartservice.initGame({name:'game', app:appType}, $http, function(game){
-            $scope.gameOn = game.visible;
-            if ($scope.gameOn){
-                $scope.gamePanel = game;
-                updateStats();
-            }
-        });
+
         var f = {zip:z, agent:'agent'};
         $scope.ex = prod;
         $scope.existprod = $scope.ex!= null && $scope.ex != undefined;
@@ -79,14 +131,12 @@ function agentctrl($scope, $rootScope, $http, $location, cartservice){
             $scope.steps = steps;
             $scope.step = cartservice.currentstep();
             $scope.c = cartservice.getCustomer();
-
-
+            $scope.$broadcast("EV_CONSUMER_CHANGED", $scope.c);
+            $scope.onair = true;
             $scope.changeView(steps[0]);
         });
 
-        cartservice.initCrumbs({name:'crumb'}, $http, function(cr){
-            $scope.crumbsOn = cr.visible;
-        });
+
         updateCartTotal();
         cartservice.getSocket().on('feedback', function (action) {
                 console.log("client feedback:");
@@ -114,9 +164,37 @@ function agentctrl($scope, $rootScope, $http, $location, cartservice){
         return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search)||[,""])[1].replace(/\+/g, '%20'))||null
     }
 
-    $scope.startCall = function(){
-        $scope.c = $scope.obj;
-        $scope.start($scope.c.zip, $scope.c, $scope.tenant, false);
+    $scope.startCall = function(prospect){
+        cartservice.setCustomer($scope.c);
+        cartservice.updateCustomer(function(){
+            //look up TFN to associate the online session
+            checkOnline(function(){
+                if (prospect !== undefined){
+                    $scope.next();
+                }
+            })
+        });
+    }
+
+    function checkOnline(callback){
+        if ($scope.c.tfn !== undefined && $scope.c.tfn.length > 0){
+            adminservice.listObj('consumer', {tfn: $scope.c.tfn, agentID: ""}, $http, function(c){
+                if (c.length > 0){
+                    var onlineSession = c[0];
+                    for(var key in onlineSession){
+                        if (key !== "agentID" && key !== '_id'){
+                            $scope.c[key] = onlineSession[key];
+                        }
+                    }
+                }
+                $scope.$broadcast("EV_CONSUMER_CHANGED", $scope.c);
+                callback();
+
+            });
+        }
+        else{
+            callback();
+        }
     }
 
     $scope.startChat = function(){
@@ -127,35 +205,16 @@ function agentctrl($scope, $rootScope, $http, $location, cartservice){
     }
 
 
-
-    function buildobj(meta, def){
-        var that = this;
-        var obj = {};
-        $.each(meta, function(i, key){
-            obj[key.fldname] = def!==undefined && def[key.fldname] !== undefined ? def[key.fldname] : key.defval;
-        });
-        return obj;
-    }
-
-
     $scope.back = function(){
-
         $scope.step = cartservice.prevStep($scope.step._id);
         $scope.changeView($scope.step);
     }
 
     $scope.next = function(){
-        console.log("Controller next(). Customer:");
-        console.log($scope.c);
+        //check success in app object
+        //check validation before proceeding
         $scope.step = cartservice.nextStep($scope.step._id);
         $scope.changeView($scope.step);
-    }
-
-    $scope.updateCrumbs = function(s){
-        if($scope.step.name == s.name){
-            return "activeStep";
-        }
-        return "";
     }
 
 
@@ -170,6 +229,14 @@ function agentctrl($scope, $rootScope, $http, $location, cartservice){
         onStep(step, $scope.c);
     }
 
+    $scope.$on("EV_CONSUMER_UPDATED", function(event, obj){
+        $scope.c = obj;
+        console.log('EV_CONSUMER_UPDATED called', $scope.c);
+        cartservice.setCustomer($scope.c);
+    });
+
+
+
     $scope.loadProds = function(){
         $scope.$broadcast("EV_LOAD_PROD");
     }
@@ -177,17 +244,6 @@ function agentctrl($scope, $rootScope, $http, $location, cartservice){
     $scope.clear = function (){
         $scope.changeView('');
         cartservice.endSession();
-    }
-
-    $scope.openAdmin = function(){
-        $('#bv_cart_panel').hide();
-        var p = $scope.isAdmin == true? '/admin' : '/';
-        $location.path(p);
-    }
-    $scope.openCart = function(){
-        if (cartservice.exCartExists() == false){
-            $('#bv_cart_panel').show();
-        }
     }
 
     $scope.onAuth = function(){
