@@ -44,53 +44,16 @@ exports.loadUser = function(f, callback){
 }
 
 exports.save = function(req, res){
-    db.setDB(dbname);
-    var vid = req.body;
-    var filter = {};
-    if (vid._id !== null && vid._id !== undefined){
-        filter._id = new ObjectID(vid._id);
-        vid._id = filter._id;
-
-
-        db.upsert(colName, vid, filter, function(err, newid){
-            if (err !== null){
-                handleError(res, "Cannot add person ", err);
-            }
-            else{
-                res.send(vid);
-            }
-        });
-    }
-    else{
-        createPerson(vid, res);
-    }
+    db.saveData(dbname, colName, req, res, onInsert);
 }
 
-function createPerson(p, res){
+
+function onInsert(p){
     p.upass = auth.createPass(p.upass);
-    db.insert(colName, p, function(err, rec){
-        if (err !== null){
-            handleError(res, "Cannot add person ", err);
-        }
-        else{
-            res.send(rec);
-        }
-    })
 }
 
 exports.delete = function(req, res){
-    db.setDB(dbname);
-    var vid = req.body;
-    var pid = new ObjectID(vid._id);
-    var filter = {_id : pid};
-    db.delete(colName, filter, function(err, ret){
-        if (err !== null){
-            handleError(res, "Cannot delete user ", err);
-        }
-        else{
-            res.send(pid);
-        }
-    });
+    db.deleteData(dbname, colName, req, res);
 }
 
 

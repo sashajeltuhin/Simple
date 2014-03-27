@@ -40,8 +40,6 @@ function agentctrl($scope, $rootScope, $http, $location, cartservice, adminservi
                     adminservice.listObj('apps', {tenant:$scope.selTen.name}, $http, function(apps){
                         $scope.selTen.appObjects = apps;
                         $scope.switchApp(apps[0]);
-                        loadWidgets();
-                        loadStats();
                     });
 
                 }
@@ -63,6 +61,8 @@ function agentctrl($scope, $rootScope, $http, $location, cartservice, adminservi
         $scope.selApp = a;
         $scope.selApp.agent = "agent"; //any flow can be used in call center
         cartservice.setAppObj(a);
+        loadWidgets();
+        loadStats();
     }
 
     function prepareField(metafld){
@@ -164,10 +164,20 @@ function agentctrl($scope, $rootScope, $http, $location, cartservice, adminservi
         return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search)||[,""])[1].replace(/\+/g, '%20'))||null
     }
 
+    $scope.$on("EV_LAUNCH_EVENT", function(event, data){
+        if (data !== undefined && data.length > 0){
+            var prospect = data[0];
+            crossRef(prospect);
+
+            //if rec is a lead, use it, otherwise copy fields into the new record and cross reference ids)
+            $scope.startCall(prospect);
+        }
+    });
+
     $scope.startCall = function(prospect){
         cartservice.setCustomer($scope.c);
         cartservice.updateCustomer(function(){
-            //look up TFN to associate the online session
+            $scope.$broadcast("EV_CONSUMER_CHANGED", $scope.c);
             checkOnline(function(){
                 if (prospect !== undefined){
                     $scope.next();
@@ -176,16 +186,13 @@ function agentctrl($scope, $rootScope, $http, $location, cartservice, adminservi
         });
     }
 
+    //look up TFN to associate the online session
     function checkOnline(callback){
         if ($scope.c.tfn !== undefined && $scope.c.tfn.length > 0){
             adminservice.listObj('consumer', {tfn: $scope.c.tfn, agentID: ""}, $http, function(c){
                 if (c.length > 0){
                     var onlineSession = c[0];
-                    for(var key in onlineSession){
-                        if (key !== "agentID" && key !== '_id'){
-                            $scope.c[key] = onlineSession[key];
-                        }
-                    }
+                    crossRef(onlineSession);
                 }
                 $scope.$broadcast("EV_CONSUMER_CHANGED", $scope.c);
                 callback();
@@ -195,6 +202,15 @@ function agentctrl($scope, $rootScope, $http, $location, cartservice, adminservi
         else{
             callback();
         }
+    }
+
+    function crossRef(onlineSession){
+        for(var key in onlineSession){
+            if (key !== "agentID" && key !== '_id'){
+                $scope.c[key] = onlineSession[key];
+            }
+        }
+        $scope.c.refID = onlineSession._id;
     }
 
     $scope.startChat = function(){
@@ -219,13 +235,9 @@ function agentctrl($scope, $rootScope, $http, $location, cartservice, adminservi
 
 
     $scope.changeView = function (step){
-        $location.path('/' + step.name);
-//        var fn = window[step.controller];
-//        $scope.viewCtrl = fn;
-//        if ($scope.wrapperUrl == undefined){
-//         $scope.wrapperUrl = serverUrl + 'adminTmpl.html';
-//        }
-//        $scope.templateUrl = cartservice.getTemplateURL();
+        $location.path('/' + step._id);
+
+        $scope.templateUrl = cartservice.getTemplateURL();
         onStep(step, $scope.c);
     }
 

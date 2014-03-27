@@ -187,6 +187,7 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
     }
 
     $scope.openWidgetDetail = function(w){
+        selected = '';
         var appObj = getAppObj(w.app);
         adminservice.setAppObj(appObj);
         $scope.obj = w;
@@ -409,6 +410,13 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
         $scope.wrapper = serverUrl + "columnMap.html";
     }
 
+    $scope.createLead = function(){
+        var obj = {};
+        obj.view = 'createLead.html';
+        obj.title = "Generate Lead";
+        $scope.$emit("EV_SWITCH_VIEW", obj);
+    }
+
     $scope.createField = function(){
         selected = 'fields';
         createObj('New Attribute');
@@ -519,6 +527,11 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
     $scope.createCat = function(){
         selected = "cats";
         newObj('New Category');
+    }
+
+    $scope.createSMTP = function(){
+        selected = "smtpserver";
+        newObj('SMTP Server');
     }
 
     $scope.createTFN = function(){
@@ -746,6 +759,18 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
         loadMeta(f);
     }
 
+    $scope.loadEventFields = function(){
+        var f = 'event';
+        $scope.viewTitle = "Events";
+        loadMeta(f);
+    }
+
+    $scope.loadSmtpFields = function(){
+        var f = 'smtpserver';
+        $scope.viewTitle = "SMTP Server";
+        loadMeta(f);
+    }
+
     function loadMeta (f){
         selected = 'fields';
         viewMode = 'grid';
@@ -929,18 +954,84 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
         $scope.viewTitle = "";
     });
 
+    $scope.execAction = function(a){
+        var fn = $scope[a.fn];
+        fn();
+        adminservice.setLastAction(a);
+    }
+
+    function initActions(callback){
+        var f = {};
+        $scope.userActions = {};
+        f.parentCat = 'sidenav';
+        f.object = 'action';
+        f.order_by = {order:1};
+        adminservice.listObj('cats', f, $http, function(cats){
+            $scope.navCats = cats;
+            var c = 0;
+            $.each($scope.navCats, function(i, ac){
+                var actionFilter = {};
+                var av = {};
+                av.oper = 'in';
+                av.val = [ac.name];
+                actionFilter.cat = av;
+                var ai = {};
+                ai.oper = "in";
+                if ($scope.adminSession.actions !== undefined && $scope.adminSession.actions.length > 0){
+                    ai.val = $scope.adminSession.actions;
+                    actionFilter._id = ai;
+                    actionFilter.order_by = {order:1};
+                    adminservice.listObj('action', actionFilter, $http, function(actions){
+                        c++;
+                        $scope.userActions[ac.name] = actions;
+                        if (c == $scope.navCats.length - 1){
+                            orderActions();
+                            if (callback){
+                                if ($scope.allActions.length > 0){
+                                    adminservice.setLastAction($scope.allActions[0]);
+                                }
+                                $scope.singleDuty = $scope.allActions.length > 1 && $scope.adminSession.tenants.length > 1;
+                                callback();
+                            }
+                        }
+                    });
+                }
+                else{
+                    if (callback){
+                        callback();
+                    }
+                }
+            });
+        });
+    }
+
+    function orderActions(){
+        $scope.allActions = [];
+        for(var i = 0; i < $scope.navCats.length; i++){
+            var ac = $scope.navCats[i];
+            if ($scope.userActions[ac.name] !== undefined){
+                for(var a = 0; a < $scope.userActions[ac.name].length; a++){
+                    var action = $scope.userActions[ac.name][a];
+                    $scope.allActions.push(action);
+                }
+            }
+        }
+    }
+
 
     function start (){
         hideGrid();
         adminservice.authenticate($http, function(uid){
             if (uid !== undefined){
                 $scope.adminSession = adminservice.getAdminSession();
-                adminservice.listObj('tenant', {order_by:{order:1}}, $http, function(t){
-                    $scope.tenants = t;
-                    if (t.length > 0){
-                        selectTenant(t[0]);
-                    }
-                    $scope.msgalert = serverUrl + 'newnotes.html';
+                initActions(function(){
+                    adminservice.listObj('tenant', {"_id":$scope.adminSession.tenants, order_by:{order:1}}, $http, function(t){
+                        $scope.tenants = t;
+                        if (t.length > 0){
+                            selectTenant(t[0]);
+                        }
+                        $scope.msgalert = serverUrl + 'newnotes.html';
+                    });
                 });
             }
             else {
@@ -1253,8 +1344,11 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
                 $scope.tenantPicked = true;
                 $scope.$broadcast("EV_TENANT_PICKED", $scope.selTen);
 
-            })
-            openDash();
+            });
+            if ($scope.allActions.length > 0){
+                $scope.execAction(adminservice.getLastAction());
+            }
+            //openDash();
         });
     }
 
@@ -1619,6 +1713,20 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
         loadObjNGrid();
     }
 
+    $scope.loadEventLst = function(){
+        selected = 'event';
+        $scope.viewTitle = "Events";
+        buildDefFilter();
+        loadObjNGrid();
+    }
+
+    $scope.loadSmtpLst = function(){
+        selected = 'smtpserver';
+        $scope.viewTitle = "SMTP servers";
+        buildDefFilter();
+        loadObjNGrid();
+    }
+
     $scope.loadConsumerLst = function(){
         selected = 'consumer';
         $scope.viewTitle = "Consumers";
@@ -1698,22 +1806,9 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
 
     function loadObjNGrid(customFields){
         if (customFields == true){
-            var metafilter = {};
-            metafilter.custom = false;
-            adminservice.loadMeta(selected, $http, function(m){
-                var custfilter = {};
-                custfilter.custom = true;
-                custfilter.tenant = $scope.selTen.name;
-                var mlist = m;
-                adminservice.loadMeta(selected, $http, function(c){
-                    if (c !== undefined){
-                        $.each(c, function(i, cf){
-                            m.push(cf);
-                        });
-                    }
-                    loadListBindNGGrid(m);
-                }, custfilter);
-            }, metafilter);
+            adminservice.loadMetaCustom(selected, $http, function(m){
+                loadListBindNGGrid(m);
+            });
         }
         else{
             adminservice.loadMeta(selected, $http, function(m){

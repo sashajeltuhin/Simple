@@ -186,6 +186,10 @@ function rulectrl($scope, $rootScope, $http, adminservice, mkPopup){
         if ($scope.surveyRule == true){
             rule.type = "survey";
         }
+        if ($scope.stepID !== undefined){
+            rule.type = "step";
+            rule.stepID = $scope.stepID;
+        }
         rule.limit = 2;
         rule.name = "New Rule";
         $scope.ruleData.push(rule);

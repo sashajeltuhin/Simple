@@ -1,0 +1,24 @@
+<section class="m-t-lg wrapper-md animated fadeInDown" ng-controller="orderctrl">
+    <div class="aside-xxl"><a class="navbar-brand block" href="#"></a>
+        <section class="panel panel-default">
+            <div class="panel-body">
+                <p>{{step.prompt}}</p>
+                <div class="input-group">
+                    <input class="form-control" ng-model="c.mobil" placeholder="Mobile or Home Number">
+                    <span class="input-group-btn">
+                      <button ng-click="confirmCustomer()" class="btn btn-info btn-icon"><i class="fa fa-phone"></i></button>
+                    </span>
+                </div>
+                <div class="btn-group">
+                    <!--<button type="button" class="btn btn-sm btn-dark btn-icon"></button>-->
+                    <div class="btn-group hidden-nav-xs">
+                        <button type="button" class="btn btn-sm btn-primary" ng-click="next()">
+                            Proceed
+                        </button>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</section>

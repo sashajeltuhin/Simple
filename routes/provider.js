@@ -22,6 +22,19 @@ exports.list = function (req, res){
     });
 }
 
+exports.loadProvider = function(f, callback){
+    db.setDB(dbname);
+    var filter = db.getFilter(f);
+    db.load(colName, filter, function(err, recs){
+        if (err !== null){
+            callback(err, null);
+        }
+        else{
+            callback(null, recs);
+        }
+    });
+}
+
 exports.save = function(req, res){
     db.setDB(dbname);
     var v = req.body;

@@ -3,10 +3,13 @@ function gridctrl($scope, $http, adminservice){
     var viewMode = "grid";
     var serverUrl = topUrl + adminURL + '/templ/';
     var selected = '';
+    var changedlist = [];
+    var changedFlds = {};
     $scope.rootUrl = topUrl;
     $scope.defFilter = {};
     $scope.gridData = [];
     $scope.gridcolumns = [];
+    $scope.pickedObj = '';
 
     $scope.gridOptions = {
         data: 'gridData',
@@ -19,9 +22,23 @@ function gridctrl($scope, $http, adminservice){
     };
     var filterdata = adminservice.getFilterData();
     selected = filterdata.objname;
-    $scope.defFilter = filterdata.f;
-    $scope.selFilter = $scope.defFilter;
-    loadObjNGrid(filterdata.customfields);
+    if (selected !== undefined && selected.length > 0){
+        $scope.defFilter = filterdata.f;
+        $scope.selFilter = $scope.defFilter;
+        loadObjNGrid(filterdata.customfields);
+    }
+
+    adminservice.listObj('object', {order_by:{title:1}}, $http, function(data){
+       $scope.mainobjects = data;
+    });
+
+    $scope.onPickedChange = function(){
+        selected = $scope.pickedObj;
+        var f = {app :adminservice.getActiveApp()};
+        $scope.defFilter = f;
+        $scope.selFilter = f;
+        loadObjNGrid(false);
+    }
 
     $scope.adminPage = serverUrl + "admin.html";
 
@@ -38,6 +55,16 @@ function gridctrl($scope, $http, adminservice){
 
         });
 
+    }
+
+    $scope.selectObj = function(){
+        var data = [];
+        $.each(changedlist, function(i, item){
+            if (item.mk_rowsel == true){
+                data.push(item);
+            }
+        });
+        $scope.$emit("EV_OBJ_SELECTED", data, selected);
     }
 
     $scope.$on('EV_FILTER_APPLY', function(event, obj){

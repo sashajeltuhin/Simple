@@ -255,8 +255,8 @@ function templateCtrl($scope, $http, adminservice){
 
     $scope.openRules = function(){
         var p = {};
-        p.adRule = $scope.adRule;
-        p.selRule = $scope.selrule;
+        p.adRule = false;
+        p.stepID = $scope.obj._id;
         adminservice.setRuleParams(p);
         $scope.stepRuleTemplate = serverUrl + "templsegrules.html"
     }

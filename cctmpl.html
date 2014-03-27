@@ -25,6 +25,8 @@
     <script src="assets/js/base.js"></script>
     <script src="js/angular.min.js" type="text/javascript"></script>
     <script src="js/angular-cookies.min.js" type="text/javascript"></script>
+    <script type="text/javascript" src="admin/js/moment.js"></script>
+    <script type="text/javascript" src="admin/js/datetimepicker.js"></script>
     <script src="js/sortable.js" type="text/javascript"></script>
     <script src="js/date.js" type="text/javascript"></script>
     <script src="js/select2.js" type="text/javascript"></script>
@@ -38,6 +40,7 @@
     <script src="service/adminservice.js" type="text/javascript"></script>
     <script src="dir/cartparms.js" type="text/javascript"></script>
     <script src="ctrl/agentctrl.js" type="text/javascript"></script>
+    <script src="ctrl/todoctrl.js" type="text/javascript"></script>
     <script src="ctrl/agentprodctrl.js" type="text/javascript"></script>
     <script src="ctrl/consumerctrl.js" type="text/javascript"></script>
     <script src="ctrl/teaserctrl.js" type="text/javascript"></script>
@@ -65,50 +68,74 @@
     </ul>
 </div>
     <section class="hbox stretch" ng-show="agent">
-        <div id="bv_cart_cont" ng-include="wrapperUrl"></div>
-        <aside class="bg-light lter b-r aside-xl hidden-print nav-xs-right" id="agenttools">
-            <section class="w-f ">
-                <div class="slim-scroll" data-height="auto" data-disable-fade-out="true" data-distance="0" data-size="5px" data-color="#333333">
-                    <!-- nav -->
-                    <nav class="nav-primary hidden-xs">
-                        <ul class="nav">
-                            <li ng-repeat="w in agentTools" ng-include="w.view" ng-show="w.show">
-                            </li>
-                        </ul>
-                    </nav>
-                    <!-- / nav -->
-                </div>
-            </section>
-        </aside>
-        <aside class="bg-light lter b-r aside-xl hidden-print nav-xs-right" id="agentnav">
+        <aside class="bg-light lter b-r aside-xl hidden-print nav-xs-left" id="agenttools">
             <section class="vbox">
-                <div class="row">
-                    <div class="form-group col-sm-2" ng-repeat="w in allwidgets">
-                        <i class="fa " ng-class="w.image"></i>
-                        <input type="checkbox" class="form-control" ng-model="w.show">
-                    </div>
-                </div>
                 <header class="header bg-primary lter text-center clearfix">
                     <div class="row">
                         <!--<a href="#agentnav" data-toggle="class:nav-xs" class="pull-left btn btn-sm btn-default btn-icon">-->
-                            <!--<i class="fa fa-angle-right text"></i>-->
-                            <!--<i class="fa fa-angle-left text-active"></i>-->
+                        <!--<i class="fa fa-angle-right text"></i>-->
+                        <!--<i class="fa fa-angle-left text-active"></i>-->
                         <!--</a>-->
                         <div class="btn-group">
                             <button type="button" class="btn btn-sm btn-primary dropdown-toggle" data-toggle="dropdown">
-                                Application
-                                <span> {{selApp.appID}}</span>
+                                <span> {{selApp.name}}</span>
                                 <span class="caret"></span>
                             </button>
                             <ul class="dropdown-menu text-left">
-                                <li ng-repeat="a in selTen.appObjects"><a href="#" ng-click="switchApp(a)">{{a.appID}}</a></li>
+                                <li ng-repeat="a in selTen.appObjects"><a href="#" ng-click="switchApp(a)">{{a.name}}</a></li>
                             </ul>
+                        </div>
+                        <div class="btn-group">
                             <button type="button" title="Chats" class="btn btn-icon btn-sm btn-dark" ng-click="startChat()"><i class="fa fa-comment-o"></i></button>
                             <button type="button" title="Restart" class="btn btn-icon btn-sm btn-dark" ng-click="restart()"><i class="fa fa-repeat"></i></button>
                         </div>
                     </div>
                     <div class="row">
                     </div>
+                </header>
+                <section class="w-f ">
+                    <div class="slim-scroll" data-height="auto" data-disable-fade-out="true" data-distance="0" data-size="5px" data-color="#333333">
+                        <!-- nav -->
+                        <nav class="nav-primary hidden-xs">
+                            <ul class="nav">
+                                <li ng-repeat="w in agentTools" ng-include="w.view" ng-show="w.show">
+                                </li>
+                            </ul>
+                        </nav>
+                        <!-- / nav -->
+                    </div>
+                </section>
+            </section>
+        </aside>
+        <div id="bv_cart_cont" ng-include="wrapperUrl"></div>
+        <aside class="bg-light lter b-r aside-xl hidden-print nav-xs-right" id="agentnav">
+            <section class="vbox">
+                <header class="header bg-primary lter text-center clearfix">
+                    <div class="row">
+                        <div class="form-group col-sm-2" ng-repeat="w in allwidgets">
+                            <i class="fa " ng-class="w.image"></i>
+                            <input type="checkbox" class="form-control" ng-model="w.show">
+                        </div>
+                    </div>
+                    <!--<section class="panel panel-default pos-rlt clearfix">-->
+                        <!--<header class="panel-heading bg-primary lter">-->
+                            <!--<ul class="nav nav-pills pull-right">-->
+                                <!--<li>-->
+                                    <!--<a href="#" class="panel-toggle btn btn-default btn-sm m-b">-->
+                                        <!--<i class="fa fa-minus icon-muted text-active"></i>-->
+                                        <!--<i class="fa fa-plus icon-muted text"></i></a>-->
+                                <!--</li>-->
+                            <!--</ul>Widget Switch Panel-->
+                        <!--</header>-->
+                        <!--<div class="panel-body clearfix collapse">-->
+                            <!--<div class="row">-->
+                                <!--<div class="form-group col-sm-2" ng-repeat="w in allwidgets">-->
+                                    <!--<i class="fa " ng-class="w.image"></i>-->
+                                    <!--<input type="checkbox" class="form-control" ng-model="w.show">-->
+                                <!--</div>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</section>-->
                 </header>
                 <section class="w-f ">
                     <div class="slim-scroll" data-height="auto" data-disable-fade-out="true" data-distance="0" data-size="5px" data-color="#333333">

@@ -1,6 +1,8 @@
 var db = require('../db/dbaccess');
 var mongo = require('mongodb');
 var csvtool = require('./csvtool');
+var postman = require('./mkmail');
+var provider = require('./provider');
 var note = require('./note');
 var ObjectID = mongo.ObjectID;
 var detect = require('./detect');
@@ -141,12 +143,54 @@ exports.export = function(req, res){
                     }
                     else{
                         console.log(error);
-                        note.sendError(user, "Export Failure", 'Export of conusmer data failed with the following error ' + error);
+                        note.sendError(user, "Export Failure", 'Export of consumer data failed with the following error ' + error);
                     }
                 });
             }
         });
     }
+}
+
+exports.verify = function(req, res){
+    var customer = req.body.c;
+
+    var msg = req.body.msg;
+    var subject = req.body.subject;
+    if (customer.mobilevendor !== undefined && customer.mobilevendor.length > 0){
+        provider.loadProvider({name:customer.mobilevendor }, function(err, data){
+           if (data.length > 0 && data[0].smsgateway !== undefined && data[0].smsgateway.length > 0) {
+               var mobileMail = customer.mobil + data[0].smsgateway;
+               postman.sendSMS(customer.tenant, subject, 'orders@bridgevine.com', mobileMail, msg, function(err, response){
+                   if (err !== null){
+                       res.send(500, {"err": err});
+                   }
+                   else{
+                       res.send(response);
+                   }
+               });
+           }
+            else{
+               emailConsumer(customer.tenant, subject, 'orders@bridgevine.com', customer.email, msg, res);
+           }
+
+        });
+    }
+    else{
+        emailConsumer(customer.tenant, subject, 'orders@bridgevine.com', customer.email, msg, res);
+    }
+
+
+}
+
+function emailConsumer(tenant, subject, from, to, msg, res){
+    postman.sendMail(tenant, subject, from, to, msg, function(err, response){
+        if (err !== null){
+            res.send(500, {"err": err});
+        }
+        else{
+            res.send(response);
+        }
+    });
 }
 
 

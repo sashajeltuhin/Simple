@@ -5,15 +5,22 @@ function consumerctrl($scope, $http, cartservice, adminservice){
     loadConsumerInfoFields();
 
     function loadConsumerInfoFields(){
-        var filter = {}; // fields associated with the widget
-        var fv = {};
-        fv.oper = "in";
-        fv.val = $scope.w.fields;
-        filter._id = fv;
-        adminservice.listObj('fields', filter, $http, function(meta){
-            $scope.meta = meta;
-            updateConsumerInfo();
-        });
+        var wirelessFilter = {};
+        wirelessFilter.tid = "0";
+        wirelessFilter.type = 'wireless';
+        adminservice.listObj('provider', wirelessFilter, $http, function(data){
+            $scope.providermeta = data;
+            var filter = {}; // fields associated with the widget
+            var fv = {};
+            fv.oper = "in";
+            fv.val = $scope.w.fields;
+            filter._id = fv;
+            adminservice.listObj('fields', filter, $http, function(meta){
+                $scope.meta = meta;
+                updateConsumerInfo();
+            });
+        })
+
     }
 
     function updateConsumerInfo(){
@@ -22,6 +29,9 @@ function consumerctrl($scope, $http, cartservice, adminservice){
 
     function prepareField(metafld){
         var mf = metafld;
+        if (mf.fldname == 'mobilevendor'){
+            mf.opts = $scope.providermeta;
+        }
 
         return mf;
     }

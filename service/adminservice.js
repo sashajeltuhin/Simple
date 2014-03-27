@@ -20,7 +20,8 @@ angular.module('cart').factory('adminservice', function($q, $cookies) {
     var filterdata = {};
     var views = [];
     var currentView = {};
-    var widgets =
+    var widgets = {};
+    var lastAction = null;
 
     service.setSelUser = function(u){
         selUser = u;
@@ -156,6 +157,14 @@ angular.module('cart').factory('adminservice', function($q, $cookies) {
 
     service.getCurrentView = function(){
         return currentView;
+    }
+
+    service.setLastAction = function(a){
+        lastAction = a;
+    }
+
+    service.getLastAction = function(){
+        return lastAction;
     }
 
     service.signIn = function(u, p, $http, callback){
@@ -621,6 +630,14 @@ angular.module('cart').factory('adminservice', function($q, $cookies) {
         }
     }
 
+    service.getActiveApp = function(){
+        $.each(selTen.appObjects, function(i, a){
+            if (a.active === true){
+                return a;
+            }
+        });
+    }
+
     service.createObj = function(heading, def, objname, mkPopup, scope, $http, callback, optionsCallback){
         service.loadMeta(objname, $http, function(meta){
             scope.obj = service.buildobj(meta, def);
@@ -696,6 +713,26 @@ angular.module('cart').factory('adminservice', function($q, $cookies) {
     service.saveClone = function(obj, objname, $http, callback){
         var clone = service.cloneObj(obj);
         service.saveObj(clone, objname, $http, callback);
+    }
+
+    service.objToString = function(obj, objname, $http, callback){
+        var desc = '';
+        var f = {};
+        f.descField = true;
+        f.order_by = {descfieldorder:1};
+        service.loadMeta(objname, $http, function(meta){
+            var parts = [];
+            for(var i = 0; i < meta.length; i++){
+                var fld = meta[i];
+                if (obj[fld.fldname] !== undefined && obj[fld.fldname] !== ''){
+                    parts.push(obj[fld.fldname]);
+                }
+            }
+            desc = parts.join(' ');
+            if (callback !== undefined){
+               callback(desc);
+            }
+        }, f);
     }
 
 

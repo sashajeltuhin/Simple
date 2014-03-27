@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="admin/js/select2/select2.css" type="text/css" />
     <link rel="stylesheet" href="admin/js/nestable/nestable.css" type="text/css">
     <link rel="stylesheet" href="admin/css/app.css" type="text/css" />
+    <link rel="stylesheet" href="admin/css/datetimepicker.css"/>
     <link rel="stylesheet" href="admin/js/calendar/bootstrap_calendar.css" type="text/css" />
 
     <!--<link rel="stylesheet" href="admin/slickgrid/slick.grid.css" type="text/css"/>-->
@@ -67,6 +68,7 @@
                 <li><a href="#/admin" ng-click="createIcon()">Icon</a></li>
                 <li><a href="#/admin" ng-click="createStyle()">Style</a></li>
                 <li><a href="#/admin" ng-click="createCat()">Category</a></li>
+                <li><a href="#/admin" ng-click="createSMTP()">SMTP server</a></li>
                 <li><a href="#/admin" ng-click="createTFN()">TFN</a></li>
             </ul>
             <!--<section class="dropdown-menu aside-xl on animated fadeInLeft no-borders lt">-->
@@ -146,7 +148,9 @@
                 <li><a href="#/admin" ng-click="loadIconsLst()">Icon</a></li>
                 <li><a href="#/admin" ng-click="loadStyleLst()">Styles</a></li>
                 <li><a href="#/admin" ng-click="loadCatLst()">Categories</a></li>
+                <li><a href="#/admin" ng-click="loadEventLst()">Events</a></li>
                 <li><a href="#/admin" ng-click="loadTFNLst()">TFN</a></li>
+                <li><a href="#/admin" ng-click="loadSmtpLst()">SMTP servers</a></li>
             </ul>
         </li>
         <li class="dropdown" ng-show="adminSession">
@@ -177,10 +181,12 @@
                 <li><a href="#/admin" ng-click="loadActionFields()">Actions</a></li>
                 <li><a href="#/admin" ng-click="loadReportFields()">Reports</a></li>
                 <li><a href="#/admin" ng-click="loadObjectFields()">Objects</a></li>
+                <li><a href="#/admin" ng-click="loadCatFields()">Categories</a></li>
+                <li><a href="#/admin" ng-click="loadEventFields()">Events</a></li>
+                <li><a href="#/admin" ng-click="loadCCNumFields()">TFN</a></li>
+                <li><a href="#/admin" ng-click="loadSmtpFields()">SMTP</a></li>
                 <li><a href="#/admin" ng-click="loadIconFields()">Icons</a></li>
                 <li><a href="#/admin" ng-click="loadStyleFields()">Styles</a></li>
-                <li><a href="#/admin" ng-click="loadCatFields()">Categories</a></li>
-                <li><a href="#/admin" ng-click="loadCCNumFields()">TFN</a></li>
             </ul>
         </li>
         <!--<li><a href="#">-->
@@ -263,7 +269,7 @@
 <section>
 <section class="hbox stretch">
 <!-- .aside -->
-<aside class="bg-dark lter aside-md hidden-print" id="nav">
+<aside class="bg-dark lter aside-md hidden-print" id="nav" ng-show="singleDuty">
 <section class="vbox" ng-show="adminSession">
 <header class="header bg-primary lter text-center clearfix">
     <div class="btn-group">
@@ -286,161 +292,183 @@
 <!-- nav -->
 <nav class="nav-primary hidden-xs">
 <ul class="nav">
-<li  class="active">
-    <a href="#/admin" ng-click="onDash()" class="active">
-        <i class="fa fa-dashboard icon">
-            <b class="bg-danger"></b>
-        </i>
-        <span>Dashboard</span>
-    </a>
-</li>
-<li >
-    <a href="#layout"  >
-        <i class="fa fa-cogs icon">
-            <b class="bg-warning"></b>
-        </i>
-                        <span class="pull-right">
-                          <i class="fa fa-angle-down text"></i>
-                          <i class="fa fa-angle-up text-active"></i>
-                        </span>
-        <span>Tools</span>
-    </a>
-    <ul class="nav lt">
-        <li >
-            <a href="#/admin" ng-click="loadProviders()" >
-                <i class="fa fa-angle-right"></i>
-                <span>Provider Priority</span>
-            </a>
-        </li>
-        <li >
-            <a href="#/admin" ng-click="loadSegments()" >
-                <i class="fa fa-angle-right"></i>
-                <span>Display Rules</span>
-            </a>
-        </li>
-        <li >
-            <a href="#/admin" ng-click="loadSurvey()" >
-                <i class="fa fa-angle-right"></i>
-                <span>Consumer Survey</span>
-            </a>
-        </li>
-        <li >
-            <a href="#/admin" ng-click="updateGeo()" >
-                <i class="fa fa-angle-right"></i>
-                <span>Geo Mapping</span>
-            </a>
-        </li>
-    </ul>
-</li>
-<li >
-    <a href="#UI"  >
-        <i class="fa fa-eye icon">
-            <b class="bg-warning"></b>
-        </i>
-                        <span class="pull-right">
-                          <i class="fa fa-angle-down text"></i>
-                          <i class="fa fa-angle-up text-active"></i>
-                        </span>
-        <span>UX</span>
-    </a>
-    <ul class="nav lt">
-        <li >
-            <a href="#/admin" ng-click="loadCartSteps()" >
-                <i class="fa fa-angle-right"></i>
-                <span>User Flow</span>
-            </a>
-        </li>
-        <li >
-            <a href="#/admin" ng-click="loadAppWidgets()" >
-                <i class="fa fa-angle-right"></i>
-                <span>Application Components</span>
-            </a>
-        </li>
-        <li >
-            <a href="#/admin" ng-click="ordersReport()" >
-                <i class="fa fa-angle-right"></i>
-                <span>Performance</span>
-            </a>
-        </li>
-    </ul>
-</li>
 
-<li >
-    <a href="#CRM"  >
-        <i class="fa fa-users icon">
-            <b class="bg-primary"></b>
-        </i>
+    <li ng-repeat="ac in navCats" ng-show="userActions[ac.name]" >
+        <a href="#{{ac.name}}"  >
+            <i class="fa icon" ng-class="ac.imageUrl">
+                <b class="bg-primary"></b>
+            </i>
                         <span class="pull-right">
                           <i class="fa fa-angle-down text"></i>
                           <i class="fa fa-angle-up text-active"></i>
                         </span>
-        <span>CRM</span>
-    </a>
-    <ul class="nav lt">
-        <li >
-            <a href="#/admin" ng-click="loadConsumerLst()" >
-                <i class="fa fa-angle-right"></i>
-                <span>Consumers</span>
-            </a>
-        </li>
-    </ul>
-</li>
-<li >
-    <a href="#pages"  >
-        <i class="fa fa-phone icon">
-            <b class="bg-primary"></b>
-        </i>
-                        <span class="pull-right">
-                          <i class="fa fa-angle-down text"></i>
-                          <i class="fa fa-angle-up text-active"></i>
-                        </span>
-        <span>Call Center</span>
-    </a>
-    <ul class="nav lt">
-        <li >
-            <a href="#/admin" ng-click="openCallCenter()" >
-                <i class="fa fa-angle-right"></i>
-                <span>Agent's portal</span>
-            </a>
-        </li>
-        <li >
-            <a href="#/admin" ng-click="openDisposition()" >
-                <i class="fa fa-angle-right"></i>
-                <span>Agent's disposition</span>
-            </a>
-        </li>
-    </ul>
-</li>
-<li >
-    <a href="#sec"  >
-        <i class="fa fa-lock icon">
-            <b class="bg-primary"></b>
-        </i>
-                        <span class="pull-right">
-                          <i class="fa fa-angle-down text"></i>
-                          <i class="fa fa-angle-up text-active"></i>
-                        </span>
-        <span>Security</span>
-    </a>
-    <ul class="nav lt">
-        <li >
-            <a href="#/admin" ng-click="openUserManagement()" >
-                <i class="fa fa-angle-right"></i>
-                <span>User Management</span>
-            </a>
-        </li>
-    </ul>
-</li>
-<li >
-    <a href="#/admin" ng-click="openInbox()" >
-        <!--<b class="badge bg-danger pull-right">3</b>-->
-        <mk-notify class="pull-right" num="newtotal"></mk-notify>
-        <i class="fa fa-envelope-o icon">
-            <b class="bg-primary dker"></b>
-        </i>
-        <span>Message Center</span>
-    </a>
-</li>
+            <span>{{ac.label}}</span>
+        </a>
+        <ul class="nav lt">
+            <li ng-repeat="a in userActions[ac.name]" >
+                <a href="#" ng-click="execAction(a)" >
+                    <i class="fa fa-angle-right"></i>
+                    <span>{{a.label}}</span>
+                </a>
+            </li>
+        </ul>
+    </li>
+
+<!--<li  class="active">-->
+    <!--<a href="#/admin" ng-click="onDash()" class="active">-->
+        <!--<i class="fa fa-dashboard icon">-->
+            <!--<b class="bg-danger"></b>-->
+        <!--</i>-->
+        <!--<span>Dashboard</span>-->
+    <!--</a>-->
+<!--</li>-->
+<!--<li >-->
+    <!--<a href="#layout"  >-->
+        <!--<i class="fa fa-cogs icon">-->
+            <!--<b class="bg-warning"></b>-->
+        <!--</i>-->
+                        <!--<span class="pull-right">-->
+                          <!--<i class="fa fa-angle-down text"></i>-->
+                          <!--<i class="fa fa-angle-up text-active"></i>-->
+                        <!--</span>-->
+        <!--<span>Tools</span>-->
+    <!--</a>-->
+    <!--<ul class="nav lt">-->
+        <!--<li >-->
+            <!--<a href="#/admin" ng-click="loadProviders()" >-->
+                <!--<i class="fa fa-angle-right"></i>-->
+                <!--<span>Provider Priority</span>-->
+            <!--</a>-->
+        <!--</li>-->
+        <!--<li >-->
+            <!--<a href="#/admin" ng-click="loadSegments()" >-->
+                <!--<i class="fa fa-angle-right"></i>-->
+                <!--<span>Display Rules</span>-->
+            <!--</a>-->
+        <!--</li>-->
+        <!--<li >-->
+            <!--<a href="#/admin" ng-click="loadSurvey()" >-->
+                <!--<i class="fa fa-angle-right"></i>-->
+                <!--<span>Consumer Survey</span>-->
+            <!--</a>-->
+        <!--</li>-->
+        <!--<li >-->
+            <!--<a href="#/admin" ng-click="updateGeo()" >-->
+                <!--<i class="fa fa-angle-right"></i>-->
+                <!--<span>Geo Mapping</span>-->
+            <!--</a>-->
+        <!--</li>-->
+    <!--</ul>-->
+<!--</li>-->
+<!--<li >-->
+    <!--<a href="#UI"  >-->
+        <!--<i class="fa fa-eye icon">-->
+            <!--<b class="bg-warning"></b>-->
+        <!--</i>-->
+                        <!--<span class="pull-right">-->
+                          <!--<i class="fa fa-angle-down text"></i>-->
+                          <!--<i class="fa fa-angle-up text-active"></i>-->
+                        <!--</span>-->
+        <!--<span>UX</span>-->
+    <!--</a>-->
+    <!--<ul class="nav lt">-->
+        <!--<li >-->
+            <!--<a href="#/admin" ng-click="loadCartSteps()" >-->
+                <!--<i class="fa fa-angle-right"></i>-->
+                <!--<span>User Flow</span>-->
+            <!--</a>-->
+        <!--</li>-->
+        <!--<li >-->
+            <!--<a href="#/admin" ng-click="loadAppWidgets()" >-->
+                <!--<i class="fa fa-angle-right"></i>-->
+                <!--<span>Application Components</span>-->
+            <!--</a>-->
+        <!--</li>-->
+        <!--<li >-->
+            <!--<a href="#/admin" ng-click="ordersReport()" >-->
+                <!--<i class="fa fa-angle-right"></i>-->
+                <!--<span>Performance</span>-->
+            <!--</a>-->
+        <!--</li>-->
+    <!--</ul>-->
+<!--</li>-->
+
+<!--<li >-->
+    <!--<a href="#CRM"  >-->
+        <!--<i class="fa fa-users icon">-->
+            <!--<b class="bg-primary"></b>-->
+        <!--</i>-->
+                        <!--<span class="pull-right">-->
+                          <!--<i class="fa fa-angle-down text"></i>-->
+                          <!--<i class="fa fa-angle-up text-active"></i>-->
+                        <!--</span>-->
+        <!--<span>CRM</span>-->
+    <!--</a>-->
+    <!--<ul class="nav lt">-->
+        <!--<li >-->
+            <!--<a href="#/admin" ng-click="loadConsumerLst()" >-->
+                <!--<i class="fa fa-angle-right"></i>-->
+                <!--<span>Consumers</span>-->
+            <!--</a>-->
+        <!--</li>-->
+    <!--</ul>-->
+<!--</li>-->
+<!--<li >-->
+    <!--<a href="#pages"  >-->
+        <!--<i class="fa fa-phone icon">-->
+            <!--<b class="bg-primary"></b>-->
+        <!--</i>-->
+                        <!--<span class="pull-right">-->
+                          <!--<i class="fa fa-angle-down text"></i>-->
+                          <!--<i class="fa fa-angle-up text-active"></i>-->
+                        <!--</span>-->
+        <!--<span>Call Center</span>-->
+    <!--</a>-->
+    <!--<ul class="nav lt">-->
+        <!--<li >-->
+            <!--<a href="#/admin" ng-click="openCallCenter()" >-->
+                <!--<i class="fa fa-angle-right"></i>-->
+                <!--<span>Agent's portal</span>-->
+            <!--</a>-->
+        <!--</li>-->
+        <!--<li >-->
+            <!--<a href="#/admin" ng-click="openDisposition()" >-->
+                <!--<i class="fa fa-angle-right"></i>-->
+                <!--<span>Agent's disposition</span>-->
+            <!--</a>-->
+        <!--</li>-->
+    <!--</ul>-->
+<!--</li>-->
+<!--<li >-->
+    <!--<a href="#sec"  >-->
+        <!--<i class="fa fa-lock icon">-->
+            <!--<b class="bg-primary"></b>-->
+        <!--</i>-->
+                        <!--<span class="pull-right">-->
+                          <!--<i class="fa fa-angle-down text"></i>-->
+                          <!--<i class="fa fa-angle-up text-active"></i>-->
+                        <!--</span>-->
+        <!--<span>Security</span>-->
+    <!--</a>-->
+    <!--<ul class="nav lt">-->
+        <!--<li >-->
+            <!--<a href="#/admin" ng-click="openUserManagement()" >-->
+                <!--<i class="fa fa-angle-right"></i>-->
+                <!--<span>User Management</span>-->
+            <!--</a>-->
+        <!--</li>-->
+    <!--</ul>-->
+<!--</li>-->
+<!--<li >-->
+    <!--<a href="#/admin" ng-click="openInbox()" >-->
+        <!--&lt;!&ndash;<b class="badge bg-danger pull-right">3</b>&ndash;&gt;-->
+        <!--<mk-notify class="pull-right" num="newtotal"></mk-notify>-->
+        <!--<i class="fa fa-envelope-o icon">-->
+            <!--<b class="bg-primary dker"></b>-->
+        <!--</i>-->
+        <!--<span>Message Center</span>-->
+    <!--</a>-->
+<!--</li>-->
 <!--<li >-->
     <!--<a href="notebook.html"  >-->
         <!--<i class="fa fa-pencil icon">-->
@@ -526,6 +554,8 @@
 <script src="js/angular.min.js" type="text/javascript"></script>
 <script src="js/angular-sanitize.min.js" type="text/javascript"></script>
 <script src="js/angular-cookies.min.js" type="text/javascript"></script>
+<script type="text/javascript" src="admin/js/moment.js"></script>
+<script type="text/javascript" src="admin/js/datetimepicker.js"></script>
 <script src="admin/js/calendar/bootstrap_calendar.js"></script>
 <script src="js/sortable.js" type="text/javascript"></script>
 <script src="admin/js/nestable/jquery.nestable.js"></script>
@@ -570,6 +600,7 @@
 <script src="ctrl/adminctrl.js" type="text/javascript"></script>
 <script src="ctrl/exportctrl.js" type="text/javascript"></script>
 <script src="ctrl/ruledefctrl.js" type="text/javascript"></script>
+<script src="ctrl/leadctrl.js" type="text/javascript"></script>
 <script src="ctrl/blockctrl.js" type="text/javascript"></script>
 <script src="ctrl/editctrl.js" type="text/javascript"></script>
 <script src="ctrl/reportctrl.js" type="text/javascript"></script>

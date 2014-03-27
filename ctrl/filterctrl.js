@@ -32,7 +32,7 @@ function filterctrl($scope, adminservice){
             if (fd.options !== undefined){
                 for(var o=0; o < fd.options.length; o++){
                     var opt = fd.options[o];
-                    $scope.filter[fd.fldname][opt.label] = opt.optvalue;
+                    $scope.filter[fd.fldname][opt.optfldvalue] = opt.optvalue;
                 }
             }
             else{
@@ -73,7 +73,8 @@ function filterctrl($scope, adminservice){
                         var optval = metafld.optfld !== undefined ? item[metafld.optfld]: item;
                         var optdesc = metafld.optlabel !== undefined && metafld.optlabel !== "" ? item[metafld.optlabel]: optval;
                         //filter[metafld.fldname][optval] = filter[metafld.fldname][optval] !== undefined && filter[metafld.fldname] == optval;
-                        opt.optvalue = filter[metafld.fldname] == optval;
+                        opt.optvalue = filter[metafld.fldname] !== undefined && filter[metafld.fldname][optval] == true; //filter[metafld.fldname] == optval;
+                        opt.optfldvalue = optval;
                         opt.label = optdesc;
                     });
                 }

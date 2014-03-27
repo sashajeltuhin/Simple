@@ -61,6 +61,27 @@ exports.delete = function(req, res){
     });
 }
 
+exports.loadRules = function(req, callback){
+    db.setDB('ShopDB');
+    var filter = {};
+    var customer = req.body.customer;
+
+    if (req.body.stepID !== undefined){
+        filter.stepID = req.body.stepID;
+    }
+    else{
+        filter.type = req.body.rule;
+    }
+    filter.app = customer.app;
+    filter.order_by = {order:1};
+
+    db.load('rule', db.getFilter(filter), function(err, list){
+        if (callback !== undefined){
+            callback(err, list);
+        }
+    });
+}
+
 exports.fitsSegment = function(customer, seg){
     var fits = false;
     if (seg.dems == undefined && seg.conds == undefined){
@@ -126,7 +147,7 @@ function getVals(cond){
     return arr;
 }
 
-exports.buildProdFilter = function(filter, seg){
+exports.buildFilter = function(filter, seg){
     if (seg.conds !== undefined){
         for (var i = 0; i < seg.conds.length; i++){
             var f = seg.conds[i];

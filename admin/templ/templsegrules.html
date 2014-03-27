@@ -1,4 +1,8 @@
 <div style="position: relative" ng-controller="rulectrl">
+    <div class="doc-buttons pull-right">
+        <button class="btn btn-success btn-sm" ng-click="newObj()"><i class="fa fa-plus"></i> New</button>
+        <button class="btn btn-success btn-sm" ng-click="saveChanges()"><i class="fa fa-save"></i> Save</button>
+    </div>
     <div ui-sortable="sortableOptions" ng-model="ruleData">
         <div class="row" ng-repeat="rule in ruleData">
             <div class="col-lg-8">

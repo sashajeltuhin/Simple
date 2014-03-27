@@ -75,6 +75,8 @@ exports.newSession = function(user, callback){
     session.fname = user.fname;
     session.lname = user.lname;
     session.imageUrl = user.imageUrl;
+    session.actions = user.actions;
+    session.tenants = user.tenants;
     session.time = new Date();
     db.insert(colName, session, function(err, rec){
         if (err !== null){

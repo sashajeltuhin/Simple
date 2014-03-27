@@ -18,6 +18,7 @@ function agentprodctrl($scope, $rootScope, $http, $location, cartservice){
         $scope.c = cartservice.getCustomer();
         f.customer = $scope.c;
         f.rule = "qual";
+        f.stepID = cartservice.currentstep()._id;
         cartservice.loadproducts(f, $http, function(data){
             var teaser = cartservice.getTeaserProd();
             if (teaser !== undefined && teaser !== null){
@@ -52,6 +53,7 @@ function agentprodctrl($scope, $rootScope, $http, $location, cartservice){
         loadProds();
     });
 
+    //special feature for chat
     $scope.$on("EV_PRODUCT_SELECTED", function(event, obj){
         console.log("changing chosen status to " + obj.chosen);
 

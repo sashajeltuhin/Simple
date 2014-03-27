@@ -1,0 +1,4 @@
+<div ng-controller="teaserctrl">
+<b class="cart-rvi-header">{{step.prompt}}</b>
+<div style="clear:both"  ng-repeat="p in products"><div xmlns:dc="http://purl.org/dc/elements/1.1/"><a href="#" ng-click="launch(p)"><img align="left" width="75" height="52" border="0" alt="{{p.title}}" class="story_image" ng-src="{{topUrl}}{{p.brandimgUrl}}"></a><h5><a href="#" ng-click="launch(p)">{{p.title}}</a></h5><p>{{p.desc}} &nbsp;<a href="#" ng-click="launch(p)">... Read more </a></p> </div></div>
+</div>

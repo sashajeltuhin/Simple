@@ -193,9 +193,11 @@ function tenantctrl($scope, $http, adminservice){
     }
 
     $scope.onAddAction = function(list){
-        $.each(list, function(i, item){
+        for(var i = 0; i < list.length; i++){
+            var item = list[i];
             if (item['$scope'].a !== undefined && item['$scope'].a._id !== 0){
                 var action = $scope.existingMap[item['$scope'].a._id];
+                //check that the item is not in the tenant actions
                 if (action !== undefined){
                     var clone = adminservice.cloneObj(action);
                     clone.tid = $scope.selTenant._id;
@@ -206,7 +208,7 @@ function tenantctrl($scope, $http, adminservice){
                     });
                 }
             }
-        });
+        }
     }
 
     $scope.manageAction = function(a){

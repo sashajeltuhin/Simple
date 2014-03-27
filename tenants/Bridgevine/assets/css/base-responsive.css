@@ -1,0 +1,42 @@
+/* Large desktop */
+@media (min-width: 980px) { 
+	.container { padding-right:0; padding-left:0; }
+	
+	.navbar-collapse .navbar-nav.navbar-right:last-child { margin-right: 0px; }	
+}
+
+
+/* Portrait tablet to landscape and desktop */
+@media (min-width: 768px) and (max-width: 979px) { 
+	header .navbar-brand { width:400px; height:122px; margin-top:30px; }
+	header .navbar-brand a { background:url(../img/logo-m.png) 0 0 no-repeat; }			
+
+	footer .botNav,
+	footer .copyright { float:none; padding:10px 0; text-align:center; }
+}
+
+
+/* Landscape phone to portrait tablet */
+@media (max-width: 767px) {	
+	header .navbar-brand { float:none; margin:0px auto; margin-bottom:20px; width:400px; height:122px; }
+	header .navbar-brand a { background:url(../img/logo-m.png) 0 0 no-repeat; }
+	header .box-header-event { float:none; width:100%; }
+	header .box-header-event .date { margin-bottom:10px; }
+	
+	.leftCol { padding-bottom:40px; }
+
+	footer .botNav,
+	footer .copyright { float:none; padding:10px 0; text-align:center; }
+}
+
+
+/* Landscape phones and down */
+@media (max-width: 480px) { 
+	header .navbar-brand { width:280px; height:86px; }
+	header .navbar-brand a { background:url(../img/logo-s.png) 0 0 no-repeat; }	
+}
+
+/* Landscape phones and down */
+@media (max-width: 320px) { 
+
+}

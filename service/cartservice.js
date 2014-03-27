@@ -491,6 +491,21 @@ angular.module('cart').factory('cartservice', function($http) {
 
     };
 
+    service.confirmCustomer = function(c, msg, subject, $http, callback){
+        var params = {};
+        params.c = c;
+        params.msg = msg;
+        params.subject = subject;
+        var url = serverUrl + '/consumer/tpv';
+        $http.post(url, params).success(function(result){
+
+            callback(null, result);
+        }).error(function(error, status) {
+                callback(error, null);
+        });
+
+    };
+
     service.logAction = function(actionName, duration, complete, d, callback){
 
         var a = {};

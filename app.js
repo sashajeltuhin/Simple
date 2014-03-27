@@ -43,6 +43,7 @@ var express = require('express')
   , style = require('./routes/style')
   , report = require('./routes/report')
   , ccnum = require('./routes/ccnumber')
+  , smtpserver = require('./routes/smtpserver')
   , db = require('./db/dbaccess')
   , session = require('./routes/adminsession');
 
@@ -128,6 +129,10 @@ app.post('/app/style/delete', style.delete);
 app.post('/app/report/total', db.total);
 app.post('/app/report/calc', db.compute);
 
+app.post('/app/smtpserver/list', smtpserver.list);
+app.post('/app/smtpserver/update', smtpserver.save);
+app.post('/app/smtpserver/delete', smtpserver.delete);
+
 
 app.post('/app/video/list', video.list);
 app.get('/app/video/del', video.delete);
@@ -172,7 +177,8 @@ app.post('/app/consumer/list', consumer.list);
 app.post('/app/consumer/update', consumer.save);
 app.post('/app/consumer/export', consumer.export);
 app.post('/app/consumer/bytype', consumer.peopleByType);
-app.post('/app/consumer/abandons', consumer.abandons)
+app.post('/app/consumer/abandons', consumer.abandons);
+app.post('/app/consumer/tpv', consumer.verify)
 
 app.post('/app/zip/list', zip.list);
 app.post('/app/zip/update', zip.save);

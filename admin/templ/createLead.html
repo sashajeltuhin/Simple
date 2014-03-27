@@ -1,0 +1,67 @@
+<div  ng-controller="leadctrl">
+<section class="panel panel-default">
+    <div class="row m-l-none m-r-none">
+        <div class="col-lg-6">
+            <h3 class="m-b-none">{{viewTitle}}</h3>
+        </div>
+        <div class="col-lg-6" ng-include="subTools">
+        </div>
+    </div>
+</section>
+
+<section class="hbox stretch">
+<div class="row">
+<aside class="col-lg-6 bg-light lter b-r">
+    <section class="vbox">
+        <section>
+            <div class="wrapper bg-light lter">
+                <section class="panel panel-default">
+                    <header class="panel-heading font-bold">Personal Information</header>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" ng-model="obj.fname" placeholder="First name">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" ng-model="obj.lname" placeholder="Last Name">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <input type="email" class="form-control" ng-model="obj.email" placeholder="Enter email">
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                    <section class="panel panel-default">
+                        <header class="panel-heading font-bold">Location</header>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" ng-model="obj.address1" placeholder="Street Address">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" ng-model="obj.zip" placeholder="Zip code">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                <button type="submit" class="btn btn-sm btn-default btn-primary" ng-click="createLead()">Create Lead</button>
+            </div>
+        </section>
+
+    </section>
+</aside>
+</div>
+</section>
+</section>
+</section>
+</div>

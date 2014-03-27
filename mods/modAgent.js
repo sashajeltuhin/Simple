@@ -1,7 +1,9 @@
 var topUrl = 'http://localhost';
 var myapp = angular.module("cart", ['ui.sortable','ui.date','ngGrid','ngCookies'], function($routeProvider, $locationProvider){
     //$locationProvider.html5Mode(true);//.hashPrefix('!');
-    $routeProvider.when('/offer', {
+    $routeProvider.when('/:id', {
+        template: '<div ng-include="templateUrl">Loading...</div>'
+    }).when('/offer', {
         template: '<div ng-include="templateUrl">Loading...</div>',
         controller: agentprodctrl
     }).when('/call', {

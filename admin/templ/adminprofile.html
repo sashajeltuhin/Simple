@@ -2,16 +2,25 @@
 <section class="panel panel-default">
     <div class="row m-l-none m-r-none">
         <div class="col-lg-6">
-            <h3 class="m-b-none">{{viewTitle}}</h3>
+            <h3 class="m-b-none">{{selUser.fname}} {{selUser.lname}}'s profile</h3>
         </div>
         <div class="col-lg-6" ng-include="subTools">
         </div>
     </div>
 </section>
 <section class="vbox">
-<header class="header bg-white b-b b-light">
-    <p>{{selUser.fname}} {{selUser.lname}}'s profile</p>
+<section class="hbox stretch">
+<section class="vbox">
+<header class="header bg-light bg-gradient">
+    <ul class="nav nav-tabs nav-white">
+        <li class="active"><a href="#main" data-toggle="tab">At a glance</a></li>
+        <li class=""><a href="#events" ng-click="loadEvents()" data-toggle="tab">Scheduling</a></li>
+        <li class=""><a href="#sec" data-toggle="tab">Security</a></li>
+    </ul>
 </header>
+<section class="vbox">
+<div class="tab-content">
+<div class="tab-pane active" id="main">
 <section>
 <section class="hbox stretch">
 <aside class="col-lg-4 bg-light lter b-r">
@@ -98,159 +107,368 @@
     </section>
 </aside>
 <aside class="bg-white">
-<div class="h4 m-t-xs m-b-xs">Access Privileges</div>
-<section class="hbox stretch">
-<section class="vbox">
-<header class="header bg-light bg-gradient">
-    <ul class="nav nav-tabs nav-white">
-        <li class="active"><a href="#tenants" ng-click="loadTenants()" data-toggle="tab">Tenants</a></li>
-        <li class=""><a href="#apps" ng-click="loadApps()" data-toggle="tab">Applications</a></li>
-        <li class=""><a href="#actions" ng-click="loadActions()" data-toggle="tab">Actions</a></li>
-    </ul>
-</header>
-<section class="vbox">
-<div class="tab-content">
-<div class="tab-pane active" id="tenants">
-<mk-nest class="dd" group="1" onchangefn="onAddTenant(list)">
-<ol class="dd-list list-group no-radius m-b-none m-t-n-xxs list-group-lg no-border">
-<li class="dd-item list-group-item" data-id="{{$index}}" ng-repeat="t in mytenants">
-    <span class="pull-right">
-        <a href="#" ng-click="removeTenant(t)"><i class="fa fa-times icon-muted fa-fw"></i></a>
-     </span>
-    <div class="dd-handle">
-        <a href="#" class="thumb-sm pull-left m-r-sm">
-            <img ng-src="{{topURL}}{{t.logo}}" class="img-circle">
-        </a>
-        <a href="#" class="clear">
-            <strong class="block">{{t.name}}</strong>
-            <small>{{t.desc}}</small>
-        </a>
-    </div>
-</li>
-</ol>
-</mk-nest>
-</div>
-<div class="tab-pane" id="apps">
-    <div class="text-center wrapper">
-        <i class="fa fa-spinner fa fa-spin fa fa-large"></i>
-    </div>
-</div>
-<div class="tab-pane" id="actions">
-    <div class="text-center wrapper">
-        <i class="fa fa-spinner fa fa-spin fa fa-large"></i>
-    </div>
-</div>
-</div>
-</section>
-</section>
-<aside class="bg-light lter b-r aside-md hidden-print nav-xs-right" id="accessnav">
-<section class="vbox">
-<header class="header bg-primary lter text-center clearfix">
-    <div class="row">
-        <a href="#accessnav" data-toggle="class:nav-xs" class="pull-left btn btn-sm btn-default btn-icon">
-            <i class="fa fa-angle-right text"></i>
-            <i class="fa fa-angle-left text-active"></i>
-        </a>
-        <div class="btn-group">
-            <div class="btn-group hidden-nav-xs">
-                <button type="button" class="btn btn-sm btn-primary dropdown-toggle" data-toggle="dropdown">
-                    Restricted
-                </button>
+    <div class="wrapper">
+        <section class="panel bg-primary b-light">
+            <header class="panel-heading bg-primary dker no-border"><strong>Calendar of events</strong></header>
+            <mk-calendar class="bg-primary m-l-n-xxs m-r-n-xxs" events="mytodos"></mk-calendar>
+            <div class="list-group">
+                <a href="#" class="list-group-item text-ellipsis" ng-repeat="e in todos">
+                    <span class="badge bg-danger">{{e.time}}</span>
+                    {{e.title}} {{e.objdesc}}
+                </a>
             </div>
-        </div>
+        </section>
     </div>
-</header>
-<section class="w-f ">
-<div class="slim-scroll" data-height="auto" data-disable-fade-out="true" data-distance="0" data-size="5px" data-color="#333333">
+</aside>
 
-<!-- nav -->
-<nav class="nav-primary hidden-xs">
-<ul class="nav">
-<li  class="active">
-    <a href="#layout"   class="active">
-        <i class="fa fa-columns icon">
-            <b class="bg-warning"></b>
-        </i>
+</section>
+</section>
+</div>
+<div class="tab-pane" id="events">
+    <section class="hbox stretch">
+    <aside class="col-lg-9 bg-light lter b-r aside-md">
+    <section class="panel panel-default pos-rlt clearfix">
+        <header class="panel-heading">
+            <ul class="nav nav-pills pull-right">
+                <li>
+                    <a href="#" class="panel-toggle btn btn-default btn-sm m-b">
+                        <i class="fa fa-minus icon-muted text-active"></i>
+                        <i class="fa fa-plus icon-muted text"></i>Add</a>
+                </li>
+            </ul>New Event
+        </header>
+        <div class="panel-body clearfix collapse">
+            <div class="form-group">
+                <input type="text" ng-model="newEvent.title" class="form-control" placeholder="Name">
+            </div>
+            <div class="form-group">
+                <a href="#gridSelector" data-toggle="class:show" class="btn btn-sm btn-default pull-right active">Add Data...</a>
+                <input type="text" class="form-control" ng-model="newEvent.objdesc" placeholder="Data Description">
+            </div>
+            <div class="dropdown">
+                <a class="dropdown-toggle" id="event_start" role="button" data-toggle="dropdown" data-target="#" href="#">
+                    <div class="input-group"><input type="text" class="form-control" data-ng-model="newEvent.start" placeholder="Start time">
+                        <span class="input-group-btn"><i class="fa fa-calendar"></i></span>
+                    </div>
+                </a>
+                <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                    <datetimepicker data-ng-model="newEvent.start" data-datetimepicker-config="{ dropdownSelector: '#event_start' }"/>
+                </ul>
+            </div>
+            <button class="btn btn-success" ng-click="addEvent()">Create</button>
+        </div>
+    </section>
+    <ul class="list-group no-radius m-b-none m-t-n-xxs list-group-lg no-border">
+        <li class="list-group-item" ng-repeat="e in myevents">
+            <section class="panel panel-default">
+                <header class="panel-heading no-border">
+                    <span class="pull-right">
+                        <a href="#" ng-click="saveEvent(e)"><i class="fa fa-save icon-muted fa-fw"></i></a>
+                        <a href="#" class="panel-toggle"><i class="fa fa-pencil icon-muted fa-fw"></i></a>
+                        <a href="#" ng-click="removeEvent(e)"><i class="fa fa-times icon-muted fa-fw"></i></a>
+                     </span>
+                    <a href="#" class="thumb-sm pull-left m-r-sm">
+                        <i class="fa fa-calendar"></i>
+                    </a>
+                    <a href="#" class="clear">
+                        <strong class="block">{{e.title}}</strong>
+                    </a>
+                </header>
+                <section class="panel-body collapse">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <input type="text" class="form-control" ng-model="e.title" placeholder="Title">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <input type="text" class="form-control" ng-model="e.objdesc" placeholder="Description">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="dropdown col-md-6">
+                            <a class="dropdown-toggle" id="e_start" role="button" data-toggle="dropdown" data-target="#" href="#">
+                                <div class="input-group"><input type="text" class="form-control" data-ng-model="e.start">
+                                    <span class="input-group-btn"><i class="fa fa-calendar"></i></span>
+                                </div>
+                            </a>
+                            <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                <datetimepicker data-ng-model="e.start" data-datetimepicker-config="{ dropdownSelector: '#e_start' }"/>
+                            </ul>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label>Done</label>
+                                <input type="checkbox" class="form-control" ng-model="e.complete">
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </section>
+        </li>
+    </ul>
+   </aside>
+    <aside class="aside-md b-l hide" id="gridSelector">
+            <div class="wrapper" ng-controller="gridctrl">
+                <section class="hbox stretch">
+                    <aside class="bg-light lter b-r aside-md">
+                        <h4 class="m-t-none">Pick record</h4>
+                        <div class="form-group">
+                            <label>{{fd.label}}</label>
+                            <select class="form-control" ng-model="pickedObj" ng-change="onPickedChange()" ng-options="o.name as o.title for o in mainobjects" placeholder="Pick what"></select>
+                            <button type="button" class="btn btn-sm" ng-click="selectObj()">
+                                Select
+                            </button>
+                        </div>
+                        <div class="ngridStyle" ng-grid="gridOptions"></div>
+                    </aside>
+                    <aside class="bg-light lter b-r aside-sm hidden-print nav-xs-right" id="filternav" ng-controller="filterctrl">
+                    <section class="vbox">
+                        <header class="header bg-primary lter text-center clearfix">
+                            <div class="row">
+                                <a href="#filternav" data-toggle="class:nav-xs" class="pull-left btn btn-sm btn-default btn-icon">
+                                    <i class="fa fa-angle-right text"></i>
+                                    <i class="fa fa-angle-left text-active"></i>
+                                </a>
+                                <div class="btn-group">
+                                    <!--<button type="button" class="btn btn-sm btn-dark btn-icon"></button>-->
+                                    <div class="btn-group hidden-nav-xs">
+                                        <button type="button" class="btn btn-sm btn-primary" ng-click="load()">
+                                            Apply
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </header>
+                        <section class="w-f ">
+                            <div class="slim-scroll" data-height="auto" data-disable-fade-out="true" data-distance="0" data-size="5px" data-color="#333333">
+
+                                <!-- nav -->
+                                <nav class="nav-primary hidden-xs">
+                                    <ul class="nav">
+                                        <li  class="active">
+                                            <a href="#layout"   class="active">
+                                                <i class="fa fa-filter icon">
+                                                    <b class="bg-warning"></b>
+                                                </i>
                         <span class="pull-right">
                           <i class="fa fa-angle-down text"></i>
                           <i class="fa fa-angle-up text-active"></i>
                         </span>
-        <span>{{availableSection}}</span>
-    </a>
-    <mk-nest class="dd" group="1">
-        <ol class="dd-list nav lt">
-            <li class="dd-item" data-id="{{$index}}" ng-repeat="i in existingList">
-                <div class="dd-handle dd3-handle">Drag</div>
-                <div class="dd3-content">
-                    <a href="#" class="thumb-sm pull-left m-r-sm">
-                        <img ng-src="{{topURL}}{{i.imageUrl}}" class="img-circle">
-                    </a>
-                    <a href="#" >
-                        <span>{{i.name}}</span>
-                    </a>
+                                                <span>Filter</span>
+                                            </a>
+                                            <ul class="nav lt" style="display: block">
+                                                <li ng-repeat="fd in filterList">
+                                                    <section class="panel panel-default">
+                                                        <div class="panel-body" ng-include="fd.template"></div>
+                                                    </section>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </nav>
+                                <!-- / nav -->
+                            </div>
+                        </section>
+                    </section>
+                </aside>
+                </section>
+            </div>
+        </aside>
+    </section>
+</div>
+<div class="tab-pane" id="sec">
+    <div class="h4 m-t-xs m-b-xs">Access Privileges</div>
+    <section class="hbox stretch">
+        <section class="vbox">
+            <header class="header bg-light bg-gradient">
+                <ul class="nav nav-tabs nav-white">
+                    <li class="active"><a href="#tenants" ng-click="loadTenants()" data-toggle="tab">Tenants</a></li>
+                    <li class=""><a href="#apps" ng-click="loadApps()" data-toggle="tab">Applications</a></li>
+                    <li class=""><a href="#actions" ng-click="loadActions()" data-toggle="tab">Actions</a></li>
+                </ul>
+            </header>
+            <section class="vbox">
+                <div class="tab-content">
+                    <div class="tab-pane active" id="tenants">
+                        <section class="hbox stretch">
+                            <aside class="bg-light lter b-r aside-md">
+                                <mk-nest class="dd" group="1" onchangefn="onAddTenant(list)">
+                                    <ol class="dd-list list-group no-radius m-b-none m-t-n-xxs list-group-lg no-border">
+                                        <li class="dd-item list-group-item" data-id="{{$index}}" ng-repeat="t in mytenants">
+            <span class="pull-right">
+                <a href="#" ng-click="removeTenant(t)"><i class="fa fa-times icon-muted fa-fw"></i></a>
+             </span>
+                                            <div class="dd-handle">
+                                                <a href="#" class="thumb-sm pull-left m-r-sm">
+                                                    <img ng-src="{{topURL}}{{t.logo}}" class="img-circle">
+                                                </a>
+                                                <a href="#" class="clear">
+                                                    <strong class="block">{{t.name}}</strong>
+                                                    <small>{{t.desc}}</small>
+                                                </a>
+                                            </div>
+                                        </li>
+                                    </ol>
+                                </mk-nest>
+                            </aside>
+                            <aside class="bg-light lter b-r aside-md hidden-print nav-xs-right nav-xs" id="tenantnav">
+                                <section class="vbox">
+                                    <header class="header bg-primary lter text-center clearfix">
+                                        <div class="row">
+                                            <a href="#tenantnav" data-toggle="class:nav-xs" class="pull-left btn btn-sm btn-default btn-icon">
+                                                <i class="fa fa-angle-right text"></i>
+                                                <i class="fa fa-angle-left text-active"></i>
+                                            </a>
+                                            <div class="btn-group">
+                                                <div class="btn-group hidden-nav-xs">
+                                                    <button type="button" class="btn btn-sm btn-primary dropdown-toggle" data-toggle="dropdown">
+                                                        Restricted
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </header>
+                                    <section class="w-f ">
+                                        <div class="slim-scroll" data-height="auto" data-disable-fade-out="true" data-distance="0" data-size="5px" data-color="#333333">
+
+                                            <!-- nav -->
+                                            <nav class="nav-primary hidden-xs">
+                                                <ul class="nav">
+                                                    <li  class="active">
+                                                        <a href="#layout"   class="active">
+                                                            <i class="fa fa-columns icon">
+                                                                <b class="bg-warning"></b>
+                                                            </i>
+                            <span class="pull-right">
+                              <i class="fa fa-angle-down text"></i>
+                              <i class="fa fa-angle-up text-active"></i>
+                            </span>
+                                                            <span>{{availableSection}}</span>
+                                                        </a>
+                                                        <mk-nest class="dd" group="1">
+                                                            <ol class="dd-list nav lt">
+                                                                <li class="dd-item" data-id="{{$index}}" ng-repeat="i in existingList">
+                                                                    <div class="dd-handle dd3-handle">Drag</div>
+                                                                    <div class="dd3-content">
+                                                                        <a href="#" class="thumb-sm pull-left m-r-sm">
+                                                                            <img ng-src="{{topURL}}{{i.imageUrl}}" class="img-circle">
+                                                                        </a>
+                                                                        <a href="#" >
+                                                                            <span>{{i.name}}</span>
+                                                                        </a>
+                                                                    </div>
+                                                                </li>
+                                                            </ol>
+                                                        </mk-nest>
+                                                    </li>
+                                                </ul>
+                                            </nav>
+                                            <!-- / nav -->
+                                        </div>
+                                    </section>
+                                </section>
+                            </aside>
+                        </section>
+                    </div>
+                    <div class="tab-pane" id="apps">
+                        <div class="text-center wrapper">
+                            <i class="fa fa-spinner fa fa-spin fa fa-large"></i>
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="actions">
+                        <section class="hbox stretch">
+
+                            <aside class="bg-light lter b-r aside-md">
+                                <mk-nest class="dd" group="1" onchangefn="onAddAction(list)">
+                                    <ol class="dd-list list-group no-radius m-b-none m-t-n-xxs list-group-lg no-border">
+                                        <li class="dd-item list-group-item" data-id="{{$index}}" ng-repeat="a in myactions">
+    <span class="pull-right">
+        <a href="#" ng-click="manageAction(a)"><i class="fa fa-pencil icon-muted fa-fw"></i></a>
+        <a href="#" ng-click="removeAction(a)"><i class="fa fa-times icon-muted fa-fw"></i></a>
+     </span>
+
+                                            <div class="dd-handle">
+                                                <a href="#" class="clear">
+                                                    <strong class="block">{{a.label}}</strong>
+                                                    <small>{{a.name}}</small>
+                                                </a>
+                                            </div>
+                                        </li>
+                                    </ol>
+                                </mk-nest>
+                            </aside>
+                            <aside class="bg-light lter b-r aside-md hidden-print nav-xs-right nav-xs" id="actnav">
+                                <section class="vbox">
+                                    <header class="header bg-primary lter text-center clearfix">
+                                        <div class="row">
+                                            <a href="#actnav" data-toggle="class:nav-xs" class="pull-left btn btn-sm btn-default btn-icon">
+                                                <i class="fa fa-angle-right text"></i>
+                                                <i class="fa fa-angle-left text-active"></i>
+                                            </a>
+                                            <div class="btn-group">
+                                                <div class="btn-group hidden-nav-xs">
+                                                    <button class="btn btn-success btn-sm"><i class="fa fa-plus"></i>
+                                                    </button>
+                                                    <button type="button" class="btn btn-sm btn-primary dropdown-toggle" data-toggle="dropdown">
+                                                        Available Actions
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </header>
+                                    <section class="w-f ">
+                                        <div class="slim-scroll" data-height="auto" data-disable-fade-out="true" data-distance="0" data-size="5px" data-color="#333333">
+
+                                            <!-- nav -->
+                                            <nav class="nav-primary hidden-xs">
+                                                <ul class="nav">
+                                                    <li  class="active">
+                                                        <a href="#layout"   class="active">
+                                                            <i class="fa fa-columns icon">
+                                                                <b class="bg-warning"></b>
+                                                            </i>
+                        <span class="pull-right">
+                          <i class="fa fa-angle-down text"></i>
+                          <i class="fa fa-angle-up text-active"></i>
+                        </span>
+                                                            <span>Actions</span>
+                                                        </a>
+                                                        <mk-nest class="dd" group="1">
+                                                            <ol class="dd-list nav lt">
+                                                                <li class="dd-item" data-id="{{$index}}" ng-repeat="a in existingActions">
+                                                                    <div class="dd-handle dd3-handle">Drag</div>
+                                                                    <div class="dd3-content">
+
+                                                                        <a href="#" >
+                                                                            <strong class="block">{{a.desc}}</strong>
+                                                                            <small>{{a.name}}</small>
+                                                                        </a>
+                                                                    </div>
+                                                                </li>
+                                                            </ol>
+                                                        </mk-nest>
+                                                    </li>
+                                                </ul>
+                                            </nav>
+                                            <!-- / nav -->
+                                        </div>
+                                    </section>
+                                </section>
+                            </aside>
+                        </section>
+                    </div>
                 </div>
-            </li>
-        </ol>
-    </mk-nest>
-</li>
-</ul>
-</nav>
-<!-- / nav -->
+            </section>
+        </section>
+    </section>
+</div>
 </div>
 </section>
-</section>
-</aside>
-</section>
-</aside>
-<!--<aside class="col-lg-4 b-l">-->
-    <!--<section class="vbox">-->
-        <!--<section>-->
-            <!--<div class="wrapper">-->
-                <!--<section class="panel panel-default">-->
-                    <!--<form>-->
-                        <!--<textarea class="form-control no-border" rows="3" placeholder="Quick message..."></textarea>-->
-                    <!--</form>-->
-                    <!--<footer class="panel-footer bg-light lter">-->
-                        <!--<button class="btn btn-info pull-right btn-sm">POST</button>-->
-                        <!--<ul class="nav nav-pills nav-sm">-->
-                            <!--<li><a href="#"><i class="fa fa-camera text-muted"></i></a></li>-->
-                            <!--<li><a href="#"><i class="fa fa-video-camera text-muted"></i></a></li>-->
-                        <!--</ul>-->
-                    <!--</footer>-->
-                <!--</section>-->
-                <!--<section class="panel panel-default">-->
-                    <!--<h4 class="font-thin padder">Latest Tweets</h4>-->
-                    <!--<ul class="list-group">-->
-                        <!--<li class="list-group-item">-->
-                            <!--<p>Wellcome <a href="#" class="text-info">@Drew Wllon</a> and play this web application template, have fun1 </p>-->
-                            <!--<small class="block text-muted"><i class="fa fa-clock-o"></i> 2 minuts ago</small>-->
-                        <!--</li>-->
-                        <!--<li class="list-group-item">-->
-                            <!--<p>Morbi nec <a href="#" class="text-info">@Jonathan George</a> nunc condimentum ipsum dolor sit amet, consectetur</p>-->
-                            <!--<small class="block text-muted"><i class="fa fa-clock-o"></i> 1 hour ago</small>-->
-                        <!--</li>-->
-                        <!--<li class="list-group-item">-->
-                            <!--<p><a href="#" class="text-info">@Josh Long</a> Vestibulum ullamcorper sodales nisi nec adipiscing elit. </p>-->
-                            <!--<small class="block text-muted"><i class="fa fa-clock-o"></i> 2 hours ago</small>-->
-                        <!--</li>-->
-                    <!--</ul>-->
-                <!--</section>-->
-                <!--<section class="panel clearfix bg-info lter">-->
-                    <!--<div class="panel-body">-->
-                        <!--<a href="#" class="thumb pull-left m-r">-->
-                            <!--<img src="images/avatar.jpg" class="img-circle">-->
-                        <!--</a>-->
-                        <!--<div class="clear">-->
-                            <!--<a href="#" class="text-info">@Mike Mcalidek <i class="fa fa-twitter"></i></a>-->
-                            <!--<small class="block text-muted">2,415 followers / 225 tweets</small>-->
-                            <!--<a href="#" class="btn btn-xs btn-success m-t-xs">Follow</a>-->
-                        <!--</div>-->
-                    <!--</div>-->
-                <!--</section>-->
-            <!--</div>-->
-        <!--</section>-->
-    <!--</section>-->
-<!--</aside>-->
 </section>
 </section>
 </section>

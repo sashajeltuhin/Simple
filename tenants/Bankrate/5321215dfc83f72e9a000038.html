@@ -1,0 +1,18 @@
+<div ng-controller="prodctrl">
+<div class="row gradient-container">
+    <div class="gradient-item clearfix">
+        <div class="col-xs-4" style="padding-top:10px;">{{emailPrompt}}</div>
+        <div class="col-xs-5"><input type="text" class="form-control mb0" placeholder="enter email address" ng-model="c.email" ng-hide="emailed"></div>
+        <div class="col-xs-3"><button class="btn btn-style1 uppercase" ng-click="emailList()" ng-hide="emailed">Submit</button></div>
+    </div>
+</div>
+<div ng-repeat="p in products">
+<div class="gradient-container">
+  <div style="font-size: 18px;color: #0D9FD0;font-weight: bold;">{{p.title}}</div> <div>{{p.desc}}</div>
+</div>
+<ul  class="tbody paid ParticipatingCostPerCall"> <li class="lender"> <a href="#" style="cursor:hand;"><img border="0" ng-src="{{topUrl}}{{p.brandimgUrl}}" width="70" height="45"></a></li> 
+<li class="fee"><span class="label mobile-show">Pricing</span> <span class="label-b"> Now at:</span> <span class="price"> ${{p.priceNow}}</span> <div class="feeapr"> Rebates</div> <span class="price"> ${{p.rebate}}</span> <div> <a href="#" class="moredetails" style="cursor:hand;" >More details</a> </div> </li>
+ <li class="toll"> <div class="tollnumber mobile-hide"> 877-364-8816 </div> <div class="tollfree mobile-hide"> (Toll-free, no obligation) </div> <a class="greenbutton mobile-show" style="cursor:hand;">Call</a>  <img ng-src="{{topUrl}}{{app.ratingsUrl}}"> <a href="#">{{p.reviews}} reviews</a></li> 
+<li class="more mobile-hide"> <a href="#" ng-click="addToCartandNext(p)" class="greenbutton" style="cursor:hand;">Shop</a> </li> </ul>
+</div>
+</div>

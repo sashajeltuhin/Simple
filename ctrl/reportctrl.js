@@ -79,7 +79,7 @@ function reportctrl($scope, $http, $parse, adminservice){
         }
         adminservice.saveObj($scope.obj, OBJ, $http, function(saved){
             //$scope.onDash();
-            var fn = $scope[adminservice.getCurrentView().controller];
+            var fn = $scope[adminservice.getLastAction().fn];
             fn();
 
         });

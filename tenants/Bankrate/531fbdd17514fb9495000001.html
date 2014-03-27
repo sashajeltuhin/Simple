@@ -1,0 +1,9 @@
+<div ng-controller="prodctrl">
+<ul ng-repeat="p in products" class="tbody paid ParticipatingCostPerCall"> <li class="lender"> <a href="#" style="cursor:hand;"><img border="0" ng-src="{{topUrl}}{{p.brandimgUrl}}" width="125" height="45"></a></li> 
+
+<li class="apr"> <div class="ratenum">{{p.title}}</div> <div class="lock">{{p.desc}}</div> </li> 
+
+<li class="fee"><span class="label mobile-show">Pricing</span> <span class="label-b"> Now at:</span> <span class="price"> ${{p.priceNow}}</span> <div class="feeapr"> Rebates</div> <span class="price"> ${{p.rebate}}</span> <div> <a href="#" class="moredetails" style="cursor:hand;" >More details</a> </div> </li>
+ <li class="toll"> <div class="tollnumber mobile-hide"> 877-364-8816 </div> <div class="tollfree mobile-hide"> (Toll-free, no obligation) </div> <a class="greenbutton mobile-show" style="cursor:hand;">Call</a> <div class="icon-container mobile-hide"> <img ng-src="{{topUrl}}{{app.ratingsUrl}}"> <a href="#">{{p.reviews}} customer reviews</a></div> </li> 
+<li class="more mobile-hide"> <a href="#" ng-click="addToCartandNext(p)" class="greenbutton" style="cursor:hand;">Shop</a> </li> </ul>
+</div>

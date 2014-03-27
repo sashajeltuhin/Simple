@@ -8,6 +8,7 @@
 var db = require('../db/dbaccess');
 var mongo = require('mongodb');
 var ObjectID = mongo.ObjectID;
+var rule = require('./rule');
 var csvtool = require('./csvtool');
 var winston = require('winston');
 
@@ -44,11 +45,10 @@ exports.qual = function (req, res){
     winston.log('info', 'Qual call body: %', req.body);
     db.setDB('ShopDB');
     var customer = req.body.customer;
-    var rule = req.body.rule;
     var filter = {};
     filter.order_by = {priority:1};
 
-    db.load('rule', db.getFilter({app:customer.app, type:rule, order_by:{order:1}}), function(err, list){
+    rule.loadRules(req, function(err, list){
         if (err !== null){
             handleError(res, "Cannot list products ", err);
         }
@@ -59,8 +59,8 @@ exports.qual = function (req, res){
                 if (seg.active && seg.global){
                     addGlobalConditions(seg, filter);
                 }
-                if(hit == false && seg.active == true && fitsSegment(customer, seg)){
-                    buildProdFilter(filter, seg);
+                if(hit == false && seg.active == true && rule.fitsSegment(customer, seg)){
+                    rule.buildFilter(filter, seg);
                     hit = true;
                 }
             }
@@ -80,99 +80,6 @@ exports.qual = function (req, res){
     });
 }
 
-function fitsSegment(customer, seg){
-    var fits = false;
-    if (seg.dems == undefined && seg.conds == undefined){
-        return false;
-    }
-    else if (seg.dems == undefined && seg.conds !== undefined && seg.conds.length > 0){
-        return true;
-    }
-
-     for (var i = 0; i < seg.dems.length; i++){
-        var f = seg.dems[i];
-        if(customer[f.field] !== undefined){
-            var arr = getVals(f);
-            switch(f.oper){
-                case "=":
-                case "in":
-                    if (Array.isArray(customer[f.field])){
-                        for (var v = 0; v < customer[f.field].length; v++){
-                            var cval = customer[f.field][v];
-                            if (arr.indexOf(cval) > -1){
-                                fits = true;
-                                break;
-                            }
-                        }
-                    }
-                    else{
-                        fits = customer[f.field] == arr[0];
-                    }
-                    break;
-                case ">":
-                    fits = customer[f.field] > arr[0];
-                    break;
-                case "<":
-                    fits = customer[f.field] < arr[0];
-                    break;
-                case "between":
-                    fits = customer[f.field] > arr[0] && customer[f.field] < arr[1];
-                    break;
-            }
-            if (seg.oper == "any"){
-                if (fits == true){
-                    break;
-                }
-            }
-        }
-
-    }
-    return fits;
-}
-
-function getVals(cond){
-    var vals = cond.val.split(',');
-    var arr = [];
-    if (vals !== undefined && cond.fldtype == 'number'){
-        for(var i = 0; i < vals.length;i++){
-            var v = vals[i];
-            arr.push(Number(v));
-        }
-    }
-    else{
-        arr = vals;
-    }
-    return arr;
-}
-
-function buildProdFilter(filter, seg){
-    if (seg.conds !== undefined){
-        for (var i = 0; i < seg.conds.length; i++){
-            var f = seg.conds[i];
-            if (f.oper == "="){
-                filter[f.field] = f.val;
-            }
-            else if (f.oper == 'all'){
-                var o = {};
-                o.oper = f.oper;
-                o.val = f.val.split(',');
-                filter[f.field] = o;
-            }
-            else if (f.oper == 'in'){
-                var o = {};
-                o.oper = f.oper;
-                o.val = f.val.split(',');
-                filter[f.field] = o;
-            }
-            else{
-                filter[f.field] = f.oper + f.val;
-            }
-        }
-        if (seg.limit !== undefined && Number(seg.limit) > 0){
-            filter.limit = seg.limit;
-        }
-    }
-}
 
 exports.default = function (req, res){
     db.setDB('ShopDB');

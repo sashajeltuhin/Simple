@@ -33,7 +33,7 @@ exports.target = function (req, res){
     filter.active = true;
     filter.app = customer.app;
 
-    db.load('rule', db.getFilter({app:customer.app, type:'survey', order_by:{order:1}}), function(err, list){
+    rule.loadRules(req, function(err, list){
         if (err !== null){
             handleError(res, "Cannot list products ", err);
         }
@@ -43,7 +43,7 @@ exports.target = function (req, res){
                 var seg = list[i];
 
                 if(hit == false && seg.active == true && rule.fitsSegment(customer, seg)){
-                    rule.buildProdFilter(filter, seg);
+                    rule.buildFilter(filter, seg);
                     hit = true;
                 }
             }

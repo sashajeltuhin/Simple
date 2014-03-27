@@ -169,7 +169,7 @@ exports.getFilter = function(f){
     return prepFilter(f);
 }
 
-exports.saveData = function(dbname, colName, req, res){
+exports.saveData = function(dbname, colName, req, res, insertCallback){
     setDB(dbname);
     var v = req.body;
     var vid = v.obj;
@@ -203,6 +203,9 @@ exports.saveData = function(dbname, colName, req, res){
     }
     else
     {
+        if (insertCallback !== undefined){
+            insertCallback(vid);
+        }
         insertData(colName, vid, function(err, rec){
             if (err !== null){
                 handleAppError(res, "Cannot add " + colName, err);
@@ -329,34 +332,38 @@ exports.insert = function(colname, obj, callback){
 }
 
 function upsertData(colname, rawobj, filter, callback){
-    checktypes(rawobj, colname, function(obj){
-        getDB(callback, function (err, db) {
-            db.collection(colname, function (err, collection) {
-                if (err !== null) {
-                    handleError("Enable to access collection", err, callback, db);
-                }
-                else {
-                    var upobj = {};
-                    for(key in obj){
-                        if (key !== "_id"){
-                            upobj[key] = obj[key];
-                        }
+    checktypes(rawobj, colname, function(err, obj){
+        if (err !== null){
+            handleError("Enable to access collection", err, callback);
+        }else{
+            getDB(callback, function (err, db) {
+                db.collection(colname, function (err, collection) {
+                    if (err !== null) {
+                        handleError("Enable to access collection", err, callback, db);
                     }
-                    var set = {$set:upobj};
-                    collection.update(filter, set, {upsert:true, w:1, multi:true}, function (err, rec, data) {
-                        if (err != null) {
-                            handleError("Enable add record. ", err, callback, db);
-                        }
-                        else {
-                            db.close();
-                            if (rec > 0 && data != null) {
-                                callback(null, data.upserted);
+                    else {
+                        var upobj = {};
+                        for(key in obj){
+                            if (key !== "_id"){
+                                upobj[key] = obj[key];
                             }
                         }
-                    });
-                }
+                        var set = {$set:upobj};
+                        collection.update(filter, set, {upsert:true, w:1, multi:true}, function (err, rec, data) {
+                            if (err != null) {
+                                handleError("Enable add record. ", err, callback, db);
+                            }
+                            else {
+                                db.close();
+                                if (rec > 0 && data != null) {
+                                    callback(null, data.upserted);
+                                }
+                            }
+                        });
+                    }
+                });
             });
-        });
+        }
     });
 
 }
@@ -444,14 +451,14 @@ exports.count = function(colname, filter, callback){
 
 function buildMetaCache (dbname, name, callback){
     if(metacache[name] !== undefined && metacache[name].length == 0){
-        callback(true);
+        callback(null);
     }
     else
     {
     setDB(dbname);
     load('fields', {objname:name}, function(err, recs){
         if (err !== null){
-            handleError(res, "Cannot list products ", err);
+            callback(err);
         }
         else{
             metacache[name]={};
@@ -460,15 +467,15 @@ function buildMetaCache (dbname, name, callback){
                 var key = name + '.' +  m.fldname;
                 metacache[key] = m;
             }
-            callback(true);
+            callback(null);
         }
     });
     }
 }
 
 function checktypes(obj, objname, callback){
-    buildMetaCache(dbname, objname, function(success){
-        if (success){
+    buildMetaCache(dbname, objname, function(err){
+        if (err == null){
             for(var k in obj){
                 var key = objname + '.' +  k;
                 var f = metacache[key];
@@ -479,7 +486,10 @@ function checktypes(obj, objname, callback){
                     }
                 }
             }
-            callback(obj);
+            callback(null, obj);
+        }
+        else{
+            callback(err, null);
         }
     });
 }
