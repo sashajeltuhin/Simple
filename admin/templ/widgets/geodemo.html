@@ -1,0 +1,23 @@
+<div class="box-6" ng-show="areademo">
+    <div class="box-6-inner clearfix">
+        <h4 class="style4 bg2">Area Demographics {{areademo.zip}}<i class="icon-shopping-cart pull-right"></i></h4>
+        <div class="list-group">
+            <a href="#" class="list-group-item text-ellipsis">
+                <span class="badge bg-danger">${{areademo.homevalue_formatted}}</span>
+                Median Home Value
+            </a>
+            <a href="#" class="list-group-item text-ellipsis">
+                <span class="badge bg-danger">${{areademo.income_formatted}}</span>
+                Median Income
+            </a>
+            <a href="#" class="list-group-item text-ellipsis">
+                <span class="badge bg-danger">${{areademo.medianrent_formatted}}</span>
+                Median Rental
+            </a>
+            <a href="#" class="list-group-item text-ellipsis">
+                <span class="badge bg-danger">{{areademo.unemployment_formatted}}%</span>
+                Uneployment rate
+            </a>
+        </div>
+    </div><!-- /box-6-inner -->
+</div><!-- /box-6 -->

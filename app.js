@@ -152,10 +152,9 @@ app.post('/app/product/list', product.list);
 app.post('/app/product/qual', product.qual);
 app.post('/app/product/delete', product.delete);
 app.post('/app/product/total', product.total);
-app.post('/app/product/update', product.upsert);
+app.post('/app/product/update', product.save);
 app.post('/app/product/import', product.import);
 app.post('/app/product/export', product.export);
-app.get('/app/product/default', product.default);
 app.post('/app/product/columnMap', product.detectCols);
 
 app.post('/app/step/list', step.list);
@@ -182,6 +181,7 @@ app.post('/app/consumer/tpv', consumer.verify)
 
 app.post('/app/zip/list', zip.list);
 app.post('/app/zip/update', zip.save);
+app.post('/app/zip/delete', zip.delete);
 
 app.post('/app/apps/list', apps.list);
 app.post('/app/apps/update', apps.save);

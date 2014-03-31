@@ -25,33 +25,12 @@ exports.list = function (req, res){
 }
 
 exports.save = function(req, res){
-    db.setDB(dbname);
-    var vid = req.body;
-    var filter = {};
-    if (vid._id !== null && vid._id !== undefined){
-        filter._id = new ObjectID(vid._id);
-        vid._id = filter._id;
+    db.saveData(dbname, colName, req, res);
+}
 
 
-    db.upsert(colName, vid, filter, function(err, newid){
-        if (err !== null){
-            handleError(res, "Cannot add zips ", err);
-        }
-        else{
-            res.send(vid);
-        }
-    });
-    }
-    else{
-        db.insert(colName, vid, function(err, rec){
-            if (err !== null){
-                handleError(res, "Cannot add consumer ", err);
-            }
-            else{
-                res.send(rec);
-            }
-        })
-    }
+exports.delete = function(req, res){
+    db.deleteData(dbname, colName, req, res);
 }
 
 

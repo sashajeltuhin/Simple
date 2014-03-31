@@ -143,7 +143,7 @@ module.exports = {
             var filter = {uname:username};
             person.loadUser(filter, function(err, u){
                 if(u == null){
-                    done(null, false, err);
+                    done(null, false, "Username is invalid. Are you hacking?");
                 }
                 else{
                     var t = sha._sha512crypt_intermediate(password, salt);

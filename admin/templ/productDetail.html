@@ -1,0 +1,359 @@
+<div  ng-controller="skuctrl">
+<section class="panel panel-default">
+    <div class="row m-l-none m-r-none">
+        <div class="col-lg-6">
+            <h3 class="m-b-none">{{selProduct.title}}</h3>
+        </div>
+        <div class="col-lg-6" ng-include="subTools">
+        </div>
+    </div>
+</section>
+<section class="vbox">
+<section>
+<section class="hbox stretch">
+<aside class="bg-white">
+<section class="hbox stretch">
+<section class="vbox">
+<header class="header bg-light bg-gradient">
+    <ul class="nav nav-tabs nav-white">
+        <li class="active"><a href="#main" data-toggle="tab">Properties</a></li>
+        <li class=""><a href="#fee" ng-click="loadFees()" data-toggle="tab">Fees</a></li>
+        <li class=""><a href="#rebate" ng-click="loadRebates()" data-toggle="tab">Rebates</a></li>
+        <li class=""><a href="#bundle" ng-click="loadBundles()" data-toggle="tab">Bundles</a></li>
+    </ul>
+</header>
+<section class="vbox">
+<div class="tab-content">
+<div class="tab-pane active" id="main">
+    <section class="hbox stretch">
+        <div class="col-lg-8 wrapper bg-light lter">
+            <form role="form">
+                <div class="panel-body" ng-include="fd.template" ng-repeat="fd in fieldList"></div>
+                <!--<div dynamic="propsEl"></div>-->
+            </form>
+        </div>
+    </section>
+</div>
+<div class="tab-pane" id="fee">
+            <section class="panel panel-default pos-rlt clearfix">
+                <header class="panel-heading">
+                    <ul class="nav nav-pills pull-right">
+                        <li>
+                            <a href="#" class="panel-toggle btn btn-default btn-sm m-b">
+                                <i class="fa fa-minus icon-muted text-active"></i>
+                                <i class="fa fa-plus icon-muted text"></i>Add</a>
+                        </li>
+                    </ul>New Fee
+                </header>
+                <div class="panel-body clearfix collapse">
+                    <div class="form-group">
+                        <input type="text" ng-model="newFee.title" class="form-control" placeholder="Name">
+                    </div>
+                    <button class="btn btn-success" ng-click="addFee()">Create</button>
+                </div>
+            </section>
+            <ul class="list-group no-radius m-b-none m-t-n-xxs list-group-lg no-border">
+                <li class="list-group-item" ng-repeat="f in selProduct.fees">
+                    <section class="panel panel-default">
+                        <header class="panel-heading no-border">
+                    <span class="pull-right">
+                        <a href="#" ng-click="saveFee(f)"><i class="fa fa-save icon-muted fa-fw"></i></a>
+                        <a href="#" class="panel-toggle"><i class="fa fa-pencil icon-muted fa-fw"></i></a>
+                        <a href="#" ng-click="removeFee(f)"><i class="fa fa-times icon-muted fa-fw"></i></a>
+                     </span>
+                            <a href="#" class="thumb-sm pull-left m-r-sm">
+                                <i class="fa fa-frown-o"></i>
+                            </a>
+                            <a href="#" class="clear">
+                                <strong class="block">{{f.title}}</strong>
+                            </a>
+                        </header>
+                        <section class="panel-body collapse">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" ng-model="f.title" placeholder="Title">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" ng-model="f.desc" placeholder="Description">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="dropdown col-md-3">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" ng-model="f.priceNow" placeholder="Current Price">
+                                    </div>
+                                </div>
+                                <div class="dropdown col-md-3">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" ng-model="f.priceOrig" placeholder="Original price">
+                                    </div>
+                                </div>
+                                <div class="dropdown col-md-3">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" ng-model="f.installPrice" placeholder="One-time price">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="dropdown col-md-3">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" ng-model="f.valnum" placeholder="Duration">
+                                    </div>
+                                </div>
+                                <div class="dropdown col-md-3">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" ng-model="f.valperiod" placeholder="Period of Validity">
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label>
+                                            <input type="checkbox" class="form-control" ng-model="f.active">In Effect</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </section>
+                </li>
+            </ul>
+</div>
+<div class="tab-pane" id="rebate">
+        <section class="panel panel-default pos-rlt clearfix">
+            <header class="panel-heading">
+                <ul class="nav nav-pills pull-right">
+                    <li>
+                        <a href="#" class="panel-toggle btn btn-default btn-sm m-b">
+                            <i class="fa fa-minus icon-muted text-active"></i>
+                            <i class="fa fa-plus icon-muted text"></i>Add</a>
+                    </li>
+                </ul>New Rebate
+            </header>
+            <div class="panel-body clearfix collapse">
+                <div class="form-group">
+                    <input type="text" ng-model="newRebate.title" class="form-control" placeholder="Name">
+                </div>
+                <button class="btn btn-success" ng-click="addRebate()">Create</button>
+            </div>
+        </section>
+        <ul class="list-group no-radius m-b-none m-t-n-xxs list-group-lg no-border">
+            <li class="list-group-item" ng-repeat="f in selProduct.rebates">
+                <section class="panel panel-default">
+                    <header class="panel-heading no-border">
+                    <span class="pull-right">
+                        <a href="#" ng-click="saveRebate(f)"><i class="fa fa-save icon-muted fa-fw"></i></a>
+                        <a href="#" class="panel-toggle"><i class="fa fa-pencil icon-muted fa-fw"></i></a>
+                        <a href="#" ng-click="removeRebate(f)"><i class="fa fa-times icon-muted fa-fw"></i></a>
+                     </span>
+                        <a href="#" class="thumb-sm pull-left m-r-sm">
+                            <i class="fa fa-smile-o"></i>
+                        </a>
+                        <a href="#" class="clear">
+                            <strong class="block">{{f.title}}</strong>
+                        </a>
+                    </header>
+                    <section class="panel-body collapse">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" ng-model="f.title" placeholder="Title">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" ng-model="f.desc" placeholder="Description">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="dropdown col-md-3">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" ng-model="f.priceNow" placeholder="Current Price">
+                                </div>
+                            </div>
+                            <div class="dropdown col-md-3">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" ng-model="f.priceOrig" placeholder="Original price">
+                                </div>
+                            </div>
+                            <div class="dropdown col-md-3">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" ng-model="f.installPrice" placeholder="One-time price">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="dropdown col-md-3">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" ng-model="f.valnum" placeholder="Duration">
+                                </div>
+                            </div>
+                            <div class="dropdown col-md-3">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" ng-model="f.valperiod" placeholder="Period of Validity">
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label>
+                                    <input type="checkbox" class="form-control" ng-model="f.active">In Effect</label>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </section>
+            </li>
+        </ul>
+</div>
+<div class="tab-pane" id="bundle">
+    <section class="hbox stretch">
+
+        <aside class="col-lg-9 bg-light lter b-r aside-md">
+            <mk-nest class="dd" group="1" onchangefn="onAddToBundle(list)">
+                <ol class="dd-list list-group no-radius m-b-none m-t-n-xxs list-group-lg no-border">
+                    <li class="dd-item list-group-item" data-id="{{$index}}" ng-repeat="t in selProduct.bundles">
+    <span class="pull-right">
+        <a href="#" ng-click="manageBundle(t)"><i class="fa fa-pencil icon-muted fa-fw m-r-xs"></i></a>
+        <a href="#" ng-click="removeFromBundle(t)"><i class="fa fa-times icon-muted fa-fw"></i></a>
+     </span>
+
+                        <div class="dd-handle">
+                            <a href="#" class="thumb-sm pull-left m-r-sm">
+                                <img ng-src="{{rootUrl}}{{t.logo}}" class="img-thumbnail">
+                            </a>
+                            <a href="#" class="clear">
+                                <strong class="block">{{t.name}}</strong>
+                                <small>{{t.desc}}</small>
+                            </a>
+                        </div>
+                    </li>
+                </ol>
+            </mk-nest>
+        </aside>
+        <aside class="col-lg-3 bg-light lter b-r aside-md hidden-print nav-xs-right nav-xs" id="accessnav">
+            <section class="vbox">
+                <header class="header bg-primary lter text-center clearfix">
+                    <div class="row">
+                        <a href="#accessnav" data-toggle="class:nav-xs" class="pull-left btn btn-sm btn-default btn-icon">
+                            <i class="fa fa-angle-right text"></i>
+                            <i class="fa fa-angle-left text-active"></i>
+                        </a>
+                        <div class="btn-group">
+                            <div class="btn-group hidden-nav-xs">
+                                <button class="btn btn-success btn-sm" ng-click="newProvider()"><i class="fa fa-plus"></i>
+                                </button>
+                                <button type="button" class="btn btn-sm btn-primary dropdown-toggle" data-toggle="dropdown">
+                                    Restricted
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </header>
+                <section class="w-f ">
+                    <div class="slim-scroll" data-height="auto" data-disable-fade-out="true" data-distance="0" data-size="5px" data-color="#333333">
+
+                        <!-- nav -->
+                        <nav class="nav-primary hidden-xs">
+                            <ul class="nav">
+                                <li  class="active">
+                                    <a href="#layout"   class="active">
+                                        <i class="fa fa-columns icon">
+                                            <b class="bg-warning"></b>
+                                        </i>
+                        <span class="pull-right">
+                          <i class="fa fa-angle-down text"></i>
+                          <i class="fa fa-angle-up text-active"></i>
+                        </span>
+                                        <span>{{availableSection}}</span>
+                                    </a>
+                                    <mk-nest class="dd" group="1">
+                                        <ol class="dd-list nav lt">
+                                            <li class="dd-item" data-id="{{$index}}" ng-repeat="i in existingList">
+                                                <div class="dd-handle dd3-handle">Drag</div>
+                                                <div class="dd3-content">
+                                                    <a href="#" class="thumb-sm pull-left m-r-sm">
+                                                        <img ng-src="{{rootUrl}}{{i.imageUrl}}" class="img-thumbnail">
+                                                    </a>
+                                                    <a href="#" >
+                                                        <span>{{i.name}}</span>
+                                                    </a>
+                                                </div>
+                                            </li>
+                                        </ol>
+                                    </mk-nest>
+                                </li>
+                            </ul>
+                        </nav>
+                        <!-- / nav -->
+                    </div>
+                </section>
+            </section>
+        </aside>
+    </section>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+</aside>
+<!--<aside class="col-lg-4 b-l">-->
+    <!--<section class="vbox">-->
+        <!--<section>-->
+            <!--<div class="wrapper">-->
+                <!--<section class="panel panel-default">-->
+                    <!--<form>-->
+                        <!--<textarea class="form-control no-border" rows="3" placeholder="Quick message..."></textarea>-->
+                    <!--</form>-->
+                    <!--<footer class="panel-footer bg-light lter">-->
+                        <!--<button class="btn btn-info pull-right btn-sm">POST</button>-->
+                        <!--<ul class="nav nav-pills nav-sm">-->
+                            <!--<li><a href="#"><i class="fa fa-camera text-muted"></i></a></li>-->
+                            <!--<li><a href="#"><i class="fa fa-video-camera text-muted"></i></a></li>-->
+                        <!--</ul>-->
+                    <!--</footer>-->
+                <!--</section>-->
+                <!--<section class="panel panel-default">-->
+                    <!--<h4 class="font-thin padder">Latest Tweets</h4>-->
+                    <!--<ul class="list-group">-->
+                        <!--<li class="list-group-item">-->
+                            <!--<p>Wellcome <a href="#" class="text-info">@Drew Wllon</a> and play this web application template, have fun1 </p>-->
+                            <!--<small class="block text-muted"><i class="fa fa-clock-o"></i> 2 minuts ago</small>-->
+                        <!--</li>-->
+                        <!--<li class="list-group-item">-->
+                            <!--<p>Morbi nec <a href="#" class="text-info">@Jonathan George</a> nunc condimentum ipsum dolor sit amet, consectetur</p>-->
+                            <!--<small class="block text-muted"><i class="fa fa-clock-o"></i> 1 hour ago</small>-->
+                        <!--</li>-->
+                        <!--<li class="list-group-item">-->
+                            <!--<p><a href="#" class="text-info">@Josh Long</a> Vestibulum ullamcorper sodales nisi nec adipiscing elit. </p>-->
+                            <!--<small class="block text-muted"><i class="fa fa-clock-o"></i> 2 hours ago</small>-->
+                        <!--</li>-->
+                    <!--</ul>-->
+                <!--</section>-->
+                <!--<section class="panel clearfix bg-info lter">-->
+                    <!--<div class="panel-body">-->
+                        <!--<a href="#" class="thumb pull-left m-r">-->
+                            <!--<img src="images/avatar.jpg" class="img-circle">-->
+                        <!--</a>-->
+                        <!--<div class="clear">-->
+                            <!--<a href="#" class="text-info">@Mike Mcalidek <i class="fa fa-twitter"></i></a>-->
+                            <!--<small class="block text-muted">2,415 followers / 225 tweets</small>-->
+                            <!--<a href="#" class="btn btn-xs btn-success m-t-xs">Follow</a>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</section>-->
+            <!--</div>-->
+        <!--</section>-->
+    <!--</section>-->
+<!--</aside>-->
+</section>
+</section>
+</section>
+</div>

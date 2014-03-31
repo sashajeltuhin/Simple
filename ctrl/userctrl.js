@@ -35,7 +35,7 @@ function userctrl($scope, $http, adminservice){
             $.each($scope.todos, function(i, v){
                 var date = new Date(v.start);
                 var  month = date.getMonth()+1, year = date.getFullYear(), day = date.getDate();
-                v.time = date.toTimeString().replace(/.*(\d{2}:\d{2}).*/, "$1");
+                v.time = date.toTimeString().replace(/.*(\d{2}:\d{2}:\d{2}).*/, "$1");
                 $scope.mytodos.push([day + "/" + month + '/' + year, v.title, '#', '#fb6b5b', v.objdesc]);
                 console.log('today events', $scope.mytodos);
             })

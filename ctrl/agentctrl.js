@@ -1,6 +1,7 @@
 function agentctrl($scope, $rootScope, $http, $location, cartservice, adminservice){
     var serverUrl = topUrl + '/templ/';
     $scope.topUrl = topUrl;
+    $scope.leftbarshow = true;
 
     $scope.isAdmin = cartservice.isIn();
     $scope.scriptlabel = "Get Help...";
@@ -229,13 +230,15 @@ function agentctrl($scope, $rootScope, $http, $location, cartservice, adminservi
     $scope.next = function(){
         //check success in app object
         //check validation before proceeding
+        $scope.areademo = cartservice.getGeo();
+        formatGeo($scope.areademo);
         $scope.step = cartservice.nextStep($scope.step._id);
         $scope.changeView($scope.step);
     }
 
 
     $scope.changeView = function (step){
-        $location.path('/' + step._id);
+        $location.path('/app/' + step._id);
 
         $scope.templateUrl = cartservice.getTemplateURL();
         onStep(step, $scope.c);
@@ -390,14 +393,35 @@ function agentctrl($scope, $rootScope, $http, $location, cartservice, adminservi
 
         });
     }
+
+    $scope.toggleLeft = function(){
+        if ($scope.leftbarshow == true){
+            $scope.leftbarshow = false;
+        }
+        else{
+            $scope.leftbarshow = true;
+        }
+    }
+
+    function onStep(step){
+
+    }
+
+
+    function getPerson(){
+        return {};
+    }
+
+    function formatGeo(obj){
+
+        if (obj){
+            obj.homevalue_formatted = Number(obj.homevalue).formatMoney(2);
+            obj.income_formatted = Number(obj.income).formatMoney(2);
+            obj.medianrent_formatted = Number(obj.medianrent).formatMoney(2);
+            obj.unemployment_formatted = Number(obj.unemployment).formatMoney(2);
+        }
+    }
 }
 
-function onStep(step){
 
-}
-
-
-function getPerson(){
-    return {};
-}
 

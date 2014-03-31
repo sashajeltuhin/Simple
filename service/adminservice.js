@@ -175,7 +175,7 @@ angular.module('cart').factory('adminservice', function($q, $cookies) {
             setsignedId(data);
             callback(null, data);
         }).error(function(data, status) {
-                callback(data, null);
+                callback(data.err, null);
         });
     }
 

@@ -7,13 +7,13 @@
                 <strong>Sign in</strong>
             </header>
             <form class="panel-body wrapper-lg">
-                <div class="form-group">
+                <div class="form-group" ng-class="class_error">
                     <label class="control-label">User Name</label>
-                    <input type="text" placeholder="User Name" ng-model="oper.uname" class="form-control input-lg">
+                    <input type="text" placeholder="User Name" ng-model="oper.uname" ng-change="onFldChange()" class="form-control input-lg">
                 </div>
-                <div class="form-group">
+                <div class="form-group" ng-class="class_error">
                     <label class="control-label">Password</label>
-                    <input type="password" id="inputPassword" placeholder="Password" ng-model="oper.upass" class="form-control input-lg">
+                    <input type="password" id="inputPassword" placeholder="Password" ng-change="onFldChange()" ng-model="oper.upass" class="form-control input-lg">
                 </div>
                 <div class="checkbox">
                     <label>
@@ -22,6 +22,10 @@
                 </div>
                 <a href="#" class="pull-right m-t-xs"><small>Forgot password?</small></a>
                 <button ng-click="login()" class="btn btn-primary">Sign in</button>
+                <div class="alert alert-danger" ng-show="errmsg">
+                    <button type="button" class="close" data-dismiss="alert">×</button>
+                    <i class="fa fa-ban-circle"></i><strong>Oh snap!</strong> <a href="#" class="alert-link">{{errmsg}}</a>
+                </div>
                 <!--<div class="line line-dashed"></div>-->
                 <!--<a href="#" class="btn btn-facebook btn-block m-b-sm"><i class="fa fa-facebook pull-left"></i>Sign in with Facebook</a>-->
                 <!--<a href="#" class="btn btn-twitter btn-block"><i class="fa fa-twitter pull-left"></i>Sign in with Twitter</a>-->

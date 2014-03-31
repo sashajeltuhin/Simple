@@ -314,12 +314,26 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
                 adminservice.setSelected(selected);
 
                 var obj = {};
-                obj.view = 'genericEdit.html';
+                obj.view = getEditView();
                 obj.title = "Edit";
                 $scope.$emit("EV_SWITCH_VIEW", obj);
                 selected = '';
             }
         }
+    }
+
+    function getEditView(){
+        var viewName = 'genericEdit.html';
+        switch(selected){
+            case 'product':
+                viewName = 'productDetail.html';
+                break;
+            default:
+                viewName = 'genericEdit.html';
+                break;
+
+        }
+        return viewName;
     }
 
     $scope.saveObj = function(){
@@ -482,7 +496,7 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
 
     $scope.createGeo = function(){
         selected = 'zip';
-        createObj('New Geo Mapping');
+        newObj('New Geo Mapping');
     }
 
     $scope.createBlock = function(){
@@ -1893,9 +1907,9 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
             $scope.gridcolumns.push(col);
         });
 
-        $scope.$on('ngGridEventScroll', function(event, obj){
-//            console.log('scrolling');
-        });
+//        $scope.$on('ngGridEventScroll', function(event, obj){
+////            console.log('scrolling');
+//        });
 
         $scope.gridOptions = {
             data: 'listData',
@@ -1906,6 +1920,7 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
             virtualizationThreshold: 40,
             columnDefs: 'gridcolumns'
         };
+
         $scope.gridValChange = function(entity, col){
             console.log("cell changed", entity);
             var changed = col.field;

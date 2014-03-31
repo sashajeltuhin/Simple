@@ -43,8 +43,8 @@
             <i class="fa fa-cog"></i>
         </a>
     </div>
-    <ul class="nav navbar-nav hidden-xs">
-        <li class="dropdown" ng-show="adminSession">
+    <ul class="nav navbar-nav hidden-xs" ng-show="singleDuty">
+        <li class="dropdown" ng-show="singleDuty">
             <a href="#" class="dropdown-toggle dker" data-toggle="dropdown">
                 <i class="fa fa-magic"></i>
                 <span class="font-bold">New</span>
@@ -104,7 +104,7 @@
                 <!--</div>-->
             <!--</section>-->
         </li>
-        <li class="dropdown" ng-show="adminSession">
+        <li class="dropdown" ng-show="singleDuty">
             <a href="#" class="dropdown-toggle dker" data-toggle="dropdown">
                 <i class="fa fa-bar-chart-o"></i>
                 <span class="font-bold">Reports</span>
@@ -117,9 +117,10 @@
                 <li><a href="#/admin" ng-click="productGeo()">Product availability</a></li>
                 <li><a href="#/admin" ng-click="import()">Import</a></li>
                 <li><a href="#/admin" ng-click="export()">Export to email list [SilverPop]</a></li>
+                <li><a href="#/admin" ng-click="updateGeo()">Update Geo</a></li>
             </ul>
         </li>
-        <li class="dropdown" ng-show="adminSession">
+        <li class="dropdown" ng-show="singleDuty">
             <a href="#" class="dropdown-toggle dker" data-toggle="dropdown">
                 <i class="fa fa-list"></i>
                 <span class="font-bold">Data</span>
@@ -153,7 +154,7 @@
                 <li><a href="#/admin" ng-click="loadSmtpLst()">SMTP servers</a></li>
             </ul>
         </li>
-        <li class="dropdown" ng-show="adminSession">
+        <li class="dropdown" ng-show="singleDuty">
             <a href="#" class="dropdown-toggle dker" data-toggle="dropdown">
                 <i class="fa fa-book"></i>
                 <span class="font-bold">Metadata</span>
@@ -588,6 +589,7 @@
 <script src="ctrl/tenantctrl.js" type="text/javascript"></script>
 <script src="ctrl/userlistctrl.js" type="text/javascript"></script>
 <script src="ctrl/prodctrl.js" type="text/javascript"></script>
+<script src="ctrl/skuctrl.js" type="text/javascript"></script>
 <script src="ctrl/teaserctrl.js" type="text/javascript"></script>
 <script src="ctrl/cartadminctrl.js" type="text/javascript"></script>
 <script src="ctrl/surveyctrl.js" type="text/javascript"></script>

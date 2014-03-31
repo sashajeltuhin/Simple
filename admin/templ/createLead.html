@@ -37,23 +37,52 @@
                         </div>
                     </div>
                 </section>
-                    <section class="panel panel-default">
-                        <header class="panel-heading font-bold">Location</header>
-                        <div class="panel-body">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <input type="text" class="form-control" ng-model="obj.address1" placeholder="Street Address">
-                                    </div>
+                <section class="panel panel-default">
+                    <header class="panel-heading font-bold">Location</header>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" ng-model="obj.address1" placeholder="Street Address">
                                 </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <input type="text" class="form-control" ng-model="obj.zip" placeholder="Zip code">
-                                    </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" ng-model="obj.zip" placeholder="Zip code">
                                 </div>
                             </div>
                         </div>
-                    </section>
+                    </div>
+                </section>
+                <section class="panel panel-default">
+                    <header class="panel-heading font-bold">Scheduling</header>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" ng-model="leadevent.title" placeholder="Note">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <select class="form-control" ng-model="leadevent.ownerID" ng-options="u._id as u.lname for u in admins" placeholder="Assign to"></select>
+                                </div>
+                            </div>
+                            <div class="dropdown col-md-6">
+                                <a class="dropdown-toggle" id="e_start" role="button" data-toggle="dropdown" data-target="#" href="#">
+                                    <div class="input-group"><input type="text" class="form-control" data-ng-model="leadevent.start">
+                                        <span class="input-group-btn"><i class="fa fa-calendar"></i></span>
+                                    </div>
+                                </a>
+                                <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                    <datetimepicker data-ng-model="leadevent.start" data-datetimepicker-config="{ dropdownSelector: '#e_start' }"/>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </section>
                 <button type="submit" class="btn btn-sm btn-default btn-primary" ng-click="createLead()">Create Lead</button>
             </div>
         </section>

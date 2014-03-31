@@ -8,9 +8,41 @@ function ruledefctrl($scope, $rootScope, $http, adminservice, mkPopup){
         $scope.obj = adminservice.getSelObj();
         adminservice.loadMeta($scope.obj.obj, $http, function(meta){
             fieldMeta = meta;
-            adminservice.loadMeta(SEG, $http, function(m){
-                $scope.fieldList = adminservice.bindObj(m, $scope.obj, prepareField);
-            });
+            var numchildren = 0;
+            var subs = [];
+            for(var x = 0; x < meta.length; x++){
+                var fld = meta[x];
+                if (fld.fldtype == 'object'){
+                    numchildren++;
+                }
+            }
+            var processed = 0;
+            for(var i = 0; i < meta.length; i++){
+                var fld = meta[i];
+                if (fld.fldtype == 'object'){
+
+                    adminservice.loadMeta(fld.optobj, $http, function(submeta){
+                        for(var s = 0; s < submeta.length; s++){
+                            var subfld = adminservice.cloneObj(submeta[s]);
+                            subfld.fldname = fld.fldname + '.' + subfld.fldname;
+                            subfld.label = fld.label + ' ' + subfld.label;
+                            subs.push(subfld);
+                        }
+                        processed++;
+                        if (processed == numchildren){
+                            fieldMeta = fieldMeta.concat(subs);
+                            adminservice.loadMeta(SEG, $http, function(m){
+                                $scope.fieldList = adminservice.bindObj(m, $scope.obj, prepareField);
+                            });
+                        }
+                    });
+                }
+            }
+            if (numchildren == 0){
+                adminservice.loadMeta(SEG, $http, function(m){
+                    $scope.fieldList = adminservice.bindObj(m, $scope.obj, prepareField);
+                });
+            }
         });
     }
 
@@ -33,6 +65,7 @@ function ruledefctrl($scope, $rootScope, $http, adminservice, mkPopup){
             var selectedFld = adminservice.getFM($scope.obj.obj, fd.fldvalue);
             console.log("selected field", selectedFld);
             $scope.obj.fldtype = selectedFld.fldtype;
+            //rebuild value template to drop-down depending on the selected field metadata
         }
     }
 

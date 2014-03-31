@@ -23,9 +23,14 @@ angular.module('cart').factory('cartservice', function($http) {
     var teaserProd = null;
     var agentID = null;
     var appID = null;
+    var geoarea = null;
 
     service.getSocket = function(){
         return service.socket;
+    }
+
+    service.getGeo = function(){
+        return geoarea;
     }
 
     service.setExCart = function(ec){
@@ -319,6 +324,7 @@ angular.module('cart').factory('cartservice', function($http) {
                 $http.post(serverUrl + '/zip/list', {zip:filter.zip}).success(function(geos){
                     if (geos.length > 0){
                         var geo = geos[0];
+                        geoarea = geo;
                         service.customer.state = geo.state;
                         service.customer.city = geo.city;
                         service.customer.lat = geo.lat;
@@ -555,6 +561,7 @@ angular.module('cart').factory('cartservice', function($http) {
             $http.post(serverUrl + '/zip/list', {zip:service.customer.zip}).success(function(geos){
                 if (geos.length > 0){
                     var geo = geos[0];
+                    geoarea = geo;
                     service.customer.state = geo.state;
                     service.customer.city = geo.city;
                     service.customer.lat = geo.lat;

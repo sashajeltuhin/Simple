@@ -8,17 +8,16 @@
     <h4 class="m-t-none">{{step.title}}</h4>
     <ul class="list-group gutter list-group-lg list-group-sp">
         <li class="list-group-item box-shadow" ng-repeat="e in events">
-            <a href="#" class="pull-right" data-dismiss="alert">
+            <a class="pull-right" style="cursor: pointer" data-dismiss="alert">
                 <i class="fa fa-times icon-muted"></i>
             </a>
             <span class="pull-left media-xs">
                 <i class="fa fa-sort icon-muted fa m-r-sm"></i>
-                <a href="#{{e._id}}" data-toggle="class:text-lt text-success">
-                    <i class="fa fa-square-o fa-fw text"></i>
-                    <i class="fa fa-check-square-o fa-fw text-active text-success"></i>
+                <a href="#" ng-click="done(e)">
+                    <i ng-class="isDoneIcon(e)"></i>
                 </a>
             </span>
-            <div class="clear" id="{{e._id}}"><a href="#" ng-click="launchEvent(e)">{{e.title}} {{e.objdesc}}</a></div>
+            <div class="clear" ng-class="isDone(e)"><a href="#" ng-click="launchEvent(e)">{{e.title}} {{e.objdesc}}</a></div>
         </li>
     </ul>
 </div>
