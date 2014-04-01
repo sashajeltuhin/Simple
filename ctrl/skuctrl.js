@@ -1,12 +1,12 @@
 function skuctrl($scope, $http, adminservice){
     $scope.rootUrl = topUrl;
+    var serverUrl = topUrl + adminURL + '/templ/';
     var OBJ = 'product';
     $scope.selProduct = adminservice.getSelObj();
 
 
     adminservice.loadMeta(OBJ, $http, function(meta){
-        $scope.obj = $scope.selProduct;
-        $scope.fieldList = adminservice.bindObj(meta, $scope.obj, prepareField);
+        $scope.fieldList = adminservice.bindObj(meta, $scope.selProduct, prepareField);
     });
 
 
@@ -25,7 +25,7 @@ function skuctrl($scope, $http, adminservice){
     function getDummyProv(){
         var dummy = {};
         dummy._id = 0;
-        dummy.name = 'Drag from the available list on the right';
+        dummy.title = 'Drag from the available list on the right';
         return dummy;
     }
 
@@ -42,6 +42,7 @@ function skuctrl($scope, $http, adminservice){
     }
 
     function loadBundles(){
+        $scope.bundleMap = {};
         $scope.availableSection = 'Products';
         $scope.existingList = [];
 
@@ -70,6 +71,7 @@ function skuctrl($scope, $http, adminservice){
 
         adminservice.listObj('product', f, $http, function(data){
             $.each(data, function(i, t){
+                $scope.bundleMap[t._id] = t;
                 var item = {};
                 item._id = t._id;
                 item.name = t.title;
@@ -84,7 +86,10 @@ function skuctrl($scope, $http, adminservice){
             var item = list[i];
             console.log('adding to bundle', item);
             if (item['$scope'].i !== undefined){
-                $scope.selProduct.bundles.push(item['$scope'].i);
+                var bundle = $scope.bundleMap[item['$scope'].i._id];
+                if (bundle !== undefined){
+                    $scope.selProduct.bundles.push(bundle);
+                }
             }
         }
         for (var b = $scope.selProduct.bundles.length - 1; b >=0; b--){
@@ -110,14 +115,93 @@ function skuctrl($scope, $http, adminservice){
     }
 
     $scope.manageBundle = function(p){
-        adminservice.setSelObj(p);
-        var obj = {};
-        obj.view = 'productDetail.html';
-        obj.title = p.title;
-        $scope.$emit("EV_SWITCH_VIEW", obj);
+        adminservice.loadMeta(OBJ, $http, function(meta){
+            $scope.bundleDetail = serverUrl + 'bundleDetail.html';
+            $scope.bundlefieldList = adminservice.bindObj(meta, p, prepareBundleField);
+        });
     }
 
+    $scope.saveBundle= function(p){
+        saveProduct(function(){
+            $scope.loadBundles();
+        });
+    }
+
+    $scope.loadBundleFees = function(p){
+        if (p.fees == undefined){
+            p.fees = [];
+        }
+        $scope.newBundleFee = {};
+    }
+
+    $scope.saveBundleFee= function(f, p){
+        saveProduct(function(){
+            $scope.loadBundleFees(p);
+        });
+    }
+
+    $scope.addBundleFee = function(p){
+        p.fees.push($scope.newBundleFee);
+        saveProduct(function(){
+            $scope.loadBundleFees(p);
+        });
+    }
+
+    $scope.removeBundleFee = function(f, p){
+        for(var i = p.fees.length - 1; i >=0; i--){
+            if (f.title == p.fees[i].title){
+                p.fees.splice(i, 1);
+            }
+        }
+        saveProduct(function(){
+            $scope.loadBundleFees(p);
+        });
+    }
+
+
+    $scope.loadBundleRebates = function(p){
+        if (p.rebates == undefined){
+            p.rebates = [];
+        }
+        $scope.newBundleRebate = {};
+    }
+
+    $scope.addBundleRebate = function(p){
+        p.rebates.push($scope.newBundleRebate);
+        saveProduct(function(){
+            $scope.loadBundleRebates(p);
+        });
+    }
+
+    $scope.saveBundleRebate= function(r, p){
+        saveProduct(function(){
+            $scope.loadBundleRebates(p);
+        });
+    }
+
+    $scope.removeBundleRebate = function(r, p){
+        for(var i = p.rebates.length - 1; i >=0; i--){
+            if (r.title == p.rebates[i].title){
+                p.rebates.splice(i, 1);
+            }
+        }
+        saveProduct(function(){
+            $scope.removeBundleRebate(p);
+        });
+    }
+
+    function prepareBundleField(metafld){
+        var mf = metafld;
+        if (metafld.fldname !== 'title' && metafld.fldname !== 'desc' && metafld.fldname !== 'priceNow' && metafld.fldname !== 'origPrice'){
+            mf = null;
+        }
+
+        return mf;
+    }
+
+
     function saveProduct(callback){
+        adminservice.bindObjData($scope.selProduct, $scope.fieldList);
         adminservice.saveObj($scope.selProduct, 'product', $http, function(saved){
             $scope.selProduct = saved;
             if (callback !== undefined){

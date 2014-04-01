@@ -1,0 +1,219 @@
+<section class="vbox">
+<header class="header bg-light bg-gradient">
+    <ul class="nav nav-tabs nav-white">
+        <li class="active"><a href="#bundlemain" data-toggle="tab">Properties</a></li>
+        <li class=""><a href="#bundlefee" ng-click="loadBundleFees(p)" data-toggle="tab">Fees</a></li>
+        <li class=""><a href="#bundlerebate" ng-click="loadBundleRebates(p)" data-toggle="tab">Rebates</a></li>
+    </ul>
+</header>
+<section class="vbox">
+<div class="tab-content">
+<div class="tab-pane active" id="bundlemain">
+    <section class="hbox stretch">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <input type="text" class="form-control" ng-model="p.title" placeholder="Title">
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <input type="text" class="form-control" ng-model="p.priceNow" placeholder="Title">
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <input type="text" class="form-control" ng-model="p.installPrice" placeholder="Title">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <input type="text" class="form-control" ng-model="p.desc" placeholder="Description">
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+<div class="tab-pane" id="bundlefee">
+            <section class="panel panel-default pos-rlt clearfix">
+                <header class="panel-heading">
+                    <ul class="nav nav-pills pull-right">
+                        <li>
+                            <a href="#" class="panel-toggle btn btn-default btn-sm m-b">
+                                <i class="fa fa-minus icon-muted text-active"></i>
+                                <i class="fa fa-plus icon-muted text"></i>Add</a>
+                        </li>
+                    </ul>New Fee
+                </header>
+                <div class="panel-body clearfix collapse">
+                    <div class="form-group">
+                        <input type="text" ng-model="newBundleFee.title" class="form-control" placeholder="Name">
+                    </div>
+                    <button class="btn btn-success" ng-click="addBundleFee(p)">Create</button>
+                </div>
+            </section>
+            <ul class="list-group no-radius m-b-none m-t-n-xxs list-group-lg no-border">
+                <li class="list-group-item" ng-repeat="f in p.fees">
+                    <section class="panel panel-default">
+                        <header class="panel-heading no-border">
+                    <span class="pull-right">
+                        <a href="#" ng-click="saveBundleFee(f, p)"><i class="fa fa-save icon-muted fa-fw"></i></a>
+                        <a href="#" class="panel-toggle"><i class="fa fa-pencil icon-muted fa-fw"></i></a>
+                        <a href="#" ng-click="removeBundleFee(f, p)"><i class="fa fa-times icon-muted fa-fw"></i></a>
+                     </span>
+                            <a href="#" class="thumb-sm pull-left m-r-sm">
+                                <i class="fa fa-frown-o"></i>
+                            </a>
+                            <a href="#" class="clear">
+                                <strong class="block">{{f.title}}</strong>
+                            </a>
+                        </header>
+                        <section class="panel-body collapse">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" ng-model="f.title" placeholder="Title">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" ng-model="f.desc" placeholder="Description">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="dropdown col-md-3">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" ng-model="f.priceNow" placeholder="Current Price">
+                                    </div>
+                                </div>
+                                <div class="dropdown col-md-3">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" ng-model="f.priceOrig" placeholder="Original price">
+                                    </div>
+                                </div>
+                                <div class="dropdown col-md-3">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" ng-model="f.installPrice" placeholder="One-time price">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="dropdown col-md-3">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" ng-model="f.valnum" placeholder="Duration">
+                                    </div>
+                                </div>
+                                <div class="dropdown col-md-3">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" ng-model="f.valperiod" placeholder="Period of Validity">
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label>
+                                            <input type="checkbox" class="form-control" ng-model="f.active">In Effect</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </section>
+                </li>
+            </ul>
+</div>
+<div class="tab-pane" id="bundlerebate">
+        <section class="panel panel-default pos-rlt clearfix">
+            <header class="panel-heading">
+                <ul class="nav nav-pills pull-right">
+                    <li>
+                        <a href="#" class="panel-toggle btn btn-default btn-sm m-b">
+                            <i class="fa fa-minus icon-muted text-active"></i>
+                            <i class="fa fa-plus icon-muted text"></i>Add</a>
+                    </li>
+                </ul>New Rebate
+            </header>
+            <div class="panel-body clearfix collapse">
+                <div class="form-group">
+                    <input type="text" ng-model="newBundleRebate.title" class="form-control" placeholder="Name">
+                </div>
+                <button class="btn btn-success" ng-click="addBundleRebate(p)">Create</button>
+            </div>
+        </section>
+        <ul class="list-group no-radius m-b-none m-t-n-xxs list-group-lg no-border">
+            <li class="list-group-item" ng-repeat="f in p.rebates">
+                <section class="panel panel-default">
+                    <header class="panel-heading no-border">
+                    <span class="pull-right">
+                        <a href="#" ng-click="saveBundleRebate(f, p)"><i class="fa fa-save icon-muted fa-fw"></i></a>
+                        <a href="#" class="panel-toggle"><i class="fa fa-pencil icon-muted fa-fw"></i></a>
+                        <a href="#" ng-click="removeBundleRebate(f, p)"><i class="fa fa-times icon-muted fa-fw"></i></a>
+                     </span>
+                        <a href="#" class="thumb-sm pull-left m-r-sm">
+                            <i class="fa fa-smile-o"></i>
+                        </a>
+                        <a href="#" class="clear">
+                            <strong class="block">{{f.title}}</strong>
+                        </a>
+                    </header>
+                    <section class="panel-body collapse">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" ng-model="f.title" placeholder="Title">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" ng-model="f.desc" placeholder="Description">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="dropdown col-md-3">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" ng-model="f.priceNow" placeholder="Current Price">
+                                </div>
+                            </div>
+                            <div class="dropdown col-md-3">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" ng-model="f.priceOrig" placeholder="Original price">
+                                </div>
+                            </div>
+                            <div class="dropdown col-md-3">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" ng-model="f.installPrice" placeholder="One-time price">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="dropdown col-md-3">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" ng-model="f.valnum" placeholder="Duration">
+                                </div>
+                            </div>
+                            <div class="dropdown col-md-3">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" ng-model="f.valperiod" placeholder="Period of Validity">
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label>
+                                    <input type="checkbox" class="form-control" ng-model="f.active">In Effect</label>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </section>
+            </li>
+        </ul>
+</div>
+</div>
+</section>
+</section>

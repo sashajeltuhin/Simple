@@ -218,21 +218,42 @@
         <aside class="col-lg-9 bg-light lter b-r aside-md">
             <mk-nest class="dd" group="1" onchangefn="onAddToBundle(list)">
                 <ol class="dd-list list-group no-radius m-b-none m-t-n-xxs list-group-lg no-border">
-                    <li class="dd-item list-group-item" data-id="{{$index}}" ng-repeat="t in selProduct.bundles">
-    <span class="pull-right">
-        <a href="#" ng-click="manageBundle(t)"><i class="fa fa-pencil icon-muted fa-fw m-r-xs"></i></a>
-        <a href="#" ng-click="removeFromBundle(t)"><i class="fa fa-times icon-muted fa-fw"></i></a>
-     </span>
+                    <li class="dd-item list-group-item" data-id="{{$index}}" ng-repeat="p in selProduct.bundles">
+                        <!--<span class="pull-right">-->
+                            <!--<a href="#" ng-click="manageBundle(t)"><i class="fa fa-pencil icon-muted fa-fw m-r-xs"></i></a>-->
+                            <!--<a href="#" ng-click="removeFromBundle(t)"><i class="fa fa-times icon-muted fa-fw"></i></a>-->
+                         <!--</span>-->
 
-                        <div class="dd-handle">
-                            <a href="#" class="thumb-sm pull-left m-r-sm">
-                                <img ng-src="{{rootUrl}}{{t.logo}}" class="img-thumbnail">
-                            </a>
-                            <a href="#" class="clear">
-                                <strong class="block">{{t.name}}</strong>
-                                <small>{{t.desc}}</small>
-                            </a>
-                        </div>
+                        <!--<div class="dd-handle">-->
+                            <!--<a href="#" class="thumb-sm pull-left m-r-sm">-->
+                                <!--<img ng-src="{{rootUrl}}{{t.logo}}" class="img-thumbnail">-->
+                            <!--</a>-->
+                            <!--<a href="#" class="clear">-->
+                                <!--<strong class="block">{{t.name}}</strong>-->
+                                <!--<small>{{t.desc}}</small>-->
+                            <!--</a>-->
+                        <!--</div>-->
+                        <section class="panel panel-default">
+                            <header class="panel-heading no-border">
+                                <span class="pull-right">
+                                    <a href="#" ng-click="saveBundle(p)"><i class="fa fa-save icon-muted fa-fw"></i></a>
+                                    <a href="#" ng-click="manageBundle(p)" class="panel-toggle"><i class="fa fa-pencil icon-muted fa-fw m-r-xs"></i></a>
+                                    <a href="#" ng-click="removeFromBundle(p)"><i class="fa fa-times icon-muted fa-fw"></i></a>
+                                </span>
+                                <div class="dd-handle">
+                                <!--<a href="#" class="thumb-sm pull-left m-r-sm">-->
+                                <!--<img ng-src="{{rootUrl}}{{p.prodimgUrl}}" class="img-thumbnail">-->
+                                <!--</a>-->
+                                <a href="#" class="clear">
+                                <strong class="block">{{p.title}}</strong>
+                                <small>{{p.desc}}</small>
+                                </a>
+                                </div>
+                            </header>
+                            <section class="panel-body collapse" ng-include="bundleDetail">
+
+                            </section>
+                        </section>
                     </li>
                 </ol>
             </mk-nest>
@@ -278,9 +299,9 @@
                                             <li class="dd-item" data-id="{{$index}}" ng-repeat="i in existingList">
                                                 <div class="dd-handle dd3-handle">Drag</div>
                                                 <div class="dd3-content">
-                                                    <a href="#" class="thumb-sm pull-left m-r-sm">
-                                                        <img ng-src="{{rootUrl}}{{i.imageUrl}}" class="img-thumbnail">
-                                                    </a>
+                                                    <!--<a href="#" class="thumb-sm pull-left m-r-sm">-->
+                                                        <!--<img ng-src="{{rootUrl}}{{i.imageUrl}}" class="img-thumbnail">-->
+                                                    <!--</a>-->
                                                     <a href="#" >
                                                         <span>{{i.name}}</span>
                                                     </a>

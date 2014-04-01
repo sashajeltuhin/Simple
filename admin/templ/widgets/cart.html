@@ -1,12 +1,11 @@
 <div class="box-6">
         <div class="box-6-inner clearfix">
-            <h4 class="style4 bg2">Summary of Charges <i class="icon-shopping-cart pull-right"></i></h4>
-            <table class="table table-striped table3">
+            <h4 class="style4 bg2">Summary of Charges <i class="fa fa-shopping-cart pull-right"></i></h4>
+            <table class="table table-striped table3" ng-show="hasproducts">
                 <thead>
                 <tr>
                     <!--<th><img ng-src="{{topUrl}}{{p.brandimgUrl}}" width="111" height="48"></th>-->
-                    <th>Carrier</th>
-                    <th>Product</th>
+                    <th colspan="2">Product</th>
                     <th>One-Time</th>
                     <th>Monthly</th>
                 </tr>
@@ -18,15 +17,36 @@
                 <tr ng-repeat="p in cp">
                     <td colspan="4">
                         <table class="table table3">
-                            <tr><td colspan="4">Package</td></tr>
+                            <tr>
+                                <td><a ng-click="removeProd(p)" style="cursor: pointer"><i class="fa fa-times"></i></a></td>
+                                <td colspan="3"><h5 class="style4">Product</h5></td></tr>
                             <tr >
                                 <td>{{p.provider}}</td>
                                 <td>{{p.title}}</td>
                                 <td>&nbsp;</td>
-                                <td class="text-right"><div class="txt1">${{p.priceNow}}</div></td>
+                                <td class="text-right" ng-show="p.recshow">${{p.priceNow}}</td>
                             </tr>
-                            <tr><td colspan="4">Rebates</td></tr>
-                            <tr><td colspan="4">Fees</td></tr>
+                            <tr ng-show="p.showbundles"><td colspan="4"><h5 class="style4">Premium Content</h5></td></tr>
+                            <tr ng-repeat="adon in p.bundles">
+                                <td>{{adon.provider}}</td>
+                                <td>{{adon.title}}</td>
+                                <td class="text-right"><div ng-hide="adon.oneshow">&nbsp;</div><div ng-show="adon.oneshow">${{adon.installPrice}}</div></td>
+                                <td class="text-right"><div ng-hide="adon.recshow">&nbsp;</div><div ng-show="adon.recshow">${{adon.priceNow}}</div></td>
+                            </tr>
+                            <tr ng-show="p.showfees"><td colspan="4"><h5 class="style4">Fees</h5></td></tr>
+                            <tr ng-repeat="f in p.fees">
+                                <td colspan="2">{{f.title}}</td>
+
+                                <td class="text-right"><div ng-hide="f.oneshow">&nbsp;</div><div ng-show="f.oneshow">${{f.installPrice}}</div></td>
+                                <td class="text-right"><div ng-hide="f.recshow">&nbsp;</div><div ng-show="f.recshow">${{f.priceNow}}</div></td>
+                            </tr>
+                            <tr ng-show="p.showrebs"><td colspan="4"><h5 class="style4">Rebates</h5></td></tr>
+                            <tr ng-repeat="r in p.rebates">
+                                <td colspan="2">{{r.title}}</td>
+                                <td class="text-right"><div ng-hide="r.oneshow">&nbsp;</div><div ng-show="r.oneshow">-{{r.installPrice}}</div></td>
+                                <td class="text-right"><div ng-hide="r.recshow">&nbsp;</div><div ng-show="r.recshow">-{{r.priceNow}}</div></td>
+                            </tr>
+
                         </table>
                     </td>
                 </tr>
@@ -43,25 +63,20 @@
                     <td colspan="4"><div class="links1"><a href="#"><i class="icon-plus-sign"></i>&nbsp; Totals</a> &nbsp;&nbsp;&nbsp;</div></td>
                 </tr>
 
-                <tr class="no-b" ng-repeat="p in cp">
-                    <td>Added to First Bill</td>
+                <tr class="no-b">
+                    <td><strong>Due today</strong></td>
                     <td>&nbsp;</td>
+                    <td class="text-right"><div class="txt1"><strong>${{carttotal.once}}</strong></div></td>
                     <td>&nbsp;</td>
-                    <td class="text-right"><div class="txt1">${{p.priceNow}}</div></td>
                 </tr>
 
-                <tr ng-repeat="p in cp">
+                <tr >
                     <td><strong>Total Monthly</strong></td>
                     <td>&nbsp;</td>
                     <td>&nbsp;</td>
-                    <td class="text-right"><div class="txt1"><strong>${{p.priceNow}}</strong></div></td>
+                    <td class="text-right"><div class="txt1"><strong>${{carttotal.rec}}</strong></div></td>
                 </tr>
-                <tr>
-                    <td><strong>Due today</strong></td>
-                    <td>&nbsp;</td>
-                    <td class="text-right"><div class="txt1"><strong>${{carttotal}}</strong></div></td>
-                    <td>&nbsp;</td>
-                </tr>
+
                 </tbody>
             </table>
         </div><!-- /box-6-inner -->

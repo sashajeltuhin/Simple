@@ -1,7 +1,4 @@
 <div class="pull-left w600" ng-controller="agentprodctrl">
-    <div class="row">
-        <div class="col-xs-4"><a ng-click="next()" class="btn btn-lg btn-default btn-block uppercase"><span>Proceed</span></a></div>
-    </div>
 
     <div class="row gradient-container" ng-repeat="p in products">
         <div class="box-1 gradient-item clearfix">
@@ -55,4 +52,8 @@
         </div><!-- /left content -->
 
     </div><!-- /row -->
+    <div class="row">
+        <div class="col-xs-4"><a ng-click="back()" class="btn btn-lg btn-default btn-block uppercase"><span>back</span></a></div>
+        <div class="col-xs-4 col-lg-offset-4"><a ng-click="next()" class="btn btn-lg btn-primary btn-block uppercase"><span>proceed</span></a></div>
+    </div>
 </div>

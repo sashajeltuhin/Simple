@@ -135,6 +135,7 @@ function tenantctrl($scope, $http, adminservice){
                 f.name = fv;
             }
 
+            //todo: load allowed providers and exclude added
             adminservice.listObj('provider', f, $http, function(data){
                 $.each(data, function(i, t){
                     $scope.providerMap[t._id] = t;

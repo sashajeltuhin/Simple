@@ -444,6 +444,7 @@ angular.module('cart').factory('cartservice', function($http) {
     service.targetsurvey = function($http, callback){
         var url = serverUrl + '/survey/target';
         var f = {};
+        f.stepID = service.currentstep()._id;
         f.customer = service.customer;
         $http.post(url, f).success(function(result){
 

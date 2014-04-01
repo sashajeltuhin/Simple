@@ -70,7 +70,9 @@ exports.loadRules = function(req, callback){
         filter.stepID = req.body.stepID;
     }
     else{
-        filter.type = req.body.rule;
+        if (req.body.rule !== undefined){
+            filter.type = req.body.rule;
+        }
     }
     filter.app = customer.app;
     filter.order_by = {order:1};
@@ -165,6 +167,13 @@ exports.buildFilter = function(filter, seg){
                 o.oper = f.oper;
                 o.val = f.val.split(',');
                 filter[f.field] = o;
+            }
+            else if (f.oper == 'sort'){
+                if (filter.order_by == undefined){
+                    filter.order_by = {};
+                }
+
+                filter.order_by[f.field] = Number(f.val);
             }
             else{
                 filter[f.field] = f.oper + f.val;

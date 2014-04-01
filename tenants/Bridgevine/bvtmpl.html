@@ -59,7 +59,7 @@
     <div cart-parms app-Type="" cart_zipval=""></div>
     <div class="wizard clearfix" ng-show="previewMode">
         <ul class="steps">
-            <li class="active" ng-repeat="w in steps" ng-click="pickStep(w)"><span ng-class="{'badge  badge-success': isActiveStep(w),'badge badge-info': !isActiveStep(w)}">{{w.order}}</span>{{w.title}}</li>
+            <li class="active" ng-repeat="w in steps" ng-click="pickStep(w)"><span ng-class="{'badge  badge-success': isActiveStep(w),'badge badge-info': !isActiveStep(w)}">{{$index}}</span>{{w.title}}</li>
         </ul>
         <div class="actions">
             <button type="button" class="btn btn-default btn-xs btn-prev" ng-click="restart()">Start</button>

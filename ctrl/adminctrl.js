@@ -315,6 +315,7 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
 
                 var obj = {};
                 obj.view = getEditView();
+                obj.toolbar = 'secTools.html';
                 obj.title = "Edit";
                 $scope.$emit("EV_SWITCH_VIEW", obj);
                 selected = '';
@@ -1066,6 +1067,7 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
         }
         $scope.viewTitle = obj.title;
         $scope.subTools = serverUrl + obj.toolbar;
+        $scope.wrapper = serverUrl + 'empty.html';
         $scope.wrapper = serverUrl + obj.view;
     });
 

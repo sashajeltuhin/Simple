@@ -271,16 +271,89 @@ function agentctrl($scope, $rootScope, $http, $location, cartservice, adminservi
     function updateCartTotal(){
         $scope.cp = cartservice.getProdsInCart();
         $scope.hasproducts = $scope.cp !== undefined && $scope.cp.length > 0;
-        $scope.carttotal = $scope.ex !== undefined && $scope.ex.price !== undefined ? $scope.ex.price : 0;
-
-        $.each($scope.cp, function(i, p){
-            $scope.carttotal = Number(Number($scope.carttotal) + Number(p.priceNow)).toFixed(2);
-            if (p.rebate !== undefined){
-                $scope.carttotal = Number($scope.carttotal - Number(p.rebate)).toFixed(2);
+        //$scope.carttotal = $scope.ex !== undefined && $scope.ex.price !== undefined ? $scope.ex.price : 0;
+        $scope.carttotal = {};
+        $scope.carttotal.once = 0;
+        $scope.carttotal.rec = 0;
+        $scope.cartfees = [];
+        $scope.cartadons = [];
+        $scope.cartrebates = [];
+        if ($scope.hasproducts){
+            for(var i = 0; i < $scope.cp.length; i++) {
+                var p = $scope.cp[i];
+                var recprice = p.priceNow == undefined ? 0 : Number(p.priceNow);
+                var onceprice = p.installPrice == undefined ? 0 : Number(p.installPrice);
+                p.recshow = recprice > 0 ? true : false;
+                p.oneshow = onceprice > 0 ? true : false;
+                $scope.carttotal.once = Number(Number($scope.carttotal.once) + Number(onceprice)).toFixed(2);
+                $scope.carttotal.rec = Number(Number($scope.carttotal.rec) + Number(recprice)).toFixed(2);
+                calculateFees(p);
+                if (p.bundles !== undefined){
+                    for(var b = 0; b < p.bundles.length; b++){
+                        var adon = p.bundles[b];
+                        var recad = adon.priceNow == undefined ? 0 : Number(adon.priceNow);
+                        var oncead = adon.installPrice == undefined ? 0 : Number(adon.installPrice);
+                        adon.recshow = recad > 0 ? true : false;
+                        adon.oneshow = oncead > 0 ? true : false;
+                        $scope.carttotal.once = Number(Number($scope.carttotal.once) + Number(oncead)).toFixed(2);
+                        $scope.carttotal.rec = Number(Number($scope.carttotal.rec) + Number(recad)).toFixed(2);
+                        $scope.cartadons.push(adon);
+                        calculateFees(adon);
+                    }
+                    p.showbundles = p.bundles.length > 0;
+                }
+                else{
+                    p.bundles = [];
+                    p.showbundles = false;
+                }
+    //            $scope.carttotal = Number(Number($scope.carttotal) + Number(p.priceNow)).toFixed(2);
+    //            if (p.rebate !== undefined){
+    //                $scope.carttotal = Number($scope.carttotal - Number(p.rebate)).toFixed(2);
+    //            }
             }
-        });
-        cartservice.updateTotal($scope.carttotal);
+            cartservice.updateTotal($scope.carttotal);
+        }
 //        $scope.$apply();
+    }
+
+    function calculateFees(p){
+        if (p.fees !== undefined){
+
+            for(var f = 0; f < p.fees.length; f++){
+                var fee = p.fees[f];
+                var recfee = fee.priceNow == undefined ? 0 : Number(fee.priceNow);
+                var oncefee = fee.installPrice == undefined ? 0 : Number(fee.installPrice);
+                fee.oneshow = oncefee > 0 ? true : false;
+                fee.recshow = recfee > 0 ? true : false;
+
+                $scope.carttotal.once = Number(Number($scope.carttotal.once) + Number(oncefee)).toFixed(2);
+                $scope.carttotal.rec = Number(Number($scope.carttotal.rec) + Number(recfee)).toFixed(2);
+                $scope.cartfees.push(fee);
+            }
+            p.showfees = p.fees.length > 0;
+        }
+        else{
+            p.fees = [];
+            p.showfees = false;
+        }
+
+        if (p.rebates !== undefined){
+            for(var f = 0; f < p.rebates.length; f++){
+                var reb = p.rebates[f];
+                var recreb = reb.priceNow == undefined ? 0 : Number(reb.priceNow);
+                var oncereb = reb.installPrice == undefined ? 0 : Number(reb.installPrice);
+                reb.oneshow = oncereb > 0 ? true : false;
+                reb.recshow = recreb > 0 ? true : false;
+                $scope.carttotal.once = Number(Number($scope.carttotal.once) - Number(oncereb)).toFixed(2);
+                $scope.carttotal.rec = Number(Number($scope.carttotal.rec) - Number(recreb)).toFixed(2);
+                $scope.cartrebates.push(reb);
+            }
+            p.showrebs = p.rebates.length > 0;
+        }
+        else{
+            p.rebates = [];
+            p.showrebs = false;
+        }
     }
 
     function buildChatAction(title, obj){

@@ -61,13 +61,20 @@ function ruledefctrl($scope, $rootScope, $http, adminservice, mkPopup){
 
     $scope.onfldChange = function(fd){
         console.log("field changed", fd);
+        var selectedFld = adminservice.getFM($scope.obj.obj, fd.fldvalue);
+        console.log("selected field", selectedFld);
+        $scope.obj.fldtype = selectedFld.fldtype;
+        //rebuild value template to drop-down depending on the selected field metadata
         if (fd.fldname == 'field'){
-            var selectedFld = adminservice.getFM($scope.obj.obj, fd.fldvalue);
-            console.log("selected field", selectedFld);
-            $scope.obj.fldtype = selectedFld.fldtype;
-            //rebuild value template to drop-down depending on the selected field metadata
+            for(var i = 0; i < $scope.fieldList.lentgh; i++){
+                if ($scope.fieldList[i].fldname == 'val'){
+                    adminservice.buildField($scope.fieldList[i], selectedFld, $scope.obj);
+                    break;
+                }
+            }
         }
     }
+
 
     $scope.$on("EV_SAVE_CHANGES", function(event){
         adminservice.bindObjData($scope.obj, $scope.fieldList);

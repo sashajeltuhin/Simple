@@ -482,7 +482,7 @@ angular.module('cart').factory('adminservice', function($q, $cookies) {
     service.bindObjData = function(obj, fields){
         for (var i = 0; i < fields.length; i++){
             var fd = fields[i];
-            if (fd.options !== undefined && fd.fldtype == 'array'){
+            if (fd.options !== undefined && fd.options.length > 0 && fd.fldtype == 'array'){
                 obj[fd.fldname] = [];
                 for(var o=0; o < fd.options.length; o++){
                     var opt = fd.options[o];
@@ -509,68 +509,72 @@ angular.module('cart').factory('adminservice', function($q, $cookies) {
                     delete metafld.template;
                 }
                 fieldList.push(fd);
-                fd.label = metafld.label;
-                fd.fldname = metafld.fldname;
-                fd.fldtype = metafld.fldtype;
-
-                if (metafld.opts !== undefined){
-                    fd.options = [];
-                    if (fd.template == undefined){
-                        if (fd.fldtype == 'array'){
-                            fd.template = templUrl + 'checklist.html';
-                        }else{
-                            fd.template = templUrl + 'dropdown.html';
-                        }
-                    }
-                    if (metafld.defval !== undefined && metafld.defval !== ""){
-                        fd.options.push({optvalue:metafld.defval,label: metafld.deflabel});
-                    }
-                    $.each(metafld.opts, function(i, item){
-                        var opt = {};
-                        fd.options.push(opt);
-
-                        var optval = metafld.optfld !== undefined && metafld.optfld !== "" ? item[metafld.optfld]: item;
-                        var optdesc = metafld.optlabel !== undefined && metafld.optlabel !== "" ? item[metafld.optlabel]: optval;
-                        if (fd.fldtype == 'array'){
-                            opt.optvalue = obj[metafld.fldname].indexOf(optval) >= 0;
-                            opt.fldvalue = optval;
-                        }else{
-                            opt.optvalue = optval;
-                        }
-                        opt.label = optdesc;
-                    });
-                    fd.fldvalue = obj[metafld.fldname];
-                }
-                else {
-                    if (fd.template == undefined){
-                        switch (metafld.fldtype){
-                            case 'text':
-                                fd.template = templUrl + 'text.html';
-                                break;
-                            case 'bool':
-                                fd.template = templUrl + 'checkbox.html';
-                                break;
-                            case 'longtext':
-                                fd.template = templUrl + 'textarea.html';
-                                break;
-                            case 'image':
-                                fd.template = templUrl + 'graphics.html';
-                                break;
-                            default:
-                                fd.template = templUrl + 'text.html';
-                                break;
-
-                        }
-                    }
-                    if (obj[metafld.fldname] == undefined){
-                        obj[metafld.fldname] = "";
-                    }
-                    fd.fldvalue = obj[metafld.fldname];
-                }
+                service.buildField(fd, metafld, obj);
             }
 
         }
         return fieldList;
+    }
+
+    service.buildField = function(fd, metafld, obj){
+        fd.label = metafld.label;
+        fd.fldname = metafld.fldname;
+        fd.fldtype = metafld.fldtype;
+
+        if (metafld.opts !== undefined){
+            fd.options = [];
+            if (fd.template == undefined){
+                if (fd.fldtype == 'array'){
+                    fd.template = templUrl + 'checklist.html';
+                }else{
+                    fd.template = templUrl + 'dropdown.html';
+                }
+            }
+            if (metafld.defval !== undefined && metafld.defval !== ""){
+                fd.options.push({optvalue:metafld.defval,label: metafld.deflabel});
+            }
+            $.each(metafld.opts, function(i, item){
+                var opt = {};
+                fd.options.push(opt);
+
+                var optval = metafld.optfld !== undefined && metafld.optfld !== "" ? item[metafld.optfld]: item;
+                var optdesc = metafld.optlabel !== undefined && metafld.optlabel !== "" ? item[metafld.optlabel]: optval;
+                if (fd.fldtype == 'array'){
+                    opt.optvalue = obj[metafld.fldname] !== undefined && obj[metafld.fldname].indexOf(optval) >= 0;
+                    opt.fldvalue = optval;
+                }else{
+                    opt.optvalue = optval;
+                }
+                opt.label = optdesc;
+            });
+            fd.fldvalue = obj[metafld.fldname];
+        }
+        else {
+            if (fd.template == undefined){
+                switch (metafld.fldtype){
+                    case 'text':
+                        fd.template = templUrl + 'text.html';
+                        break;
+                    case 'bool':
+                        fd.template = templUrl + 'checkbox.html';
+                        break;
+                    case 'longtext':
+                        fd.template = templUrl + 'textarea.html';
+                        break;
+                    case 'image':
+                        fd.template = templUrl + 'graphics.html';
+                        break;
+                    default:
+                        fd.template = templUrl + 'text.html';
+                        break;
+
+                }
+            }
+            if (obj[metafld.fldname] == undefined){
+                obj[metafld.fldname] = "";
+            }
+            fd.fldvalue = obj[metafld.fldname];
+        }
     }
 
     service.buildForm = function(meta, optionscallback, obj){
