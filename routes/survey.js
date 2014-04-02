@@ -31,7 +31,12 @@ exports.target = function (req, res){
     var filter = {};
     filter.order_by = {priority:1};
     filter.active = true;
-    filter.app = customer.app;
+    var step = req.body.step;
+    if (step !== undefined){
+        filter.app = step.app;
+    }else{
+       filter.app = customer.app;
+    }
 
     rule.loadRules(req, function(err, list){
         if (err !== null){

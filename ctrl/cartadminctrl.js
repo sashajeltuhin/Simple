@@ -19,6 +19,8 @@ function cartadminctrl($scope, $routeParams, $http, $location, cartservice){
     $scope.previewStep = getURLParameter('step');
     $scope.previewMode = getURLParameter('preview');
     $scope.tenant = getURLParameter('tenant');
+    var iud = getURLParameter('uid');
+    cartservice.setAgentID(iud);
 
     var appID = getURLParameter('app');
     if (appID !== undefined){

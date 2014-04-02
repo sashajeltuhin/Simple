@@ -2018,7 +2018,8 @@ function adminctrl($scope, $rootScope, $http, $location, $compile, mkPopup, mkFi
 
     $scope.viewFlow = function(app){
         $scope.viewTitle = "Preview";
-        $scope.masterTmpl = $scope.rootUrl +'/' + app.template + '?preview=1&tenant=' + $scope.selTen.name + '&app=' + app._id;
+        var session = adminservice.getAdminSession();
+        $scope.masterTmpl = $scope.rootUrl +'/' + app.template + '?preview=1&tenant=' + $scope.selTen.name + '&app=' + app._id + '&uid=' + session.uid;
         $scope.wrapper = serverUrl + 'flow.html';
 
     }

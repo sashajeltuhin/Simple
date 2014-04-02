@@ -65,16 +65,19 @@ exports.loadRules = function(req, callback){
     db.setDB('ShopDB');
     var filter = {};
     var customer = req.body.customer;
+    var step = req.body.step;
 
-    if (req.body.stepID !== undefined){
-        filter.stepID = req.body.stepID;
+    if (step !== undefined){
+        filter.stepID = step._id;
+        filter.app = step.app;
     }
     else{
         if (req.body.rule !== undefined){
             filter.type = req.body.rule;
         }
+        filter.app = customer.app;
     }
-    filter.app = customer.app;
+
     filter.order_by = {order:1};
 
     db.load('rule', db.getFilter(filter), function(err, list){

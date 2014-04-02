@@ -37,7 +37,7 @@ function agentctrl($scope, $rootScope, $http, $location, cartservice, adminservi
                 if (t.length > 0){
                     $scope.selTen = t[0];
                     adminservice.setTenant(t[0]);
-                    adminservice.listObj('apps', {tenant:$scope.selTen.name}, $http, function(apps){
+                    adminservice.listObj('apps', {tenant:$scope.selTen.name, agent:'agent'}, $http, function(apps){
                         $scope.selTen.appObjects = apps;
                         $scope.switchApp(apps[0]);
                     });

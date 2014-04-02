@@ -19,7 +19,7 @@ function prodctrl($scope, $rootScope, $http, $location, cartservice){
         $scope.c = cartservice.getCustomer();
         f.customer = $scope.c;
         f.rule = "qual";
-        f.stepID = cartservice.currentstep()._id;
+        f.step = cartservice.currentstep();
         cartservice.loadproducts(f, $http, function(data){
             var teaser = cartservice.getTeaserProd();
             if (teaser !== undefined && teaser !== null && !teaserInList(teaser, data)){

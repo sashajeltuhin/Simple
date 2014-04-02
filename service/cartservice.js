@@ -266,6 +266,8 @@ angular.module('cart').factory('cartservice', function($http) {
     }
 
     service.initsteps = function(filter, cust, appT, f, $http, callback){
+        steps = [];
+        stepNames = [];
         if (cart !== null){
             service.endSession();
             service.teaserProd = null;
@@ -325,54 +327,94 @@ angular.module('cart').factory('cartservice', function($http) {
 
         var url = serverUrl + '/step/list';
         $http.post(url, f).success(function(st){
-            $.each(st, function(i, s){
-                if (admin == true && singleTempl !== null && singleTempl.length > 0){
-                    if (singleTempl === s._id){
-                        steps[0] = s;
-                        stepNames[s._id] = 0;
-                    }
+            var lst = [];
+            var index = 0;
+            iterateSteps(st, index, lst, function(){
+                buildSteps(lst, filter, callback);
+            })
+        });
+    }
+
+    function iterateSteps(steplist, index, finallist, callback){
+        console.log('iterateSteps', finallist);
+        var w = steplist[index];
+        if (w.name == 'placeholder'){
+            var url = serverUrl + '/step/list';
+            $http.post(url, {app:w.placeholder, visible:true, type:'cart', order_by:{order:1}}).success(function(data){
+                console.log('unzipped the placeholder', data);
+                for(var i = 0; i < data.length; i++){
+                    finallist.push(data[i]);
+                }
+                index++;
+                if (index == steplist.length){
+                    callback();
                 }
                 else{
-                    s.num = i + 1;
-                    steps[i] = s;
-                    stepNames[s._id] = i;
+                    iterateSteps(steplist, index, finallist, callback);
                 }
             });
-            singleTempl = "";
-            curstep = steps[0];
-            if (appObj.agent !== "agent"){
-                service.customer.OS = BrowserDetect.OS;
-                service.customer.browser = BrowserDetect.browser;
-                service.customer.speed = SpeedDetect.speedMbps;
-            }
-            if (filter.zip !== undefined){
-                $http.post(serverUrl + '/zip/list', {zip:filter.zip}).success(function(geos){
-                    if (geos.length > 0){
-                        var geo = geos[0];
-                        geoarea = geo;
-                        service.customer.state = geo.state;
-                        service.customer.city = geo.city;
-                        service.customer.lat = geo.lat;
-                        service.customer.lon = geo.lon;
-                    }
-                    service.updateCustomer(function(c){
-                        service.customer = c;
-                        service.logAction("call_start", 0, true);
-                        callback(steps);
-                        service.getIPinfo();
-                    });
-                });
+        }
+        else{
+            finallist.push(w);
+            index++;
+            if (index == steplist.length){
+                callback();
             }
             else{
-                service.customer.zipguess=true;
+                iterateSteps(steplist, index, finallist, callback);
+            }
+        }
+    }
+
+    function buildSteps(st, filter, callback){
+        console.log('final list', st);
+        $.each(st, function(i, s){
+            if (admin == true && singleTempl !== null && singleTempl.length > 0){
+                if (singleTempl === s._id){
+                    steps[0] = s;
+                    stepNames[s._id] = 0;
+                }
+            }
+            else{
+                s.num = i + 1;
+                steps[i] = s;
+                stepNames[s._id] = i;
+            }
+        });
+        singleTempl = "";
+        curstep = steps[0];
+        if (appObj.agent !== "agent"){
+            service.customer.OS = BrowserDetect.OS;
+            service.customer.browser = BrowserDetect.browser;
+            service.customer.speed = SpeedDetect.speedMbps;
+        }
+        if (filter.zip !== undefined){
+            $http.post(serverUrl + '/zip/list', {zip:filter.zip}).success(function(geos){
+                if (geos.length > 0){
+                    var geo = geos[0];
+                    geoarea = geo;
+                    service.customer.state = geo.state;
+                    service.customer.city = geo.city;
+                    service.customer.lat = geo.lat;
+                    service.customer.lon = geo.lon;
+                }
                 service.updateCustomer(function(c){
                     service.customer = c;
                     service.logAction("call_start", 0, true);
                     callback(steps);
                     service.getIPinfo();
                 });
-            }
-        });
+            });
+        }
+        else{
+            service.customer.zipguess=true;
+            service.updateCustomer(function(c){
+                service.customer = c;
+                service.logAction("call_start", 0, true);
+                callback(steps);
+                service.getIPinfo();
+            });
+        }
     }
 
     service.getIPinfo = function(callback){
@@ -469,7 +511,7 @@ angular.module('cart').factory('cartservice', function($http) {
     service.targetsurvey = function($http, callback){
         var url = serverUrl + '/survey/target';
         var f = {};
-        f.stepID = service.currentstep()._id;
+        f.step = service.currentstep();
         f.customer = service.customer;
         $http.post(url, f).success(function(result){
 

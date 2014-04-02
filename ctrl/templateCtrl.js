@@ -6,6 +6,7 @@ function templateCtrl($scope, $http, adminservice){
     $scope.appObj = adminservice.getAppObj();
     $scope.applid = $scope.appObj._id;
     $scope.masterTmpl = $scope.appObj.template;
+    $scope.userID = adminservice.getAdminSession().uid;
 
     refreshDetail();
     init();
