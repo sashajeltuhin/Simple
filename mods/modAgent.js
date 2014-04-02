@@ -30,6 +30,9 @@ var myapp = angular.module("cart", ['ui.sortable','ui.date','ngGrid','ngCookies'
         }).when('/credit', {
             template: '<div ng-include="templateUrl">Loading...</div>',
             controller: orderctrl
+        }).when('/tpv', {
+            template: '<div ng-include="templateUrl">Loading...</div>',
+            controller: orderctrl
         }).when('/conf', {
             template: '<div ng-include="templateUrl">Loading...</div>',
             controller: orderctrl

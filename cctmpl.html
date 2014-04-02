@@ -66,7 +66,7 @@
 <body ng-app="cart" ng-controller="agentctrl">
 <div class="wizard clearfix" ng-show="onair">
     <ul class="steps">
-        <li class="active" ng-repeat="w in steps"><span ng-class="{'badge  badge-success': isActiveStep(w),'badge badge-info': !isActiveStep(w)}">{{w.order}}</span>{{w.title}}</li>
+        <li class="active" ng-repeat="w in steps"><span ng-class="{'badge  badge-success': isActiveStep(w),'badge badge-info': !isActiveStep(w)}">{{w.num}}</span>{{w.title}}</li>
     </ul>
 </div>
     <section class="hbox stretch" ng-show="agent">

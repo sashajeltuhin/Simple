@@ -24,6 +24,7 @@ angular.module('cart').factory('cartservice', function($http) {
     var agentID = null;
     var appID = null;
     var geoarea = null;
+    var curIndex = 0;
 
     service.getSocket = function(){
         return service.socket;
@@ -160,11 +161,17 @@ angular.module('cart').factory('cartservice', function($http) {
         return curstep;
     }
 
+    service.getCurIndex = function(){
+        return curIndex;
+    }
+
+
     service.prevStep = function(now){
         if (cart == null){
             return '';
         }
         var index = stepNames[now] < 0 ? 0 : stepNames[now] - 1;
+        curIndex = index + 1;
         curstep = steps[index];
 
         return curstep;
@@ -179,12 +186,25 @@ angular.module('cart').factory('cartservice', function($http) {
         });
     }
 
+    service.moveToLastStep = function(){
+        curstep = steps[steps.length - 1];
+        service.updateCustomer();
+        return curstep;
+    }
+
+    service.finish = function(){
+        service.endSession();
+        curstep = steps[0];
+        return curstep;
+    }
+
     service.nextStep = function(now){
         if (cart == null){
             return '';
         }
 
         var index = stepNames[now] == steps.length - 1 ? 0 : stepNames[now] + 1;
+        curIndex = index + 1;
         curstep = steps[index];
 
         if (index == steps.length - 1){
@@ -192,6 +212,10 @@ angular.module('cart').factory('cartservice', function($http) {
             service.customer.type = "client";
             service.updateCustomer();
             service.endSession();
+        }
+        else if (curstep.success == true){
+            service.customer.type = "client";
+            service.updateCustomer();
         }
         else{
             cart.complete = false;
@@ -309,6 +333,7 @@ angular.module('cart').factory('cartservice', function($http) {
                     }
                 }
                 else{
+                    s.num = i + 1;
                     steps[i] = s;
                     stepNames[s._id] = i;
                 }
@@ -552,6 +577,9 @@ angular.module('cart').factory('cartservice', function($http) {
         service.customer.app = appObj.appID;
         service.customer.tenant = tenant;
         service.customer.visitTime = new Date();
+        if (cart !== null){
+            service.customer.duration = service.customer.visitTime.getTime() / 1000 - cart.start;
+        }
         if (admin == true || appObj.agent == "chat"){
             if (callback !== undefined){
                 callback(service.customer);

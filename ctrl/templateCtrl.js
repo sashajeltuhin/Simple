@@ -4,6 +4,8 @@ function templateCtrl($scope, $http, adminservice){
     var caretpos = 0;
     $scope.tenant = adminservice.getTenant().name;
     $scope.appObj = adminservice.getAppObj();
+    $scope.applid = $scope.appObj._id;
+    $scope.masterTmpl = $scope.appObj.template;
 
     refreshDetail();
     init();
@@ -98,11 +100,12 @@ function templateCtrl($scope, $http, adminservice){
     }
 
     $scope.showTemplate = function(){
-        var appObj = currentApp();
-        if (appObj.template !== undefined && $scope.obj.template !== undefined){
-            $scope.modalTemplPage = serverUrl + 'stepTmpl.html';
-            $scope.masterTmpl = appObj.template;
-        }
+//        var appObj = currentApp();
+//        if (appObj.template !== undefined && $scope.obj.template !== undefined){
+//            $scope.previewTabPage = serverUrl + 'stepTmpl.html';
+//            //$scope.masterTmpl = appObj.template;
+//            $scope.stepTempl = $scope.rootUrl +'/' + appObj.template + '?step=' + $scope.obj._id + '&app=' + appObj._id;
+//        }
     }
 
     function currentApp(){

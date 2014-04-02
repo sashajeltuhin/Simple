@@ -18,14 +18,19 @@
                     <td colspan="4">
                         <table class="table table3">
                             <tr>
-                                <td><a ng-click="removeProd(p)" style="cursor: pointer"><i class="fa fa-times"></i></a></td>
-                                <td colspan="3"><h5 class="style4">Product</h5></td></tr>
-                            <tr >
-                                <td>{{p.provider}}</td>
-                                <td>{{p.title}}</td>
+                                <td><a ng-click="removeProd(p)" style="cursor: pointer"><i class="fa fa-times"></i></a>{{p.provider}}</td>
+                                <td>
+                                    <h5 class="style4">{{p.title}}</h5>
+                                </td>
                                 <td>&nbsp;</td>
                                 <td class="text-right" ng-show="p.recshow">${{p.priceNow}}</td>
                             </tr>
+                            <!--<tr >-->
+                                <!--<td>{{p.provider}}</td>-->
+                                <!--<td>{{p.title}}</td>-->
+                                <!--<td>&nbsp;</td>-->
+                                <!--<td class="text-right" ng-show="p.recshow">${{p.priceNow}}</td>-->
+                            <!--</tr>-->
                             <tr ng-show="p.showbundles"><td colspan="4"><h5 class="style4">Premium Content</h5></td></tr>
                             <tr ng-repeat="adon in p.bundles">
                                 <td>{{adon.provider}}</td>

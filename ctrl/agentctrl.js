@@ -10,7 +10,6 @@ function agentctrl($scope, $rootScope, $http, $location, cartservice, adminservi
     $scope.c = cartservice.getCustomer();
 
     $scope.stats = {};
-    $scope.allwidgets = [];
     $scope.hasproducts = false;
     $scope.existprod = false;
     $scope.showCart = false;
@@ -59,6 +58,7 @@ function agentctrl($scope, $rootScope, $http, $location, cartservice, adminservi
     }
 
     $scope.switchApp = function(a){
+        $scope.allwidgets = [];
         $scope.selApp = a;
         $scope.selApp.agent = "agent"; //any flow can be used in call center
         cartservice.setAppObj(a);
@@ -73,14 +73,14 @@ function agentctrl($scope, $rootScope, $http, $location, cartservice, adminservi
     }
 
     function loadWidgets(){
-        adminservice.listObj('step', {app:'admin', type:'app', parentid:'agentnav', visible:true, order_by:{order:1}}, $http, function(data){
+        adminservice.listObj('step', {app:$scope.selApp.appID, type:'app', parentid:'agentnav', visible:true, order_by:{order:1}}, $http, function(data){
             $scope.agentWidgets = data;
             $.each(data, function(i, w){
                 initWidget(w);
             });
             $scope.restart();
         });
-        adminservice.listObj('step', {app:'admin', type:'app', parentid:'agenttools', visible:true, order_by:{order:1}}, $http, function(data){
+        adminservice.listObj('step', {app:$scope.selApp.appID, type:'app', parentid:'agenttools', visible:true, order_by:{order:1}}, $http, function(data){
             $scope.agentTools = data;
             $.each(data, function(i, w){
                 initWidget(w);
@@ -134,11 +134,14 @@ function agentctrl($scope, $rootScope, $http, $location, cartservice, adminservi
             $scope.c = cartservice.getCustomer();
             $scope.$broadcast("EV_CONSUMER_CHANGED", $scope.c);
             $scope.onair = true;
+            $scope.areademo = cartservice.getGeo();
+            formatGeo($scope.areademo);
+            updateCartTotal();
             $scope.changeView(steps[0]);
         });
 
 
-        updateCartTotal();
+
         cartservice.getSocket().on('feedback', function (action) {
                 console.log("client feedback:");
                 console.log(action);
@@ -238,10 +241,21 @@ function agentctrl($scope, $rootScope, $http, $location, cartservice, adminservi
 
 
     $scope.changeView = function (step){
+        console.log('changing view', step._id);
         $location.path('/app/' + step._id);
 
         $scope.templateUrl = cartservice.getTemplateURL();
         onStep(step, $scope.c);
+    }
+
+    $scope.last = function(){
+        $scope.step = cartservice.moveToLastStep();
+        $scope.changeView($scope.step);
+    }
+
+    $scope.finish = function(){
+        cartservice.finish();
+        $scope.restart();
     }
 
     $scope.$on("EV_CONSUMER_UPDATED", function(event, obj){
@@ -269,6 +283,7 @@ function agentctrl($scope, $rootScope, $http, $location, cartservice, adminservi
     }
 
     function updateCartTotal(){
+        var prods = 0;
         $scope.cp = cartservice.getProdsInCart();
         $scope.hasproducts = $scope.cp !== undefined && $scope.cp.length > 0;
         //$scope.carttotal = $scope.ex !== undefined && $scope.ex.price !== undefined ? $scope.ex.price : 0;
@@ -281,6 +296,7 @@ function agentctrl($scope, $rootScope, $http, $location, cartservice, adminservi
         if ($scope.hasproducts){
             for(var i = 0; i < $scope.cp.length; i++) {
                 var p = $scope.cp[i];
+                prods++;
                 var recprice = p.priceNow == undefined ? 0 : Number(p.priceNow);
                 var onceprice = p.installPrice == undefined ? 0 : Number(p.installPrice);
                 p.recshow = recprice > 0 ? true : false;
@@ -290,6 +306,7 @@ function agentctrl($scope, $rootScope, $http, $location, cartservice, adminservi
                 calculateFees(p);
                 if (p.bundles !== undefined){
                     for(var b = 0; b < p.bundles.length; b++){
+                        prods++;
                         var adon = p.bundles[b];
                         var recad = adon.priceNow == undefined ? 0 : Number(adon.priceNow);
                         var oncead = adon.installPrice == undefined ? 0 : Number(adon.installPrice);
@@ -312,8 +329,11 @@ function agentctrl($scope, $rootScope, $http, $location, cartservice, adminservi
     //            }
             }
             cartservice.updateTotal($scope.carttotal);
+
         }
-//        $scope.$apply();
+        $scope.c.numprods = prods;
+        $scope.c.revenue = Number(Number($scope.carttotal.rec) + Number($scope.carttotal.once));
+        cartservice.updateCustomer();
     }
 
     function calculateFees(p){
