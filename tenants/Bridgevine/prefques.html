@@ -1,0 +1,13 @@
+
+<h2 class="style1">{{currentQue.label}}</h2>
+
+
+<div class="row">
+    <div class="col-xs-3" ng-repeat="r in currentQue.responses">
+        <div class="box-5a">
+            <div class="t_image"><img src="{{topUrl}}{{r.imageUrl}}"></div>
+            <h4>{{r.label}}</h4>
+            <div class="select"><div class="checkbox"><label><input ng-click="answer(r)" ng-model="r.selected" type="checkbox"> Select</label></div></div>
+        </div><!-- /box-5a -->
+    </div><!-- /col -->
+</div><!-- /row -->
